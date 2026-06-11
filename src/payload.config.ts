@@ -26,8 +26,18 @@ const databaseUri =
   process.env.DATABASE_URI ||
   process.env.POSTGRES_URL ||
   process.env.DATABASE_URL ||
+  process.env.PRISMA_DATABASE_URL ||
   'file:./motorflash.db'
 const usesPostgres = /^postgres(ql)?:\/\//.test(databaseUri)
+
+// Diagnóstico: en Vercel logueamos qué resolvimos sin filtrar credenciales.
+if (process.env.VERCEL_ENV) {
+  const dbKeys = Object.keys(process.env).filter((k) => /DATABASE|POSTGRES|PRISMA/.test(k))
+  // eslint-disable-next-line no-console
+  console.log(
+    `[motorflash] db resolved: usesPostgres=${usesPostgres} scheme=${databaseUri.match(/^[a-z+]+/i)?.[0] ?? 'none'} len=${databaseUri.length} envKeys=${dbKeys.join(',') || 'NONE'}`,
+  )
+}
 
 export default buildConfig({
   admin: {
