@@ -15,11 +15,18 @@ const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
 /**
- * Adaptador de BD según `DATABASE_URI`:
- *  - `postgres://…` o `postgresql://…` → Postgres (producción en Vercel / Neon)
- *  - cualquier otra cosa (`file:./motorflash.db`, vacío…) → SQLite (desarrollo local)
+ * Adaptador de BD. Resuelve la URL de varias env vars por orden de prioridad:
+ *  1. `DATABASE_URI` — nuestra propia. En dev apunta a SQLite (`file:./motorflash.db`).
+ *  2. `POSTGRES_URL` — inyectada por Vercel/Prisma Postgres automáticamente.
+ *  3. `DATABASE_URL` — convención estándar.
+ *
+ * Si la URL empieza por `postgres://` → adaptador Postgres. Si no → SQLite.
  */
-const databaseUri = process.env.DATABASE_URI || 'file:./motorflash.db'
+const databaseUri =
+  process.env.DATABASE_URI ||
+  process.env.POSTGRES_URL ||
+  process.env.DATABASE_URL ||
+  'file:./motorflash.db'
 const usesPostgres = /^postgres(ql)?:\/\//.test(databaseUri)
 
 export default buildConfig({
