@@ -50,3 +50,6 @@ motorflash.db*
 
 # Vercel CLI
 .vercel
+
+# vercel env pull download
+.env.vercel*
