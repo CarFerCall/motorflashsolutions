@@ -59,6 +59,10 @@ export default buildConfig({
   db: usesPostgres
     ? postgresAdapter({
         pool: { connectionString: databaseUri },
+        // En este proyecto no usamos migraciones: dejamos que el adapter
+        // sincronice el esquema con las colecciones al arrancar. Suficiente
+        // para un sitio de marketing/CMS donde el schema lo controla el código.
+        push: true,
       })
     : sqliteAdapter({
         client: { url: databaseUri },
