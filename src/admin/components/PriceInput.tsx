@@ -17,7 +17,7 @@ export default function PriceInput(props: NumberFieldClientProps) {
 
   return (
     <div className={`field-type number ${showError ? 'error' : ''}`}>
-      {field.label !== false && <FieldLabel label={field.label} required={field.required} path={path} />}
+      {field.label && <FieldLabel label={field.label} required={field.required} path={path} />}
 
       <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
         <input

@@ -16,7 +16,8 @@ const dirname = path.dirname(filename)
 config({ path: path.resolve(dirname, '..', '.env') })
 
 async function run() {
-  const payloadConfig = (await import('./payload.config.ts')).default
+  // @ts-ignore - tsx resuelve la extensión en runtime
+  const payloadConfig = (await import('./payload.config')).default
   const payload = await getPayload({ config: payloadConfig })
 
   // 1. Admin user
@@ -125,15 +126,15 @@ async function run() {
   }
 
   if (existing.length === 0) {
-    const created = await payload.create({ collection: 'pricing-plans', data })
-    console.log(`✔ Plan CRM4YOU creado (id=${created.id}) con ${items.length} items configurables`)
+    const created = await payload.create({ collection: 'pricing-plans', data: data as any })
+    console.log(`✔ Plan CRM4YOU creado (id=${(created as any).id}) con ${items.length} items configurables`)
   } else {
     const updated = await payload.update({
       collection: 'pricing-plans',
       id: existing[0].id,
-      data,
+      data: data as any,
     })
-    console.log(`✔ Plan CRM4YOU actualizado (id=${updated.id}) con ${items.length} items configurables`)
+    console.log(`✔ Plan CRM4YOU actualizado (id=${(updated as any).id ?? existing[0].id}) con ${items.length} items configurables`)
   }
 
   process.exit(0)

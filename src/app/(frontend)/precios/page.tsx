@@ -18,7 +18,7 @@ export default async function PreciosPage() {
     where: { enabled: { equals: true } },
     limit: 100,
   })
-  const planBySlug = new Map(plans.map((p) => [p.productSlug, p]))
+  const planBySlug = new Map<string, (typeof plans)[number]>(plans.map((p) => [p.productSlug, p]))
 
   return (
     <section className="py-32">
