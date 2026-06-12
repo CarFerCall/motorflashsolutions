@@ -40,7 +40,13 @@ const databaseUri = process.env.VERCEL_ENV
     'file:./motorflash.db'
 const usesPostgres = /^postgres(ql)?:\/\//.test(databaseUri)
 
+const serverURL =
+  process.env.NEXT_PUBLIC_SERVER_URL ||
+  (process.env.VERCEL_PROJECT_PRODUCTION_URL ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}` : '') ||
+  'http://localhost:3100'
+
 export default buildConfig({
+  serverURL,
   admin: {
     user: Users.slug,
     importMap: { baseDir: path.resolve(dirname) },
@@ -48,6 +54,20 @@ export default buildConfig({
       title: 'Motorflash CMS',
       titleSuffix: '— Motorflash Ibérica',
       icons: [{ rel: 'icon', type: 'image/png', url: '/images/logo-motorflash.png' }],
+    },
+    livePreview: {
+      url: ({ data, collectionConfig }) => {
+        const slug = (data as any)?.slug
+        if (collectionConfig?.slug === 'pages' && slug) {
+          return `${serverURL}/${slug}?livePreview=true`
+        }
+        return serverURL
+      },
+      breakpoints: [
+        { name: 'mobile', label: 'Móvil', width: 375, height: 667 },
+        { name: 'tablet', label: 'Tablet', width: 768, height: 1024 },
+        { name: 'desktop', label: 'Desktop', width: 1440, height: 900 },
+      ],
     },
     components: {
       graphics: {

@@ -21,6 +21,7 @@
     "@payloadcms/db-postgres": "^3.85.1",
     "@payloadcms/db-sqlite": "latest",
     "@payloadcms/email-nodemailer": "^3.85.1",
+    "@payloadcms/live-preview-react": "^3.85.1",
     "@payloadcms/next": "latest",
     "@payloadcms/richtext-lexical": "latest",
     "@payloadcms/ui": "latest",

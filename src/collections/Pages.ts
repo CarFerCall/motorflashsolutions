@@ -11,10 +11,26 @@ export const Pages: CollectionConfig = {
   labels: { singular: 'Página', plural: 'Páginas' },
   admin: {
     useAsTitle: 'title',
-    description: 'Crea landings y otras páginas con bloques arrastrables. URL pública: /<slug>.',
+    description: 'Crea landings y otras páginas con bloques arrastrables. Pulsa "Live Preview" arriba a la derecha para verlo en directo mientras editas. URL pública: /<slug>.',
     defaultColumns: ['title', 'slug', 'status', 'updatedAt'],
     listSearchableFields: ['title', 'slug'],
     group: 'Contenido',
+    livePreview: {
+      url: ({ data }) => {
+        const base =
+          process.env.NEXT_PUBLIC_SERVER_URL ||
+          (process.env.VERCEL_PROJECT_PRODUCTION_URL ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}` : '') ||
+          'http://localhost:3100'
+        const slug = (data as any)?.slug
+        if (!slug) return base
+        return `${base}/${slug}?livePreview=true`
+      },
+      breakpoints: [
+        { name: 'mobile', label: 'Móvil', width: 375, height: 667 },
+        { name: 'tablet', label: 'Tablet', width: 768, height: 1024 },
+        { name: 'desktop', label: 'Desktop', width: 1440, height: 900 },
+      ],
+    },
   },
   access: {
     read: ({ req }) => {

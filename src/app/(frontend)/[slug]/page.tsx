@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation'
 import { getPayloadClient } from '@/lib/payload'
 import { BlockRenderer } from '@/components/blocks/BlockRenderer'
+import { PageLivePreview } from '@/components/PageLivePreview'
 
 export const dynamic = 'force-dynamic'
 
@@ -18,17 +19,19 @@ const RESERVED_SLUGS = new Set([
 
 interface RouteParams {
   params: Promise<{ slug: string }>
+  searchParams: Promise<{ [k: string]: string | string[] | undefined }>
 }
 
-async function findPage(slug: string) {
+async function findPage(slug: string, opts: { includeDrafts: boolean }) {
   if (RESERVED_SLUGS.has(slug)) return null
   const payload = await getPayloadClient()
+  const where: any = { slug: { equals: slug } }
+  if (!opts.includeDrafts) {
+    where.status = { equals: 'published' }
+  }
   const { docs } = await payload.find({
     collection: 'pages',
-    where: {
-      slug: { equals: slug },
-      status: { equals: 'published' },
-    },
+    where,
     limit: 1,
   })
   return docs[0] ?? null
@@ -36,7 +39,7 @@ async function findPage(slug: string) {
 
 export async function generateMetadata({ params }: RouteParams) {
   const { slug } = await params
-  const page = await findPage(slug)
+  const page = await findPage(slug, { includeDrafts: false })
   if (!page) return {}
   const seo = (page as any).seo ?? {}
   return {
@@ -45,10 +48,23 @@ export async function generateMetadata({ params }: RouteParams) {
   }
 }
 
-export default async function DynamicPage({ params }: RouteParams) {
+export default async function DynamicPage({ params, searchParams }: RouteParams) {
   const { slug } = await params
-  const page = await findPage(slug)
+  const sp = await searchParams
+  const isLivePreview = sp.livePreview === 'true'
+
+  // En live preview cargamos también borradores (el admin está editando).
+  const page = await findPage(slug, { includeDrafts: isLivePreview })
   if (!page) notFound()
+
+  if (isLivePreview) {
+    const serverURL =
+      process.env.NEXT_PUBLIC_SERVER_URL ||
+      (process.env.VERCEL_PROJECT_PRODUCTION_URL ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}` : '') ||
+      'http://localhost:3100'
+    return <PageLivePreview initialData={page} serverURL={serverURL} />
+  }
+
   const blocks = ((page as any).blocks ?? []) as Array<{ blockType: string; [k: string]: any }>
   return <BlockRenderer blocks={blocks} />
 }

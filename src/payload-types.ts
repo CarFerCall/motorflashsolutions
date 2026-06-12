@@ -152,7 +152,7 @@ export interface User {
   collection: 'users';
 }
 /**
- * Crea landings y otras páginas con bloques arrastrables. URL pública: /<slug>.
+ * Crea landings y otras páginas con bloques arrastrables. Pulsa "Live Preview" arriba a la derecha para verlo en directo mientras editas. URL pública: /<slug>.
  *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "pages".
@@ -324,6 +324,7 @@ export interface Page {
   };
   updatedAt: string;
   createdAt: string;
+  _status?: ('draft' | 'published') | null;
 }
 /**
  * Cada plan se conecta con su producto del catálogo y define lo que el cliente puede configurar en /precios/{slug}.
@@ -675,6 +676,7 @@ export interface PagesSelect<T extends boolean = true> {
       };
   updatedAt?: T;
   createdAt?: T;
+  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
