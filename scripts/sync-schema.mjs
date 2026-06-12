@@ -33,8 +33,44 @@ const payload = await getPayload({ config })
 // efectivamente queden las tablas creadas antes de salir, intentamos
 // una query trivial — si falla, vemos el error en el log del build.
 try {
-  await payload.find({ collection: 'pricing-plans', limit: 1 })
+  const existing = await payload.find({ collection: 'pricing-plans', limit: 1 })
   console.log('[sync-schema] schema OK — pricing_plans is queryable')
+
+  // Seed placeholder solo si la collection está vacía. Sin esto el
+  // configurador de /precios sale con "Aún no hay planes activos" en
+  // un deploy desde cero. Los precios son una primera estimación que
+  // el equipo puede editar luego en /admin.
+  if (existing.totalDocs === 0) {
+    console.log('[sync-schema] sin planes — creando seed inicial...')
+    const seed = [
+      { productSlug: 'exportaciones', productName: 'Multipublicador', basePriceCents: 14900 },
+      { productSlug: 'crm4you', productName: 'CRM4YOU', basePriceCents: 19900 },
+      { productSlug: 'spyne', productName: 'Photocall IA', basePriceCents: 8900 },
+      { productSlug: 'motorflash-message', productName: 'WhatsApp Business', basePriceCents: 5900 },
+      { productSlug: 'dealer', productName: 'Dealer / Stock', basePriceCents: 12900 },
+      { productSlug: 'contact-center', productName: 'Contact Center', basePriceCents: 24900 },
+    ]
+    for (const plan of seed) {
+      try {
+        await payload.create({
+          collection: 'pricing-plans',
+          data: {
+            ...plan,
+            introText: 'Plan inicial creado automáticamente — edítalo desde el admin.',
+            currency: 'EUR',
+            billingCycle: 'month',
+            enabled: true,
+            items: [],
+          },
+        })
+        console.log(`  ✔ ${plan.productName}`)
+      } catch (err) {
+        console.warn(`  ✗ ${plan.productName}:`, err?.message || err)
+      }
+    }
+  } else {
+    console.log(`[sync-schema] ${existing.totalDocs} planes existentes — sin seed`)
+  }
 } catch (err) {
   console.error('[sync-schema] schema check failed:', err?.message || err)
   // No fallamos el build: dejamos que el deploy salga y el problema se
