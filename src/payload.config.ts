@@ -10,6 +10,8 @@ import sharp from 'sharp'
 import { Users } from './collections/Users'
 import { PricingPlans } from './collections/PricingPlans'
 import { Quotes } from './collections/Quotes'
+import { Pages } from './collections/Pages'
+import { MainMenu } from './globals/MainMenu'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -59,7 +61,8 @@ export default buildConfig({
       },
     },
   },
-  collections: [Users, PricingPlans, Quotes],
+  collections: [Users, Pages, PricingPlans, Quotes],
+  globals: [MainMenu],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || 'change-me-in-production',
   typescript: {

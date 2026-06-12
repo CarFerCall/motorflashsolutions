@@ -9,7 +9,7 @@ export const metadata = {
     'Motorflash Ibérica: solución 360 con IA para marcas y concesionarios del motor. Multipublicador, CRM4YOU, Contact Center, IA en WhatsApp y más.',
 }
 
-export default function FrontendLayout({ children }: { children: React.ReactNode }) {
+export default async function FrontendLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="es">
       <head>
@@ -26,7 +26,7 @@ export default function FrontendLayout({ children }: { children: React.ReactNode
         />
       </head>
       <body>
-        <Navbar />
+        {await Navbar()}
         <main className="pt-20">{children}</main>
         <Footer />
       </body>

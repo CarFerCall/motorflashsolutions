@@ -68,6 +68,7 @@ export interface Config {
   blocks: {};
   collections: {
     users: User;
+    pages: Page;
     'pricing-plans': PricingPlan;
     quotes: Quote;
     'payload-kv': PayloadKv;
@@ -78,6 +79,7 @@ export interface Config {
   collectionsJoins: {};
   collectionsSelect: {
     users: UsersSelect<false> | UsersSelect<true>;
+    pages: PagesSelect<false> | PagesSelect<true>;
     'pricing-plans': PricingPlansSelect<false> | PricingPlansSelect<true>;
     quotes: QuotesSelect<false> | QuotesSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
@@ -89,8 +91,12 @@ export interface Config {
     defaultIDType: number;
   };
   fallbackLocale: null;
-  globals: {};
-  globalsSelect: {};
+  globals: {
+    'main-menu': MainMenu;
+  };
+  globalsSelect: {
+    'main-menu': MainMenuSelect<false> | MainMenuSelect<true>;
+  };
   locale: null;
   widgets: {
     collections: CollectionsWidget;
@@ -144,6 +150,180 @@ export interface User {
     | null;
   password?: string | null;
   collection: 'users';
+}
+/**
+ * Crea landings y otras páginas con bloques arrastrables. URL pública: /<slug>.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "pages".
+ */
+export interface Page {
+  id: number;
+  title: string;
+  /**
+   * Sin barras, en minúsculas. La URL final será /<slug>.
+   */
+  slug: string;
+  status: 'draft' | 'published';
+  /**
+   * Arrastra para reordenar. Cada bloque se renderiza uno tras otro en la página pública.
+   */
+  blocks?:
+    | (
+        | {
+            eyebrow?: string | null;
+            icon?: string | null;
+            title: string;
+            subtitle?: string | null;
+            /**
+             * Hasta 2 botones. El primero será naranja, el segundo blanco.
+             */
+            ctas?:
+              | {
+                  label: string;
+                  url: string;
+                  variant?: ('primary' | 'secondary') | null;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'hero';
+          }
+        | {
+            content?: {
+              root: {
+                type: string;
+                children: {
+                  type: any;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            } | null;
+            width?: ('narrow' | 'wide') | null;
+            alignment?: ('left' | 'center') | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'richText';
+          }
+        | {
+            eyebrow?: string | null;
+            title?: string | null;
+            description?: string | null;
+            columns?: ('2' | '3' | '4') | null;
+            features?:
+              | {
+                  icon?: string | null;
+                  title: string;
+                  description?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'featureGrid';
+          }
+        | {
+            title: string;
+            description?: string | null;
+            buttonLabel: string;
+            buttonUrl: string;
+            style?: ('orange' | 'dark' | 'light') | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'ctaBanner';
+          }
+        | {
+            eyebrow?: string | null;
+            title?: string | null;
+            items?:
+              | {
+                  quote: string;
+                  author: string;
+                  role?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'testimonials';
+          }
+        | {
+            eyebrow?: string | null;
+            title?: string | null;
+            description?: string | null;
+            /**
+             * Elige los productos del catálogo que quieres mostrar en el carrusel.
+             */
+            productSlugs: (
+              | 'dealer'
+              | 'exportaciones'
+              | 'crm4you'
+              | 'contact-center'
+              | 'spyne'
+              | 'motorflash-message'
+              | 'motorflash-mobile-tracking'
+              | 'ia'
+              | 'soluciones-web'
+              | 'marketing-digital'
+              | 'portal-publicacion'
+              | 'lead-factory'
+              | 'soluciones-fabricantes'
+              | 'apex'
+            )[];
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'productCarousel';
+          }
+        | {
+            eyebrow?: string | null;
+            title?: string | null;
+            items?:
+              | {
+                  question: string;
+                  answer: string;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'faq';
+          }
+        | {
+            eyebrow?: string | null;
+            title: string;
+            description?: string | null;
+            /**
+             * Ruta a la imagen (de /public, p. ej. /images/foo.png) o URL externa.
+             */
+            imageUrl?: string | null;
+            imageSide?: ('left' | 'right') | null;
+            imageAlt?: string | null;
+            cta?: {
+              label?: string | null;
+              url?: string | null;
+            };
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'imageText';
+          }
+      )[]
+    | null;
+  /**
+   * Opcional. Si lo dejas vacío se usa el título de la página.
+   */
+  seo?: {
+    metaTitle?: string | null;
+    metaDescription?: string | null;
+  };
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * Cada plan se conecta con su producto del catálogo y define lo que el cliente puede configurar en /precios/{slug}.
@@ -284,6 +464,10 @@ export interface PayloadLockedDocument {
         value: number | User;
       } | null)
     | ({
+        relationTo: 'pages';
+        value: number | Page;
+      } | null)
+    | ({
         relationTo: 'pricing-plans';
         value: number | PricingPlan;
       } | null)
@@ -355,6 +539,142 @@ export interface UsersSelect<T extends boolean = true> {
         createdAt?: T;
         expiresAt?: T;
       };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "pages_select".
+ */
+export interface PagesSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  status?: T;
+  blocks?:
+    | T
+    | {
+        hero?:
+          | T
+          | {
+              eyebrow?: T;
+              icon?: T;
+              title?: T;
+              subtitle?: T;
+              ctas?:
+                | T
+                | {
+                    label?: T;
+                    url?: T;
+                    variant?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        richText?:
+          | T
+          | {
+              content?: T;
+              width?: T;
+              alignment?: T;
+              id?: T;
+              blockName?: T;
+            };
+        featureGrid?:
+          | T
+          | {
+              eyebrow?: T;
+              title?: T;
+              description?: T;
+              columns?: T;
+              features?:
+                | T
+                | {
+                    icon?: T;
+                    title?: T;
+                    description?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        ctaBanner?:
+          | T
+          | {
+              title?: T;
+              description?: T;
+              buttonLabel?: T;
+              buttonUrl?: T;
+              style?: T;
+              id?: T;
+              blockName?: T;
+            };
+        testimonials?:
+          | T
+          | {
+              eyebrow?: T;
+              title?: T;
+              items?:
+                | T
+                | {
+                    quote?: T;
+                    author?: T;
+                    role?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        productCarousel?:
+          | T
+          | {
+              eyebrow?: T;
+              title?: T;
+              description?: T;
+              productSlugs?: T;
+              id?: T;
+              blockName?: T;
+            };
+        faq?:
+          | T
+          | {
+              eyebrow?: T;
+              title?: T;
+              items?:
+                | T
+                | {
+                    question?: T;
+                    answer?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        imageText?:
+          | T
+          | {
+              eyebrow?: T;
+              title?: T;
+              description?: T;
+              imageUrl?: T;
+              imageSide?: T;
+              imageAlt?: T;
+              cta?:
+                | T
+                | {
+                    label?: T;
+                    url?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+      };
+  seo?:
+    | T
+    | {
+        metaTitle?: T;
+        metaDescription?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -456,6 +776,90 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
   batch?: T;
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * Configura los enlaces de la barra de navegación. Arrastra para reordenar.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "main-menu".
+ */
+export interface MainMenu {
+  id: number;
+  /**
+   * Cada item es un enlace en la barra. Si eliges "Submenú" se convierte en un desplegable.
+   */
+  items?:
+    | {
+        label: string;
+        kind: 'link' | 'dropdown';
+        /**
+         * Ej. /precios, /contacto, /landings/black-friday o https://blog.motorflash.com
+         */
+        url?: string | null;
+        newTab?: boolean | null;
+        /**
+         * Aparecen al desplegar el submenú. Mínimo 1.
+         */
+        children?:
+          | {
+              label: string;
+              url: string;
+              /**
+               * Opcional. Ej. hub, dynamic_feed. Lista en fonts.google.com/icons
+               */
+              icon?: string | null;
+              /**
+               * Opcional. Aparece debajo del enlace en el menú desplegable.
+               */
+              description?: string | null;
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * El botón naranja a la derecha del menú. Déjalo vacío si no quieres botón.
+   */
+  cta?: {
+    label?: string | null;
+    url?: string | null;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "main-menu_select".
+ */
+export interface MainMenuSelect<T extends boolean = true> {
+  items?:
+    | T
+    | {
+        label?: T;
+        kind?: T;
+        url?: T;
+        newTab?: T;
+        children?:
+          | T
+          | {
+              label?: T;
+              url?: T;
+              icon?: T;
+              description?: T;
+              id?: T;
+            };
+        id?: T;
+      };
+  cta?:
+    | T
+    | {
+        label?: T;
+        url?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

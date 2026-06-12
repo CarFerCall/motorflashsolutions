@@ -145,6 +145,48 @@ try {
       console.warn(`[sync-schema] ✗ ${plan.productName}:`, err?.message || err)
     }
   }
+
+  // -------------------------------------------------------------------
+  // Seed del menú principal si está vacío
+  // -------------------------------------------------------------------
+  try {
+    const menu = await payload.findGlobal({ slug: 'main-menu' })
+    if (!menu?.items || menu.items.length === 0) {
+      console.log('[sync-schema] sin menú — creando seed inicial...')
+      await payload.updateGlobal({
+        slug: 'main-menu',
+        data: {
+          items: [
+            { label: 'Inicio', kind: 'link', url: '/' },
+            {
+              label: 'Servicios',
+              kind: 'dropdown',
+              children: [
+                { label: 'Dealer / Stock', url: '/servicios/dealer', icon: 'inventory_2' },
+                { label: 'Multipublicador', url: '/servicios/exportaciones', icon: 'dynamic_feed' },
+                { label: 'CRM4YOU', url: '/servicios/crm4you', icon: 'hub' },
+                { label: 'Contact Center', url: '/servicios/contact-center', icon: 'support_agent' },
+                { label: 'Photocall IA', url: '/servicios/spyne', icon: 'photo_camera' },
+                { label: 'WhatsApp Business', url: '/servicios/motorflash-message', icon: 'chat' },
+                { label: 'Motorflash IA', url: '/servicios/ia', icon: 'psychology' },
+                { label: 'Lead Exclusive', url: '/servicios/lead-factory', icon: 'star' },
+                { label: 'Ver catálogo completo', url: '/servicios', icon: 'arrow_forward' },
+              ],
+            },
+            { label: 'Precios', kind: 'link', url: '/precios' },
+            { label: 'Casos de éxito', kind: 'link', url: '/historias-de-exito' },
+            { label: 'Compañía', kind: 'link', url: '/compania' },
+          ],
+          cta: { label: 'Contacto', url: '/contacto' },
+        },
+      })
+      console.log('[sync-schema] + menú principal creado')
+    } else {
+      console.log(`[sync-schema] = menú principal ya tiene ${menu.items.length} items, sin tocar`)
+    }
+  } catch (err) {
+    console.warn('[sync-schema] ✗ seed menú:', err?.message || err)
+  }
 } catch (err) {
   console.error('[sync-schema] schema check failed:', err?.message || err)
   // No fallamos el build: dejamos que el deploy salga y el problema se
