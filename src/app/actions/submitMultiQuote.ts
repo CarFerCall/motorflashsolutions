@@ -24,8 +24,12 @@ function escapeHtml(s: string): string {
   return s.replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c] as string))
 }
 
-const fmt = (cents: number) =>
-  `${(cents / 100).toLocaleString('es-ES', { minimumFractionDigits: 0, maximumFractionDigits: 0 })} €`
+const fmt = (cents: number) => {
+  const euros = cents / 100
+  const hasDecimals = Math.abs(euros - Math.round(euros)) > 0.001
+  const decimals = hasDecimals ? 2 : 0
+  return `${euros.toLocaleString('es-ES', { minimumFractionDigits: decimals, maximumFractionDigits: 2 })} €`
+}
 
 export async function submitMultiQuote(input: MultiQuoteInput): Promise<MultiQuoteResult> {
   if (!input.privacy) return { ok: false, error: 'Debes aceptar la política de privacidad para continuar.' }

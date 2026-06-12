@@ -19,8 +19,15 @@ interface Props {
   products: ConfiguratorProduct[]
 }
 
-const fmt = (cents: number) =>
-  `${(cents / 100).toLocaleString('es-ES', { minimumFractionDigits: 0, maximumFractionDigits: 0 })} €`
+// Muestra precio sin decimales si es redondo (199 €) y con 2 decimales si
+// no lo es (0,25 €). Antes formateaba todo sin decimales, así que un
+// precio sub-euro salía como "0 €" y parecía que no se pintaba.
+const fmt = (cents: number) => {
+  const euros = cents / 100
+  const hasDecimals = Math.abs(euros - Math.round(euros)) > 0.001
+  const decimals = hasDecimals ? 2 : 0
+  return `${euros.toLocaleString('es-ES', { minimumFractionDigits: decimals, maximumFractionDigits: 2 })} €`
+}
 
 export function PricingConfigurator({ products }: Props) {
   const [selected, setSelected] = useState<Set<string>>(new Set())
