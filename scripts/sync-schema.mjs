@@ -16,6 +16,13 @@ if (!hasPostgres) {
   process.exit(0)
 }
 
+// El push del adapter postgres solo dispara si NODE_ENV !== 'production'.
+// Durante `vercel-build` viene como 'production', así que lo bajamos a
+// 'development' SOLO para este script. La lambda en runtime sigue siendo
+// production (esto es un proceso aparte que termina con process.exit(0)).
+process.env.NODE_ENV = 'development'
+console.log('[sync-schema] NODE_ENV temporalmente forzado a development para habilitar push')
+
 const { getPayload } = await import('payload')
 const { default: config } = await import('../src/payload.config.ts')
 
