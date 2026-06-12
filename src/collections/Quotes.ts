@@ -84,7 +84,7 @@ export const Quotes: CollectionConfig = {
           name: 'totalCents',
           type: 'number',
           required: true,
-          label: 'Total',
+          label: 'Total (€)',
           admin: {
             width: '33%',
             components: {

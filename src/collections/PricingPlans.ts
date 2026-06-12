@@ -80,11 +80,11 @@ export const PricingPlans: CollectionConfig = {
           name: 'basePriceCents',
           type: 'number',
           required: true,
-          label: 'Precio base',
+          label: 'Precio base (€)',
           defaultValue: 0,
           admin: {
             width: '33%',
-            description: 'En céntimos. Verás el preview en € a la derecha.',
+            description: 'Escríbelo directamente en euros (p. ej. 199 o 199,50).',
             components: {
               Field: '/admin/components/PriceInput#default',
               Cell: '/admin/components/PriceCell#default',
@@ -178,11 +178,11 @@ export const PricingPlans: CollectionConfig = {
               type: 'number',
               required: true,
               defaultValue: 0,
-              label: 'Precio unitario',
+              label: 'Precio unitario (€)',
               admin: {
                 width: '33%',
                 description:
-                  'Numérico → precio por unidad (× cantidad). Casilla → precio cuando está marcada. Desplegable → déjalo en 0; el precio va dentro de cada opción.',
+                  'Escríbelo en euros. Numérico → precio por unidad. Casilla → precio cuando está marcada. Desplegable → déjalo en 0; el precio va dentro de cada opción.',
                 components: {
                   Field: '/admin/components/PriceInput#default',
                   Cell: '/admin/components/PriceCell#default',
@@ -259,9 +259,10 @@ export const PricingPlans: CollectionConfig = {
                       type: 'number',
                       required: true,
                       defaultValue: 0,
-                      label: 'Precio',
+                      label: 'Precio (€)',
                       admin: {
                         width: '25%',
+                        description: 'En euros.',
                         components: { Field: '/admin/components/PriceInput#default' },
                       },
                     },

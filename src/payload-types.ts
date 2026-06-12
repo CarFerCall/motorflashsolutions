@@ -174,7 +174,7 @@ export interface PricingPlan {
    */
   introText?: string | null;
   /**
-   * En céntimos. Verás el preview en € a la derecha.
+   * Escríbelo directamente en euros (p. ej. 199 o 199,50).
    */
   basePriceCents: number;
   currency: 'EUR' | 'USD';
@@ -193,7 +193,7 @@ export interface PricingPlan {
         helpText?: string | null;
         type: 'number' | 'select' | 'checkbox';
         /**
-         * Numérico → precio por unidad (× cantidad). Casilla → precio cuando está marcada. Desplegable → déjalo en 0; el precio va dentro de cada opción.
+         * Escríbelo en euros. Numérico → precio por unidad. Casilla → precio cuando está marcada. Desplegable → déjalo en 0; el precio va dentro de cada opción.
          */
         unitPriceCents?: number | null;
         required?: boolean | null;
@@ -208,6 +208,9 @@ export interface PricingPlan {
           | {
               value: string;
               label: string;
+              /**
+               * En euros.
+               */
               priceCents: number;
               isDefault?: boolean | null;
               id?: string | null;
