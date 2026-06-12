@@ -1,7 +1,7 @@
 'use client'
 
 import { useLivePreview } from '@payloadcms/live-preview-react'
-import { BlockRenderer } from './blocks/BlockRenderer'
+import { PuckRender } from './PuckRender'
 
 interface Props {
   initialData: any
@@ -9,10 +9,8 @@ interface Props {
 }
 
 /**
- * Cuando la página se carga dentro del iframe de Payload Live Preview,
- * este wrapper escucha los `postMessage` que llegan desde el admin con
- * los datos sin guardar y re-renderiza los bloques en vivo. Permite que
- * arrastres, edites campos y veas el resultado al instante sin guardar.
+ * Wrapper para el modo Live Preview. Escucha postMessage del admin y
+ * re-renderiza al instante el JSON de Puck con cambios sin guardar.
  */
 export function PageLivePreview({ initialData, serverURL }: Props) {
   const { data } = useLivePreview<any>({
@@ -20,6 +18,5 @@ export function PageLivePreview({ initialData, serverURL }: Props) {
     serverURL,
     depth: 1,
   })
-  const blocks = (data?.blocks ?? []) as Array<{ blockType: string; [k: string]: any }>
-  return <BlockRenderer blocks={blocks} />
+  return <PuckRender data={data?.puckData} />
 }

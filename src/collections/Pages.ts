@@ -1,17 +1,18 @@
 import type { CollectionConfig } from 'payload'
-import { ALL_BLOCKS } from '../blocks'
 
 /**
- * Páginas creadas desde el admin con el page builder. Cada página tiene
- * un slug único (la URL pública será /<slug>) y un array de bloques que
- * se renderiza en orden. Los bloques se reordenan arrastrándolos.
+ * Páginas creadas desde el admin con el editor visual Puck.
+ * URL pública: /<slug>. La estructura entera de la página se persiste
+ * en el campo `puckData` (JSON Puck) y el editor visual se renderiza
+ * en su lugar mediante un componente custom (admin/components/PuckField).
  */
 export const Pages: CollectionConfig = {
   slug: 'pages',
   labels: { singular: 'Página', plural: 'Páginas' },
   admin: {
     useAsTitle: 'title',
-    description: 'Crea landings y otras páginas con bloques arrastrables. Pulsa "Live Preview" arriba a la derecha para verlo en directo mientras editas. URL pública: /<slug>.',
+    description:
+      'Crea landings con el editor visual: arrastra componentes desde la paleta de la izquierda, configúralos en el panel de la derecha. URL pública: /<slug>.',
     defaultColumns: ['title', 'slug', 'status', 'updatedAt'],
     listSearchableFields: ['title', 'slug'],
     group: 'Contenido',
@@ -34,7 +35,6 @@ export const Pages: CollectionConfig = {
   },
   access: {
     read: ({ req }) => {
-      // El público solo ve páginas publicadas. Logueados ven todo.
       if (req.user) return true
       return { status: { equals: 'published' } }
     },
@@ -72,14 +72,14 @@ export const Pages: CollectionConfig = {
       ],
     },
     {
-      name: 'blocks',
-      type: 'blocks',
-      label: 'Bloques de la página',
-      labels: { singular: 'Bloque', plural: 'Bloques' },
+      name: 'puckData',
+      type: 'json',
+      label: 'Estructura de la página (editor visual)',
       admin: {
-        description: 'Arrastra para reordenar. Cada bloque se renderiza uno tras otro en la página pública.',
+        components: {
+          Field: '/admin/components/PuckField#default',
+        },
       },
-      blocks: ALL_BLOCKS,
     },
     {
       name: 'seo',

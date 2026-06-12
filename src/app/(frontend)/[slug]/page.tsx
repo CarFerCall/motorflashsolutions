@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation'
 import { getPayloadClient } from '@/lib/payload'
-import { BlockRenderer } from '@/components/blocks/BlockRenderer'
+import { PuckRender } from '@/components/PuckRender'
 import { PageLivePreview } from '@/components/PageLivePreview'
 
 export const dynamic = 'force-dynamic'
@@ -53,7 +53,6 @@ export default async function DynamicPage({ params, searchParams }: RouteParams)
   const sp = await searchParams
   const isLivePreview = sp.livePreview === 'true'
 
-  // En live preview cargamos también borradores (el admin está editando).
   const page = await findPage(slug, { includeDrafts: isLivePreview })
   if (!page) notFound()
 
@@ -65,6 +64,5 @@ export default async function DynamicPage({ params, searchParams }: RouteParams)
     return <PageLivePreview initialData={page} serverURL={serverURL} />
   }
 
-  const blocks = ((page as any).blocks ?? []) as Array<{ blockType: string; [k: string]: any }>
-  return <BlockRenderer blocks={blocks} />
+  return <PuckRender data={(page as any).puckData} />
 }
