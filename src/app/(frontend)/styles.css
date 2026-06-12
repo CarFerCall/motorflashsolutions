@@ -38,11 +38,18 @@
   .btn-secondary {
     @apply inline-flex items-center justify-center gap-2 bg-white text-on-surface px-8 py-4 rounded-full text-sm font-semibold border border-outline-variant transition-all hover:bg-surface-container;
   }
+  /*
+   * Etiqueta tipo "eyebrow" con icono opcional. Antes era una pill naranja
+   * (fondo + borde + padding) tipo badge; ahora es texto plano en mayúsculas
+   * con kerning, alineado al estilo editorial del resto del sitio. Mantiene
+   * inline-flex para que sigan funcionando los usos que añaden un icono.
+   */
   .mf-chip {
-    @apply inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold uppercase tracking-widest;
-    background: rgba(255, 128, 0, 0.10);
-    border: 1px solid rgba(255, 128, 0, 0.20);
-    color: var(--primary);
+    @apply inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-primary;
+    letter-spacing: 0.2em;
+  }
+  .mf-chip > .material-symbols-outlined {
+    font-size: 16px;
   }
   .mf-eyebrow {
     @apply block text-sm font-semibold uppercase mb-4 text-primary;
