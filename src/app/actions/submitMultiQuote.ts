@@ -1,11 +1,11 @@
 'use server'
 
 import { getPayloadClient } from '@/lib/payload'
-import { computeLineCents, volumeDiscountRate } from '@/lib/multiQuotePricing'
+import { computeProductLine, type SelectionMap } from '@/lib/multiQuotePricing'
+import { normalizeItem, type RawPricingItem } from '@/lib/pricing'
 
 interface MultiQuoteInput {
-  selectedSlugs: string[]
-  licences: number
+  selections: SelectionMap
   contactName: string
   email: string
   companyName: string | null
@@ -31,80 +31,81 @@ export async function submitMultiQuote(input: MultiQuoteInput): Promise<MultiQuo
   if (!input.privacy) return { ok: false, error: 'Debes aceptar la política de privacidad para continuar.' }
   if (!input.contactName.trim()) return { ok: false, error: 'El nombre es obligatorio.' }
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(input.email)) return { ok: false, error: 'Email no válido.' }
-  if (!input.selectedSlugs.length) return { ok: false, error: 'Selecciona al menos un producto.' }
 
-  const licences = Math.max(1, Math.min(100, Math.round(input.licences || 1)))
+  const selectedSlugs = Object.keys(input.selections)
+  if (!selectedSlugs.length) return { ok: false, error: 'Selecciona al menos un producto.' }
 
   const payload = await getPayloadClient()
   const { docs: plans } = await payload.find({
     collection: 'pricing-plans',
     where: {
-      productSlug: { in: input.selectedSlugs },
+      productSlug: { in: selectedSlugs },
       enabled: { equals: true },
     },
     limit: 100,
   })
 
-  const lines = plans
-    .filter((p) => p.basePriceCents > 0)
-    .map((p) => ({
-      productSlug: p.productSlug,
-      productName: p.productName,
-      unitPriceCents: p.basePriceCents,
-      totalCents: computeLineCents(p.basePriceCents, licences),
-    }))
+  // Recalcula totales en servidor por cada producto a partir de los items
+  // del plan y la selección del cliente.
+  const lines = plans.map((plan) => {
+    const items = (plan.items ?? []).map((raw) => normalizeItem(raw as RawPricingItem))
+    const breakdown = computeProductLine(plan.basePriceCents, items, input.selections[plan.productSlug])
+    return {
+      productSlug: plan.productSlug,
+      productName: plan.productName,
+      breakdown,
+    }
+  })
 
-  if (!lines.length) return { ok: false, error: 'Ninguno de los productos seleccionados tiene precio configurado.' }
+  if (!lines.length) return { ok: false, error: 'Ninguno de los productos seleccionados tiene plan activo.' }
 
-  const subtotalCents = lines.reduce((acc, l) => acc + l.totalCents, 0)
-  const discountCents = Math.round(subtotalCents * volumeDiscountRate(licences))
-  const totalCents = subtotalCents - discountCents
+  const totalCents = lines.reduce((acc, l) => acc + l.breakdown.totalCents, 0)
+  const productList = lines.map((l) => l.productName).join(', ')
 
   const linesHtml = lines
-    .map(
-      (l) => `
-      <tr>
-        <td style="padding:8px 0;border-bottom:1px solid #f0f0f0">
-          <strong>${escapeHtml(l.productName)}</strong>
-          <div style="color:#666;font-size:12px">${licences} ${licences === 1 ? 'licencia' : 'licencias'} · base ${fmt(l.unitPriceCents)}/mes</div>
-        </td>
-        <td style="padding:8px 0;border-bottom:1px solid #f0f0f0;text-align:right;font-weight:600">${fmt(l.totalCents)}</td>
-      </tr>`,
-    )
+    .map((l) => {
+      const itemsRows = l.breakdown.itemsDetail
+        .map(
+          (d) => `<tr><td style="padding:4px 0 4px 16px;color:#666;font-size:13px">+ ${escapeHtml(d.label)} <em style="opacity:.7;font-style:normal">(${escapeHtml(d.valueLabel)})</em></td><td style="padding:4px 0;text-align:right;color:#666;font-size:13px">${fmt(d.cents)}</td></tr>`,
+        )
+        .join('')
+      return `
+      <tr style="border-bottom:1px solid #e2e2e2"><td style="padding:12px 0 4px"><strong>${escapeHtml(l.productName)}</strong></td><td style="padding:12px 0 4px;text-align:right;font-weight:700">${fmt(l.breakdown.totalCents)}</td></tr>
+      <tr><td style="padding:0 0 4px 16px;color:#666;font-size:13px">Cuota base</td><td style="padding:0 0 4px;text-align:right;color:#666;font-size:13px">${fmt(l.breakdown.baseCents)}</td></tr>
+      ${itemsRows}`
+    })
     .join('')
 
-  const productList = lines.map((l) => l.productName).join(', ')
   const commercialEmail = process.env.COMMERCIAL_EMAIL || 'comercial@motorflash.com'
 
   const internalHtml = `<!DOCTYPE html><html><body style="font-family:system-ui,-apple-system,sans-serif;color:#1a1c1c;background:#f8f9fa;padding:32px">
-<div style="max-width:640px;margin:0 auto;background:#fff;border-radius:12px;padding:32px;border:1px solid #e2e2e2">
+<div style="max-width:680px;margin:0 auto;background:#fff;border-radius:12px;padding:32px;border:1px solid #e2e2e2">
   <p style="color:#ff8000;margin:0 0 4px;font-weight:700;font-size:14px;text-transform:uppercase;letter-spacing:.08em">Nueva cotización · Configurador multi-producto</p>
   <h1 style="font-size:20px;margin:0 0 24px">${escapeHtml(input.contactName)} pide presupuesto</h1>
   <p style="margin:8px 0"><strong>Email:</strong> <a href="mailto:${escapeHtml(input.email)}">${escapeHtml(input.email)}</a></p>
   ${input.phone ? `<p style="margin:8px 0"><strong>Teléfono:</strong> ${escapeHtml(input.phone)}</p>` : ''}
   ${input.companyName ? `<p style="margin:8px 0"><strong>Empresa:</strong> ${escapeHtml(input.companyName)}</p>` : ''}
-  <p style="margin:8px 0"><strong>Licencias:</strong> ${licences}</p>
+
   <table style="width:100%;border-collapse:collapse;margin:24px 0 8px">
-    <thead><tr><th style="text-align:left;font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:#666;padding-bottom:8px;border-bottom:2px solid #e2e2e2">Producto</th><th style="text-align:right;font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:#666;padding-bottom:8px;border-bottom:2px solid #e2e2e2">Importe/mes</th></tr></thead>
+    <thead><tr><th style="text-align:left;font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:#666;padding-bottom:8px;border-bottom:2px solid #e2e2e2">Producto / item</th><th style="text-align:right;font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:#666;padding-bottom:8px;border-bottom:2px solid #e2e2e2">Importe/mes</th></tr></thead>
     <tbody>${linesHtml}</tbody>
     <tfoot>
-      <tr><td style="padding:8px 0">Subtotal</td><td style="padding:8px 0;text-align:right">${fmt(subtotalCents)}</td></tr>
-      ${discountCents > 0 ? `<tr><td style="padding:8px 0;color:#ff8000">Descuento por volumen</td><td style="padding:8px 0;text-align:right;color:#ff8000">-${fmt(discountCents)}</td></tr>` : ''}
-      <tr><td style="padding:12px 0 0;border-top:2px solid #e2e2e2;font-weight:700">Total mensual</td><td style="padding:12px 0 0;border-top:2px solid #e2e2e2;text-align:right;font-size:20px;font-weight:700;color:#ff8000">${fmt(totalCents)}</td></tr>
+      <tr><td style="padding:16px 0 0;border-top:2px solid #e2e2e2;font-weight:700;font-size:16px">Total mensual</td><td style="padding:16px 0 0;border-top:2px solid #e2e2e2;text-align:right;font-size:22px;font-weight:700;color:#ff8000">${fmt(totalCents)}</td></tr>
     </tfoot>
   </table>
+
   ${input.message ? `<p style="margin:24px 0 0;padding-top:16px;border-top:1px solid #e2e2e2;white-space:pre-wrap"><strong>Mensaje:</strong><br>${escapeHtml(input.message)}</p>` : ''}
 </div></body></html>`
 
   const confirmHtml = `<!DOCTYPE html><html><body style="font-family:system-ui,-apple-system,sans-serif;color:#1a1c1c;background:#f8f9fa;padding:32px">
 <div style="max-width:640px;margin:0 auto;background:#fff;border-radius:12px;padding:32px;border:1px solid #e2e2e2">
   <h1 style="font-size:24px;margin:0 0 12px">Hola ${escapeHtml(input.contactName)},</h1>
-  <p style="color:#454747;font-size:15px;line-height:1.5">Hemos recibido tu solicitud de presupuesto para <strong>${escapeHtml(productList)}</strong> con ${licences} ${licences === 1 ? 'licencia' : 'licencias'}. Nuestro equipo comercial te contactará en menos de 24 horas con la propuesta cerrada.</p>
+  <p style="color:#454747;font-size:15px;line-height:1.5">Hemos recibido tu solicitud de presupuesto para <strong>${escapeHtml(productList)}</strong>. Nuestro equipo comercial te contactará en menos de 24 horas con la propuesta cerrada.</p>
   <div style="background:#fff5e6;border-left:4px solid #ff8000;padding:16px;border-radius:8px;margin:24px 0">
     <p style="margin:0 0 4px;color:#666;font-size:12px;text-transform:uppercase;letter-spacing:.08em;font-weight:700">Estimación inicial</p>
     <p style="margin:0;font-size:28px;font-weight:700;color:#ff8000">${fmt(totalCents)}<span style="font-size:14px;color:#666;font-weight:400"> /mes + IVA</span></p>
   </div>
-  <p style="color:#454747;font-size:13px;margin-top:16px">Este importe es una estimación basada en los productos y el número de licencias seleccionados. La oferta final puede ajustarse según las particularidades de tu concesionario, integraciones específicas o descuentos adicionales por volumen.</p>
+  <p style="color:#454747;font-size:13px;margin-top:16px">Estimación basada en los productos y opciones que has configurado. La oferta final puede ajustarse según las particularidades de tu concesionario, integraciones específicas o descuentos por volumen.</p>
   <p style="margin-top:24px">Si necesitas hablar antes con nosotros, llámanos al <a href="tel:+34910788575" style="color:#ff8000;text-decoration:none;font-weight:600">+34 910 788 575</a>.</p>
   <p style="color:#454747;font-size:12px;margin-top:32px;padding-top:16px;border-top:1px solid #e2e2e2">Motorflash Ibérica de Negocios S.L. — Calle Basauri 17, Edf. B, 28023 Madrid</p>
 </div></body></html>`
@@ -121,7 +122,7 @@ export async function submitMultiQuote(input: MultiQuoteInput): Promise<MultiQuo
         companyName: input.companyName?.trim() || undefined,
         phone: input.phone?.trim() || undefined,
         message: input.message?.trim() || undefined,
-        selectedItems: { licences, lines, subtotalCents, discountCents } as any,
+        selectedItems: { selections: input.selections, lines } as any,
         totalCents,
         currency: 'EUR',
         billingCycle: 'month',

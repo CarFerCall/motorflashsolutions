@@ -3,6 +3,7 @@ import { orderedProducts } from '@/catalog/products'
 import { getPayloadClient } from '@/lib/payload'
 import { Reveal } from '@/components/Reveal'
 import { PricingConfigurator, type ConfiguratorProduct } from '@/components/PricingConfigurator'
+import { normalizeItem, type RawPricingItem } from '@/lib/pricing'
 
 export const dynamic = 'force-dynamic'
 export const metadata = {
@@ -24,24 +25,28 @@ export default async function PreciosPage() {
   // Productos que entran al configurador: los que tienen plan habilitado
   // con precio base > 0. Los demás se ofrecen abajo como "Cotización
   // personalizada".
+  // Productos que entran al configurador: los que tienen plan habilitado
+  // (con precio base > 0 O con items configurables). Los demás se ofrecen
+  // abajo como "Cotización a medida".
   const configurable: ConfiguratorProduct[] = products
     .map((p) => {
       const plan = planBySlug.get(p.slug)
-      if (!plan || plan.basePriceCents <= 0) return null
+      if (!plan) return null
+      const items = (plan.items ?? []).map((raw) => normalizeItem(raw as RawPricingItem))
+      if (plan.basePriceCents <= 0 && items.length === 0) return null
       return {
         slug: p.slug,
         name: p.name,
         tagline: p.tagline,
         icon: p.icon,
         basePriceCents: plan.basePriceCents,
+        items,
       }
     })
     .filter(Boolean) as ConfiguratorProduct[]
 
-  const onDemand = products.filter((p) => {
-    const plan = planBySlug.get(p.slug)
-    return !plan || plan.basePriceCents <= 0
-  })
+  const configurableSlugs = new Set(configurable.map((c) => c.slug))
+  const onDemand = products.filter((p) => !configurableSlugs.has(p.slug))
 
   return (
     <>

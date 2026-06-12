@@ -1,22 +1,84 @@
 /**
- * Cálculo del precio del configurador multi-producto en /precios.
+ * Cálculo del configurador multi-producto en /precios.
  *
- * Misma fórmula la usan el cliente (para el resumen en vivo) y el server
- * action (para recalcular y no fiarse del cliente al enviar la cotización).
+ * La misma fórmula se aplica en el cliente (resumen en vivo) y en el
+ * server action (recálculo para no fiarnos del cliente al enviar la
+ * cotización).
  *
- * Reglas:
- *  - Cada licencia adicional añade el 40% del precio base por producto.
- *  - Descuento por volumen sobre el subtotal: 10+ → 5%, 20+ → 10%, 40+ → 15%.
+ * Por cada producto seleccionado se suma:
+ *  - basePriceCents (cuota fija mensual).
+ *  - Items configurables: number (qty × unitPrice), select (precio
+ *    de la opción), checkbox (unitPrice si está marcado).
  */
+import type { NormalizedItem } from './pricing'
 
-export function computeLineCents(baseCents: number, licences: number): number {
-  const extra = Math.max(0, licences - 1)
-  return Math.round(baseCents + extra * baseCents * 0.4)
+export type SelectionMap = Record<string, Record<string, string>>
+
+export interface ProductLineBreakdown {
+  baseCents: number
+  itemsCents: number
+  itemsDetail: Array<{ label: string; valueLabel: string; cents: number }>
+  totalCents: number
 }
 
-export function volumeDiscountRate(licences: number): number {
-  if (licences >= 40) return 0.15
-  if (licences >= 20) return 0.1
-  if (licences >= 10) return 0.05
-  return 0
+export function computeProductLine(
+  basePriceCents: number,
+  items: NormalizedItem[],
+  selections: Record<string, string> | undefined,
+): ProductLineBreakdown {
+  let itemsCents = 0
+  const itemsDetail: ProductLineBreakdown['itemsDetail'] = []
+  const sel = selections ?? {}
+
+  for (const item of items) {
+    const raw = sel[item.itemKey]
+    if (item.type === 'number') {
+      const qty = clamp(Number(raw ?? item.default) || 0, item.min, item.max)
+      if (qty > 0 && item.unitPriceCents > 0) {
+        const cents = qty * item.unitPriceCents
+        itemsCents += cents
+        const unitSuffix = item.unit ? ` × ${item.unit}${qty === 1 ? '' : 's'}` : ''
+        itemsDetail.push({ label: item.label, valueLabel: `${qty}${unitSuffix}`, cents })
+      }
+    } else if (item.type === 'select') {
+      const fallback = item.options.find((o) => o.isDefault) ?? item.options[0]
+      const opt = item.options.find((o) => o.value === raw) ?? fallback
+      if (opt && opt.priceCents > 0) {
+        itemsCents += opt.priceCents
+        itemsDetail.push({ label: item.label, valueLabel: opt.label, cents: opt.priceCents })
+      }
+    } else {
+      const isChecked = raw == null ? item.defaultChecked : raw === '1' || raw === 'true' || raw === 'on'
+      if (isChecked && item.unitPriceCents > 0) {
+        itemsCents += item.unitPriceCents
+        itemsDetail.push({ label: item.label, valueLabel: '✓', cents: item.unitPriceCents })
+      }
+    }
+  }
+
+  return {
+    baseCents: basePriceCents,
+    itemsCents,
+    itemsDetail,
+    totalCents: basePriceCents + itemsCents,
+  }
+}
+
+export function buildDefaultSelections(items: NormalizedItem[]): Record<string, string> {
+  const out: Record<string, string> = {}
+  for (const item of items) {
+    if (item.type === 'number') {
+      out[item.itemKey] = String(item.default)
+    } else if (item.type === 'select') {
+      const def = item.options.find((o) => o.isDefault) ?? item.options[0]
+      if (def) out[item.itemKey] = def.value
+    } else {
+      out[item.itemKey] = item.defaultChecked ? '1' : '0'
+    }
+  }
+  return out
+}
+
+function clamp(n: number, min: number, max: number): number {
+  return Math.max(min, Math.min(max, Math.trunc(n)))
 }
