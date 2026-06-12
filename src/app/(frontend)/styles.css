@@ -102,4 +102,30 @@
     50% { transform: translateY(-10px); }
   }
   .float-animation { animation: mf-float 6s ease-in-out infinite; }
+
+  /* Slider personalizado para el configurador de precios */
+  .mf-range { -webkit-appearance: none; appearance: none; background: transparent; height: 20px; cursor: pointer; }
+  .mf-range::-webkit-slider-runnable-track {
+    height: 6px; background: #e5e7eb; border-radius: 3px;
+  }
+  .mf-range::-webkit-slider-thumb {
+    -webkit-appearance: none; appearance: none;
+    height: 22px; width: 22px; margin-top: -8px;
+    border-radius: 50%; background: #ffffff;
+    border: 2px solid var(--primary);
+    box-shadow: 0 4px 12px rgba(255, 128, 0, 0.25);
+    cursor: pointer;
+  }
+  .mf-range::-moz-range-track {
+    height: 6px; background: #e5e7eb; border-radius: 3px; border: none;
+  }
+  .mf-range::-moz-range-thumb {
+    height: 22px; width: 22px;
+    border-radius: 50%; background: #ffffff;
+    border: 2px solid var(--primary);
+    box-shadow: 0 4px 12px rgba(255, 128, 0, 0.25);
+    cursor: pointer;
+  }
+  .mf-range:focus { outline: none; }
+  .mf-range:focus::-webkit-slider-thumb { box-shadow: 0 0 0 4px rgba(255, 128, 0, 0.2); }
 }
