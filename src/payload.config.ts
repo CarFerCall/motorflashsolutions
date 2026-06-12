@@ -22,22 +22,21 @@ const dirname = path.dirname(filename)
  *
  * Si la URL empieza por `postgres://` → adaptador Postgres. Si no → SQLite.
  */
-const databaseUri =
-  process.env.DATABASE_URI ||
-  process.env.POSTGRES_URL ||
-  process.env.DATABASE_URL ||
-  process.env.PRISMA_DATABASE_URL ||
-  'file:./motorflash.db'
+// En Vercel priorizamos las vars Postgres reales y ignoramos cualquier
+// DATABASE_URI heredada del .env local (que apuntaría a SQLite). En local
+// hacemos lo contrario: DATABASE_URI manda para que el desarrollador
+// pueda forzar la base que quiera sin pisar nada.
+const databaseUri = process.env.VERCEL_ENV
+  ? process.env.POSTGRES_URL ||
+    process.env.DATABASE_URL ||
+    process.env.PRISMA_DATABASE_URL ||
+    process.env.DATABASE_URI ||
+    'file:./motorflash.db'
+  : process.env.DATABASE_URI ||
+    process.env.POSTGRES_URL ||
+    process.env.DATABASE_URL ||
+    'file:./motorflash.db'
 const usesPostgres = /^postgres(ql)?:\/\//.test(databaseUri)
-
-// Diagnóstico: en Vercel logueamos qué resolvimos sin filtrar credenciales.
-if (process.env.VERCEL_ENV) {
-  const dbKeys = Object.keys(process.env).filter((k) => /DATABASE|POSTGRES|PRISMA/.test(k))
-  // eslint-disable-next-line no-console
-  console.log(
-    `[motorflash] db resolved: usesPostgres=${usesPostgres} scheme=${databaseUri.match(/^[a-z+]+/i)?.[0] ?? 'none'} len=${databaseUri.length} envKeys=${dbKeys.join(',') || 'NONE'}`,
-  )
-}
 
 export default buildConfig({
   admin: {

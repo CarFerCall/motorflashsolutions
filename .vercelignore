@@ -1,0 +1,20 @@
+# Nunca subimos el .env local al builder de Vercel: las env vars
+# de producción se configuran en el dashboard. Si se cuelan, pisan
+# las variables reales (sucedió con DATABASE_URI=file:./motorflash.db
+# apuntando a SQLite en prod).
+.env
+.env.local
+.env.development
+.env.development.local
+.env.production
+.env.production.local
+.env.vercel*
+
+# BBDD local
+motorflash.db*
+*.db
+*.db-shm
+*.db-wal
+
+# Carpeta de migraciones que solo se generan en dev
+src/migrations/
