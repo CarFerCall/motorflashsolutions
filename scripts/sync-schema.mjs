@@ -103,7 +103,7 @@ try {
     },
     {
       productSlug: 'motorflash-renting',
-      productName: 'MotorFlash Renting',
+      productName: 'MotorFlash Connect',
       basePriceCents: 49900,
       items: [
         { itemKey: 'contratos_mes', label: 'Vídeos generados al mes', helpText: 'Cantidad de vídeos personalizados que envías mensualmente.', type: 'number', unitPriceCents: 200, required: true, numberMin: 100, numberMax: 5000, numberDefault: 250, numberUnit: 'vídeo' },
@@ -124,9 +124,24 @@ try {
   for (const plan of seed) {
     const existingPlan = bySlug.get(plan.productSlug)
     if (existingPlan) {
+      // Si el nombre comercial en BD no coincide con el seed, lo
+      // sincronizamos sin tocar precio ni items. Sirve para rebrandings
+      // (p. ej. "MotorFlash Renting" → "MotorFlash Connect").
+      if (existingPlan.productName !== plan.productName) {
+        try {
+          await payload.update({
+            collection: 'pricing-plans',
+            id: existingPlan.id,
+            data: { productName: plan.productName },
+          })
+          console.log(`[sync-schema] ↻ ${existingPlan.productName} → ${plan.productName} (nombre actualizado)`)
+        } catch (err) {
+          console.warn(`[sync-schema] ✗ rename ${existingPlan.productName}:`, err?.message || err)
+        }
+      }
       // Si ya existe pero no tiene items, le inyectamos los items del
-      // seed sin tocar precio ni nada más (migración suave para deploys
-      // anteriores). Si ya tenía items, no lo tocamos.
+      // seed sin tocar precio ni nada más. Si ya tenía items, no lo
+      // tocamos para no pisar cambios manuales del admin.
       const hasItems = Array.isArray(existingPlan.items) && existingPlan.items.length > 0
       if (hasItems) {
         console.log(`[sync-schema] = ${plan.productName}: ya tiene items, sin tocar`)
