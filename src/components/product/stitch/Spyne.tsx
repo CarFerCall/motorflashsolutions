@@ -134,6 +134,54 @@ export function Spyne() {
         </div>
       </section>
 
+      {/* Vídeo 360° interactivo */}
+      <section className="py-24 bg-white">
+        <div className="mf-container">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+            <div className="lg:col-span-4">
+              <span className="text-primary text-xs font-bold uppercase tracking-widest">EJEMPLO REAL</span>
+              <h2 className="text-3xl md:text-headline-lg font-semibold mt-3 mb-4">
+                Pruébalo tú: gira el vehículo 360°
+              </h2>
+              <p className="text-on-surface-variant mb-6">
+                Lo mismo que verán tus compradores en la ficha. Pincha y arrastra para girarlo. Esta es una toma real procesada con Photocall IA, con plataforma giratoria generada y hotspots interactivos.
+              </p>
+              <ul className="space-y-3 mb-6">
+                {[
+                  { icon: 'rotate_360', t: 'Vista completa desde cualquier ángulo' },
+                  { icon: 'touch_app', t: 'Hotspots con detalles del coche' },
+                  { icon: 'smartphone', t: 'Funciona igual en móvil y desktop' },
+                ].map((b) => (
+                  <li key={b.t} className="flex items-center gap-3 text-sm">
+                    <span className="material-symbols-outlined text-primary" style={{ fontSize: 22 }}>{b.icon}</span>
+                    <span className="font-medium">{b.t}</span>
+                  </li>
+                ))}
+              </ul>
+              <p className="text-xs text-on-surface-variant">
+                Si el visor tarda en cargar, dale un par de segundos: descarga los frames del coche.
+              </p>
+            </div>
+
+            <div className="lg:col-span-8">
+              <div className="relative rounded-3xl overflow-hidden border border-outline-variant shadow-xl bg-surface-container-low" style={{ aspectRatio: '16 / 10' }}>
+                <iframe
+                  src="https://assets.spyne.ai/360?sku_id=007070db15154b07ad6c88eb1e64d2d6&showHotspot=true"
+                  className="absolute inset-0 w-full h-full"
+                  title="Vídeo 360° interactivo Photocall IA"
+                  loading="lazy"
+                  allow="fullscreen; accelerometer; gyroscope"
+                  allowFullScreen
+                />
+              </div>
+              <p className="text-[10px] uppercase tracking-widest text-on-surface-variant text-center mt-3 opacity-70">
+                Visor 360° servido por Photocall IA · arrastra para girar
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* +150 funcionalidades en detalle */}
       <section className="py-24 bg-white">
         <div className="mf-container">
