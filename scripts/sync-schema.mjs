@@ -101,6 +101,21 @@ try {
         { itemKey: 'quality_monitoring', label: 'Quality Monitoring con IA', helpText: 'Análisis automático del 100% de las llamadas.', type: 'checkbox', unitPriceCents: 4900, required: false, checkboxDefault: false },
       ],
     },
+    {
+      productSlug: 'motorflash-renting',
+      productName: 'MotorFlash Renting',
+      basePriceCents: 49900,
+      items: [
+        { itemKey: 'contratos_mes', label: 'Vídeos generados al mes', helpText: 'Cantidad de vídeos personalizados que envías mensualmente.', type: 'number', unitPriceCents: 200, required: true, numberMin: 100, numberMax: 5000, numberDefault: 250, numberUnit: 'vídeo' },
+        { itemKey: 'tier', label: 'Plan', type: 'select', unitPriceCents: 0, required: true, selectOptions: [
+          { value: 'starter', label: 'Starter (1 marca, email)', priceCents: 0, isDefault: true },
+          { value: 'pro', label: 'Pro (multi-marca, email + WhatsApp)', priceCents: 19900, isDefault: false },
+          { value: 'enterprise', label: 'Enterprise (multi-tenant + API + soporte VIP)', priceCents: 49900, isDefault: false },
+        ] },
+        { itemKey: 'integracion_crm', label: 'Integración API con tu CRM/ERP', helpText: 'Sincronización automática de cartera y respuestas vía webhooks.', type: 'checkbox', unitPriceCents: 9900, required: false, checkboxDefault: false },
+        { itemKey: 'motor_campanas', label: 'Motor de campañas todo el año', helpText: 'Campañas estacionales, fecha fija y por audiencia más allá del fin de renting.', type: 'checkbox', unitPriceCents: 14900, required: false, checkboxDefault: false },
+      ],
+    },
   ]
 
   const { docs: existingPlans } = await payload.find({ collection: 'pricing-plans', limit: 100 })

@@ -660,6 +660,66 @@ export const productContent: Record<string, ProductContent> = {
       },
     ],
   },
+  'motorflash-renting': {
+    subtitle: 'Vídeos IA personalizados para retener y vender más a tus clientes de renting',
+    sections: [
+      {
+        type: 'highlights',
+        title: 'Cuando termina el renting, pierdes al cliente. Y la competencia ya le está llamando.',
+        lead: 'Cada año, miles de clientes terminan su contrato sin renovar porque no han recibido una propuesta personalizada a tiempo. Tu equipo no llega a todos. Tus emails masivos se ignoran. MotorFlash Renting convierte ese final de contrato en una nueva venta, automáticamente, con un vídeo único por cliente.',
+        highlights: [
+          { title: '100%', description: 'De tu cartera contactada con vídeo personalizado' },
+          { title: '×5', description: 'Tasa de respuesta vs. email comercial tradicional' },
+          { title: '0', description: 'Trabajo manual de creación: la IA genera todo' },
+          { title: 'White-label', description: 'Tu logo, tus colores, tu dominio. El cliente ve tu marca, no la nuestra' },
+        ],
+        bullets: [
+          'Cero clientes perdidos por desbordamiento comercial: la plataforma llega al 100% de la cartera, no solo a quien tu equipo puede llamar.',
+          'Recuperas leads que se escapaban por no llegar a tiempo: la IA dispara el vídeo en la fecha óptima antes del fin de contrato.',
+          'Multi-organización: si tienes varios concesionarios o brokers, cada uno con su branding y configuración en una sola plataforma.',
+        ],
+      },
+      {
+        type: 'features',
+        title: 'Un vídeo único por cliente, generado por IA en minutos',
+        lead: 'Cada cliente recibe una pieza personalizada con su nombre, su coche actual, su cuota y hasta 5 propuestas reales para renovar, cambiar de modelo, subir de gama o comprar el vehículo. Todo con un solo clic para responder.',
+        items: [
+          { title: 'Voz IA natural en español', description: 'Voces seleccionables y ajustables por organización (powered by ElevenLabs). Saluda al cliente por su nombre con un tono natural — desde sobrio hasta cercano y dinámico, según tu marca.', icon: 'record_voice_over' },
+          { title: 'Hasta 5 propuestas reales por cliente', description: 'Renovar con el mismo modelo nuevo, cambiar a otro de la marca, subir de gama, renovar con condiciones reducidas o comprar el coche al contado o financiado. Tú las defines, la IA las personaliza.', icon: 'tune' },
+          { title: 'Botones de respuesta con un clic', description: 'El cliente abre el vídeo, ve las opciones y pulsa la que le interesa. Cero fricción, cero formularios, cero llamadas previas para descubrir qué quiere.', icon: 'ads_click' },
+          { title: 'Branding 100% white-label', description: 'Tu logo, tus colores corporativos, tu dominio. El cliente no ve "MotorFlash" en ningún sitio — ve tu organización en cada frame.', icon: 'palette' },
+          { title: 'Multi-canal: email y WhatsApp', description: 'El vídeo llega por email, por WhatsApp o por ambos, según las preferencias del cliente. Más oportunidades de apertura, más respuestas.', icon: 'forward_to_inbox' },
+          { title: 'Multi-tenant y RGPD', description: 'Cada organización tiene su espacio aislado. Datos del cliente en servidores europeos, cumplimiento RGPD garantizado, branding y configuración independientes.', icon: 'shield' },
+        ],
+      },
+      {
+        type: 'process',
+        title: 'De la cartera a la venta cerrada en 4 pasos',
+        steps: [
+          { title: 'Importas tu cartera', description: 'Sube un Excel con tus clientes y rentings activos, o conecta tu ERP por API REST. La plataforma lee los datos del cliente (nombre, email, teléfono), del coche actual (marca, modelo, matrícula, cuota) y las fechas de fin de contrato.' },
+          { title: 'Configuras tus propuestas', description: 'Para cada cliente o tipo de cliente defines hasta 5 ofertas concretas con cuota, modelo y fotos: renovar, cambiar a otro modelo, subir de gama, reducir kilometraje, comprar al contado o financiado.' },
+          { title: 'La plataforma envía el vídeo', description: 'Cuando faltan X días para el fin de contrato (tú decides cuántos), el sistema genera la voz IA, compone el vídeo con tu branding y lo envía por email y/o WhatsApp. Tu equipo no toca nada.' },
+          { title: 'Cierras la venta', description: 'El cliente responde con un clic. Tu comercial recibe al instante un email + notificación en el CRM con la opción elegida y los datos del cliente. Llama ya sabiendo qué le interesa.' },
+        ],
+      },
+      {
+        type: 'features',
+        title: 'Más allá del fin de renting: motor de campañas todo el año',
+        lead: 'Además del flujo de fin de contrato, MotorFlash Renting incluye un motor para enviar vídeos personalizados en cualquier momento del año. Diseñas la campaña una vez y la plataforma la dispara automáticamente, personalizada para cada cliente.',
+        items: [
+          { title: 'Campañas estacionales', description: 'Neumáticos de invierno, revisión ITV, cambio de aceite, seguro a renovar. Vídeos automáticos en la fecha justa para cada cliente.', icon: 'event_repeat' },
+          { title: 'Campañas de fecha fija', description: 'Black Friday, lanzamiento de un modelo nuevo, fin de año fiscal. Defines fecha y audiencia, la plataforma envía a todos con su nombre y datos.', icon: 'calendar_month' },
+          { title: 'Campañas por audiencia', description: 'Define una base de datos concreta (clientes de cierta marca, cuota, antigüedad) y mándales una oferta exclusiva con vídeo personalizado.', icon: 'group' },
+          { title: 'Integración con tu CRM/ERP', description: 'API REST y webhooks para sincronizar cartera, disparar campañas desde tu CRM y mandar respuestas automáticamente al lead correcto.', icon: 'integration_instructions' },
+        ],
+      },
+      {
+        type: 'cta',
+        title: '30 minutos y te enseñamos un vídeo real con uno de tus clientes',
+        lead: 'Demo personalizada: vídeo generado con un caso real de tu cartera (con tu autorización), panel de respuestas y métricas, integración con tu sistema actual y cálculo de ROI estimado. Modalidad SaaS sin permanencia, con plan piloto para validar antes de decidir.',
+      },
+    ],
+  },
 }
 
 export const productContentBySlug = (slug: string): ProductContent | undefined =>

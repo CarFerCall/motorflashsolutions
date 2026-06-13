@@ -14,6 +14,7 @@ const productSlugs = [
   'portal-publicacion',
   'lead-factory',
   'soluciones-fabricantes',
+  'motorflash-renting',
   'apex',
 ] as const
 

@@ -4,7 +4,7 @@ const productSlugs = [
   'dealer', 'exportaciones', 'crm4you', 'contact-center', 'spyne',
   'motorflash-message', 'motorflash-mobile-tracking', 'ia',
   'soluciones-web', 'marketing-digital', 'portal-publicacion',
-  'lead-factory', 'soluciones-fabricantes', 'apex',
+  'lead-factory', 'soluciones-fabricantes', 'motorflash-renting', 'apex',
 ] as const
 
 export const ProductCarouselBlock: Block = {
