@@ -109,13 +109,13 @@ export const products: Product[] = [
   },
   {
     slug: 'soluciones-web',
-    name: 'Web / Marketplace',
-    menuLabel: 'Web / Marketplace',
+    name: 'Servicios Web',
+    menuLabel: 'Servicios Web',
     menuOrder: 90,
-    tagline: 'Tu concesionario online, diseñado para convertir.',
-    heroTitle: 'Tu concesionario online, diseñado para convertir',
+    tagline: 'Webs y marketplaces para concesionarios: 3 niveles, de Única a Platinum.',
+    heroTitle: 'Webs y marketplaces de automoción, en 30 días',
     intro:
-      'Web 100 % automoción: gestión de stock, leads, renting, tasaciones y más, con una experiencia de usuario fluida y profesional. CMS propio potenciado por IA y estructura SEO friendly desde el primer día.',
+      'Web 100 % automoción con 3 niveles (Platinum, Silver y Única). Publicación real de stock, CMS autogestionable, calculadora financiera, pasarela de pago, SEO y analítica de fábrica. Infraestructura 99,9 %, SSL, anti-DDoS y WAF incluidos. Integrado nativamente con CRM4YOU, Contact Center, MF Message y CHATWEB MF.',
     icon: 'language',
   },
   {
