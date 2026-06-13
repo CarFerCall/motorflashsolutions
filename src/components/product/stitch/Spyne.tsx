@@ -84,8 +84,8 @@ export function Spyne() {
                 </p>
               </div>
               <BeforeAfterSlider
-                beforeSrc="/images/products/spyne-before.jpg"
-                afterSrc="/images/products/spyne-after.jpg"
+                beforeSrc="/images/products/spyne-after.jpg"
+                afterSrc="/images/products/spyne-before.jpg"
                 beforeAlt="Foto original del vehículo tomada en el concesionario"
                 afterAlt="Misma foto procesada con IA: fondo de estudio y plataforma giratoria"
                 beforeLabel="Antes"
