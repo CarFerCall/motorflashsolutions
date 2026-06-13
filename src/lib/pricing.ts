@@ -28,6 +28,7 @@ export interface RawPricingItem {
     value: string
     label: string
     priceCents: number
+    setupCents?: number | null
     isDefault?: boolean
   }> | null
 
@@ -54,7 +55,7 @@ export interface NormalizedSelectItem {
   label: string
   helpText: string | null
   required: boolean
-  options: Array<{ value: string; label: string; priceCents: number; isDefault: boolean }>
+  options: Array<{ value: string; label: string; priceCents: number; setupCents: number; isDefault: boolean }>
 }
 
 export interface NormalizedCheckboxItem {
@@ -95,6 +96,7 @@ export function normalizeItem(raw: RawPricingItem): NormalizedItem {
         value: String(o.value),
         label: o.label ?? String(o.value),
         priceCents: Number(o.priceCents ?? 0),
+        setupCents: Number(o.setupCents ?? 0),
         isDefault: !!o.isDefault,
       })),
     }

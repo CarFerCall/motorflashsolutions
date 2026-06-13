@@ -64,6 +64,7 @@ export async function submitMultiQuote(input: MultiQuoteInput): Promise<MultiQuo
   if (!lines.length) return { ok: false, error: 'Ninguno de los productos seleccionados tiene plan activo.' }
 
   const totalCents = lines.reduce((acc, l) => acc + l.breakdown.totalCents, 0)
+  const totalSetupCents = lines.reduce((acc, l) => acc + l.breakdown.setupCents, 0)
   const productList = lines.map((l) => l.productName).join(', ')
 
   const linesHtml = lines
@@ -73,10 +74,16 @@ export async function submitMultiQuote(input: MultiQuoteInput): Promise<MultiQuo
           (d) => `<tr><td style="padding:4px 0 4px 16px;color:#666;font-size:13px">+ ${escapeHtml(d.label)} <em style="opacity:.7;font-style:normal">(${escapeHtml(d.valueLabel)})</em></td><td style="padding:4px 0;text-align:right;color:#666;font-size:13px">${fmt(d.cents)}</td></tr>`,
         )
         .join('')
+      const setupRows = l.breakdown.setupDetail
+        .map(
+          (d) => `<tr><td style="padding:4px 0 4px 16px;color:#ff8000;font-size:13px;font-weight:600">Set up (pago único): ${escapeHtml(d.label)}</td><td style="padding:4px 0;text-align:right;color:#ff8000;font-size:13px;font-weight:600">${fmt(d.cents)}</td></tr>`,
+        )
+        .join('')
       return `
-      <tr style="border-bottom:1px solid #e2e2e2"><td style="padding:12px 0 4px"><strong>${escapeHtml(l.productName)}</strong></td><td style="padding:12px 0 4px;text-align:right;font-weight:700">${fmt(l.breakdown.totalCents)}</td></tr>
+      <tr style="border-bottom:1px solid #e2e2e2"><td style="padding:12px 0 4px"><strong>${escapeHtml(l.productName)}</strong></td><td style="padding:12px 0 4px;text-align:right;font-weight:700">${fmt(l.breakdown.totalCents)}/mes${l.breakdown.setupCents > 0 ? ` + ${fmt(l.breakdown.setupCents)} setup` : ''}</td></tr>
       <tr><td style="padding:0 0 4px 16px;color:#666;font-size:13px">Cuota base</td><td style="padding:0 0 4px;text-align:right;color:#666;font-size:13px">${fmt(l.breakdown.baseCents)}</td></tr>
-      ${itemsRows}`
+      ${itemsRows}
+      ${setupRows}`
     })
     .join('')
 
@@ -95,6 +102,7 @@ export async function submitMultiQuote(input: MultiQuoteInput): Promise<MultiQuo
     <tbody>${linesHtml}</tbody>
     <tfoot>
       <tr><td style="padding:16px 0 0;border-top:2px solid #e2e2e2;font-weight:700;font-size:16px">Total mensual</td><td style="padding:16px 0 0;border-top:2px solid #e2e2e2;text-align:right;font-size:22px;font-weight:700;color:#ff8000">${fmt(totalCents)}</td></tr>
+      ${totalSetupCents > 0 ? `<tr><td style="padding:8px 0 0;font-weight:600;font-size:14px;color:#666">Set up inicial (pago único)</td><td style="padding:8px 0 0;text-align:right;font-size:16px;font-weight:700;color:#ff8000">${fmt(totalSetupCents)}</td></tr>` : ''}
     </tfoot>
   </table>
 
@@ -108,6 +116,7 @@ export async function submitMultiQuote(input: MultiQuoteInput): Promise<MultiQuo
   <div style="background:#fff5e6;border-left:4px solid #ff8000;padding:16px;border-radius:8px;margin:24px 0">
     <p style="margin:0 0 4px;color:#666;font-size:12px;text-transform:uppercase;letter-spacing:.08em;font-weight:700">Estimación inicial</p>
     <p style="margin:0;font-size:28px;font-weight:700;color:#ff8000">${fmt(totalCents)}<span style="font-size:14px;color:#666;font-weight:400"> /mes + IVA</span></p>
+    ${totalSetupCents > 0 ? `<p style="margin:8px 0 0;font-size:14px;color:#666"><strong>Set up inicial:</strong> ${fmt(totalSetupCents)} (pago único al contratar)</p>` : ''}
   </div>
   <p style="color:#454747;font-size:13px;margin-top:16px">Estimación basada en los productos y opciones que has configurado. La oferta final puede ajustarse según las particularidades de tu concesionario, integraciones específicas o descuentos por volumen.</p>
   <p style="margin-top:24px">Si necesitas hablar antes con nosotros, llámanos al <a href="tel:+34910788575" style="color:#ff8000;text-decoration:none;font-weight:600">+34 910 788 575</a>.</p>
@@ -126,7 +135,7 @@ export async function submitMultiQuote(input: MultiQuoteInput): Promise<MultiQuo
         companyName: input.companyName?.trim() || undefined,
         phone: input.phone?.trim() || undefined,
         message: input.message?.trim() || undefined,
-        selectedItems: { selections: input.selections, lines } as any,
+        selectedItems: { selections: input.selections, lines, totalSetupCents } as any,
         totalCents,
         currency: 'EUR',
         billingCycle: 'month',

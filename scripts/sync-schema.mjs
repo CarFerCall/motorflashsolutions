@@ -106,10 +106,10 @@ try {
       productName: 'Servicios Web',
       basePriceCents: 6000,
       items: [
-        { itemKey: 'tier', label: 'Producto', helpText: 'Elige el nivel de proyecto web. La base es Única; Silver y Platinum se suman como upgrade sobre la base.', type: 'select', unitPriceCents: 0, required: true, selectOptions: [
-          { value: 'unica', label: 'Única (web práctica · 60 €/mes)', priceCents: 0, isDefault: true },
-          { value: 'silver', label: 'Silver (stock + financiera · 100 €/mes)', priceCents: 4000, isDefault: false },
-          { value: 'platinum', label: 'Platinum (web completa + CMS · 420 €/mes)', priceCents: 36000, isDefault: false },
+        { itemKey: 'tier', label: 'Producto', helpText: 'Elige el nivel de proyecto web. La base es Única (60 €/mes, sin setup); Silver y Platinum suman cuota + un coste de arranque (pago único).', type: 'select', unitPriceCents: 0, required: true, selectOptions: [
+          { value: 'unica', label: 'Única (web práctica · 60 €/mes)', priceCents: 0, setupCents: 0, isDefault: true },
+          { value: 'silver', label: 'Silver (stock + financiera · 100 €/mes)', priceCents: 4000, setupCents: 30000, isDefault: false },
+          { value: 'platinum', label: 'Platinum (web completa + CMS · 420 €/mes)', priceCents: 36000, setupCents: 80000, isDefault: false },
         ] },
         { itemKey: 'marcas_adicionales', label: 'Marcas / mundos adicionales', helpText: 'Cada marca extra (Audi, VW, Skoda…) se factura como un mundo independiente.', type: 'number', unitPriceCents: 10000, required: false, numberMin: 0, numberMax: 10, numberDefault: 0, numberUnit: 'marca' },
         { itemKey: 'seo_continuo', label: 'Mejora continua SEO', helpText: 'Optimización mensual del tráfico orgánico (servicio de Marketing Digital).', type: 'checkbox', unitPriceCents: 20000, required: false, checkboxDefault: false },
@@ -185,7 +185,40 @@ try {
       // tocamos para no pisar cambios manuales del admin.
       const hasItems = Array.isArray(existingPlan.items) && existingPlan.items.length > 0
       if (hasItems) {
-        console.log(`[sync-schema] = ${plan.productName}: ya tiene items, sin tocar`)
+        // Migración suave: si algún select option del seed tiene
+        // setupCents > 0 pero el plan en BD aún no lo tiene, lo
+        // sincronizamos. Cubrir nuestro caso de añadir set up a tier
+        // de Servicios Web sin perder las personalizaciones del admin.
+        let mergedItems = existingPlan.items
+        let setupMigrated = false
+        for (const seedItem of plan.items ?? []) {
+          if (seedItem.type !== 'select' || !Array.isArray(seedItem.selectOptions)) continue
+          const bdItem = mergedItems.find((i) => i.itemKey === seedItem.itemKey)
+          if (!bdItem || !Array.isArray(bdItem.selectOptions)) continue
+          for (const seedOpt of seedItem.selectOptions) {
+            if (!seedOpt.setupCents || seedOpt.setupCents <= 0) continue
+            const bdOpt = bdItem.selectOptions.find((o) => o.value === seedOpt.value)
+            if (!bdOpt) continue
+            if (!bdOpt.setupCents || bdOpt.setupCents <= 0) {
+              bdOpt.setupCents = seedOpt.setupCents
+              setupMigrated = true
+            }
+          }
+        }
+        if (setupMigrated) {
+          try {
+            await payload.update({
+              collection: 'pricing-plans',
+              id: existingPlan.id,
+              data: { items: mergedItems },
+            })
+            console.log(`[sync-schema] ↻ ${plan.productName}: setupCents añadidos a opciones de tier`)
+          } catch (err) {
+            console.warn(`[sync-schema] ✗ ${plan.productName} setup migrate:`, err?.message || err)
+          }
+        } else {
+          console.log(`[sync-schema] = ${plan.productName}: ya tiene items, sin tocar`)
+        }
         continue
       }
       try {

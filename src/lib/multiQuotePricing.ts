@@ -19,6 +19,9 @@ export interface ProductLineBreakdown {
   itemsCents: number
   itemsDetail: Array<{ label: string; valueLabel: string; cents: number }>
   totalCents: number
+  // Setup (pago único, no entra en el total mensual).
+  setupCents: number
+  setupDetail: Array<{ label: string; valueLabel: string; cents: number }>
 }
 
 export function computeProductLine(
@@ -27,7 +30,9 @@ export function computeProductLine(
   selections: Record<string, string> | undefined,
 ): ProductLineBreakdown {
   let itemsCents = 0
+  let setupCents = 0
   const itemsDetail: ProductLineBreakdown['itemsDetail'] = []
+  const setupDetail: ProductLineBreakdown['setupDetail'] = []
   const sel = selections ?? {}
 
   for (const item of items) {
@@ -43,9 +48,15 @@ export function computeProductLine(
     } else if (item.type === 'select') {
       const fallback = item.options.find((o) => o.isDefault) ?? item.options[0]
       const opt = item.options.find((o) => o.value === raw) ?? fallback
-      if (opt && opt.priceCents > 0) {
-        itemsCents += opt.priceCents
-        itemsDetail.push({ label: item.label, valueLabel: opt.label, cents: opt.priceCents })
+      if (opt) {
+        if (opt.priceCents > 0) {
+          itemsCents += opt.priceCents
+          itemsDetail.push({ label: item.label, valueLabel: opt.label, cents: opt.priceCents })
+        }
+        if (opt.setupCents > 0) {
+          setupCents += opt.setupCents
+          setupDetail.push({ label: `${item.label}: ${opt.label}`, valueLabel: 'set up', cents: opt.setupCents })
+        }
       }
     } else {
       const isChecked = raw == null ? item.defaultChecked : raw === '1' || raw === 'true' || raw === 'on'
@@ -61,6 +72,8 @@ export function computeProductLine(
     itemsCents,
     itemsDetail,
     totalCents: basePriceCents + itemsCents,
+    setupCents,
+    setupDetail,
   }
 }
 

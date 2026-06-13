@@ -88,6 +88,7 @@ export function PricingConfigurator({ products }: Props) {
   }, [selected, selections, productBySlug])
 
   const totalCents = lines.reduce((acc, l) => acc + l.breakdown.totalCents, 0)
+  const totalSetupCents = lines.reduce((acc, l) => acc + l.breakdown.setupCents, 0)
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -175,14 +176,19 @@ export function PricingConfigurator({ products }: Props) {
                       <span className="material-symbols-outlined text-primary" style={{ fontSize: 22 }}>{product.icon}</span>
                     </div>
                     <h3 className="text-lg font-semibold m-0 flex-1">{product.name}</h3>
-                    <span className="text-xl font-bold whitespace-nowrap">{fmt(breakdown.totalCents)}<span className="text-sm text-on-surface-variant font-medium">/mes</span></span>
+                    <div className="text-right whitespace-nowrap">
+                      <span className="text-xl font-bold">{fmt(breakdown.totalCents)}<span className="text-sm text-on-surface-variant font-medium">/mes</span></span>
+                      {breakdown.setupCents > 0 && (
+                        <div className="text-xs text-on-surface-variant font-medium">+ {fmt(breakdown.setupCents)} set up</div>
+                      )}
+                    </div>
                   </div>
-                  <div className="space-y-1 text-sm pl-13" style={{ paddingLeft: 52 }}>
+                  <div className="space-y-1 text-sm" style={{ paddingLeft: 52 }}>
                     <div className="flex justify-between text-on-surface-variant">
                       <span>Cuota base</span>
                       <span className="tabular-nums">{fmt(breakdown.baseCents)}</span>
                     </div>
-                    {breakdown.itemsDetail.length === 0 ? (
+                    {breakdown.itemsDetail.length === 0 && breakdown.setupDetail.length === 0 ? (
                       <p className="text-xs text-on-surface-variant italic m-0 pt-1">Sin extras configurados.</p>
                     ) : (
                       breakdown.itemsDetail.map((d, i) => (
@@ -192,6 +198,12 @@ export function PricingConfigurator({ products }: Props) {
                         </div>
                       ))
                     )}
+                    {breakdown.setupDetail.map((d, i) => (
+                      <div key={`setup-${i}`} className="flex justify-between text-primary font-semibold">
+                        <span>Set up (pago único): {d.label}</span>
+                        <span className="tabular-nums">{fmt(d.cents)}</span>
+                      </div>
+                    ))}
                   </div>
                 </div>
               ))}
@@ -228,6 +240,12 @@ export function PricingConfigurator({ products }: Props) {
                 <span className="text-xs uppercase tracking-widest text-on-surface-variant font-semibold">/ mes + IVA</span>
               </div>
             </div>
+            {totalSetupCents > 0 && (
+              <div className="flex justify-between items-center mt-3 pt-3 border-t border-outline-variant/50">
+                <span className="text-sm text-on-surface-variant">+ Set up inicial (pago único)</span>
+                <span className="font-bold text-primary tabular-nums">{fmt(totalSetupCents)}</span>
+              </div>
+            )}
           </div>
 
           {!showForm ? (
@@ -454,6 +472,11 @@ function ItemControl({ item, value, onChange }: { item: NormalizedItem; value: s
                 <span className="text-xs text-primary font-bold">
                   {opt.priceCents > 0 ? `+${fmt(opt.priceCents)}/mes` : 'Incluido'}
                 </span>
+                {opt.setupCents > 0 && (
+                  <span className="text-[10px] text-on-surface-variant font-semibold uppercase tracking-wide">
+                    + {fmt(opt.setupCents)} set up
+                  </span>
+                )}
               </button>
             )
           })}
