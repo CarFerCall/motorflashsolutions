@@ -268,10 +268,34 @@ try {
         touched = true
         break
       }
+      // Dedup: si por una migración anterior quedaron sub-links
+      // duplicados con la misma URL en un dropdown, dejar solo la
+      // primera ocurrencia.
+      let dedupedAny = false
+      for (const item of items) {
+        if (item.kind !== 'dropdown' || !Array.isArray(item.children)) continue
+        const seenUrls = new Set()
+        const deduped = []
+        for (const c of item.children) {
+          if (c.url && seenUrls.has(c.url)) {
+            dedupedAny = true
+            continue
+          }
+          if (c.url) seenUrls.add(c.url)
+          deduped.push(c)
+        }
+        if (deduped.length !== item.children.length) {
+          item.children = deduped
+        }
+      }
+      if (dedupedAny) {
+        touched = true
+        console.log('[sync-schema] ↻ menú: sub-links duplicados eliminados')
+      }
       if (touched) {
         try {
           await payload.updateGlobal({ slug: 'main-menu', data: { items } })
-          console.log('[sync-schema] ↻ menú: + MotorFlash Connect en dropdown Servicios')
+          console.log('[sync-schema] ↻ menú principal actualizado')
         } catch (err) {
           console.warn('[sync-schema] ✗ menú update:', err?.message || err)
         }
