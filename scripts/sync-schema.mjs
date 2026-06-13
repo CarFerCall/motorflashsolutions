@@ -102,7 +102,7 @@ try {
       ],
     },
     {
-      productSlug: 'motorflash-renting',
+      productSlug: 'motorflash-connect',
       productName: 'MotorFlash Connect',
       basePriceCents: 49900,
       items: [
@@ -117,6 +117,29 @@ try {
       ],
     },
   ]
+
+  // Migración suave: si quedan planes con el slug viejo
+  // 'motorflash-renting', los renombramos a 'motorflash-connect'
+  // antes de procesar el seed (el front ya no acepta el slug viejo).
+  {
+    const { docs: legacy } = await payload.find({
+      collection: 'pricing-plans',
+      where: { productSlug: { equals: 'motorflash-renting' } },
+      limit: 10,
+    })
+    for (const lp of legacy) {
+      try {
+        await payload.update({
+          collection: 'pricing-plans',
+          id: lp.id,
+          data: { productSlug: 'motorflash-connect' },
+        })
+        console.log(`[sync-schema] ↻ plan ${lp.productName}: productSlug motorflash-renting → motorflash-connect`)
+      } catch (err) {
+        console.warn(`[sync-schema] ✗ migración slug plan ${lp.productName}:`, err?.message || err)
+      }
+    }
+  }
 
   const { docs: existingPlans } = await payload.find({ collection: 'pricing-plans', limit: 100 })
   const bySlug = new Map(existingPlans.map((p) => [p.productSlug, p]))
@@ -199,7 +222,7 @@ try {
                 { label: 'Photocall IA', url: '/servicios/spyne', icon: 'photo_camera' },
                 { label: 'WhatsApp Business', url: '/servicios/motorflash-message', icon: 'chat' },
                 { label: 'Motorflash IA', url: '/servicios/ia', icon: 'psychology' },
-                { label: 'MotorFlash Connect', url: '/servicios/motorflash-renting', icon: 'autorenew' },
+                { label: 'MotorFlash Connect', url: '/servicios/motorflash-connect', icon: 'autorenew' },
                 { label: 'Lead Exclusive', url: '/servicios/lead-factory', icon: 'star' },
                 { label: 'Ver catálogo completo', url: '/servicios', icon: 'arrow_forward' },
               ],
@@ -213,15 +236,25 @@ try {
       })
       console.log('[sync-schema] + menú principal creado')
     } else {
-      // Migración idempotente: si el dropdown Servicios ya existe pero
-      // no contiene el sub-enlace de MotorFlash Connect, lo añadimos
-      // justo antes de Lead Exclusive. Si Lead Exclusive no existe, lo
-      // metemos al final del dropdown.
+      // Migración idempotente:
+      //  1. Si algún sub-link aún apunta a la URL vieja
+      //     /servicios/motorflash-renting, lo actualizamos a la nueva.
+      //  2. Si no existe MotorFlash Connect en el dropdown de Servicios,
+      //     lo añadimos justo antes de Lead Exclusive.
       const items = Array.isArray(menu.items) ? [...menu.items] : []
       let touched = false
       for (const item of items) {
         if (item.kind !== 'dropdown' || !Array.isArray(item.children)) continue
-        const hasConnect = item.children.some((c) => c.url === '/servicios/motorflash-renting')
+        for (const c of item.children) {
+          if (c.url === '/servicios/motorflash-renting') {
+            c.url = '/servicios/motorflash-connect'
+            c.label = 'MotorFlash Connect'
+            c.icon = c.icon || 'autorenew'
+            touched = true
+            console.log('[sync-schema] ↻ menú: URL motorflash-renting → motorflash-connect')
+          }
+        }
+        const hasConnect = item.children.some((c) => c.url === '/servicios/motorflash-connect')
         if (hasConnect) continue
         const isServiciosDropdown = item.children.some((c) => c.url?.startsWith?.('/servicios/'))
         if (!isServiciosDropdown) continue
@@ -229,7 +262,7 @@ try {
         const insertAt = leadIdx >= 0 ? leadIdx : item.children.length
         item.children.splice(insertAt, 0, {
           label: 'MotorFlash Connect',
-          url: '/servicios/motorflash-renting',
+          url: '/servicios/motorflash-connect',
           icon: 'autorenew',
         })
         touched = true

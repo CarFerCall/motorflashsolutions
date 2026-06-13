@@ -14,7 +14,8 @@ const productSlugs = [
   'portal-publicacion',
   'lead-factory',
   'soluciones-fabricantes',
-  'motorflash-renting',
+  'motorflash-renting', // legado: planes antiguos en BD
+  'motorflash-connect',
   'apex',
 ] as const
 

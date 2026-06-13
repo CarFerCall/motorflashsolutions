@@ -37,7 +37,7 @@ const PRODUCT_OPTIONS = [
   { value: 'portal-publicacion', label: 'Clasificados' },
   { value: 'lead-factory', label: 'Lead Exclusive' },
   { value: 'soluciones-fabricantes', label: 'Fabricantes' },
-  { value: 'motorflash-renting', label: 'MotorFlash Connect' },
+  { value: 'motorflash-connect', label: 'MotorFlash Connect' },
   { value: 'apex', label: 'Apex' },
 ]
 

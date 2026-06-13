@@ -13,6 +13,21 @@ const nextConfig: NextConfig = {
       { pathname: '/images/**' },
     ],
   },
+  async redirects() {
+    return [
+      // Rebranding MotorFlash Renting → MotorFlash Connect.
+      {
+        source: '/servicios/motorflash-renting',
+        destination: '/servicios/motorflash-connect',
+        permanent: true,
+      },
+      {
+        source: '/precios/motorflash-renting',
+        destination: '/precios/motorflash-connect',
+        permanent: true,
+      },
+    ]
+  },
   webpack: (webpackConfig) => {
     webpackConfig.resolve.extensionAlias = {
       '.cjs': ['.cts', '.cjs'],

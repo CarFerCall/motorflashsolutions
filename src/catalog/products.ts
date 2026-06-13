@@ -164,7 +164,7 @@ export const products: Product[] = [
     placeholder: true,
   },
   {
-    slug: 'motorflash-renting',
+    slug: 'motorflash-connect',
     name: 'MotorFlash Connect',
     menuLabel: 'MotorFlash Connect',
     menuOrder: 135,

@@ -660,7 +660,7 @@ export const productContent: Record<string, ProductContent> = {
       },
     ],
   },
-  'motorflash-renting': {
+  'motorflash-connect': {
     subtitle: 'Vídeos IA personalizados para retener y vender más a tus clientes de renting',
     sections: [
       {
