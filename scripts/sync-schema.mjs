@@ -102,6 +102,24 @@ try {
       ],
     },
     {
+      productSlug: 'soluciones-web',
+      productName: 'Servicios Web',
+      basePriceCents: 6000,
+      items: [
+        { itemKey: 'tier', label: 'Producto', helpText: 'Elige el nivel de proyecto web. La base es Única; Silver y Platinum se suman como upgrade sobre la base.', type: 'select', unitPriceCents: 0, required: true, selectOptions: [
+          { value: 'unica', label: 'Única (web práctica · 60 €/mes)', priceCents: 0, isDefault: true },
+          { value: 'silver', label: 'Silver (stock + financiera · 100 €/mes)', priceCents: 4000, isDefault: false },
+          { value: 'platinum', label: 'Platinum (web completa + CMS · 420 €/mes)', priceCents: 36000, isDefault: false },
+        ] },
+        { itemKey: 'marcas_adicionales', label: 'Marcas / mundos adicionales', helpText: 'Cada marca extra (Audi, VW, Skoda…) se factura como un mundo independiente.', type: 'number', unitPriceCents: 10000, required: false, numberMin: 0, numberMax: 10, numberDefault: 0, numberUnit: 'marca' },
+        { itemKey: 'seo_continuo', label: 'Mejora continua SEO', helpText: 'Optimización mensual del tráfico orgánico (servicio de Marketing Digital).', type: 'checkbox', unitPriceCents: 20000, required: false, checkboxDefault: false },
+        { itemKey: 'sea_google', label: 'Gestión campañas Google Ads (SEA)', type: 'checkbox', unitPriceCents: 30000, required: false, checkboxDefault: false },
+        { itemKey: 'sea_meta', label: 'Gestión campañas Meta (RRSS)', type: 'checkbox', unitPriceCents: 20000, required: false, checkboxDefault: false },
+        { itemKey: 'chatweb', label: 'CHATWEB MF (chat + bot + IA)', helpText: 'Chat en directo con posibilidad de bot automático o IA conversacional.', type: 'checkbox', unitPriceCents: 10000, required: false, checkboxDefault: false },
+        { itemKey: 'gestor_leads', label: 'Gestor de Leads (Contact Center)', type: 'checkbox', unitPriceCents: 15000, required: false, checkboxDefault: false },
+      ],
+    },
+    {
       productSlug: 'motorflash-connect',
       productName: 'MotorFlash Connect',
       basePriceCents: 49900,
