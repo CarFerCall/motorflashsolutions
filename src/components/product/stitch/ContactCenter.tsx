@@ -1,5 +1,66 @@
-import Image from 'next/image'
 import Link from 'next/link'
+
+const PILLARS = [
+  { icon: 'campaign', title: 'Motor Lead Management', desc: 'Nuestro servicio estrella en gestión de leads para automoción.' },
+  { icon: 'memory', title: 'Tecnología propia', desc: 'Plataformas de última generación desarrolladas por nosotros.' },
+  { icon: 'groups', title: 'Equipo especializado', desc: '50 agentes formados en el sector del motor.' },
+  { icon: 'insights', title: 'Reporting en tiempo real', desc: 'Informes customizables por portal, origen, canal, producto y comercial.' },
+  { icon: 'price_check', title: 'Propuesta competitiva', desc: 'La tarifa más ajustada del sector con modelo por uso real.' },
+  { icon: 'verified', title: 'Cartera consolidada', desc: '+400 clientes y 2.000 concesionarios respaldan el servicio.' },
+]
+
+const CHANNELS = [
+  { icon: 'call', title: 'Llamadas entrantes y salientes', desc: 'Atendemos el 100 % de las llamadas con infraestructura cloud y plataformas propias.' },
+  { icon: 'chat', title: 'WhatsApp Business API', desc: 'Únicos en el mercado con desarrollo propio que mide la conversión del canal por excelencia.' },
+  { icon: 'mail', title: 'Emails & Click-to-Call', desc: 'Integramos los formularios de contacto procedentes de cualquier canal web.' },
+  { icon: 'forum', title: 'Chats y redes sociales', desc: 'Respondemos con inmediatez a dudas técnicas o comerciales en cualquier canal.' },
+]
+
+const COMPLIANCE = [
+  'Grabación de todas las llamadas hasta 5 años, conforme RGPD',
+  'Recogida de consentimientos para acciones de remarketing posteriores',
+  'Stock publicado en todos los canales para estrategias de precios y conversión a venta',
+]
+
+const TEAM_STATS = [
+  { v: '50', l: 'AGENTES' },
+  { v: '+400', l: 'CLIENTES', primary: true },
+  { v: '7', l: 'AÑOS DE EXPERIENCIA' },
+  { v: '2.000', l: 'CONCESIONARIOS' },
+]
+
+const KPIS = [
+  { v: '>90 %', l: 'Atención en recepción' },
+  { v: '<10 min', l: 'Tiempo de contacto en emisión' },
+  { v: '195.000', l: 'Llamadas/mes atendidas' },
+  { v: '100 %', l: 'Respuestas garantizadas' },
+]
+
+const SERVICES = [
+  { icon: 'phone_callback', title: 'Recepción y emisión', desc: 'Cualificación de contacto + RGPD desde el primer minuto.' },
+  { icon: 'thermostat', title: 'Cualificación de temperatura', desc: 'Filtro de leads según intención real de compra.' },
+  { icon: 'event_available', title: 'Citas de prueba y taller', desc: 'Gestión y confirmación de asistencia a citas.' },
+  { icon: 'support', title: 'Postventa y gestión', desc: 'Acompañamos al cliente después de la entrega.' },
+  { icon: 'inbox', title: 'Back office y CRM', desc: 'Gestión de emails, depuración de BBDD y mystery calls.' },
+  { icon: 'language', title: 'Servicio multidioma', desc: 'Castellano, inglés, francés, catalán y portugués.' },
+]
+
+const REPORTING_POINTS = [
+  'Registro completo de contactos destacando los leads más calientes',
+  'Acceso a gestor exclusivo con todas las métricas de control',
+  'Estrategias de seguimiento "Nurturing" sobre tus potenciales',
+  'Acceso ilimitado a todas las grabaciones de tus clientes',
+  'Reportes por portal, origen, canal, producto, departamento y comercial',
+  'Visión de derivación equitativa entre comerciales VO y VN',
+]
+
+const TARIFFS = [
+  { label: 'Licencia básica', monthly: 'Desde 150 €', setup: '—', meta: 'Llamadas, emails y click-to-call incluidos.' },
+  { label: 'Licencia con WhatsApp Business API', monthly: '180 €/mes', setup: '—', meta: 'Añade WhatsApp con medición de conversión.' },
+  { label: 'Llamadas gestionadas', monthly: '0,62 €/min', setup: '50 € por integración', meta: 'TMC promedio 2,5 min · máx. 3,5 min.' },
+  { label: 'Emails gestionados', monthly: '0,55 €/email', setup: '—', meta: 'Por cada email atendido por el equipo.' },
+  { label: 'Teléfono virtual', monthly: '5,35 €/línea', setup: '—', meta: 'Útil para tracking por canal o ubicación.' },
+]
 
 export function ContactCenter() {
   const productSlug = 'contact-center'
@@ -7,130 +68,108 @@ export function ContactCenter() {
   return (
     <div className="font-display text-on-surface">
       {/* Hero */}
-      <section className="relative min-h-[80vh] flex items-center overflow-hidden bg-surface-container-low">
-        <div className="relative z-10 mf-container grid grid-cols-1 lg:grid-cols-2 gap-6 items-center w-full">
-          <div className="space-y-6">
-            <span className="inline-block px-3 py-1 bg-primary/10 text-primary border border-primary/20 rounded-full text-xs font-bold uppercase tracking-widest">
-              KINETIC PRECISION IN AUTOMOTIVE
-            </span>
-            <h1 className="text-5xl md:text-display-lg font-bold leading-tight">
-              Contact Center <br /> <span className="text-primary">Omnicanal</span>
+      <section className="relative min-h-[78vh] flex items-center overflow-hidden bg-white">
+        <div aria-hidden className="absolute inset-0 z-0" style={{ background: 'radial-gradient(circle at 70% 100%, rgba(255,128,0,0.10), transparent 60%)' }} />
+        <div className="relative z-10 mf-container">
+          <div className="max-w-3xl">
+            <span className="text-xs font-bold uppercase tracking-widest text-primary mb-4 block">CONTACT CENTER · MOTORFLASH SOLUTIONS</span>
+            <h1 className="text-5xl md:text-display-lg font-bold mb-6 leading-tight">
+              Lo que no se mide, <span className="text-primary">no se puede mejorar</span>
             </h1>
-            <p className="text-lg text-on-surface-variant max-w-lg">
-              Elevamos la gestión de leads al siguiente nivel con tecnología de IA de voz y monitoreo de calidad. Gestionamos más de 70.000 llamadas mensuales con precisión mecánica.
+            <p className="text-lg text-on-surface-variant mb-10 max-w-2xl">
+              Servicio de Contact Center exclusivo del sector de la automoción. Atendemos el 100 % de tus leads en todos los canales (voz, WhatsApp, email, chat, RRSS) con plataformas propias, equipo especializado y reporting en tiempo real.
             </p>
-            <div className="flex flex-wrap gap-4 pt-4">
-              <Link href={`/contacto?servicio=${productSlug}`} className="bg-primary text-white px-8 py-4 rounded-xl orange-glow hover:scale-105 transition-transform text-xs font-bold uppercase tracking-widest inline-flex items-center gap-2">
-                SOLICITAR DEMO <span className="material-symbols-outlined">arrow_forward</span>
+            <div className="flex flex-wrap gap-4">
+              <Link href={`/contacto?servicio=${productSlug}`} className="bg-primary text-white px-8 py-4 rounded-xl text-xs font-bold uppercase tracking-widest hover:shadow-lg hover:shadow-primary/20 transition-all">
+                Solicitar Demo
               </Link>
-              <Link href="/servicios" className="border border-outline text-on-surface px-8 py-4 rounded-xl text-xs font-bold uppercase tracking-widest hover:bg-black/5 transition-colors">
-                VER CAPACIDADES
-              </Link>
-            </div>
-          </div>
-          <div className="hidden lg:block relative">
-            <div className="relative glass-card p-4 rounded-2xl overflow-hidden aspect-square flex items-center justify-center shadow-2xl">
-              <Image src="/images/products/contact-center-hero.png" alt="Dashboard Contact Center" width={600} height={600} className="rounded-xl w-full h-full object-cover" />
-              <div className="absolute -bottom-6 -right-6 bg-white p-6 rounded-2xl border border-primary/20 shadow-xl w-64">
-                <div className="flex items-center gap-3 mb-2">
-                  <span className="material-symbols-outlined text-primary" style={{ fontVariationSettings: "'FILL' 1" }}>call</span>
-                  <span className="text-xl font-bold">+70K</span>
-                </div>
-                <p className="text-xs font-bold uppercase tracking-widest text-on-surface-variant">Llamadas gestionadas / mes</p>
-              </div>
+              <a href="#tarifas" className="border border-outline text-on-surface px-8 py-4 rounded-xl text-xs font-bold uppercase tracking-widest hover:bg-surface-container transition-colors">
+                Ver tarifas
+              </a>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Bento */}
+      {/* 6 pilares */}
+      <section className="py-24 bg-surface-container-low border-y border-outline-variant">
+        <div className="mf-container">
+          <div className="text-center mb-12 max-w-3xl mx-auto">
+            <span className="text-xs font-bold uppercase tracking-widest text-primary block mb-3">SERVICIOS EXCLUSIVOS EN AUTOMOCIÓN</span>
+            <h2 className="text-3xl md:text-headline-lg font-semibold mb-3">6 razones por las que somos diferentes</h2>
+            <p className="text-on-surface-variant">No somos un Contact Center generalista. Vivimos del sector del motor desde hace 7 años y todo nuestro stack está pensado para concesionarios.</p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+            {PILLARS.map((p) => (
+              <div key={p.title} className="bg-white border border-outline-variant rounded-2xl p-6 hover:shadow-md transition-shadow">
+                <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-4">
+                  <span className="material-symbols-outlined text-primary text-2xl">{p.icon}</span>
+                </div>
+                <h3 className="text-lg font-semibold mb-2">{p.title}</h3>
+                <p className="text-sm text-on-surface-variant">{p.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Tecnología multicanal */}
       <section className="py-24 bg-white">
         <div className="mf-container">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-headline-lg font-semibold mb-4">Gestión Inteligente de Leads</h2>
-            <p className="text-on-surface-variant max-w-2xl mx-auto">
-              La convergencia de la inteligencia artificial y el factor humano para maximizar la conversión en el sector automotriz.
-            </p>
+          <div className="text-center mb-12 max-w-3xl mx-auto">
+            <span className="text-xs font-bold uppercase tracking-widest text-primary block mb-3">TECNOLOGÍA MULTICANAL</span>
+            <h2 className="text-3xl md:text-headline-lg font-semibold mb-3">Atendemos donde está tu cliente</h2>
+            <p className="text-on-surface-variant">Las soluciones técnicas más avanzadas del sector. Plataformas propias para customizar cualquier servicio y crecer con tus operaciones.</p>
           </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            <div className="md:col-span-2 lg:row-span-2 bento-item p-8 rounded-2xl flex flex-col justify-between">
-              <div>
-                <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-6">
-                  <span className="material-symbols-outlined text-primary">psychology</span>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+            {CHANNELS.map((c) => (
+              <div key={c.title} className="bg-surface-container-low border border-outline-variant rounded-2xl p-6 hover:shadow-md transition-shadow">
+                <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-4">
+                  <span className="material-symbols-outlined text-primary text-2xl">{c.icon}</span>
                 </div>
-                <h3 className="text-xl font-medium mb-4">IA de Voz Especializada</h3>
-                <p className="text-on-surface-variant">
-                  Nuestra IA no solo atiende, cualifica. Analiza el sentimiento y la intención del usuario para derivar el lead al especialista adecuado de forma inmediata.
-                </p>
+                <h3 className="text-base font-semibold mb-2">{c.title}</h3>
+                <p className="text-sm text-on-surface-variant leading-snug">{c.desc}</p>
               </div>
-              <div className="mt-8 pt-8 border-t border-outline-variant/30">
-                <ul className="space-y-3">
-                  {['Cualificación automática 24/7', 'Integración directa con CRM4YOU', 'Transcripción en tiempo real'].map((t) => (
-                    <li key={t} className="flex items-center gap-3 text-sm">
-                      <span className="material-symbols-outlined text-primary text-[18px]">check_circle</span> {t}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-
-            <div className="bento-item p-8 rounded-2xl">
-              <span className="material-symbols-outlined text-primary mb-4 block">hub</span>
-              <h4 className="text-xl font-medium mb-2">Omnicanalidad</h4>
-              <p className="text-sm text-on-surface-variant">Llamadas, WhatsApp AI, Chats y Redes Sociales en un solo flujo de trabajo unificado.</p>
-            </div>
-
-            <div className="bento-item p-8 rounded-2xl">
-              <span className="material-symbols-outlined text-primary mb-4 block">verified_user</span>
-              <h4 className="text-xl font-medium mb-2">Quality Monitoring</h4>
-              <p className="text-sm text-on-surface-variant">Auditoría constante y feedbacks para asegurar que cada interacción cumpla con los estándares Motorflash.</p>
-            </div>
-
-            <div className="md:col-span-2 bento-item bg-surface-container-low border border-outline-variant/30 p-8 rounded-2xl relative overflow-hidden">
-              <div className="relative z-10">
-                <h4 className="text-xl font-medium mb-2">Métricas en Tiempo Real</h4>
-                <p className="text-sm text-on-surface-variant mb-6">Toma decisiones basadas en datos precisos con nuestro panel de analítica avanzada.</p>
-                <div className="flex gap-8">
-                  <div>
-                    <p className="text-primary text-3xl leading-tight font-bold">98%</p>
-                    <p className="text-xs font-bold uppercase tracking-widest text-on-surface-variant">SLA Garantizado</p>
-                  </div>
-                  <div>
-                    <p className="text-primary text-3xl leading-tight font-bold">-15s</p>
-                    <p className="text-xs font-bold uppercase tracking-widest text-on-surface-variant">Tiempos de Respuesta</p>
-                  </div>
-                </div>
-              </div>
-              <div aria-hidden className="absolute right-0 bottom-0 opacity-5">
-                <span className="material-symbols-outlined" style={{ fontSize: 120 }}>query_stats</span>
-              </div>
-            </div>
+            ))}
+          </div>
+          <div className="mt-10 bg-surface-container-low border border-outline-variant rounded-2xl p-6 md:p-8">
+            <p className="text-xs font-bold uppercase tracking-widest text-primary mb-3">CUMPLIMIENTO Y CONVERSIÓN</p>
+            <ul className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              {COMPLIANCE.map((c) => (
+                <li key={c} className="flex gap-3 text-sm">
+                  <span className="material-symbols-outlined text-primary shrink-0" style={{ fontSize: 22 }}>check_circle</span>
+                  <span>{c}</span>
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
       </section>
 
-      {/* Process */}
-      <section className="bg-surface-container-low py-24 border-y border-outline-variant/30">
-        <div className="mf-container grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-          <div className="order-2 lg:order-1 grid grid-cols-2 gap-4">
-            <Image src="/images/products/contact-center-agent.png" alt="Agente Contact Center" width={320} height={400} className="rounded-xl w-full aspect-[4/5] object-cover shadow-lg" />
-            <Image src="/images/products/contact-center-server.png" alt="Servidor de comunicaciones" width={320} height={400} className="rounded-xl w-full aspect-[4/5] object-cover mt-8 shadow-lg" />
-          </div>
-          <div className="order-1 lg:order-2 space-y-8">
-            <h2 className="text-3xl md:text-headline-lg font-semibold">Excelencia en cada palabra</h2>
-            <div className="space-y-6">
-              {[
-                { n: 1, t: 'Cualificación Automática', d: 'Nuestros algoritmos pre-clasifican los leads basándose en el presupuesto, modelo de interés y urgencia de compra.' },
-                { n: 2, t: 'Derivación Inteligente', d: 'El lead caliente llega al vendedor en el momento exacto, con toda la información necesaria ya procesada.' },
-                { n: 3, t: 'Monitoreo de Calidad', d: 'Garantizamos una experiencia de cliente premium mediante auditorías aleatorias y análisis de sentimiento automatizado.' },
-              ].map((s) => (
-                <div key={s.n} className="flex gap-4">
-                  <div className="flex-shrink-0 w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center font-bold">{s.n}</div>
-                  <div>
-                    <h5 className="text-xl font-medium mb-2">{s.t}</h5>
-                    <p className="text-on-surface-variant">{s.d}</p>
-                  </div>
+      {/* Equipo + KPIs */}
+      <section className="py-24 bg-surface-container-low border-y border-outline-variant">
+        <div className="mf-container">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-14">
+            <div>
+              <span className="text-xs font-bold uppercase tracking-widest text-primary block mb-3">EQUIPO MULTIDISCIPLINAR</span>
+              <h2 className="text-3xl md:text-headline-lg font-semibold mb-4">Atención al cliente integral con KPIs garantizados</h2>
+              <p className="text-on-surface-variant mb-6">
+                Gestionamos tus prospectos y leads con un equipo especializado en automoción. Trabajamos de lunes a sábado en horario ininterrumpido, con posibilidad de ampliación a fines de semana.
+              </p>
+              <ul className="space-y-3">
+                {KPIS.map((k) => (
+                  <li key={k.l} className="flex items-baseline gap-3">
+                    <span className="text-2xl font-bold text-primary tabular-nums whitespace-nowrap">{k.v}</span>
+                    <span className="text-sm text-on-surface-variant">{k.l}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className="grid grid-cols-2 gap-4">
+              {TEAM_STATS.map((s) => (
+                <div key={s.l} className={`rounded-2xl p-6 text-center border ${s.primary ? 'bg-primary text-white border-primary' : 'bg-white border-outline-variant'}`}>
+                  <div className="text-4xl md:text-5xl font-bold mb-2 tabular-nums">{s.v}</div>
+                  <div className={`text-xs font-bold uppercase tracking-widest ${s.primary ? 'opacity-90' : 'text-on-surface-variant'}`}>{s.l}</div>
                 </div>
               ))}
             </div>
@@ -138,21 +177,139 @@ export function ContactCenter() {
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="py-24 mf-container text-center">
-        <div className="bg-primary rounded-[2rem] p-12 lg:p-20 relative overflow-hidden shadow-2xl">
-          <div className="relative z-10 text-white">
-            <h2 className="text-3xl md:text-display-lg font-bold mb-6">¿Listo para transformar su gestión de ventas?</h2>
-            <p className="text-white/80 text-lg max-w-2xl mx-auto mb-10">
-              Únase a los concesionarios y marcas líderes que ya confían en la precisión de Motorflash para sus centros de contacto.
+      {/* Servicios */}
+      <section className="py-24 bg-white">
+        <div className="mf-container">
+          <div className="text-center mb-12 max-w-3xl mx-auto">
+            <span className="text-xs font-bold uppercase tracking-widest text-primary block mb-3">QUÉ HACEMOS POR TI</span>
+            <h2 className="text-3xl md:text-headline-lg font-semibold mb-3">Desde la captura del lead hasta la postventa</h2>
+            <p className="text-on-surface-variant">Un flujo completo de atención: cualificamos, filtramos, derivamos equitativamente entre tus comerciales y reportamos cada interacción.</p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+            {SERVICES.map((s) => (
+              <div key={s.title} className="bg-surface-container-low border border-outline-variant rounded-2xl p-6">
+                <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-4">
+                  <span className="material-symbols-outlined text-primary text-2xl">{s.icon}</span>
+                </div>
+                <h3 className="text-base font-semibold mb-2">{s.title}</h3>
+                <p className="text-sm text-on-surface-variant">{s.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Reporting */}
+      <section className="py-24 bg-surface-container-low border-y border-outline-variant">
+        <div className="mf-container">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+            <div>
+              <span className="text-xs font-bold uppercase tracking-widest text-primary block mb-3">REPORTING EN TIEMPO REAL</span>
+              <h2 className="text-3xl md:text-headline-lg font-semibold mb-4">Sistemas de información que sí mueven la aguja</h2>
+              <p className="text-on-surface-variant mb-6">
+                Acceso a un gestor exclusivo con métricas de control e informes detallados de toda la actividad. Sabes en cada momento qué leads tienes, de dónde vienen y qué hace cada comercial con ellos.
+              </p>
+              <ul className="space-y-3">
+                {REPORTING_POINTS.map((r) => (
+                  <li key={r} className="flex gap-3 text-sm">
+                    <span className="material-symbols-outlined text-primary shrink-0" style={{ fontSize: 22 }}>insights</span>
+                    <span>{r}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className="grid grid-cols-2 gap-4">
+              {[
+                { v: '37 %', l: 'Transferidos en línea' },
+                { v: '35 %', l: 'No transferidos' },
+                { v: '18 %', l: 'Otros estados' },
+                { v: '10 %', l: 'Derivados vía email' },
+              ].map((s) => (
+                <div key={s.l} className="bg-white border border-outline-variant rounded-2xl p-6 text-center">
+                  <div className="text-3xl md:text-4xl font-bold text-primary mb-2 tabular-nums">{s.v}</div>
+                  <div className="text-xs font-medium text-on-surface-variant uppercase tracking-wide">{s.l}</div>
+                </div>
+              ))}
+              <div className="col-span-2 bg-primary text-white rounded-2xl p-5 text-center">
+                <p className="text-xs uppercase tracking-widest font-bold opacity-90 mb-1">EJEMPLO REAL DE GESTIÓN</p>
+                <p className="text-sm">164 leads gestionados en un mes para un grupo de concesionarios, con derivación equitativa entre 5 comerciales.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Tarifas */}
+      <section id="tarifas" className="py-24 bg-white">
+        <div className="mf-container">
+          <div className="text-center mb-12 max-w-3xl mx-auto">
+            <span className="text-xs font-bold uppercase tracking-widest text-primary block mb-3">TARIFAS</span>
+            <h2 className="text-3xl md:text-headline-lg font-semibold mb-3">Pagas por lo que usas</h2>
+            <p className="text-on-surface-variant">
+              Licencia mensual con consumo por minuto, email y línea virtual. Sin volumen mínimo: si un mes no atiendes, no facturamos por encima de la licencia. IVA y otros impuestos no incluidos.
             </p>
-            <Link href={`/contacto?servicio=${productSlug}`} className="inline-block bg-white text-primary px-10 py-5 font-bold rounded-xl text-lg hover:bg-gray-100 transition-all shadow-xl">
-              COMENZAR AHORA
-            </Link>
           </div>
-          <div aria-hidden className="absolute top-0 right-0 p-12 opacity-10">
-            <span className="material-symbols-outlined" style={{ fontSize: 300 }}>rocket_launch</span>
+          <div className="bg-surface-container-low rounded-3xl border border-outline-variant overflow-hidden max-w-4xl mx-auto">
+            <div className="overflow-x-auto">
+              <table className="w-full min-w-[600px] text-sm">
+                <thead>
+                  <tr className="border-b border-outline-variant">
+                    <th className="text-left p-4 font-semibold text-on-surface-variant">Servicio</th>
+                    <th className="text-right p-4 font-semibold text-primary">Cuota mensual</th>
+                    <th className="text-right p-4 font-semibold text-on-surface">Set up</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {TARIFFS.map((t, i) => (
+                    <tr key={t.label} className={i < TARIFFS.length - 1 ? 'border-b border-outline-variant/40' : ''}>
+                      <td className="p-4">
+                        <p className="font-semibold m-0">{t.label}</p>
+                        <p className="text-xs text-on-surface-variant m-0 mt-1">{t.meta}</p>
+                      </td>
+                      <td className="p-4 text-right font-bold tabular-nums whitespace-nowrap">{t.monthly}</td>
+                      <td className="p-4 text-right text-on-surface-variant tabular-nums whitespace-nowrap">{t.setup}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
+          <div className="max-w-4xl mx-auto mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="bg-primary/5 border border-primary/20 rounded-2xl p-6">
+              <p className="text-xs uppercase tracking-widest text-primary font-bold mb-2">SIMULACIÓN TIPO</p>
+              <p className="text-2xl font-bold mb-2">500 prospectos / mes</p>
+              <p className="text-sm text-on-surface-variant mb-4">
+                500 prospectos × 2,5 min promedio = <strong>1.250 minutos</strong>
+              </p>
+              <div className="pt-4 border-t border-primary/20">
+                <p className="text-xs text-on-surface-variant uppercase tracking-widest font-bold">Coste estimado</p>
+                <p className="text-3xl font-bold text-primary">775 €/mes</p>
+                <p className="text-xs text-on-surface-variant">+ licencia desde 150 €/mes</p>
+              </div>
+            </div>
+            <div className="bg-white border border-outline-variant rounded-2xl p-6 space-y-3 text-sm">
+              <p className="font-semibold m-0">Consideraciones</p>
+              <ul className="space-y-2 text-on-surface-variant text-sm">
+                <li className="flex gap-2"><span className="material-symbols-outlined text-primary shrink-0" style={{ fontSize: 18 }}>check</span><span>Facturación mensual con vencimiento a 30 días.</span></li>
+                <li className="flex gap-2"><span className="material-symbols-outlined text-primary shrink-0" style={{ fontSize: 18 }}>check</span><span>Actualización IPC sector servicios.</span></li>
+                <li className="flex gap-2"><span className="material-symbols-outlined text-primary shrink-0" style={{ fontSize: 18 }}>check</span><span>Cancelación con preaviso de 30 días.</span></li>
+                <li className="flex gap-2"><span className="material-symbols-outlined text-primary shrink-0" style={{ fontSize: 18 }}>check</span><span>Cualquier desarrollo a medida se valora aparte.</span></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* CTA */}
+      <section className="py-24 bg-surface-container-low border-t border-outline-variant">
+        <div className="max-w-3xl mx-auto text-center px-5">
+          <h2 className="text-3xl md:text-headline-lg font-semibold mb-4">¿Listo para externalizar tu atención al cliente?</h2>
+          <p className="text-lg text-on-surface-variant mb-8">
+            Cuéntanos cuántos leads recibes al mes y te enseñamos un dashboard real con un grupo de tu tamaño. En 30 minutos sabes el coste y el ROI estimado.
+          </p>
+          <Link href={`/contacto?servicio=${productSlug}`} className="inline-block bg-primary text-white px-10 py-5 rounded-xl text-xs font-bold uppercase tracking-widest hover:opacity-90 transition-all">
+            Solicitar Demo Personalizada
+          </Link>
         </div>
       </section>
     </div>

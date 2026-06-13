@@ -95,10 +95,17 @@ try {
     {
       productSlug: 'contact-center',
       productName: 'Contact Center',
-      basePriceCents: 24900,
+      basePriceCents: 15000, // 150 €/mes — licencia básica
       items: [
-        { itemKey: 'horas_mes', label: 'Horas de atención al mes', type: 'number', unitPriceCents: 1900, required: true, numberMin: 50, numberMax: 1000, numberDefault: 100, numberUnit: 'hora' },
-        { itemKey: 'quality_monitoring', label: 'Quality Monitoring con IA', helpText: 'Análisis automático del 100% de las llamadas.', type: 'checkbox', unitPriceCents: 4900, required: false, checkboxDefault: false },
+        { itemKey: 'tier_licencia', label: 'Tipo de licencia', helpText: 'WhatsApp Business API con desarrollo propio que mide la conversión del canal por excelencia.', type: 'select', unitPriceCents: 0, required: true, selectOptions: [
+          { value: 'estandar', label: 'Estándar (llamadas, email, click-to-call)', priceCents: 0, setupCents: 0, isDefault: true },
+          { value: 'whatsapp', label: 'Con WhatsApp Business API (180 €/mes)', priceCents: 3000, setupCents: 0, isDefault: false },
+        ] },
+        { itemKey: 'minutos_mes', label: 'Llamadas estimadas al mes (minutos)', helpText: 'Tarifa 0,62 €/minuto. TMC promedio 2,5 min · máximo 3,5 min. Ejemplo: 500 prospectos = 1.250 minutos = 775 €/mes.', type: 'number', unitPriceCents: 62, required: true, numberMin: 0, numberMax: 10000, numberDefault: 1250, numberUnit: 'min' },
+        { itemKey: 'emails_mes', label: 'Emails gestionados al mes', helpText: 'Tarifa 0,55 €/email atendido por el equipo.', type: 'number', unitPriceCents: 55, required: false, numberMin: 0, numberMax: 5000, numberDefault: 0, numberUnit: 'email' },
+        { itemKey: 'lineas_virtuales', label: 'Teléfonos virtuales (líneas)', helpText: 'Tarifa 5,35 €/línea/mes. Útil para tracking por canal o ubicación.', type: 'number', unitPriceCents: 535, required: false, numberMin: 0, numberMax: 20, numberDefault: 0, numberUnit: 'línea' },
+        { itemKey: 'multidioma', label: 'Servicio multidioma (EN/FR/PT)', helpText: 'Castellano y catalán incluidos. Inglés, francés y portugués como add-on.', type: 'checkbox', unitPriceCents: 5000, required: false, checkboxDefault: false },
+        { itemKey: 'mystery_calls', label: 'Mystery Calls trimestrales', helpText: 'Realizamos llamadas anónimas a tu red para evaluar la atención comercial.', type: 'checkbox', unitPriceCents: 9900, required: false, checkboxDefault: false },
       ],
     },
     {
@@ -135,6 +142,42 @@ try {
       ],
     },
   ]
+
+  // Migración puntual Contact Center: el seed antiguo tenía un item
+  // 'horas_mes' que ya no encaja con las tarifas del PDF (licencia +
+  // minutos + emails + líneas). Si el plan en BD aún tiene horas_mes,
+  // sustituimos sus items y basePriceCents por los del nuevo seed.
+  {
+    const { docs: cc } = await payload.find({
+      collection: 'pricing-plans',
+      where: { productSlug: { equals: 'contact-center' } },
+      limit: 1,
+    })
+    const existingCc = cc[0]
+    if (existingCc && Array.isArray(existingCc.items) && existingCc.items.some((i) => i.itemKey === 'horas_mes')) {
+      const newCcSeed = [
+        { itemKey: 'tier_licencia', label: 'Tipo de licencia', helpText: 'WhatsApp Business API con desarrollo propio que mide la conversión del canal por excelencia.', type: 'select', unitPriceCents: 0, required: true, selectOptions: [
+          { value: 'estandar', label: 'Estándar (llamadas, email, click-to-call)', priceCents: 0, setupCents: 0, isDefault: true },
+          { value: 'whatsapp', label: 'Con WhatsApp Business API (180 €/mes)', priceCents: 3000, setupCents: 0, isDefault: false },
+        ] },
+        { itemKey: 'minutos_mes', label: 'Llamadas estimadas al mes (minutos)', helpText: 'Tarifa 0,62 €/minuto. TMC promedio 2,5 min · máximo 3,5 min. Ejemplo: 500 prospectos = 1.250 minutos = 775 €/mes.', type: 'number', unitPriceCents: 62, required: true, numberMin: 0, numberMax: 10000, numberDefault: 1250, numberUnit: 'min' },
+        { itemKey: 'emails_mes', label: 'Emails gestionados al mes', helpText: 'Tarifa 0,55 €/email atendido por el equipo.', type: 'number', unitPriceCents: 55, required: false, numberMin: 0, numberMax: 5000, numberDefault: 0, numberUnit: 'email' },
+        { itemKey: 'lineas_virtuales', label: 'Teléfonos virtuales (líneas)', helpText: 'Tarifa 5,35 €/línea/mes. Útil para tracking por canal o ubicación.', type: 'number', unitPriceCents: 535, required: false, numberMin: 0, numberMax: 20, numberDefault: 0, numberUnit: 'línea' },
+        { itemKey: 'multidioma', label: 'Servicio multidioma (EN/FR/PT)', helpText: 'Castellano y catalán incluidos. Inglés, francés y portugués como add-on.', type: 'checkbox', unitPriceCents: 5000, required: false, checkboxDefault: false },
+        { itemKey: 'mystery_calls', label: 'Mystery Calls trimestrales', helpText: 'Realizamos llamadas anónimas a tu red para evaluar la atención comercial.', type: 'checkbox', unitPriceCents: 9900, required: false, checkboxDefault: false },
+      ]
+      try {
+        await payload.update({
+          collection: 'pricing-plans',
+          id: existingCc.id,
+          data: { basePriceCents: 15000, items: newCcSeed },
+        })
+        console.log('[sync-schema] ↻ Contact Center: items migrados a tarifas del PDF (licencia + minutos + emails + líneas)')
+      } catch (err) {
+        console.warn('[sync-schema] ✗ migración Contact Center:', err?.message || err)
+      }
+    }
+  }
 
   // Migración suave: si quedan planes con el slug viejo
   // 'motorflash-renting', los renombramos a 'motorflash-connect'
