@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { Reveal } from '@/components/Reveal'
+import { HistoryTimeline } from '@/components/HistoryTimeline'
 
 export const metadata = {
   title: 'La Compañía — Motorflash Ibérica',
@@ -149,34 +150,7 @@ export default function CompaniaPage() {
             </div>
           </Reveal>
 
-          <div className="relative">
-            <div aria-hidden className="hidden md:block absolute left-1/2 top-0 bottom-0 w-px -translate-x-1/2 bg-outline-variant" />
-
-            <div className="space-y-16">
-              {TIMELINE.map((item, idx) => {
-                const reversed = idx % 2 === 1
-                return (
-                  <Reveal key={item.year}>
-                    <div className="relative">
-                      <div className={`hidden md:flex absolute left-1/2 top-4 -translate-x-1/2 w-4 h-4 rounded-full bg-primary ring-8 ring-primary/10`} />
-                      <div className={`grid grid-cols-1 md:grid-cols-2 gap-8 items-center ${reversed ? '' : ''}`}>
-                        <div className={`${reversed ? 'md:order-2' : 'md:text-right md:order-1'}`}>
-                          <span className="font-display text-5xl font-semibold text-primary/10 block mb-2 leading-none">{item.year}</span>
-                          <h3 className="text-2xl font-semibold mb-3">{item.title}</h3>
-                          <p className={`text-on-surface-variant ${reversed ? '' : 'md:ml-auto'} max-w-md ${reversed ? '' : 'md:text-right'}`}>{item.desc}</p>
-                        </div>
-                        <div className={`${reversed ? 'md:order-1' : 'md:order-2'}`}>
-                          <div className={`h-64 rounded-3xl flex items-center justify-center border ${item.accent ? 'bg-primary border-transparent text-white' : 'bg-surface-container border-outline-variant text-primary'}`}>
-                            <span className="material-symbols-outlined" style={{ fontSize: 80, opacity: item.accent ? 0.3 : 0.4 }}>{item.icon}</span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </Reveal>
-                )
-              })}
-            </div>
-          </div>
+          <HistoryTimeline items={TIMELINE} />
         </div>
       </section>
 
