@@ -199,6 +199,7 @@ try {
                 { label: 'Photocall IA', url: '/servicios/spyne', icon: 'photo_camera' },
                 { label: 'WhatsApp Business', url: '/servicios/motorflash-message', icon: 'chat' },
                 { label: 'Motorflash IA', url: '/servicios/ia', icon: 'psychology' },
+                { label: 'MotorFlash Connect', url: '/servicios/motorflash-renting', icon: 'autorenew' },
                 { label: 'Lead Exclusive', url: '/servicios/lead-factory', icon: 'star' },
                 { label: 'Ver catálogo completo', url: '/servicios', icon: 'arrow_forward' },
               ],
@@ -212,7 +213,38 @@ try {
       })
       console.log('[sync-schema] + menú principal creado')
     } else {
-      console.log(`[sync-schema] = menú principal ya tiene ${menu.items.length} items, sin tocar`)
+      // Migración idempotente: si el dropdown Servicios ya existe pero
+      // no contiene el sub-enlace de MotorFlash Connect, lo añadimos
+      // justo antes de Lead Exclusive. Si Lead Exclusive no existe, lo
+      // metemos al final del dropdown.
+      const items = Array.isArray(menu.items) ? [...menu.items] : []
+      let touched = false
+      for (const item of items) {
+        if (item.kind !== 'dropdown' || !Array.isArray(item.children)) continue
+        const hasConnect = item.children.some((c) => c.url === '/servicios/motorflash-renting')
+        if (hasConnect) continue
+        const isServiciosDropdown = item.children.some((c) => c.url?.startsWith?.('/servicios/'))
+        if (!isServiciosDropdown) continue
+        const leadIdx = item.children.findIndex((c) => c.url === '/servicios/lead-factory')
+        const insertAt = leadIdx >= 0 ? leadIdx : item.children.length
+        item.children.splice(insertAt, 0, {
+          label: 'MotorFlash Connect',
+          url: '/servicios/motorflash-renting',
+          icon: 'autorenew',
+        })
+        touched = true
+        break
+      }
+      if (touched) {
+        try {
+          await payload.updateGlobal({ slug: 'main-menu', data: { items } })
+          console.log('[sync-schema] ↻ menú: + MotorFlash Connect en dropdown Servicios')
+        } catch (err) {
+          console.warn('[sync-schema] ✗ menú update:', err?.message || err)
+        }
+      } else {
+        console.log(`[sync-schema] = menú principal ya tiene ${menu.items.length} items, sin tocar`)
+      }
     }
   } catch (err) {
     console.warn('[sync-schema] ✗ seed menú:', err?.message || err)
