@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import Link from 'next/link'
+import { BeforeAfterSlider } from '@/components/BeforeAfterSlider'
 
 export function Spyne() {
   const productSlug = 'spyne'
@@ -79,17 +80,17 @@ export function Spyne() {
                   <h3 className="text-xl font-medium">Sustitución de fondos y plataforma giratoria</h3>
                 </div>
                 <p className="text-sm text-on-surface-variant mb-8">
-                  La IA detecta el vehículo, lo recorta y reemplaza el fondo por uno profesional o el tuyo personalizado. Además genera la plataforma bajo el coche para que parezca tomado en estudio.
+                  La IA detecta el vehículo, lo recorta y reemplaza el fondo por uno profesional o el tuyo personalizado. Además genera la plataforma bajo el coche para que parezca tomado en estudio. Arrastra el divisor para comparar.
                 </p>
               </div>
-              <div className="relative h-64 rounded-xl overflow-hidden shadow-inner bg-surface-container-low">
-                <Image src="/images/products/spyne-background-removal.png" alt="Comparativa eliminación de fondos" fill className="object-cover transition-transform duration-700 group-hover:scale-110" sizes="(min-width: 768px) 50vw, 100vw" />
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="bg-primary/90 p-2 rounded-full backdrop-blur-md shadow-lg">
-                    <span className="material-symbols-outlined text-white">compare</span>
-                  </div>
-                </div>
-              </div>
+              <BeforeAfterSlider
+                beforeSrc="/images/products/spyne-before.jpg"
+                afterSrc="/images/products/spyne-after.jpg"
+                beforeAlt="Foto original del vehículo tomada en el concesionario"
+                afterAlt="Misma foto procesada con IA: fondo de estudio y plataforma giratoria"
+                beforeLabel="Antes"
+                afterLabel="Después"
+              />
             </div>
 
             <div className="md:col-span-5 bg-surface-container p-8 rounded-2xl border border-outline-variant flex flex-col items-center text-center">
