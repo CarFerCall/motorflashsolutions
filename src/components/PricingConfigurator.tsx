@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { useEffect, useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
 import { buildDefaultSelections, computeProductLine, type SelectionMap } from '@/lib/multiQuotePricing'
 import type { NormalizedItem } from '@/lib/pricing'
 import { submitMultiQuote } from '@/app/actions/submitMultiQuote'
@@ -19,9 +19,9 @@ interface Props {
   products: ConfiguratorProduct[]
 }
 
-// Muestra precio sin decimales si es redondo (199 €) y con 2 decimales si
-// no lo es (0,25 €). Antes formateaba todo sin decimales, así que un
-// precio sub-euro salía como "0 €" y parecía que no se pintaba.
+// Muestra precio sin decimales si es redondo (199 €) y con 2 decimales si no
+// lo es (0,25 €). Antes formateaba todo sin decimales y un precio sub-euro
+// se mostraba como "0 €".
 const fmt = (cents: number) => {
   const euros = cents / 100
   const hasDecimals = Math.abs(euros - Math.round(euros)) > 0.001
@@ -32,7 +32,6 @@ const fmt = (cents: number) => {
 export function PricingConfigurator({ products }: Props) {
   const [selected, setSelected] = useState<Set<string>>(new Set())
   const [selections, setSelections] = useState<SelectionMap>({})
-  const [activeSlug, setActiveSlug] = useState<string | null>(null)
   const [showForm, setShowForm] = useState(false)
 
   // Datos del formulario
@@ -65,22 +64,10 @@ export function PricingConfigurator({ products }: Props) {
             [slug]: sel[slug] ?? buildDefaultSelections(product.items),
           }))
         }
-        // Si nada está activo, este pasa a ser el activo
-        setActiveSlug((prevActive) => prevActive ?? slug)
       }
       return next
     })
   }
-
-  // Si el slug activo se deselecciona, salta al siguiente
-  useEffect(() => {
-    if (activeSlug && !selected.has(activeSlug)) {
-      const next = Array.from(selected)[0] ?? null
-      setActiveSlug(next)
-    } else if (!activeSlug && selected.size > 0) {
-      setActiveSlug(Array.from(selected)[0])
-    }
-  }, [selected, activeSlug])
 
   const updateSelection = (productSlug: string, itemKey: string, value: string) => {
     setSelections((prev) => ({
@@ -100,9 +87,7 @@ export function PricingConfigurator({ products }: Props) {
       .filter(Boolean) as Array<{ product: ConfiguratorProduct; breakdown: ReturnType<typeof computeProductLine> }>
   }, [selected, selections, productBySlug])
 
-  const linesBySlug = useMemo(() => new Map(lines.map((l) => [l.product.slug, l])), [lines])
   const totalCents = lines.reduce((acc, l) => acc + l.breakdown.totalCents, 0)
-  const activeLine = activeSlug ? linesBySlug.get(activeSlug) : null
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -144,10 +129,10 @@ export function PricingConfigurator({ products }: Props) {
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-      {/* Columna izquierda: cards + tabs de configuración */}
-      <div className="lg:col-span-8 space-y-6">
+      {/* Columna izquierda: lista de productos expandibles + desglose */}
+      <div className="lg:col-span-8 space-y-4">
         <div className="bg-white rounded-3xl border border-outline-variant shadow-sm p-6 md:p-8">
-          <div className="flex items-center justify-between gap-4 mb-8">
+          <div className="flex items-center justify-between gap-4 mb-6">
             <h2 className="text-2xl md:text-3xl font-semibold border-l-4 border-primary pl-4">Elige tus soluciones</h2>
             {selected.size > 0 && (
               <span className="text-sm text-on-surface-variant whitespace-nowrap">
@@ -156,125 +141,61 @@ export function PricingConfigurator({ products }: Props) {
             )}
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {/* Lista vertical de productos. Cada uno se selecciona y expande in-place. */}
+          <div className="space-y-3">
             {products.map((p) => {
               const isSelected = selected.has(p.slug)
+              const breakdown = isSelected
+                ? computeProductLine(p.basePriceCents, p.items, selections[p.slug])
+                : null
               return (
-                <button
-                  type="button"
+                <ProductRow
                   key={p.slug}
-                  onClick={() => toggleProduct(p.slug)}
-                  className={`text-left p-5 rounded-2xl border-2 transition-all group ${
-                    isSelected ? 'border-primary' : 'border-outline-variant hover:border-primary/50'
-                  }`}
-                  style={isSelected ? { background: 'rgba(255, 128, 0, 0.05)' } : undefined}
-                  aria-pressed={isSelected}
-                >
-                  <div className="flex items-start justify-between mb-4">
-                    <div
-                      className="w-12 h-12 rounded-xl flex items-center justify-center transition-colors"
-                      style={{ background: isSelected ? 'rgba(255, 128, 0, 0.15)' : '#f9fafb' }}
-                    >
-                      <span className="material-symbols-outlined text-primary">{p.icon}</span>
-                    </div>
-                    <div
-                      className={`w-6 h-6 rounded-md border-2 flex items-center justify-center transition-colors ${
-                        isSelected ? 'border-primary' : 'border-outline-variant'
-                      }`}
-                      style={isSelected ? { background: '#ff8000' } : undefined}
-                    >
-                      {isSelected && (
-                        <span className="material-symbols-outlined text-white" style={{ fontSize: 16 }}>check</span>
-                      )}
-                    </div>
-                  </div>
-                  <h3 className="text-lg font-semibold mb-1">{p.name}</h3>
-                  <p className="text-sm text-on-surface-variant mb-3 line-clamp-2">{p.tagline}</p>
-                  <p className="text-primary font-bold">Desde {fmt(p.basePriceCents)}/mes</p>
-                </button>
+                  product={p}
+                  isSelected={isSelected}
+                  breakdown={breakdown}
+                  selections={selections[p.slug] ?? {}}
+                  onToggle={() => toggleProduct(p.slug)}
+                  onItemChange={(itemKey, value) => updateSelection(p.slug, itemKey, value)}
+                />
               )
             })}
           </div>
         </div>
 
-        {/* Configurador por producto (tabs) */}
-        {lines.length > 0 && activeLine && (
-          <div className="bg-white rounded-3xl border border-outline-variant shadow-sm overflow-hidden">
-            {/* Tabs */}
-            <div className="border-b border-outline-variant overflow-x-auto">
-              <div className="flex min-w-max">
-                {lines.map(({ product, breakdown }) => {
-                  const isActive = product.slug === activeSlug
-                  return (
-                    <button
-                      type="button"
-                      key={product.slug}
-                      onClick={() => setActiveSlug(product.slug)}
-                      className={`flex items-center gap-3 px-5 py-4 border-b-2 transition-colors ${
-                        isActive
-                          ? 'border-primary text-on-surface bg-white'
-                          : 'border-transparent text-on-surface-variant hover:text-on-surface'
-                      }`}
-                      style={isActive ? { background: 'rgba(255, 128, 0, 0.04)' } : undefined}
-                      aria-pressed={isActive}
-                    >
-                      <div
-                        className="w-8 h-8 rounded-lg flex items-center justify-center shrink-0"
-                        style={{ background: isActive ? 'rgba(255, 128, 0, 0.15)' : '#f3f4f6' }}
-                      >
-                        <span className="material-symbols-outlined text-primary" style={{ fontSize: 18 }}>{product.icon}</span>
-                      </div>
-                      <div className="text-left">
-                        <p className="font-semibold text-sm m-0 leading-tight">{product.name}</p>
-                        <p className="text-xs text-on-surface-variant m-0">{fmt(breakdown.totalCents)}/mes</p>
-                      </div>
-                    </button>
-                  )
-                })}
-              </div>
+        {/* Desglose por producto */}
+        {lines.length > 0 && (
+          <div className="bg-white rounded-3xl border border-outline-variant shadow-sm p-6 md:p-8">
+            <h2 className="text-2xl md:text-3xl font-semibold mb-6 border-l-4 border-primary pl-4">Desglose por producto</h2>
+            <div className="space-y-6">
+              {lines.map(({ product, breakdown }) => (
+                <div key={product.slug} className="pb-6 border-b border-outline-variant last:border-b-0 last:pb-0">
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className="w-10 h-10 rounded-lg flex items-center justify-center" style={{ background: 'rgba(255, 128, 0, 0.10)' }}>
+                      <span className="material-symbols-outlined text-primary" style={{ fontSize: 22 }}>{product.icon}</span>
+                    </div>
+                    <h3 className="text-lg font-semibold m-0 flex-1">{product.name}</h3>
+                    <span className="text-xl font-bold whitespace-nowrap">{fmt(breakdown.totalCents)}<span className="text-sm text-on-surface-variant font-medium">/mes</span></span>
+                  </div>
+                  <div className="space-y-1 text-sm pl-13" style={{ paddingLeft: 52 }}>
+                    <div className="flex justify-between text-on-surface-variant">
+                      <span>Cuota base</span>
+                      <span className="tabular-nums">{fmt(breakdown.baseCents)}</span>
+                    </div>
+                    {breakdown.itemsDetail.length === 0 ? (
+                      <p className="text-xs text-on-surface-variant italic m-0 pt-1">Sin extras configurados.</p>
+                    ) : (
+                      breakdown.itemsDetail.map((d, i) => (
+                        <div key={i} className="flex justify-between text-on-surface-variant">
+                          <span>+ {d.label} <em className="not-italic opacity-70">({d.valueLabel})</em></span>
+                          <span className="tabular-nums">{fmt(d.cents)}</span>
+                        </div>
+                      ))
+                    )}
+                  </div>
+                </div>
+              ))}
             </div>
-
-            {/* Panel activo */}
-            <ProductPanel
-              key={activeLine.product.slug}
-              product={activeLine.product}
-              selections={selections[activeLine.product.slug] ?? {}}
-              onChange={(key, value) => updateSelection(activeLine.product.slug, key, value)}
-              breakdown={activeLine.breakdown}
-            />
-
-            {/* Navegación entre tabs */}
-            {lines.length > 1 && (
-              <div className="flex items-center justify-between gap-3 px-6 py-4 border-t border-outline-variant" style={{ background: '#f9fafb' }}>
-                <button
-                  type="button"
-                  onClick={() => {
-                    const idx = lines.findIndex((l) => l.product.slug === activeSlug)
-                    if (idx > 0) setActiveSlug(lines[idx - 1].product.slug)
-                  }}
-                  disabled={lines.findIndex((l) => l.product.slug === activeSlug) === 0}
-                  className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium text-on-surface-variant hover:text-primary disabled:opacity-30 disabled:cursor-not-allowed"
-                >
-                  <span className="material-symbols-outlined">arrow_back</span>
-                  Anterior
-                </button>
-                <span className="text-xs text-on-surface-variant">
-                  {lines.findIndex((l) => l.product.slug === activeSlug) + 1} de {lines.length}
-                </span>
-                <button
-                  type="button"
-                  onClick={() => {
-                    const idx = lines.findIndex((l) => l.product.slug === activeSlug)
-                    if (idx < lines.length - 1) setActiveSlug(lines[idx + 1].product.slug)
-                  }}
-                  disabled={lines.findIndex((l) => l.product.slug === activeSlug) === lines.length - 1}
-                  className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium text-on-surface-variant hover:text-primary disabled:opacity-30 disabled:cursor-not-allowed"
-                >
-                  Siguiente
-                  <span className="material-symbols-outlined">arrow_forward</span>
-                </button>
-              </div>
-            )}
           </div>
         )}
       </div>
@@ -289,33 +210,12 @@ export function PricingConfigurator({ products }: Props) {
               Selecciona un producto para comenzar
             </p>
           ) : (
-            <div className="space-y-4 mb-6">
+            <div className="space-y-3 mb-6">
               {lines.map(({ product, breakdown }) => (
-                <button
-                  type="button"
-                  key={product.slug}
-                  onClick={() => setActiveSlug(product.slug)}
-                  className={`w-full text-left pb-4 border-b border-outline-variant/50 last:border-b-0 transition-colors rounded-lg px-2 py-2 -mx-2 ${
-                    activeSlug === product.slug ? 'bg-primary/5' : 'hover:bg-surface-container/50'
-                  }`}
-                >
-                  <div className="flex justify-between items-baseline gap-3 mb-1">
-                    <p className="font-semibold m-0">{product.name}</p>
-                    <span className="font-bold whitespace-nowrap">{fmt(breakdown.totalCents)}</span>
-                  </div>
-                  <div className="text-xs text-on-surface-variant space-y-0.5">
-                    <div className="flex justify-between">
-                      <span>Cuota base</span>
-                      <span>{fmt(breakdown.baseCents)}</span>
-                    </div>
-                    {breakdown.itemsDetail.map((d, i) => (
-                      <div key={i} className="flex justify-between">
-                        <span className="truncate">+ {d.label} <em className="not-italic opacity-70">({d.valueLabel})</em></span>
-                        <span className="whitespace-nowrap ml-2">{fmt(d.cents)}</span>
-                      </div>
-                    ))}
-                  </div>
-                </button>
+                <div key={product.slug} className="flex justify-between items-baseline gap-3 pb-3 border-b border-outline-variant/50 last:border-b-0">
+                  <p className="font-semibold m-0">{product.name}</p>
+                  <span className="font-bold whitespace-nowrap tabular-nums">{fmt(breakdown.totalCents)}</span>
+                </div>
               ))}
             </div>
           )}
@@ -324,7 +224,7 @@ export function PricingConfigurator({ products }: Props) {
             <div className="flex justify-between items-end">
               <span className="text-lg font-semibold">Total</span>
               <div className="text-right">
-                <div className="text-4xl font-bold leading-none">{fmt(totalCents)}</div>
+                <div className="text-4xl font-bold leading-none tabular-nums">{fmt(totalCents)}</div>
                 <span className="text-xs uppercase tracking-widest text-on-surface-variant font-semibold">/ mes + IVA</span>
               </div>
             </div>
@@ -374,68 +274,99 @@ export function PricingConfigurator({ products }: Props) {
 }
 
 /**
- * Panel del producto activo: cabecera con icono + nombre + cuota, items
- * en grid de tarjetas según su tipo.
+ * Una fila por producto. Header clickable que selecciona/deselecciona,
+ * y al activarse despliega in-place los items configurables justo debajo
+ * con un borde marcado en naranja.
  */
-function ProductPanel({
+function ProductRow({
   product,
-  selections,
-  onChange,
+  isSelected,
   breakdown,
+  selections,
+  onToggle,
+  onItemChange,
 }: {
   product: ConfiguratorProduct
+  isSelected: boolean
+  breakdown: ReturnType<typeof computeProductLine> | null
   selections: Record<string, string>
-  onChange: (itemKey: string, value: string) => void
-  breakdown: ReturnType<typeof computeProductLine>
+  onToggle: () => void
+  onItemChange: (itemKey: string, value: string) => void
 }) {
   return (
-    <div className="p-6 md:p-8 space-y-6">
-      {/* Cabecera del producto */}
-      <div className="flex items-start gap-4 pb-6 border-b border-outline-variant">
-        <div className="w-14 h-14 rounded-2xl flex items-center justify-center shrink-0" style={{ background: 'rgba(255, 128, 0, 0.10)' }}>
-          <span className="material-symbols-outlined text-primary" style={{ fontSize: 30 }}>{product.icon}</span>
+    <div
+      className={`rounded-2xl border-2 transition-all overflow-hidden ${
+        isSelected ? 'border-primary' : 'border-outline-variant hover:border-primary/50'
+      }`}
+      style={isSelected ? { background: 'rgba(255, 128, 0, 0.04)' } : undefined}
+    >
+      <button
+        type="button"
+        onClick={onToggle}
+        className="w-full text-left p-4 md:p-5 flex items-center gap-4"
+        aria-pressed={isSelected}
+      >
+        <div
+          className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0 transition-colors"
+          style={{ background: isSelected ? 'rgba(255, 128, 0, 0.15)' : '#f9fafb' }}
+        >
+          <span className="material-symbols-outlined text-primary">{product.icon}</span>
         </div>
         <div className="flex-1 min-w-0">
-          <h3 className="text-xl font-semibold m-0 leading-tight">{product.name}</h3>
-          <p className="text-sm text-on-surface-variant m-0 mt-1">{product.tagline}</p>
+          <h3 className="text-base md:text-lg font-semibold m-0 leading-tight">{product.name}</h3>
+          <p className="text-xs md:text-sm text-on-surface-variant m-0 mt-0.5 line-clamp-1">{product.tagline}</p>
         </div>
-        <div className="text-right shrink-0">
-          <p className="text-xs uppercase tracking-widest text-on-surface-variant font-semibold m-0">Cuota base</p>
-          <p className="text-xl font-bold text-on-surface m-0">{fmt(product.basePriceCents)}<span className="text-sm font-medium text-on-surface-variant">/mes</span></p>
+        <div className="text-right shrink-0 hidden sm:block">
+          <p className="text-xs uppercase tracking-widest text-on-surface-variant font-semibold m-0">
+            {isSelected ? 'Total' : 'Desde'}
+          </p>
+          <p className="text-base md:text-lg font-bold text-primary m-0 tabular-nums">
+            {fmt(isSelected && breakdown ? breakdown.totalCents : product.basePriceCents)}
+            <span className="text-xs font-medium text-on-surface-variant">/mes</span>
+          </p>
         </div>
-      </div>
+        <div
+          className={`w-6 h-6 rounded-md border-2 flex items-center justify-center transition-colors shrink-0 ${
+            isSelected ? 'border-primary' : 'border-outline-variant'
+          }`}
+          style={isSelected ? { background: '#ff8000' } : undefined}
+        >
+          {isSelected && (
+            <span className="material-symbols-outlined text-white" style={{ fontSize: 16 }}>check</span>
+          )}
+        </div>
+      </button>
 
-      {product.items.length === 0 ? (
-        <div className="text-center py-8 rounded-2xl" style={{ background: '#f9fafb' }}>
-          <span className="material-symbols-outlined text-on-surface-variant mb-2" style={{ fontSize: 28 }}>info</span>
-          <p className="text-sm text-on-surface-variant m-0">Este producto tiene cuota fija — no requiere configuración adicional.</p>
-        </div>
-      ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {product.items.map((item) => (
-            <ItemCard
-              key={item.itemKey}
-              item={item}
-              value={selections[item.itemKey]}
-              onChange={(v) => onChange(item.itemKey, v)}
-            />
-          ))}
+      {isSelected && (
+        <div className="border-t border-outline-variant p-5 md:p-6 bg-white">
+          {product.items.length === 0 ? (
+            <div className="text-center py-6 rounded-xl" style={{ background: '#f9fafb' }}>
+              <span className="material-symbols-outlined text-on-surface-variant mb-2" style={{ fontSize: 24 }}>info</span>
+              <p className="text-sm text-on-surface-variant m-0">Cuota fija — sin extras que configurar.</p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {product.items.map((item) => (
+                <ItemCard
+                  key={item.itemKey}
+                  item={item}
+                  value={selections[item.itemKey]}
+                  onChange={(v) => onItemChange(item.itemKey, v)}
+                />
+              ))}
+            </div>
+          )}
         </div>
       )}
     </div>
   )
 }
 
-/**
- * Card por item. Una tarjeta visualmente independiente con el control
- * apropiado al tipo. Los items "select" ocupan toda la fila porque
- * suelen tener varias opciones.
- */
 function ItemCard({ item, value, onChange }: { item: NormalizedItem; value: string | undefined; onChange: (v: string) => void }) {
   const fullWidth = item.type === 'select'
   return (
     <div
-      className={`p-5 rounded-2xl border border-outline-variant bg-white ${fullWidth ? 'md:col-span-2' : ''}`}
+      className={`p-5 rounded-2xl border border-outline-variant ${fullWidth ? 'md:col-span-2' : ''}`}
       style={{ background: '#fafbfc' }}
     >
       <ItemControl item={item} value={value} onChange={onChange} />
