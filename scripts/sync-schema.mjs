@@ -54,15 +54,16 @@ try {
     {
       productSlug: 'crm4you',
       productName: 'CRM4YOU',
-      basePriceCents: 19900,
+      basePriceCents: 7200, // 72 €/mes licencia (1 usuario incluido)
       items: [
-        { itemKey: 'licencias', label: 'Licencias adicionales', helpText: 'Cada licencia incluye 1 usuario.', type: 'number', unitPriceCents: 2900, required: false, numberMin: 0, numberMax: 50, numberDefault: 0, numberUnit: 'licencia' },
-        { itemKey: 'tier', label: 'Tipo de plan', helpText: '', type: 'select', unitPriceCents: 0, required: true, selectOptions: [
-          { value: 'starter', label: 'Starter', priceCents: 0, isDefault: true },
-          { value: 'pro', label: 'Pro (multi-sede, automatizaciones)', priceCents: 9900, isDefault: false },
-          { value: 'enterprise', label: 'Enterprise (API + soporte VIP)', priceCents: 24900, isDefault: false },
+        { itemKey: 'contratacion', label: 'Tipo de contratación', helpText: 'El set up incluye configuración inicial del CRM, canales de publicación y formación al equipo (2 semanas).', type: 'select', unitPriceCents: 0, required: true, selectOptions: [
+          { value: 'nueva', label: 'Nueva implantación (incluye set up + formación)', priceCents: 0, setupCents: 35000, isDefault: true },
+          { value: 'existente', label: 'Cliente existente (sin set up)', priceCents: 0, setupCents: 0, isDefault: false },
         ] },
-        { itemKey: 'whatsapp_integration', label: 'Integración WhatsApp Business', helpText: 'Conecta CRM con chat omnicanal.', type: 'checkbox', unitPriceCents: 5900, required: false, checkboxDefault: false },
+        { itemKey: 'licencias_adicionales', label: 'Licencias adicionales', helpText: 'Cada licencia incluye 1 usuario activo. La primera viene en la cuota base.', type: 'number', unitPriceCents: 7200, required: false, numberMin: 0, numberMax: 100, numberDefault: 0, numberUnit: 'licencia' },
+        { itemKey: 'sim_tracking', label: 'SIM Tracking', helpText: 'Tracking de llamadas móviles del equipo comercial con grabación.', type: 'checkbox', unitPriceCents: 1800, required: false, checkboxDefault: false },
+        { itemKey: 'whatsapp_business', label: 'WhatsApp Business API', helpText: 'Línea oficial de WhatsApp Business integrada al CRM con multi-agente.', type: 'checkbox', unitPriceCents: 1800, required: false, checkboxDefault: false },
+        { itemKey: 'api_terceros', label: 'API con terceros', helpText: 'Conexiones API a tu DMS, ERP, sistemas de financiación o herramientas externas.', type: 'checkbox', unitPriceCents: 10000, required: false, checkboxDefault: false },
       ],
     },
     {
@@ -142,6 +143,43 @@ try {
       ],
     },
   ]
+
+  // Migración puntual CRM4YOU: el seed antiguo tenía items
+  // 'licencias' y 'whatsapp_integration' con precios que no encajan
+  // con las tarifas del PDF (72 €/mes + 350 € setup + 18 €/mes
+  // SIM/WhatsApp + 100 €/mes API). Si el plan en BD aún tiene el
+  // item antiguo 'whatsapp_integration', sustituimos todo por el seed
+  // nuevo.
+  {
+    const { docs: crmDocs } = await payload.find({
+      collection: 'pricing-plans',
+      where: { productSlug: { equals: 'crm4you' } },
+      limit: 1,
+    })
+    const existingCrm = crmDocs[0]
+    if (existingCrm && Array.isArray(existingCrm.items) && existingCrm.items.some((i) => i.itemKey === 'whatsapp_integration')) {
+      const newCrmItems = [
+        { itemKey: 'contratacion', label: 'Tipo de contratación', helpText: 'El set up incluye configuración inicial del CRM, canales de publicación y formación al equipo (2 semanas).', type: 'select', unitPriceCents: 0, required: true, selectOptions: [
+          { value: 'nueva', label: 'Nueva implantación (incluye set up + formación)', priceCents: 0, setupCents: 35000, isDefault: true },
+          { value: 'existente', label: 'Cliente existente (sin set up)', priceCents: 0, setupCents: 0, isDefault: false },
+        ] },
+        { itemKey: 'licencias_adicionales', label: 'Licencias adicionales', helpText: 'Cada licencia incluye 1 usuario activo. La primera viene en la cuota base.', type: 'number', unitPriceCents: 7200, required: false, numberMin: 0, numberMax: 100, numberDefault: 0, numberUnit: 'licencia' },
+        { itemKey: 'sim_tracking', label: 'SIM Tracking', helpText: 'Tracking de llamadas móviles del equipo comercial con grabación.', type: 'checkbox', unitPriceCents: 1800, required: false, checkboxDefault: false },
+        { itemKey: 'whatsapp_business', label: 'WhatsApp Business API', helpText: 'Línea oficial de WhatsApp Business integrada al CRM con multi-agente.', type: 'checkbox', unitPriceCents: 1800, required: false, checkboxDefault: false },
+        { itemKey: 'api_terceros', label: 'API con terceros', helpText: 'Conexiones API a tu DMS, ERP, sistemas de financiación o herramientas externas.', type: 'checkbox', unitPriceCents: 10000, required: false, checkboxDefault: false },
+      ]
+      try {
+        await payload.update({
+          collection: 'pricing-plans',
+          id: existingCrm.id,
+          data: { basePriceCents: 7200, items: newCrmItems },
+        })
+        console.log('[sync-schema] ↻ CRM4YOU: items migrados a tarifas del PDF (72 €/mes + 350 € setup + add-ons reales)')
+      } catch (err) {
+        console.warn('[sync-schema] ✗ migración CRM4YOU:', err?.message || err)
+      }
+    }
+  }
 
   // Migración puntual Contact Center: el seed antiguo tenía un item
   // 'horas_mes' que ya no encaja con las tarifas del PDF (licencia +

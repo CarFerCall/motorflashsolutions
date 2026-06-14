@@ -1,5 +1,78 @@
-import Image from 'next/image'
 import Link from 'next/link'
+
+const CLAVES = [
+  { v: '+1.750', l: 'Grupos, concesionarios y multimarcas' },
+  { v: '4.000', l: 'KPIs disponibles. Aunque solo uses 20.', primary: true },
+  { v: '+30.000', l: 'Horas de desarrollo propio' },
+  { v: '100 %', l: 'Adaptable al sector de la automoción' },
+]
+
+const DIFFERENTIATORS = [
+  { icon: 'inventory', title: 'Pioneros en gestión de stock', desc: 'Multipublica, comercializa y vende en UNA sola herramienta. No saltas entre sistemas para vender un coche.' },
+  { icon: 'tune', title: '100 % adaptable a tu negocio', desc: 'El único CRM del sector customizable. Crea flujos de trabajo, automatismos y campañas, apoyados con IA.' },
+  { icon: 'corporate_fare', title: 'Pensado para GRUPOS', desc: 'Única plataforma diseñada para grupos de concesionarios. Imputas datos en una sola plataforma independiente a las marcas con las que trabajes.' },
+  { icon: 'description', title: 'Gestor documental al click', desc: 'Ofertas, reservas, contratos, mandato, factura proforma, garantía. Integración con herramientas de financiación incluida.' },
+]
+
+const OBTAINABLES = [
+  { icon: 'analytics', title: 'Ratio de conversión', desc: 'Por comercial, portal, fuente de tráfico y concesionario.' },
+  { icon: 'paid', title: 'Coste por lead y por venta', desc: 'Real, sin interpretaciones ni hojas Excel.' },
+  { icon: 'sell', title: 'Informes de ventas, rotación y stock', desc: 'En tiempo real, exportables y comparables.' },
+  { icon: 'timer', title: 'Tiempo de respuesta a clientes', desc: 'Controla cuánto tarda cada comercial en contestar a cada lead.' },
+  { icon: 'campaign', title: 'Trazabilidad de campañas', desc: 'De marketing hasta la venta, con atribución real.' },
+  { icon: 'support', title: 'Módulo de Postventa', desc: 'Atención dedicada para los equipos de Postventa.' },
+  { icon: 'price_check', title: 'Tasación integrada', desc: 'Módulo de tasación nativo dentro del CRM.' },
+  { icon: 'groups', title: 'Visión consolidada de clientes', desc: 'Por cliente consolidado o por leads generados.' },
+  { icon: 'account_balance', title: 'Control de financiaciones', desc: 'Todas las solicitudes de financiación, en un solo sitio.' },
+  { icon: 'monitoring', title: 'Análisis de mercado del stock', desc: 'Compara cada vehículo con todos los similares publicados en portales.' },
+]
+
+const FEATURES_GRID = [
+  { n: '01', title: 'Tu flujo de venta', desc: 'Configurado a tu medida, etapa a etapa.' },
+  { n: '02', title: 'Evolutivos', desc: 'Roadmap continuo del producto basado en tus necesidades.' },
+  { n: '03', title: 'Datos del vehículo', desc: 'Multitud de campos nativos y personalizables por vehículo.' },
+  { n: '04', title: 'Gráficos de stock', desc: 'Rotación, antigüedad y mix por marca/modelo en directo.' },
+  { n: '05', title: 'Agenda comercial', desc: 'Citas, llamadas y tareas centralizadas por comercial.' },
+  { n: '06', title: 'Analítica de inversiones', desc: 'ROI por marca, por proveedor y por canal de captación.' },
+  { n: '07', title: 'Analítica de producto', desc: 'Qué se vende, a quién y por qué — sin reportes manuales.' },
+  { n: '08', title: 'Módulo financiero', desc: 'Solicitudes, ofertas y seguimiento con todas las financieras.' },
+  { n: '09', title: 'Una o múltiples oportunidades', desc: 'Varios coches y múltiples deals en una sola ficha de cliente.' },
+  { n: '10', title: 'Automatismos y marketing', desc: 'Campañas, secuencias y reglas que se ejecutan solas.' },
+  { n: '11', title: 'Informe de ventas', desc: 'Comercial, concesionario, marca, mes — el que te haga falta.' },
+  { n: '12', title: 'Documentación al click', desc: 'Ofertas, contratos, mandatos, facturas y garantías generados.' },
+]
+
+const COMMS = [
+  { icon: 'chat', title: 'WhatsApp Business API + App móvil' },
+  { icon: 'call', title: 'Telefonía VOZ IP, DDI y gestión de centralita' },
+  { icon: 'cell_tower', title: 'GSM móvil + grabaciones en tiempo real' },
+  { icon: 'phone_in_talk', title: 'App tracking de llamadas' },
+  { icon: 'mail', title: 'Integración de correo electrónico' },
+  { icon: 'contact_phone', title: 'Vcard: contacto del cliente integrado en móvil' },
+  { icon: 'auto_awesome', title: 'Copiloto de IA para análisis de actividad comercial' },
+]
+
+const SEGUIMIENTO = [
+  { icon: 'person', title: 'Cliente', desc: 'Todos sus leads, interacciones y evolución a lo largo del tiempo.' },
+  { icon: 'badge', title: 'Comercial', desc: 'Toda la actividad realizada por cada agente, en tiempo real.' },
+  { icon: 'directions_car', title: 'Vehículos', desc: 'Estadísticas nativas y en vivo de cada coche en stock.' },
+  { icon: 'savings', title: 'Costes y ventas', desc: 'Análisis detallado y evolutivo por concesión y por marca.' },
+]
+
+const TIMELINE = [
+  { week: 'Semana 1', step: 'Firma de contrato' },
+  { week: 'Semana 1', step: 'Recogida de datos, usuarios y configuración' },
+  { week: 'Semana 1', step: 'Configuración de CRM4YOU, canales y licencias' },
+  { week: 'Semana 2', step: 'Formación al equipo' },
+  { week: 'Semana 2', step: 'Listo para vender desde CRM4YOU' },
+]
+
+const STATS = [
+  { v: '17', l: 'AÑOS EN EL SECTOR', primary: true },
+  { v: '+950', l: 'LICENCIAS CRM IMPLANTADAS EN UN AÑO' },
+  { v: '+100', l: 'ESPECIALISTAS IT' },
+  { v: '+350', l: 'WEBS DESARROLLADAS' },
+]
 
 export function Crm4you() {
   const productSlug = 'crm4you'
@@ -7,200 +80,199 @@ export function Crm4you() {
   return (
     <div className="font-display text-on-surface">
       {/* Hero */}
-      <section className="relative min-h-[85vh] flex items-center overflow-hidden bg-white">
-        <div aria-hidden className="absolute inset-0 z-0 dot-grid" />
-        <div className="relative z-10 mf-container grid md:grid-cols-2 gap-6 items-center w-full">
-          <div className="space-y-8">
-            <span className="inline-block px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-bold uppercase tracking-widest">
-              INTELIGENCIA AUTOMOTRIZ
-            </span>
-            <h1 className="text-5xl md:text-display-lg font-bold leading-tight">
-              CRM4YOU: La evolución del <span className="text-primary">concesionario</span> inteligente.
+      <section className="relative min-h-[80vh] flex items-center overflow-hidden bg-white">
+        <div aria-hidden className="absolute inset-0 z-0" style={{ background: 'radial-gradient(circle at 20% 100%, rgba(255,128,0,0.10), transparent 60%)' }} />
+        <div className="relative z-10 mf-container">
+          <div className="max-w-3xl">
+            <span className="text-xs font-bold uppercase tracking-widest text-primary mb-4 block">CRM4YOU · MOTORFLASH SOLUTIONS</span>
+            <h1 className="text-5xl md:text-display-lg font-bold mb-6 leading-tight">
+              Un CRM para <span className="text-primary">TODO</span>. Y más.
             </h1>
-            <p className="text-lg text-on-surface-variant max-w-lg">
-              El único CRM diseñado específicamente para la gestión de múltiples ubicaciones, marcas y grupos de concesionarios. Potenciado por IA para una eficiencia sin precedentes.
+            <p className="text-lg text-on-surface-variant mb-10 max-w-2xl">
+              El único CRM creado por y para concesionarios y multimarcas. Stock, leads, comunicación, financiación, documentación y reporting en una sola plataforma. Sin reporting declarativo: todo se reporta solo.
             </p>
             <div className="flex flex-wrap gap-4">
-              <Link href={`/contacto?servicio=${productSlug}`} className="px-8 py-4 bg-primary text-white font-bold rounded-lg hover:scale-105 transition-transform orange-glow inline-flex items-center gap-2">
-                Solicitar Demo Gratis
+              <Link href={`/contacto?servicio=${productSlug}`} className="bg-primary text-white px-8 py-4 rounded-xl text-xs font-bold uppercase tracking-widest hover:shadow-lg hover:shadow-primary/20 transition-all">
+                Solicitar Demo
               </Link>
-              <Link href="/servicios" className="px-8 py-4 border border-outline/30 text-on-surface font-bold rounded-lg hover:bg-black/5 transition-all inline-flex items-center gap-2">
-                <span className="material-symbols-outlined text-primary">play_circle</span>
-                Ver todos los servicios
+              <Link href={`/precios#${productSlug}`} className="border border-outline text-on-surface px-8 py-4 rounded-xl text-xs font-bold uppercase tracking-widest hover:bg-surface-container transition-colors">
+                Ver tarifas en /precios
               </Link>
-            </div>
-          </div>
-          <div className="hidden md:block relative">
-            <div className="aspect-square rounded-2xl overflow-hidden border border-outline-variant/30 glass-card shadow-2xl relative group">
-              <Image src="/images/products/crm4you-hero.png" alt="Dashboard CRM4YOU" width={720} height={720} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
-              <div aria-hidden className="absolute inset-0 bg-gradient-to-t from-white/80 to-transparent" />
-              <div className="absolute bottom-8 left-8 right-8 space-y-2">
-                <div className="flex gap-2 items-center">
-                  <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-                  <span className="text-xs font-bold uppercase tracking-widest">IA ANALIZANDO LLAMADA EN VIVO</span>
-                </div>
-                <p className="text-xl font-bold">Resumen automático generado con 99% de precisión.</p>
-              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Bento grid */}
-      <section className="py-24 bg-surface-container-low">
+      {/* Claves */}
+      <section className="py-20 bg-surface-container-low border-y border-outline-variant">
         <div className="mf-container">
-          <div className="text-center mb-16 space-y-4">
-            <h2 className="text-3xl md:text-headline-lg font-semibold">Diseñado para la complejidad del sector</h2>
-            <p className="text-on-surface-variant max-w-2xl mx-auto">
-              Centraliza el control sin perder el detalle. CRM4YOU se adapta a la estructura de tu negocio, no al revés.
-            </p>
+          <div className="text-center mb-10 max-w-3xl mx-auto">
+            <span className="text-xs font-bold uppercase tracking-widest text-primary block mb-3">LAS CLAVES</span>
+            <h2 className="text-3xl md:text-headline-lg font-semibold">Una plataforma diseñada para tu sector y tu volumen</h2>
           </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {/* Multi-Location 2 cols */}
-            <div className="md:col-span-2 p-8 rounded-2xl bg-white border border-outline-variant shadow-sm flex flex-col justify-between group hover:border-primary/40 transition-colors">
-              <div className="space-y-4">
-                <span className="material-symbols-outlined text-primary text-4xl">hub</span>
-                <h3 className="text-xl font-medium">Gestión Multi-Ubicación</h3>
-                <p className="text-on-surface-variant">
-                  Visualiza el rendimiento de todos tus puntos de venta desde un panel único. Comparativas en tiempo real y flujo de leads distribuido inteligentemente.
-                </p>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
+            {CLAVES.map((c) => (
+              <div key={c.l} className={`rounded-2xl p-6 text-center border ${c.primary ? 'bg-primary text-white border-primary' : 'bg-white border-outline-variant'}`}>
+                <div className="text-4xl md:text-5xl font-bold mb-2 tabular-nums">{c.v}</div>
+                <div className={`text-xs font-bold uppercase tracking-widest ${c.primary ? 'opacity-90' : 'text-on-surface-variant'}`}>{c.l}</div>
               </div>
-              <div className="mt-12 h-48 rounded-lg bg-surface-container-high relative overflow-hidden">
-                <div className="absolute inset-0 flex items-center justify-center opacity-10">
-                  <span className="material-symbols-outlined text-primary" style={{ fontSize: 120 }}>map</span>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Diferenciadores */}
+      <section className="py-24 bg-white">
+        <div className="mf-container">
+          <div className="text-center mb-12 max-w-3xl mx-auto">
+            <span className="text-xs font-bold uppercase tracking-widest text-primary block mb-3">QUÉ NOS HACE DIFERENTES</span>
+            <h2 className="text-3xl md:text-headline-lg font-semibold mb-3">No es un CRM genérico. Es un CRM de automoción.</h2>
+            <p className="text-on-surface-variant">Llevamos 4 años adaptando la plataforma a los requerimientos reales de concesionarios y grupos. Tu equipo no se adapta al CRM — el CRM se adapta a tu equipo.</p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {DIFFERENTIATORS.map((d) => (
+              <div key={d.title} className="bg-surface-container-low border border-outline-variant rounded-2xl p-7">
+                <div className="w-14 h-14 bg-primary/10 rounded-2xl flex items-center justify-center mb-4">
+                  <span className="material-symbols-outlined text-primary text-3xl">{d.icon}</span>
                 </div>
-                <div className="absolute inset-0 p-4 grid grid-cols-4 gap-2">
-                  <div className="bg-primary/10 border border-primary/20 h-full rounded-md animate-pulse" />
-                  <div className="bg-primary/5 border border-outline-variant h-full rounded-md animate-pulse" style={{ animationDelay: '75ms' }} />
-                  <div className="bg-primary/[0.08] border border-outline-variant h-full rounded-md animate-pulse" style={{ animationDelay: '150ms' }} />
-                  <div className="bg-primary/5 border border-outline-variant h-full rounded-md animate-pulse" style={{ animationDelay: '200ms' }} />
+                <h3 className="text-xl font-semibold mb-2">{d.title}</h3>
+                <p className="text-sm text-on-surface-variant leading-snug">{d.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Obtenibles */}
+      <section className="py-24 bg-surface-container-low border-y border-outline-variant">
+        <div className="mf-container">
+          <div className="text-center mb-12 max-w-3xl mx-auto">
+            <span className="text-xs font-bold uppercase tracking-widest text-primary block mb-3">OBTENIBLES CON CRM4YOU</span>
+            <h2 className="text-3xl md:text-headline-lg font-semibold mb-3">Esto es lo que sabes mañana si lo implantas hoy</h2>
+            <p className="text-on-surface-variant">Datos reales, en vivo, sin que nadie tenga que rellenarlos a mano. Lo que tu director comercial pide cada lunes — pero generado solo.</p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
+            {OBTAINABLES.map((o) => (
+              <div key={o.title} className="bg-white border border-outline-variant rounded-xl p-5">
+                <span className="material-symbols-outlined text-primary text-2xl mb-3 block">{o.icon}</span>
+                <p className="font-semibold text-sm mb-1">{o.title}</p>
+                <p className="text-xs text-on-surface-variant leading-snug">{o.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 12 funcionalidades */}
+      <section className="py-24 bg-white">
+        <div className="mf-container">
+          <div className="text-center mb-12 max-w-3xl mx-auto">
+            <span className="text-xs font-bold uppercase tracking-widest text-primary block mb-3">12 PIEZAS QUE CASAN SOLAS</span>
+            <h2 className="text-3xl md:text-headline-lg font-semibold mb-3">Todo lo que necesitas en una sola plataforma</h2>
+            <p className="text-on-surface-variant">De la captura del lead a la entrega del coche, pasando por financiación, marketing y reporting. Sin saltar entre sistemas.</p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {FEATURES_GRID.map((f) => (
+              <div key={f.n} className="bg-surface-container-low border border-outline-variant rounded-2xl p-6 flex gap-4 hover:border-primary/30 transition-colors">
+                <div className="text-primary font-bold tabular-nums" style={{ fontSize: 28, lineHeight: 1 }}>{f.n}</div>
+                <div>
+                  <p className="font-semibold mb-1">{f.title}</p>
+                  <p className="text-xs text-on-surface-variant leading-snug">{f.desc}</p>
                 </div>
               </div>
-            </div>
+            ))}
+          </div>
+        </div>
+      </section>
 
-            {/* Multi-Brand */}
-            <div className="p-8 rounded-2xl bg-white border border-outline-variant shadow-sm space-y-6 hover:border-primary/40 transition-colors">
-              <span className="material-symbols-outlined text-primary text-4xl">branding_watermark</span>
-              <h3 className="text-xl font-medium">Multi-Marca</h3>
-              <p className="text-on-surface-variant">
-                Configura reglas específicas para cada marca que representas. Personalización total de comunicaciones y procesos según el estándar de cada fabricante.
-              </p>
-              <ul className="space-y-3 pt-4">
-                {['Plantillas personalizadas', 'Workflows independientes', 'Branding automático'].map((t) => (
-                  <li key={t} className="flex items-center gap-2 text-sm">
-                    <span className="material-symbols-outlined text-primary text-sm">check_circle</span> {t}
+      {/* Sistema de comunicación + Seguimiento */}
+      <section className="py-24 bg-surface-container-low border-y border-outline-variant">
+        <div className="mf-container">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
+            <div>
+              <span className="text-xs font-bold uppercase tracking-widest text-primary block mb-3">SISTEMA DE COMUNICACIÓN PROPIO</span>
+              <h2 className="text-3xl md:text-headline-lg font-semibold mb-4">Tu cliente te escribe por donde quiere. Tú le respondes desde un solo sitio.</h2>
+              <p className="text-on-surface-variant mb-6">Telefonía, WhatsApp, email y centralita virtual integrados en el propio CRM, con copiloto de IA que analiza la actividad comercial.</p>
+              <ul className="space-y-3">
+                {COMMS.map((c) => (
+                  <li key={c.title} className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
+                      <span className="material-symbols-outlined text-primary" style={{ fontSize: 22 }}>{c.icon}</span>
+                    </div>
+                    <span className="text-sm font-medium">{c.title}</span>
                   </li>
                 ))}
               </ul>
             </div>
-
-            {/* AI Calls */}
-            <div className="p-8 rounded-2xl bg-white border border-outline-variant shadow-sm space-y-6 hover:border-primary/40 transition-colors">
-              <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center">
-                <span className="material-symbols-outlined text-primary">psychology</span>
+            <div>
+              <span className="text-xs font-bold uppercase tracking-widest text-primary block mb-3">SEGUIMIENTO EXHAUSTIVO</span>
+              <h2 className="text-3xl md:text-headline-lg font-semibold mb-4">Todo lo que pasa, registrado. Nada se pierde en el camino.</h2>
+              <p className="text-on-surface-variant mb-6">Cada lead, cada llamada, cada movimiento de stock y cada euro queda registrado y disponible para análisis.</p>
+              <div className="space-y-4">
+                {SEGUIMIENTO.map((s) => (
+                  <div key={s.title} className="bg-white border border-outline-variant rounded-2xl p-5 flex items-start gap-4">
+                    <div className="w-10 h-10 rounded-lg bg-primary text-white flex items-center justify-center shrink-0">
+                      <span className="material-symbols-outlined" style={{ fontSize: 22 }}>{s.icon}</span>
+                    </div>
+                    <div>
+                      <p className="font-semibold mb-1">{s.title}</p>
+                      <p className="text-xs text-on-surface-variant">{s.desc}</p>
+                    </div>
+                  </div>
+                ))}
               </div>
-              <h3 className="text-xl font-medium">IA de Análisis de Voz</h3>
-              <p className="text-on-surface-variant">
-                Nuestra IA escucha, transcribe y extrae los puntos clave de cada llamada comercial de forma automática.
-              </p>
-            </div>
-
-            {/* Automation orange 2 cols */}
-            <div className="md:col-span-2 p-8 rounded-2xl bg-primary text-white relative overflow-hidden group shadow-lg">
-              <div className="relative z-10 flex flex-col md:flex-row gap-8 items-center">
-                <div className="space-y-4 md:w-2/3">
-                  <h3 className="text-2xl md:text-headline-lg font-semibold leading-tight">Actualización Automática de Fichas</h3>
-                  <p className="text-white/90">
-                    Olvídate de la entrada manual de datos. La IA detecta el interés del cliente, el vehículo de interés y actualiza el CRM instantáneamente.
-                  </p>
-                  <Link href={`/contacto?servicio=${productSlug}`} className="inline-block mt-4 px-6 py-2 bg-white text-primary font-bold rounded-lg hover:shadow-lg transition-all">
-                    Saber más
-                  </Link>
-                </div>
-                <div className="md:w-1/3">
-                  <span className="material-symbols-outlined opacity-20 group-hover:scale-110 transition-transform duration-500" style={{ fontSize: 120 }}>auto_awesome</span>
-                </div>
-              </div>
-              <div aria-hidden className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full" style={{ marginRight: -128, marginTop: -128 }} />
             </div>
           </div>
         </div>
       </section>
 
-      {/* AI Summary */}
+      {/* Plan de trabajo */}
       <section className="py-24 bg-white">
-        <div className="mf-container flex flex-col md:flex-row gap-6 items-center">
-          <div className="md:w-1/2 space-y-8">
-            <h2 className="text-3xl md:text-headline-lg font-semibold">Resúmenes que ahorran horas de trabajo</h2>
-            <p className="text-lg text-on-surface-variant">
-              Después de cada interacción, CRM4YOU genera un resumen ejecutivo. Los gerentes pueden auditar la calidad comercial sin escuchar horas de audio.
-            </p>
-            <div className="space-y-6">
-              {[
-                { icon: 'transcribe', title: 'Transcripción Precisa', desc: 'Convierte voz a texto en milisegundos con detección de locutores.' },
-                { icon: 'summarize', title: 'Detección de Sentimiento', desc: 'Identifica el nivel de satisfacción y urgencia del cliente automáticamente.' },
-              ].map((f) => (
-                <div key={f.title} className="flex gap-4 p-4 rounded-lg bg-surface-container-low border border-outline-variant">
-                  <div className="bg-primary/10 p-3 rounded-lg h-fit flex-shrink-0">
-                    <span className="material-symbols-outlined text-primary">{f.icon}</span>
-                  </div>
-                  <div>
-                    <h4 className="font-medium text-on-surface">{f.title}</h4>
-                    <p className="text-sm text-on-surface-variant">{f.desc}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
+        <div className="mf-container">
+          <div className="text-center mb-12 max-w-3xl mx-auto">
+            <span className="text-xs font-bold uppercase tracking-widest text-primary block mb-3">PLAN DE TRABAJO</span>
+            <h2 className="text-3xl md:text-headline-lg font-semibold mb-3">En 2 semanas estás vendiendo desde CRM4YOU</h2>
+            <p className="text-on-surface-variant">Sin migraciones eternas. Recogemos tus datos, configuramos canales y licencias, formamos a tu equipo y arrancas.</p>
           </div>
-          <div className="md:w-1/2 w-full">
-            <div className="p-1 bg-gradient-to-br from-primary/30 to-transparent rounded-2xl shadow-xl">
-              <div className="bg-white rounded-xl p-8 space-y-6 border border-outline-variant">
-                <div className="flex justify-between items-center border-b border-outline-variant pb-4">
-                  <span className="text-xs font-bold uppercase tracking-widest text-primary">VISTA PREVIA DE IA</span>
-                  <span className="text-sm text-on-surface-variant">Hoy, 10:45 AM</span>
+          <div className="grid grid-cols-1 md:grid-cols-5 gap-3 max-w-5xl mx-auto">
+            {TIMELINE.map((t, i) => (
+              <div key={`${t.step}-${i}`} className="relative bg-surface-container-low border border-outline-variant rounded-2xl p-5 text-center">
+                <div className="w-12 h-12 rounded-full bg-primary text-white flex items-center justify-center font-bold mx-auto mb-3" style={{ fontSize: 14 }}>
+                  S{t.week.endsWith('2') ? '2' : '1'}
                 </div>
-                <div className="space-y-4">
-                  <div className="p-3 bg-surface-container-low rounded text-sm italic text-on-surface-variant border-l-4 border-primary">
-                    “Hola, me interesa el SUV eléctrico que vi anunciado. ¿Tienen disponibilidad para prueba mañana?”
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <span className="material-symbols-outlined text-primary" style={{ fontVariationSettings: "'FILL' 1" }}>arrow_right_alt</span>
-                    <div className="flex-1 bg-primary/5 p-4 rounded-lg border border-primary/10">
-                      <p className="font-bold text-on-surface mb-1">Resumen IA:</p>
-                      <p className="text-sm text-on-surface-variant">
-                        Cliente interesado en <span className="text-primary font-semibold">Modelo X (EV)</span>. Solicita <span className="text-primary font-semibold">Test Drive</span> para el 24/10. Estado:{' '}
-                        <span className="bg-green-100 text-green-700 px-2 py-0.5 rounded text-[10px] font-bold">ALTA INTENCIÓN</span>
-                      </p>
-                    </div>
-                  </div>
-                  <div className="flex justify-end">
-                    <span className="text-[10px] text-on-surface-variant italic">Ficha de cliente actualizada ✓</span>
-                  </div>
-                </div>
+                <p className="text-xs uppercase tracking-widest text-primary font-bold mb-1">{t.week}</p>
+                <p className="text-sm font-medium text-on-surface leading-snug">{t.step}</p>
+                {i < TIMELINE.length - 1 && (
+                  <span aria-hidden className="hidden md:block absolute top-1/2 -right-2 text-on-surface-variant/30 text-2xl leading-none">→</span>
+                )}
               </div>
-            </div>
+            ))}
           </div>
+        </div>
+      </section>
+
+      {/* Stats */}
+      <section className="py-20 border-y border-outline-variant bg-surface-container-low">
+        <div className="mf-container grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+          {STATS.map((s) => (
+            <div key={s.l}>
+              <div className={`text-4xl md:text-5xl font-bold ${s.primary ? 'text-primary' : 'text-on-surface'}`}>{s.v}</div>
+              <div className="text-xs font-bold uppercase tracking-widest text-on-surface-variant">{s.l}</div>
+            </div>
+          ))}
         </div>
       </section>
 
       {/* CTA */}
       <section className="py-24 bg-white">
-        <div className="mf-container">
-          <div className="rounded-3xl p-12 text-center relative overflow-hidden shadow-2xl" style={{ background: '#121414' }}>
-            <div aria-hidden className="absolute inset-0 opacity-10" style={{ background: 'radial-gradient(circle at center, #ff8000, transparent 70%)' }} />
-            <div className="relative z-10 max-w-2xl mx-auto space-y-8">
-              <h2 className="text-3xl md:text-display-lg font-semibold leading-tight text-white">¿Listo para transformar tu gestión comercial?</h2>
-              <p className="text-lg text-white/80">
-                Únete a los grupos de concesionarios líderes que ya están utilizando la inteligencia de Motorflash para vender más y mejor.
-              </p>
-              <div className="flex justify-center gap-4">
-                <Link href={`/contacto?servicio=${productSlug}`} className="px-10 py-5 bg-primary text-white font-bold rounded-lg text-lg hover:scale-105 transition-transform orange-glow">
-                  Agendar Consultoría Gratuita
-                </Link>
-              </div>
-            </div>
-          </div>
+        <div className="max-w-3xl mx-auto text-center px-5">
+          <h2 className="text-3xl md:text-headline-lg font-semibold mb-4">¿Cambiarías de CRM si vieras un caso real de tu sector?</h2>
+          <p className="text-lg text-on-surface-variant mb-8">
+            Solicita una demo de 30 minutos con un caso real de un grupo de tu tamaño. Te enseñamos cómo se configura, cómo se reporta y cuánto tarda en estar operativo.
+          </p>
+          <Link href={`/contacto?servicio=${productSlug}`} className="inline-block bg-primary text-white px-10 py-5 rounded-xl text-xs font-bold uppercase tracking-widest hover:opacity-90 transition-all">
+            Solicitar Demo Personalizada
+          </Link>
         </div>
       </section>
     </div>
