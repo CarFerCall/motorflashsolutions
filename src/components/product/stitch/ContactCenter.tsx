@@ -54,14 +54,6 @@ const REPORTING_POINTS = [
   'Visión de derivación equitativa entre comerciales VO y VN',
 ]
 
-const TARIFFS = [
-  { label: 'Licencia básica', monthly: 'Desde 150 €', setup: '—', meta: 'Llamadas, emails y click-to-call incluidos.' },
-  { label: 'Licencia con WhatsApp Business API', monthly: '180 €/mes', setup: '—', meta: 'Añade WhatsApp con medición de conversión.' },
-  { label: 'Llamadas gestionadas', monthly: '0,62 €/min', setup: '50 € por integración', meta: 'TMC promedio 2,5 min · máx. 3,5 min.' },
-  { label: 'Emails gestionados', monthly: '0,55 €/email', setup: '—', meta: 'Por cada email atendido por el equipo.' },
-  { label: 'Teléfono virtual', monthly: '5,35 €/línea', setup: '—', meta: 'Útil para tracking por canal o ubicación.' },
-]
-
 export function ContactCenter() {
   const productSlug = 'contact-center'
 
@@ -83,9 +75,9 @@ export function ContactCenter() {
               <Link href={`/contacto?servicio=${productSlug}`} className="bg-primary text-white px-8 py-4 rounded-xl text-xs font-bold uppercase tracking-widest hover:shadow-lg hover:shadow-primary/20 transition-all">
                 Solicitar Demo
               </Link>
-              <a href="#tarifas" className="border border-outline text-on-surface px-8 py-4 rounded-xl text-xs font-bold uppercase tracking-widest hover:bg-surface-container transition-colors">
-                Ver tarifas
-              </a>
+              <Link href={`/precios#${productSlug}`} className="border border-outline text-on-surface px-8 py-4 rounded-xl text-xs font-bold uppercase tracking-widest hover:bg-surface-container transition-colors">
+                Ver tarifas en /precios
+              </Link>
             </div>
           </div>
         </div>
@@ -234,67 +226,6 @@ export function ContactCenter() {
                 <p className="text-xs uppercase tracking-widest font-bold opacity-90 mb-1">EJEMPLO REAL DE GESTIÓN</p>
                 <p className="text-sm">164 leads gestionados en un mes para un grupo de concesionarios, con derivación equitativa entre 5 comerciales.</p>
               </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Tarifas */}
-      <section id="tarifas" className="py-24 bg-white">
-        <div className="mf-container">
-          <div className="text-center mb-12 max-w-3xl mx-auto">
-            <span className="text-xs font-bold uppercase tracking-widest text-primary block mb-3">TARIFAS</span>
-            <h2 className="text-3xl md:text-headline-lg font-semibold mb-3">Pagas por lo que usas</h2>
-            <p className="text-on-surface-variant">
-              Licencia mensual con consumo por minuto, email y línea virtual. Sin volumen mínimo: si un mes no atiendes, no facturamos por encima de la licencia. IVA y otros impuestos no incluidos.
-            </p>
-          </div>
-          <div className="bg-surface-container-low rounded-3xl border border-outline-variant overflow-hidden max-w-4xl mx-auto">
-            <div className="overflow-x-auto">
-              <table className="w-full min-w-[600px] text-sm">
-                <thead>
-                  <tr className="border-b border-outline-variant">
-                    <th className="text-left p-4 font-semibold text-on-surface-variant">Servicio</th>
-                    <th className="text-right p-4 font-semibold text-primary">Cuota mensual</th>
-                    <th className="text-right p-4 font-semibold text-on-surface">Set up</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {TARIFFS.map((t, i) => (
-                    <tr key={t.label} className={i < TARIFFS.length - 1 ? 'border-b border-outline-variant/40' : ''}>
-                      <td className="p-4">
-                        <p className="font-semibold m-0">{t.label}</p>
-                        <p className="text-xs text-on-surface-variant m-0 mt-1">{t.meta}</p>
-                      </td>
-                      <td className="p-4 text-right font-bold tabular-nums whitespace-nowrap">{t.monthly}</td>
-                      <td className="p-4 text-right text-on-surface-variant tabular-nums whitespace-nowrap">{t.setup}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
-          <div className="max-w-4xl mx-auto mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="bg-primary/5 border border-primary/20 rounded-2xl p-6">
-              <p className="text-xs uppercase tracking-widest text-primary font-bold mb-2">SIMULACIÓN TIPO</p>
-              <p className="text-2xl font-bold mb-2">500 prospectos / mes</p>
-              <p className="text-sm text-on-surface-variant mb-4">
-                500 prospectos × 2,5 min promedio = <strong>1.250 minutos</strong>
-              </p>
-              <div className="pt-4 border-t border-primary/20">
-                <p className="text-xs text-on-surface-variant uppercase tracking-widest font-bold">Coste estimado</p>
-                <p className="text-3xl font-bold text-primary">775 €/mes</p>
-                <p className="text-xs text-on-surface-variant">+ licencia desde 150 €/mes</p>
-              </div>
-            </div>
-            <div className="bg-white border border-outline-variant rounded-2xl p-6 space-y-3 text-sm">
-              <p className="font-semibold m-0">Consideraciones</p>
-              <ul className="space-y-2 text-on-surface-variant text-sm">
-                <li className="flex gap-2"><span className="material-symbols-outlined text-primary shrink-0" style={{ fontSize: 18 }}>check</span><span>Facturación mensual con vencimiento a 30 días.</span></li>
-                <li className="flex gap-2"><span className="material-symbols-outlined text-primary shrink-0" style={{ fontSize: 18 }}>check</span><span>Actualización IPC sector servicios.</span></li>
-                <li className="flex gap-2"><span className="material-symbols-outlined text-primary shrink-0" style={{ fontSize: 18 }}>check</span><span>Cancelación con preaviso de 30 días.</span></li>
-                <li className="flex gap-2"><span className="material-symbols-outlined text-primary shrink-0" style={{ fontSize: 18 }}>check</span><span>Cualquier desarrollo a medida se valora aparte.</span></li>
-              </ul>
             </div>
           </div>
         </div>
