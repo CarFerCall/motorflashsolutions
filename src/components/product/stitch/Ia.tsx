@@ -1,5 +1,68 @@
-import Image from 'next/image'
 import Link from 'next/link'
+
+const PRODUCTS = [
+  {
+    key: 'whatsapp',
+    name: 'WhatsApp IA',
+    icon: 'chat',
+    tagline: 'IA conversacional sobre el canal que tus clientes ya usan',
+    flow: ['Cliente escribe', 'IA responde', 'Cita o seguimiento'],
+    bullets: [
+      'Canal directo y familiar: el cliente ya usa WhatsApp, sin barreras ni descargas.',
+      'Conversación libre, natural y disponible 24/7: la IA responde sin depender de agentes.',
+      'Personalización real: recuerda el contexto, aprende de cada conversación y se adapta.',
+      'Más conversión: mejora la experiencia y aumenta la probabilidad de venta.',
+    ],
+  },
+  {
+    key: 'webchat',
+    name: 'WebChat IA',
+    icon: 'forum',
+    tagline: 'Capta y conversa con el usuario mientras navega tu web',
+    flow: ['Usuario entra', 'Clic en botón', 'Formulario / cita'],
+    bullets: [
+      'Integrado en la web: capta al usuario mientras navega.',
+      'Texto y voz en un solo canal: interacción escrita o hablada según prefiera el usuario.',
+      'Interacción natural: el chat se adapta a cada usuario, no al revés.',
+      'Integrable con otros sistemas: permite consultar y gestionar datos externos.',
+    ],
+  },
+  {
+    key: 'voz',
+    name: 'Voz IA',
+    icon: 'record_voice_over',
+    tagline: 'Asistente telefónico inteligente que coge tus llamadas',
+    flow: ['Cliente llama', 'IA responde', 'Agenda cita y envía a CRM'],
+    bullets: [
+      'Asistente de voz inteligente que coge la llamada sin esperas.',
+      'Comunicación inmediata: el cliente llama y recibe atención personalizada.',
+      'Ideal para concertar citas, resolver dudas rápidas o completar procesos iniciados por chat.',
+      'Integra análisis, transcripción y puntuación automática para mejorar atención y venta.',
+    ],
+  },
+]
+
+const QUALITY = [
+  { icon: 'transcribe', title: 'Transcripción de todas las llamadas', desc: 'Cada llamada de tus asesores se transcribe automáticamente y queda disponible para revisión y análisis.' },
+  { icon: 'insights', title: 'Análisis de puntos clave', desc: 'Detección automática de saludos, identificación del cliente, oferta presentada, objeciones y cierre.' },
+  { icon: 'category', title: 'Categorización por interés', desc: 'Cada conversación se etiqueta por el grado de interés real del cliente — caliente, templado o frío.' },
+  { icon: 'star_rate', title: 'Puntuación automática', desc: 'Cada llamada recibe un score basado en KPIs comerciales para mejorar la atención y la venta.' },
+]
+
+const FOUNDATION = [
+  { icon: 'graphic_eq', title: 'Síntesis de voz' },
+  { icon: 'auto_awesome', title: 'OpenAI' },
+  { icon: 'flare', title: 'Gemini' },
+  { icon: 'psychology_alt', title: 'Anthropic' },
+]
+
+const BUSINESS_PROCESSES = ['Vehículos Nuevos', 'Vehículos Ocasión', 'Postventa', 'Taller', 'Renting', 'Alquiler']
+const CHANNELS = [
+  { icon: 'call', label: 'Llamada' },
+  { icon: 'chat', label: 'WhatsApp' },
+  { icon: 'mail', label: 'Email' },
+]
+const SYSTEMS = ['DMS', 'CRM4YOU', 'Dealer', 'Multipublicador', 'Contact Center', 'Webs', 'Integraciones API']
 
 export function Ia() {
   const productSlug = 'ia'
@@ -7,131 +70,178 @@ export function Ia() {
   return (
     <div className="font-display text-on-surface">
       {/* Hero */}
-      <section className="relative min-h-[90vh] flex items-center overflow-hidden" style={{ backgroundColor: '#fafafa' }}>
-        <div className="absolute inset-0 z-0">
-          <div aria-hidden className="absolute inset-0 bg-gradient-to-r from-white via-white/80 to-transparent z-10" />
-          <div aria-hidden className="absolute inset-0 opacity-10" style={{ background: 'radial-gradient(circle at 50% 50%, #ff8000 0%, transparent 50%)' }} />
-          <div aria-hidden className="w-full h-full opacity-10 grayscale" style={{ backgroundImage: "url('/images/products/ia-hero-bg.png')", backgroundSize: 'cover', backgroundPosition: 'center' }} />
-        </div>
-        <div className="relative z-20 mf-container grid grid-cols-1 md:grid-cols-12 gap-6">
-          <div className="md:col-span-7 flex flex-col justify-center gap-8">
-            <span className="text-primary text-xs font-bold uppercase tracking-[0.2em]">IA GENERATIVA PARA AUTOMOCIÓN</span>
-            <h1 className="text-5xl md:text-display-lg font-bold leading-none">
-              El Motor de tu <br /> <span className="text-primary">Inteligencia</span>
+      <section className="relative min-h-[78vh] flex items-center overflow-hidden bg-white">
+        <div aria-hidden className="absolute inset-0 z-0" style={{ background: 'radial-gradient(circle at 80% 100%, rgba(255,128,0,0.12), transparent 60%)' }} />
+        <div className="relative z-10 mf-container">
+          <div className="max-w-3xl">
+            <span className="text-xs font-bold uppercase tracking-widest text-primary mb-4 block">SOLUCIONES IA APLICADAS · MOTORFLASH SOLUTIONS</span>
+            <h1 className="text-5xl md:text-display-lg font-bold mb-6 leading-tight">
+              Tres asistentes IA y un sistema de calidad que <span className="text-primary">atienden, califican y miden</span> cada conversación.
             </h1>
-            <p className="text-lg text-on-surface-variant max-w-xl">
-              Automatiza procesos, optimiza tu inventario y transforma la experiencia de tus clientes con la plataforma de IA líder diseñada exclusivamente para el sector del motor.
+            <p className="text-lg text-on-surface-variant mb-10 max-w-2xl">
+              WhatsApp IA, WebChat IA y Voz IA conversan con tus clientes 24/7 en su canal preferido. Quality Monitoring transcribe, analiza y puntúa todas las llamadas de tu equipo. Todo integrado con tu DMS, CRM, Dealer, Multipublicador, Contact Center y webs.
             </p>
             <div className="flex flex-wrap gap-4">
-              <Link href={`/contacto?servicio=${productSlug}`} className="inline-block bg-primary text-white px-8 py-4 text-xs font-bold uppercase tracking-widest hover:scale-105 transition-transform orange-glow">
-                DESCUBRE MOTORFLASH IA
+              <Link href={`/contacto?servicio=${productSlug}`} className="bg-primary text-white px-8 py-4 rounded-xl text-xs font-bold uppercase tracking-widest hover:shadow-lg hover:shadow-primary/20 transition-all">
+                Solicitar Demo
               </Link>
-              <Link href="/servicios" className="inline-block border border-on-surface/20 text-on-surface px-8 py-4 text-xs font-bold uppercase tracking-widest hover:bg-on-surface/5 transition-colors">
-                SOLICITAR DEMO
+              <Link href={`/precios#${productSlug}`} className="border border-outline text-on-surface px-8 py-4 rounded-xl text-xs font-bold uppercase tracking-widest hover:bg-surface-container transition-colors">
+                Ver tarifas en /precios
               </Link>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Bento */}
-      <section className="py-24 mf-container bg-white">
-        <div className="mb-16 text-center">
-          <h2 className="text-3xl md:text-headline-lg font-semibold mb-4">Potencia Automotriz en cada Byte</h2>
-          <p className="text-on-surface-variant">Soluciones integrales para la era digital del concesionario.</p>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-4 md:grid-rows-2 gap-6 md:h-[600px]">
-          <div className="md:col-span-2 md:row-span-2 glass-card p-10 rounded-2xl flex flex-col justify-between border border-gray-100 shadow-sm relative">
-            <div className="z-10">
-              <span className="material-symbols-outlined text-primary text-4xl mb-6 block" style={{ fontVariationSettings: "'FILL' 1" }}>insights</span>
-              <h3 className="text-xl font-medium mb-4">Análisis Predictivo de Stock</h3>
-              <p className="text-sm text-on-surface-variant">
-                Anticípate a la demanda del mercado. Nuestra IA analiza tendencias históricas y datos en tiempo real para recomendarte qué vehículos comprar y a qué precio vender.
-              </p>
+      {/* Ecosistema IA */}
+      <section className="py-24 bg-surface-container-low border-y border-outline-variant">
+        <div className="mf-container">
+          <div className="text-center mb-12 max-w-3xl mx-auto">
+            <span className="text-xs font-bold uppercase tracking-widest text-primary block mb-3">ECOSISTEMA IA MOTORFLASH</span>
+            <h2 className="text-3xl md:text-headline-lg font-semibold mb-3">Un solo integrador entre tus procesos, tus canales y la IA</h2>
+            <p className="text-on-surface-variant">Actuamos como Integrador / Consultor / Arquitecto de IA: enchufamos los modelos al canal correcto y al sistema correcto, para que cada conversación acabe en el CRM con todo el contexto.</p>
+          </div>
+
+          <div className="space-y-6 max-w-5xl mx-auto">
+            <Stack title="Procesos de negocio" items={BUSINESS_PROCESSES.map((t) => ({ label: t }))} />
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <Stack title="Canales" items={CHANNELS.map((c) => ({ icon: c.icon, label: c.label }))} />
+              <Stack title="Inteligencia Artificial" items={FOUNDATION.map((f) => ({ icon: f.icon, label: f.title }))} />
             </div>
-          </div>
-
-          <div className="md:col-span-2 glass-card p-8 rounded-2xl flex items-start gap-6 shadow-sm border border-gray-100" style={{ borderLeft: '4px solid #ff8000' }}>
-            <span className="material-symbols-outlined text-primary text-3xl">smart_toy</span>
-            <div>
-              <h3 className="text-xl font-medium mb-2">Atención al Cliente 2.0</h3>
-              <p className="text-sm text-on-surface-variant">
-                Chatbots especializados en automoción capaces de gestionar leads, agendar pruebas dinámicas y responder consultas técnicas 24/7 sin intervención humana.
-              </p>
+            <div className="bg-primary text-white rounded-2xl p-6 text-center">
+              <p className="text-xs uppercase tracking-widest font-bold opacity-90 mb-1">EL INTEGRADOR</p>
+              <p className="text-lg font-semibold">Motorflash Solutions · Consultor y arquitecto de IA</p>
+              <p className="text-xs opacity-80 mt-1">Voz IA · WhatsApp IA · WebChat IA · Copilot · Quality Monitoring · Asistente de contenidos web</p>
             </div>
-          </div>
-
-          <div className="md:col-span-1 glass-card p-8 rounded-2xl flex flex-col gap-4 border border-gray-100 shadow-sm">
-            <span className="material-symbols-outlined text-primary text-3xl">auto_mode</span>
-            <h3 className="text-xl font-medium">Automatización</h3>
-            <p className="text-sm text-on-surface-variant">Publicación automática en portales y gestión de inventario sin errores.</p>
-          </div>
-
-          <div className="md:col-span-1 glass-card p-8 rounded-2xl flex flex-col gap-4 border border-gray-100 shadow-sm">
-            <span className="material-symbols-outlined text-primary text-3xl">campaign</span>
-            <h3 className="text-xl font-medium">Marketing IA</h3>
-            <p className="text-sm text-on-surface-variant">Generación de descripciones optimizadas para SEO y anuncios dinámicos.</p>
+            <Stack title="Sistemas de gestión" items={SYSTEMS.map((t) => ({ label: t }))} />
           </div>
         </div>
       </section>
 
-      {/* Product details */}
-      <section className="bg-surface-container py-24">
-        <div className="mf-container grid grid-cols-1 md:grid-cols-2 gap-24 items-center">
-          <div className="relative">
-            <div aria-hidden className="absolute -inset-4 bg-primary/5 blur-3xl rounded-full" />
-            <div className="relative border border-black/5 rounded-xl overflow-hidden shadow-xl float-animation bg-white">
-              <Image src="/images/products/ia-dashboard.png" alt="Dashboard IA" width={720} height={500} className="w-full h-auto" />
-            </div>
+      {/* Tres productos IA */}
+      <section className="py-24 bg-white">
+        <div className="mf-container">
+          <div className="text-center mb-12 max-w-3xl mx-auto">
+            <span className="text-xs font-bold uppercase tracking-widest text-primary block mb-3">3 ASISTENTES IA</span>
+            <h2 className="text-3xl md:text-headline-lg font-semibold mb-3">WhatsApp, WebChat y Voz — el cliente elige el canal</h2>
+            <p className="text-on-surface-variant">Mismo cerebro IA, distintos canales. Funcionan por separado o como un único asistente que pasa el contexto entre ellos.</p>
           </div>
-          <div>
-            <h2 className="text-3xl md:text-headline-lg font-semibold mb-8">Gestión Inteligente de Leads</h2>
-            <div className="space-y-4">
-              {[
-                { icon: 'filter_alt', t: 'Cualificación automática de contactos', white: true },
-                { icon: 'psychology', t: 'Análisis de sentimiento en comunicaciones', white: false },
-                { icon: 'event_available', t: 'Agendamiento inteligente de citas', white: true },
-                { icon: 'history', t: 'Historial predictivo de ciclo de compra', white: false },
-              ].map((row) => (
-                <div key={row.t} className={`flex items-center gap-4 p-4 rounded-lg border border-black/5 ${row.white ? 'bg-white shadow-sm' : ''}`} style={!row.white ? { background: '#fafafa' } : undefined}>
-                  <div className="bg-primary/10 p-2 rounded">
-                    <span className="material-symbols-outlined text-primary">{row.icon}</span>
-                  </div>
-                  <span className="text-lg font-medium">{row.t}</span>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {PRODUCTS.map((p) => (
+              <div key={p.key} className="bg-surface-container-low border border-outline-variant rounded-3xl p-7 flex flex-col">
+                <div className="w-14 h-14 bg-primary/10 rounded-2xl flex items-center justify-center mb-5">
+                  <span className="material-symbols-outlined text-primary text-3xl">{p.icon}</span>
                 </div>
-              ))}
-            </div>
+                <h3 className="text-xl font-bold mb-1">{p.name}</h3>
+                <p className="text-sm text-on-surface-variant mb-5">{p.tagline}</p>
+
+                <div className="bg-white border border-outline-variant rounded-xl p-3 mb-5">
+                  <p className="text-[10px] uppercase tracking-widest text-on-surface-variant font-bold mb-2">FLUJO</p>
+                  <div className="flex items-center justify-between gap-1 text-xs font-medium">
+                    {p.flow.map((step, i) => (
+                      <span key={step} className="flex items-center gap-1 min-w-0">
+                        <span className="truncate">{step}</span>
+                        {i < p.flow.length - 1 && <span className="text-primary shrink-0">→</span>}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                <ul className="space-y-2 mb-5 flex-1">
+                  {p.bullets.map((b) => (
+                    <li key={b} className="flex gap-2 text-sm">
+                      <span className="material-symbols-outlined text-primary shrink-0" style={{ fontSize: 18 }}>check</span>
+                      <span>{b}</span>
+                    </li>
+                  ))}
+                </ul>
+                <Link href={`/contacto?servicio=${productSlug}&modulo=${p.key}`} className="inline-block w-full text-center border border-primary text-primary px-5 py-2.5 rounded-xl text-xs font-bold uppercase tracking-widest hover:bg-primary hover:text-white transition-colors">
+                  Pruébame
+                </Link>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Stats */}
-      <section className="py-24 mf-container grid grid-cols-2 md:grid-cols-4 gap-12 text-center bg-white">
-        {[
-          { v: '40%', l: 'Aumento en Conversión' },
-          { v: '-25%', l: 'Tiempo de Gestión' },
-          { v: '24/7', l: 'Disponibilidad Total' },
-          { v: '98%', l: 'Precisión en Datos' },
-        ].map((s) => (
-          <div key={s.l}>
-            <div className="text-5xl font-bold text-primary mb-2">{s.v}</div>
-            <div className="text-xs font-bold uppercase tracking-widest text-on-surface-variant">{s.l}</div>
+      {/* Quality Monitoring */}
+      <section className="py-24 bg-surface-container-low border-y border-outline-variant">
+        <div className="mf-container">
+          <div className="text-center mb-12 max-w-3xl mx-auto">
+            <span className="text-xs font-bold uppercase tracking-widest text-primary block mb-3">QUALITY</span>
+            <h2 className="text-3xl md:text-headline-lg font-semibold mb-3">Quality Monitoring: cada llamada se mide</h2>
+            <p className="text-on-surface-variant">Lo que tu mejor responsable comercial haría si pudiera escuchar todas las llamadas. Transcribe, analiza, categoriza y puntúa de forma automática para que sepas qué funciona y qué hay que entrenar.</p>
           </div>
-        ))}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+            {QUALITY.map((q) => (
+              <div key={q.title} className="bg-white border border-outline-variant rounded-2xl p-6">
+                <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-4">
+                  <span className="material-symbols-outlined text-primary text-2xl">{q.icon}</span>
+                </div>
+                <h3 className="text-base font-semibold mb-2">{q.title}</h3>
+                <p className="text-sm text-on-surface-variant leading-snug">{q.desc}</p>
+              </div>
+            ))}
+          </div>
+
+          {/* Alertas */}
+          <div className="mt-10 max-w-4xl mx-auto bg-white border border-primary/20 rounded-2xl p-6 md:p-8">
+            <div className="flex items-start gap-4">
+              <div className="w-12 h-12 bg-primary text-white rounded-xl flex items-center justify-center shrink-0">
+                <span className="material-symbols-outlined">notifications_active</span>
+              </div>
+              <div>
+                <h3 className="text-lg font-semibold mb-2">Alertas a partir de eventos o sobre los datos</h3>
+                <p className="text-sm text-on-surface-variant mb-3">
+                  Recibe avisos en el momento en que algo importante ocurre o cuando se cumplen condiciones sobre tus métricas. Sin tener que entrar al panel a buscarlas.
+                </p>
+                <ul className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm">
+                  {[
+                    'Llamada con cliente con scoring alto sin seguimiento',
+                    'Agente con tasa de transferencia por debajo del KPI',
+                    'WhatsApp sin responder más de N minutos en horario',
+                    'Pico de leads que supera la capacidad del equipo',
+                  ].map((t) => (
+                    <li key={t} className="flex gap-2 text-on-surface-variant">
+                      <span className="material-symbols-outlined text-primary shrink-0" style={{ fontSize: 18 }}>bolt</span>
+                      <span>{t}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
       </section>
 
       {/* CTA */}
-      <section className="py-24 bg-primary relative overflow-hidden">
-        <div aria-hidden className="absolute inset-0 bg-white opacity-5" />
-        <div className="relative z-10 mf-container text-center flex flex-col items-center gap-8">
-          <h2 className="text-3xl md:text-headline-lg font-bold text-white max-w-3xl">
-            ¿Listo para transformar tu concesionario en una potencia digital?
-          </h2>
-          <Link href={`/contacto?servicio=${productSlug}`} className="inline-block bg-white text-primary px-12 py-5 text-xs font-bold uppercase tracking-widest hover:scale-105 transition-transform shadow-xl">
-            SOLICITAR CONSULTORÍA GRATUITA
+      <section className="py-24 bg-white">
+        <div className="max-w-3xl mx-auto text-center px-5">
+          <h2 className="text-3xl md:text-headline-lg font-semibold mb-4">¿Quieres ver un ejemplo real de tu negocio?</h2>
+          <p className="text-lg text-on-surface-variant mb-8">
+            En la demo te mostramos un caso con tu propio nicho (VN, VO, taller, renting…) y enchufamos uno de los asistentes a una llamada o un WhatsApp en vivo. Decide tú si el cliente final hablaría con esa IA.
+          </p>
+          <Link href={`/contacto?servicio=${productSlug}`} className="inline-block bg-primary text-white px-10 py-5 rounded-xl text-xs font-bold uppercase tracking-widest hover:opacity-90 transition-all">
+            Solicitar Demo Personalizada
           </Link>
         </div>
       </section>
+    </div>
+  )
+}
+
+function Stack({ title, items }: { title: string; items: Array<{ icon?: string; label: string }> }) {
+  return (
+    <div className="bg-white border border-outline-variant rounded-2xl p-5">
+      <p className="text-xs uppercase tracking-widest text-on-surface-variant font-bold mb-3">{title}</p>
+      <div className="flex flex-wrap gap-2">
+        {items.map((i) => (
+          <span key={i.label} className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-surface-container-low border border-outline-variant text-sm font-medium">
+            {i.icon && <span className="material-symbols-outlined text-primary" style={{ fontSize: 16 }}>{i.icon}</span>}
+            {i.label}
+          </span>
+        ))}
+      </div>
     </div>
   )
 }
