@@ -173,9 +173,15 @@ export default function CompaniaPage() {
                 Calle Basauri 17 – Edf. B, Bajo Izq. D<br />
                 28023 Madrid, España
               </p>
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-lg bg-white border border-outline-variant">
-                <span className="w-2 h-2 rounded-full bg-primary" />
-                <span className="text-xs font-bold uppercase tracking-wider text-primary">ISO Certified 9001</span>
+              <div className="flex flex-wrap gap-2">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-lg bg-white border border-outline-variant" title="Sistema de Gestión de la Calidad">
+                  <span className="w-2 h-2 rounded-full bg-primary" />
+                  <span className="text-xs font-bold uppercase tracking-wider text-primary">ISO 9001 · Calidad</span>
+                </div>
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-lg bg-white border border-outline-variant" title="Sistema de Gestión de la Seguridad de la Información">
+                  <span className="w-2 h-2 rounded-full bg-primary" />
+                  <span className="text-xs font-bold uppercase tracking-wider text-primary">ISO 27001 · Seguridad</span>
+                </div>
               </div>
             </Reveal>
             <Reveal delay={200}>
