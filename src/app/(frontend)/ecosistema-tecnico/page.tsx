@@ -122,8 +122,9 @@ export default function EcosistemaTecnicoPage() {
         </div>
       </section>
 
-      {/* Lista completa por hub */}
-      <section className="py-16 md:py-24 bg-surface-container-low border-y border-outline-variant">
+      {/* Lista completa por hub — solo en desktop (en móvil ya se ve
+          en los acordeones del componente EcosystemHub). */}
+      <section className="hidden lg:block py-16 md:py-24 bg-surface-container-low border-y border-outline-variant">
         <div className="mf-container">
           <Reveal>
             <div className="text-center mb-10 md:mb-12 max-w-3xl mx-auto">
