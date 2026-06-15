@@ -11,6 +11,7 @@ const RESERVED_SLUGS = new Set([
   'api',
   'compania',
   'contacto',
+  'ecosistema-tecnico',
   'historias-de-exito',
   'precios',
   'servicios',
@@ -42,9 +43,14 @@ export async function generateMetadata({ params }: RouteParams) {
   const page = await findPage(slug, { includeDrafts: false })
   if (!page) return {}
   const seo = (page as any).seo ?? {}
+  const title = seo.metaTitle || page.title
+  const description = seo.metaDescription || undefined
+  const canonical = `/${slug}`
   return {
-    title: seo.metaTitle || page.title,
-    description: seo.metaDescription || undefined,
+    title,
+    description,
+    alternates: { canonical },
+    openGraph: { title, description, url: canonical },
   }
 }
 

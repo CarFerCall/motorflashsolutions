@@ -5,14 +5,27 @@ import { productBySlug } from '@/catalog/products'
 import { getPayloadClient } from '@/lib/payload'
 import { PricingConfigurator, type PlanData } from '@/components/pricing/PricingConfigurator'
 import { normalizeItem, type RawPricingItem } from '@/lib/pricing'
+import { breadcrumbSchema, jsonLdScript } from '@/lib/seo/schema'
 
 export const dynamic = 'force-dynamic'
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params
   const product = productBySlug(slug)
+  const canonical = `/precios/${slug}`
+  if (!product) {
+    return {
+      title: 'Configurador de precios',
+      alternates: { canonical },
+    }
+  }
+  const title = `Configurar precio — ${product.name}`
+  const description = `Configura tu plan de ${product.name} y obtén una estimación en directo. Sin permanencia.`
   return {
-    title: product ? `Configurar precio — ${product.name} | Motorflash` : 'Configurador de precios — Motorflash',
+    title,
+    description,
+    alternates: { canonical },
+    openGraph: { title: `${title} | Motorflash`, description, url: canonical },
   }
 }
 
@@ -60,8 +73,17 @@ export default async function PrecioProductoPage({ params }: { params: Promise<{
     items: (plan.items ?? []).map((item: any) => normalizeItem(item as RawPricingItem)),
   }
 
+  const jsonLd = jsonLdScript(
+    breadcrumbSchema([
+      { name: 'Inicio', url: '/' },
+      { name: 'Precios', url: '/precios' },
+      { name: product.name, url: `/precios/${product.slug}` },
+    ]),
+  )
+
   return (
     <section className="py-32">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd }} />
       <div className="mf-container">
         <nav aria-label="breadcrumb" className="mb-6 text-sm text-on-surface-variant">
           <Link href="/" className="hover:text-primary">Inicio</Link> /{' '}

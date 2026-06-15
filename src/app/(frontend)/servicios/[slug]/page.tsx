@@ -8,6 +8,7 @@ import { ContactCenter } from '@/components/product/stitch/ContactCenter'
 import { PortalPublicacion } from '@/components/product/stitch/PortalPublicacion'
 import { Ia } from '@/components/product/stitch/Ia'
 import { SolucionesWeb } from '@/components/product/stitch/SolucionesWeb'
+import { breadcrumbSchema, jsonLdScript, serviceSchema } from '@/lib/seo/schema'
 
 const stitchPages: Record<string, React.ComponentType> = {
   crm4you: Crm4you,
@@ -27,10 +28,17 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params
   const product = productBySlug(slug)
-  if (!product) return { title: 'Servicio no encontrado — Motorflash' }
+  if (!product) return { title: 'Servicio no encontrado' }
+  const canonical = `/servicios/${slug}`
   return {
-    title: `${product.name} — Motorflash Ibérica`,
+    title: `${product.name}`,
     description: product.tagline,
+    alternates: { canonical },
+    openGraph: {
+      title: `${product.name} — Motorflash`,
+      description: product.tagline,
+      url: canonical,
+    },
   }
 }
 
@@ -40,6 +48,23 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
   if (!product) notFound()
 
   const StitchComponent = stitchPages[slug]
-  if (StitchComponent) return <StitchComponent />
-  return <GenericProductPage product={product} />
+  const jsonLd = jsonLdScript([
+    serviceSchema({
+      name: product.name,
+      description: product.intro || product.tagline,
+      slug: product.slug,
+    }),
+    breadcrumbSchema([
+      { name: 'Inicio', url: '/' },
+      { name: 'Servicios', url: '/servicios' },
+      { name: product.name, url: `/servicios/${product.slug}` },
+    ]),
+  ])
+
+  return (
+    <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd }} />
+      {StitchComponent ? <StitchComponent /> : <GenericProductPage product={product} />}
+    </>
+  )
 }

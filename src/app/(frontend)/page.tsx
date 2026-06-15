@@ -235,6 +235,82 @@ export default function HomePage() {
         <ProductCarousel products={products} />
       </section>
 
+      {/* Ecosistema técnico teaser → /ecosistema-tecnico */}
+      <section className="py-24">
+        <div className="mf-container">
+          <Reveal>
+            <div className="rounded-3xl overflow-hidden relative" style={{ background: 'linear-gradient(135deg, #121414 0%, #1f1f1f 100%)' }}>
+              <div aria-hidden className="absolute -top-20 -right-20 w-96 h-96 rounded-full" style={{ background: 'radial-gradient(circle, rgba(255,128,0,0.25), transparent 70%)' }} />
+              <div className="relative grid grid-cols-1 lg:grid-cols-2 gap-10 items-center p-10 md:p-16">
+                <div className="text-white">
+                  <span className="inline-flex items-center gap-2 mf-eyebrow !text-primary !mb-3">
+                    <span className="material-symbols-outlined" style={{ fontSize: 16 }}>hub</span>
+                    Ecosistema técnico
+                  </span>
+                  <h2 className="text-3xl md:text-4xl font-semibold mb-4 leading-tight">
+                    Motorflash es el <span className="text-primary">HUB</span> que conecta todo tu stack de automoción
+                  </h2>
+                  <p className="text-base mb-6" style={{ color: 'rgba(255,255,255,0.75)' }}>
+                    Un único punto de integración entre tu DMS (Keyloop, Autoline, Quiter…), los portales (Coches.net, Autoscout24, Wallapop…), tu CRM, las financieras (Santander, CaixaBank, BBVA…), la logística y las bases de datos del sector (JATO, Autovista, Carfax).
+                  </p>
+                  <div className="flex flex-wrap items-center gap-x-6 gap-y-3 mb-8 text-sm" style={{ color: 'rgba(255,255,255,0.75)' }}>
+                    <span><strong className="text-primary">8</strong> hubs</span>
+                    <span className="opacity-30">·</span>
+                    <span><strong className="text-primary">+40</strong> integraciones</span>
+                    <span className="opacity-30">·</span>
+                    <span><strong className="text-primary">1</strong> punto de entrada</span>
+                  </div>
+                  <Link href="/ecosistema-tecnico" className="inline-flex items-center gap-2 bg-primary text-white px-6 py-3 rounded-full text-sm font-semibold hover:opacity-90 transition-opacity">
+                    Ver el diagrama completo
+                    <span className="material-symbols-outlined">arrow_forward</span>
+                  </Link>
+                </div>
+                <div className="hidden lg:flex items-center justify-center">
+                  <div className="relative" style={{ width: 280, height: 280 }}>
+                    {/* Mini HUB visual */}
+                    <div
+                      className="absolute rounded-full flex items-center justify-center text-white"
+                      style={{
+                        left: '50%',
+                        top: '50%',
+                        transform: 'translate(-50%, -50%)',
+                        width: 90,
+                        height: 90,
+                        background: 'linear-gradient(135deg, #ff8000, #d96f00)',
+                        boxShadow: '0 0 0 12px rgba(255,128,0,0.15), 0 12px 32px rgba(255,128,0,0.40)',
+                      }}
+                    >
+                      <span className="material-symbols-outlined" style={{ fontSize: 36 }}>hub</span>
+                    </div>
+                    {['inventory_2', 'language', 'account_balance', 'local_shipping', 'database', 'gavel', 'factory', 'hub'].map((icon, i) => {
+                      const angle = (i / 8) * Math.PI * 2 - Math.PI / 2
+                      const r = 120
+                      return (
+                        <div
+                          key={i}
+                          className="absolute rounded-full bg-white flex items-center justify-center mf-hub-node"
+                          style={{
+                            left: `calc(50% + ${r * Math.cos(angle)}px)`,
+                            top: `calc(50% + ${r * Math.sin(angle)}px)`,
+                            transform: 'translate(-50%, -50%)',
+                            width: 44,
+                            height: 44,
+                            animationDelay: `${i * 0.1}s`,
+                            boxShadow: '0 6px 16px rgba(0,0,0,0.25)',
+                          }}
+                        >
+                          <span className="material-symbols-outlined text-primary" style={{ fontSize: 22 }}>{icon}</span>
+                        </div>
+                      )
+                    })}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
       {/* Para quién */}
       <section className="py-24 bg-surface-container">
         <div className="mf-container">

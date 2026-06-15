@@ -7,8 +7,16 @@ import { normalizeItem, type RawPricingItem } from '@/lib/pricing'
 
 export const dynamic = 'force-dynamic'
 export const metadata = {
-  title: 'Precios — Motorflash Ibérica',
-  description: 'Selecciona los servicios que tu concesionario necesita y obtén una estimación en directo. Sin permanencia.',
+  title: 'Precios',
+  description:
+    'Configura los servicios de Motorflash que necesita tu concesionario y obtén una estimación en directo. Mensual, anual o pago único. Sin permanencia.',
+  alternates: { canonical: '/precios' },
+  openGraph: {
+    title: 'Precios — Motorflash',
+    description:
+      'Configura los servicios de Motorflash que necesita tu concesionario y obtén una estimación en directo. Sin permanencia.',
+    url: '/precios',
+  },
 }
 
 export default async function PreciosPage() {

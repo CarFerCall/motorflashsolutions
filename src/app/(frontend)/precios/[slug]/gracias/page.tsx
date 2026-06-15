@@ -2,6 +2,11 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { productBySlug } from '@/catalog/products'
 
+export const metadata = {
+  title: 'Solicitud recibida',
+  robots: { index: false, follow: false },
+}
+
 export default async function GraciasPage({
   params,
   searchParams,

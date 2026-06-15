@@ -5,8 +5,16 @@ import { ContactForm } from '@/components/ContactForm'
 import { Reveal } from '@/components/Reveal'
 
 export const metadata = {
-  title: 'Contacto — Motorflash Ibérica',
-  description: 'Cuéntanos tu caso y un especialista te llamará en menos de 24 horas.',
+  title: 'Contacto',
+  description:
+    'Cuéntanos tu caso y un especialista de Motorflash te llamará en menos de 24 horas para analizar cómo digitalizar tu concesionario.',
+  alternates: { canonical: '/contacto' },
+  openGraph: {
+    title: 'Contacto — Motorflash',
+    description:
+      'Cuéntanos tu caso y un especialista de Motorflash te llamará en menos de 24 horas.',
+    url: '/contacto',
+  },
 }
 
 export default function ContactoPage() {

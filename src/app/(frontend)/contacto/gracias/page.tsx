@@ -1,7 +1,8 @@
 import Link from 'next/link'
 
 export const metadata = {
-  title: 'Mensaje recibido — Motorflash Ibérica',
+  title: 'Mensaje recibido',
+  robots: { index: false, follow: false },
 }
 
 export default function ContactoGraciasPage() {

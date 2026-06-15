@@ -4,8 +4,16 @@ import { Reveal } from '@/components/Reveal'
 import { HistoryTimeline } from '@/components/HistoryTimeline'
 
 export const metadata = {
-  title: 'La Compañía — Motorflash Ibérica',
-  description: '+20 años de experiencia y +180 especialistas en IT trabajando para la digitalización del sector del motor.',
+  title: 'La Compañía',
+  description:
+    '+20 años de experiencia y +180 especialistas en IT trabajando para la digitalización del sector del motor. Conoce el equipo, los valores y la historia de Motorflash Ibérica.',
+  alternates: { canonical: '/compania' },
+  openGraph: {
+    title: 'La Compañía — Motorflash',
+    description:
+      '+20 años digitalizando el sector del motor. +1.500 concesionarios activos. 10M€ facturados en 2024.',
+    url: '/compania',
+  },
 }
 
 const VALUES = [

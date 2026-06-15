@@ -2,8 +2,16 @@ import Link from 'next/link'
 import { orderedProducts } from '@/catalog/products'
 
 export const metadata = {
-  title: 'Servicios — Motorflash Ibérica',
-  description: '14 productos integrados entre sí para cubrir el ciclo comercial completo del concesionario.',
+  title: 'Servicios',
+  description:
+    '14 productos integrados entre sí para cubrir el ciclo comercial completo del concesionario: publicación, stock, captación de leads, atención al cliente, IA y reporting.',
+  alternates: { canonical: '/servicios' },
+  openGraph: {
+    title: 'Servicios — Motorflash',
+    description:
+      '14 productos integrados que cubren el ciclo comercial completo del concesionario.',
+    url: '/servicios',
+  },
 }
 
 export default function ServiciosPage() {

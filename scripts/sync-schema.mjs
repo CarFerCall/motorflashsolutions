@@ -359,6 +359,7 @@ try {
                 { label: 'Ver catálogo completo', url: '/servicios', icon: 'arrow_forward' },
               ],
             },
+            { label: 'Ecosistema técnico', kind: 'link', url: '/ecosistema-tecnico' },
             { label: 'Precios', kind: 'link', url: '/precios' },
             { label: 'Casos de éxito', kind: 'link', url: '/historias-de-exito' },
             { label: 'Compañía', kind: 'link', url: '/compania' },
@@ -373,6 +374,23 @@ try {
       //     /servicios/motorflash-renting, lo actualizamos a la nueva.
       //  2. Si no existe MotorFlash Connect en el dropdown de Servicios,
       //     lo añadimos justo antes de Lead Exclusive.
+      //  3. Si no existe el item "Ecosistema técnico" en el nivel raíz,
+      //     lo añadimos justo antes de "Precios".
+      const hasEcosistema = (Array.isArray(menu.items) ? menu.items : []).some((it) => it.url === '/ecosistema-tecnico')
+      if (!hasEcosistema) {
+        const items2 = Array.isArray(menu.items) ? [...menu.items] : []
+        const preciosIdx = items2.findIndex((it) => it.url === '/precios')
+        const newItem = { label: 'Ecosistema técnico', kind: 'link', url: '/ecosistema-tecnico' }
+        if (preciosIdx >= 0) items2.splice(preciosIdx, 0, newItem)
+        else items2.push(newItem)
+        try {
+          await payload.updateGlobal({ slug: 'main-menu', data: { items: items2 } })
+          menu.items = items2
+          console.log('[sync-schema] ↻ menú: + Ecosistema técnico añadido al nivel raíz')
+        } catch (err) {
+          console.warn('[sync-schema] ✗ menú añadir ecosistema:', err?.message || err)
+        }
+      }
       const items = Array.isArray(menu.items) ? [...menu.items] : []
       let touched = false
       for (const item of items) {

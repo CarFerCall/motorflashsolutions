@@ -2,8 +2,15 @@ import Link from 'next/link'
 import { Reveal } from '@/components/Reveal'
 
 export const metadata = {
-  title: 'Historias de éxito — Motorflash Ibérica',
-  description: 'Concesionarios y marcas que ya están vendiendo más con Motorflash.',
+  title: 'Historias de éxito',
+  description:
+    'Concesionarios y marcas del motor que ya están vendiendo más gracias a Motorflash. Casos reales con resultados medibles.',
+  alternates: { canonical: '/historias-de-exito' },
+  openGraph: {
+    title: 'Historias de éxito — Motorflash',
+    description: 'Concesionarios y marcas que ya están vendiendo más con Motorflash.',
+    url: '/historias-de-exito',
+  },
 }
 
 export default function HistoriasPage() {
