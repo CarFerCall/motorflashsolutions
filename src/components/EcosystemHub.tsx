@@ -50,23 +50,41 @@ export function EcosystemHub({ hubs }: Props) {
     const subY = hubPositions[idx].y
     const n = activeHub.integrations.length
 
-    // Rodear el sub-hub al ~270° hacia el exterior (deja libre el
-    // tercio que mira al HUB central) — así no se sobrescriben ni la
-    // X central ni el card con el nombre del hub.
-    const totalArc = Math.min(Math.PI * 1.6, (Math.PI * 0.6) + n * (Math.PI / 11))
+    // Las integraciones se reparten en un arco de hasta 180°
+    // centrado HACIA AFUERA del HUB central (perpendicular máxima),
+    // de modo que ningún extremo del arco quede entre el sub-hub y
+    // el centro — evita que los pills caigan encima de la card del
+    // sub-hub activo.
+    const MAX_ARC = Math.PI // 180°
+    const totalArc = Math.min(MAX_ARC, (Math.PI * 0.45) + n * (Math.PI / 14))
     const startAngle = baseAngle - totalArc / 2
     const stepAngle = n > 1 ? totalArc / (n - 1) : 0
 
-    // Radio variable: más integraciones → ligeramente más lejos para
-    // que los pills no se monten entre sí. Clampamos para no salir
-    // del viewBox.
-    const distance = n <= 3 ? 16 : n <= 5 ? 19 : n <= 7 ? 22 : 24
+    // Radio variable: más integraciones → más lejos para que los
+    // pills no se monten entre sí. Forzado mínimo lejos del centro.
+    const distance = n <= 2 ? 16 : n <= 4 ? 19 : n <= 6 ? 22 : n <= 8 ? 25 : 28
+
+    // El centro del diagrama (card del sub-hub activo) tiene una
+    // exclusión radial: si por azar una integración cae dentro de
+    // ese radio, la empujamos hacia fuera siguiendo su mismo ángulo.
+    const CENTER_EXCLUSION = 22
 
     integrationPositions = activeHub.integrations.map((label, i) => {
       const ang = n > 1 ? startAngle + stepAngle * i : baseAngle
+      let x = subX + distance * Math.cos(ang)
+      let y = subY + distance * Math.sin(ang)
+      // Empuje fuera del centro si entra en la zona de exclusión.
+      const dx = x - 50
+      const dy = y - 50
+      const distFromCenter = Math.sqrt(dx * dx + dy * dy)
+      if (distFromCenter < CENTER_EXCLUSION && distFromCenter > 0.1) {
+        const scale = CENTER_EXCLUSION / distFromCenter
+        x = 50 + dx * scale
+        y = 50 + dy * scale
+      }
       return {
-        x: Math.max(8, Math.min(92, subX + distance * Math.cos(ang))),
-        y: Math.max(8, Math.min(92, subY + distance * Math.sin(ang))),
+        x: Math.max(6, Math.min(94, x)),
+        y: Math.max(6, Math.min(94, y)),
         label,
         ang,
       }
@@ -269,7 +287,7 @@ export function EcosystemHub({ hubs }: Props) {
               animationDelay: '0.05s',
             }}
           >
-            <div className="bg-white border-2 border-primary rounded-2xl shadow-2xl px-5 py-3 text-center min-w-[220px] max-w-[280px]">
+            <div className="bg-white border-2 border-primary rounded-2xl shadow-2xl px-4 py-3 text-center w-[200px] sm:w-[240px] max-w-[260px]">
               <div className="flex items-center gap-2 mb-1">
                 <span className="material-symbols-outlined text-primary" style={{ fontSize: 22 }}>{activeHub.icon}</span>
                 <h3 className="text-sm font-bold m-0 text-left flex-1">{activeHub.name}</h3>
