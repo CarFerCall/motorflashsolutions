@@ -118,7 +118,7 @@ export default function EcosistemaTecnicoPage() {
         <div className="mf-container">
           <Reveal>
             <p className="text-center text-sm text-on-surface-variant mb-8 max-w-xl mx-auto">
-              Pulsa cualquier sub-hub para ver sus integraciones reales en producción.
+              Pulsa cualquier sub-hub para ver sus integraciones reales en producción. Se despliegan dentro del propio diagrama.
             </p>
             <EcosystemHub hubs={HUBS} />
           </Reveal>

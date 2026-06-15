@@ -14,38 +14,66 @@ interface Props {
   hubs: EcosystemHub[]
 }
 
+const VIEWBOX_SIZE = 100
+const HUB_RADIUS_PERCENT = 38 // distancia del centro a los sub-hubs
+
 /**
  * Visualización animada del ecosistema de integraciones de Motorflash.
  *
- * Disposición en círculo: el HUB MOTORFLASH ocupa el centro, los 8
- * sub-hubs se reparten alrededor en una circunferencia. Líneas SVG
- * animadas con stroke-dasharray conectan el centro con cada hub. Al
- * pulsar un hub se expande la lista de integraciones.
- *
- * Pensada para desktop. En móvil cae a una lista vertical clásica para
- * no perder legibilidad.
+ * Estados:
+ * - Reposo: HUB central + 8 sub-hubs alrededor.
+ * - Sub-hub activo: el sub-hub se agranda, los demás se atenúan, el
+ *   HUB central también, y las integraciones aparecen como mini-nodos
+ *   conectados al sub-hub con líneas finas. Todo dentro del mismo
+ *   canvas — no hay panel debajo.
  */
 export function EcosystemHub({ hubs }: Props) {
   const [activeKey, setActiveKey] = useState<string | null>(null)
+  const activeHub = activeKey ? hubs.find((h) => h.key === activeKey) ?? null : null
 
-  // Posiciones en porcentaje sobre el viewBox 100x100 del SVG.
-  // Repartimos los hubs uniformemente alrededor del HUB central.
-  const radius = 38
-  const positions = hubs.map((_, i) => {
-    const angle = (i / hubs.length) * Math.PI * 2 - Math.PI / 2
-    return {
-      x: 50 + radius * Math.cos(angle),
-      y: 50 + radius * Math.sin(angle),
-    }
-  })
+  // Posiciones radiales de los sub-hubs en % del viewBox.
+  const hubAngles = hubs.map((_, i) => (i / hubs.length) * Math.PI * 2 - Math.PI / 2)
+  const hubPositions = hubAngles.map((a) => ({
+    x: 50 + HUB_RADIUS_PERCENT * Math.cos(a),
+    y: 50 + HUB_RADIUS_PERCENT * Math.sin(a),
+  }))
+
+  // Cuando hay sub-hub activo, calculamos posiciones para sus
+  // integraciones alrededor del sub-hub. Las distribuimos en un
+  // arco hacia AFUERA del HUB central (para no solaparlas con él).
+  let integrationPositions: Array<{ x: number; y: number; label: string }> = []
+  if (activeHub) {
+    const idx = hubs.findIndex((h) => h.key === activeKey)
+    const baseAngle = hubAngles[idx]
+    const subX = hubPositions[idx].x
+    const subY = hubPositions[idx].y
+    const n = activeHub.integrations.length
+
+    // Apertura total del arco según número de integraciones.
+    const totalArc = Math.min(Math.PI * 1.45, (Math.PI / 4) + n * (Math.PI / 14))
+    const startAngle = baseAngle - totalArc / 2
+    const stepAngle = n > 1 ? totalArc / (n - 1) : 0
+    const distance = n <= 4 ? 14 : n <= 6 ? 16 : 18
+
+    integrationPositions = activeHub.integrations.map((label, i) => {
+      const ang = n > 1 ? startAngle + stepAngle * i : baseAngle
+      return {
+        x: subX + distance * Math.cos(ang),
+        y: subY + distance * Math.sin(ang),
+        label,
+      }
+    })
+  }
 
   return (
     <>
       {/* Diagrama (desktop) */}
-      <div className="hidden lg:block relative w-full" style={{ aspectRatio: '1 / 1', maxWidth: 880, margin: '0 auto' }}>
-        {/* SVG con conexiones animadas y halo central */}
+      <div
+        className="hidden lg:block relative w-full"
+        style={{ aspectRatio: '1 / 1', maxWidth: 920, margin: '0 auto' }}
+      >
         <svg
-          viewBox="0 0 100 100"
+          viewBox={`0 0 ${VIEWBOX_SIZE} ${VIEWBOX_SIZE}`}
           className="absolute inset-0 w-full h-full"
           style={{ pointerEvents: 'none' }}
         >
@@ -62,22 +90,55 @@ export function EcosystemHub({ hubs }: Props) {
           </defs>
 
           {/* Halo central */}
-          <circle cx="50" cy="50" r="22" fill="url(#centerGlow)" className="mf-hub-pulse" />
+          <circle
+            cx="50"
+            cy="50"
+            r="22"
+            fill="url(#centerGlow)"
+            className="mf-hub-pulse"
+            style={{ opacity: activeHub ? 0.18 : 1, transition: 'opacity 0.4s ease' }}
+          />
 
           {/* Conexiones del centro a cada sub-hub */}
-          {positions.map((p, i) => (
-            <line
-              key={i}
-              x1="50"
-              y1="50"
-              x2={p.x}
-              y2={p.y}
-              stroke="url(#connLine)"
-              strokeWidth={0.35}
-              className="mf-hub-line"
-              style={{ animationDelay: `${i * 0.1}s` }}
-            />
-          ))}
+          {hubPositions.map((p, i) => {
+            const isActiveLine = activeKey === hubs[i].key
+            return (
+              <line
+                key={`line-main-${i}`}
+                x1="50"
+                y1="50"
+                x2={p.x}
+                y2={p.y}
+                stroke="url(#connLine)"
+                strokeWidth={isActiveLine ? 0.55 : 0.35}
+                className="mf-hub-line"
+                style={{
+                  animationDelay: `${i * 0.1}s`,
+                  opacity: activeHub && !isActiveLine ? 0.15 : 1,
+                  transition: 'opacity 0.4s ease, stroke-width 0.3s ease',
+                }}
+              />
+            )
+          })}
+
+          {/* Conexiones del sub-hub activo a sus integraciones */}
+          {activeHub && integrationPositions.map((p, i) => {
+            const idx = hubs.findIndex((h) => h.key === activeKey)
+            return (
+              <line
+                key={`line-int-${i}`}
+                x1={hubPositions[idx].x}
+                y1={hubPositions[idx].y}
+                x2={p.x}
+                y2={p.y}
+                stroke="rgba(255, 128, 0, 0.7)"
+                strokeWidth={0.3}
+                strokeDasharray="0.8 0.8"
+                className="mf-hub-int-line"
+                style={{ animationDelay: `${0.2 + i * 0.05}s` }}
+              />
+            )
+          })}
         </svg>
 
         {/* Centro: HUB MOTORFLASH */}
@@ -89,6 +150,9 @@ export function EcosystemHub({ hubs }: Props) {
             transform: 'translate(-50%, -50%)',
             width: '20%',
             aspectRatio: '1 / 1',
+            opacity: activeHub ? 0.4 : 1,
+            transition: 'opacity 0.4s ease',
+            zIndex: activeHub ? 1 : 5,
           }}
         >
           <div
@@ -107,7 +171,8 @@ export function EcosystemHub({ hubs }: Props) {
         {/* Sub-hubs alrededor del centro */}
         {hubs.map((h, i) => {
           const isActive = activeKey === h.key
-          const p = positions[i]
+          const isDimmed = activeHub != null && !isActive
+          const p = hubPositions[i]
           return (
             <button
               key={h.key}
@@ -121,21 +186,24 @@ export function EcosystemHub({ hubs }: Props) {
                 width: '20%',
                 aspectRatio: '1 / 1',
                 animationDelay: `${i * 0.12}s`,
-                zIndex: isActive ? 10 : 2,
+                zIndex: isActive ? 20 : 4,
+                opacity: isDimmed ? 0.3 : 1,
+                transition: 'opacity 0.4s ease',
               }}
               aria-expanded={isActive}
               aria-label={h.name}
             >
               <div
                 className={`w-full h-full rounded-full flex flex-col items-center justify-center text-center transition-all duration-300 ${
-                  isActive ? 'scale-110' : 'group-hover:scale-105'
+                  isActive ? 'scale-115' : 'group-hover:scale-105'
                 }`}
                 style={{
-                  background: isActive ? 'rgba(255, 128, 0, 0.10)' : '#ffffff',
+                  background: isActive ? 'linear-gradient(135deg, rgba(255,128,0,0.18), rgba(255,128,0,0.05))' : '#ffffff',
                   border: `2px solid ${isActive ? '#ff8000' : 'rgba(0,0,0,0.08)'}`,
                   boxShadow: isActive
-                    ? '0 16px 48px rgba(255, 128, 0, 0.30)'
+                    ? '0 20px 60px rgba(255, 128, 0, 0.40), 0 0 0 6px rgba(255, 128, 0, 0.15)'
                     : '0 6px 20px rgba(0, 0, 0, 0.06)',
+                  transform: isActive ? 'scale(1.15)' : undefined,
                 }}
               >
                 <span className="material-symbols-outlined text-primary" style={{ fontSize: 22 }}>{h.icon}</span>
@@ -144,14 +212,66 @@ export function EcosystemHub({ hubs }: Props) {
             </button>
           )
         })}
-      </div>
 
-      {/* Detalle del hub activo (debajo del diagrama, desktop) */}
-      {activeKey && (
-        <div className="hidden lg:block max-w-3xl mx-auto mt-8 bg-white border-2 border-primary/30 rounded-3xl p-7 shadow-xl">
-          <DetalleHub hub={hubs.find((h) => h.key === activeKey)!} />
-        </div>
-      )}
+        {/* Integraciones del sub-hub activo */}
+        {activeHub && integrationPositions.map((p, i) => (
+          <div
+            key={`int-${activeKey}-${i}`}
+            className="absolute mf-hub-int-pop"
+            style={{
+              left: `${p.x}%`,
+              top: `${p.y}%`,
+              transform: 'translate(-50%, -50%)',
+              animationDelay: `${0.25 + i * 0.05}s`,
+              zIndex: 15,
+            }}
+          >
+            <div
+              className="bg-white border border-primary/30 rounded-full whitespace-nowrap"
+              style={{
+                fontSize: 10,
+                padding: '4px 10px',
+                fontWeight: 600,
+                boxShadow: '0 4px 12px rgba(0,0,0,0.10)',
+              }}
+            >
+              {p.label}
+            </div>
+          </div>
+        ))}
+
+        {/* Badge nombre del sub-hub activo + cerrar */}
+        {activeHub && (
+          <div
+            className="absolute mf-hub-int-pop"
+            style={{
+              left: '50%',
+              top: '50%',
+              transform: 'translate(-50%, -50%)',
+              zIndex: 25,
+              animationDelay: '0.05s',
+            }}
+          >
+            <div className="bg-white border-2 border-primary rounded-2xl shadow-2xl px-5 py-3 text-center min-w-[200px]">
+              <div className="flex items-center gap-2 mb-1">
+                <span className="material-symbols-outlined text-primary" style={{ fontSize: 22 }}>{activeHub.icon}</span>
+                <h3 className="text-sm font-bold m-0 text-left">{activeHub.name}</h3>
+                <button
+                  type="button"
+                  onClick={() => setActiveKey(null)}
+                  aria-label="Cerrar"
+                  className="ml-auto w-7 h-7 rounded-full hover:bg-surface-container flex items-center justify-center transition-colors"
+                >
+                  <span className="material-symbols-outlined text-on-surface-variant" style={{ fontSize: 18 }}>close</span>
+                </button>
+              </div>
+              <p className="text-[10px] uppercase tracking-widest text-on-surface-variant font-semibold m-0">
+                {activeHub.integrations.length} integraciones
+              </p>
+            </div>
+          </div>
+        )}
+      </div>
 
       {/* Móvil/tablet: lista vertical de hubs expandibles */}
       <div className="lg:hidden space-y-3 max-w-2xl mx-auto">
@@ -196,31 +316,5 @@ export function EcosystemHub({ hubs }: Props) {
         })}
       </div>
     </>
-  )
-}
-
-function DetalleHub({ hub }: { hub: EcosystemHub }) {
-  return (
-    <div>
-      <div className="flex items-center gap-4 mb-4">
-        <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center">
-          <span className="material-symbols-outlined text-primary text-2xl">{hub.icon}</span>
-        </div>
-        <h3 className="text-xl font-semibold m-0">{hub.name}</h3>
-      </div>
-      <p className="text-xs font-bold uppercase tracking-widest text-on-surface-variant mb-3">
-        {hub.integrations.length} integraciones disponibles
-      </p>
-      <ul className="flex flex-wrap gap-2">
-        {hub.integrations.map((i) => (
-          <li
-            key={i}
-            className="text-sm font-semibold px-4 py-2 rounded-full bg-surface-container-low border border-outline-variant hover:border-primary/40 transition-colors"
-          >
-            {i}
-          </li>
-        ))}
-      </ul>
-    </div>
   )
 }
