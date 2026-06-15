@@ -39,9 +39,10 @@ export function EcosystemHub({ hubs }: Props) {
   }))
 
   // Cuando hay sub-hub activo, calculamos posiciones para sus
-  // integraciones alrededor del sub-hub. Las distribuimos en un
-  // arco hacia AFUERA del HUB central (para no solaparlas con él).
-  let integrationPositions: Array<{ x: number; y: number; label: string }> = []
+  // integraciones repartidas en un arco AMPLIO alrededor del sub-hub
+  // activo. Como los otros sub-hubs se ocultan mientras tanto, las
+  // integraciones tienen todo el espacio del canvas para sí.
+  let integrationPositions: Array<{ x: number; y: number; label: string; ang: number }> = []
   if (activeHub) {
     const idx = hubs.findIndex((h) => h.key === activeKey)
     const baseAngle = hubAngles[idx]
@@ -49,18 +50,25 @@ export function EcosystemHub({ hubs }: Props) {
     const subY = hubPositions[idx].y
     const n = activeHub.integrations.length
 
-    // Apertura total del arco según número de integraciones.
-    const totalArc = Math.min(Math.PI * 1.45, (Math.PI / 4) + n * (Math.PI / 14))
+    // Rodear el sub-hub al ~270° hacia el exterior (deja libre el
+    // tercio que mira al HUB central) — así no se sobrescriben ni la
+    // X central ni el card con el nombre del hub.
+    const totalArc = Math.min(Math.PI * 1.6, (Math.PI * 0.6) + n * (Math.PI / 11))
     const startAngle = baseAngle - totalArc / 2
     const stepAngle = n > 1 ? totalArc / (n - 1) : 0
-    const distance = n <= 4 ? 14 : n <= 6 ? 16 : 18
+
+    // Radio variable: más integraciones → ligeramente más lejos para
+    // que los pills no se monten entre sí. Clampamos para no salir
+    // del viewBox.
+    const distance = n <= 3 ? 16 : n <= 5 ? 19 : n <= 7 ? 22 : 24
 
     integrationPositions = activeHub.integrations.map((label, i) => {
       const ang = n > 1 ? startAngle + stepAngle * i : baseAngle
       return {
-        x: subX + distance * Math.cos(ang),
-        y: subY + distance * Math.sin(ang),
+        x: Math.max(8, Math.min(92, subX + distance * Math.cos(ang))),
+        y: Math.max(8, Math.min(92, subY + distance * Math.sin(ang))),
         label,
+        ang,
       }
     })
   }
@@ -99,9 +107,11 @@ export function EcosystemHub({ hubs }: Props) {
             style={{ opacity: activeHub ? 0.18 : 1, transition: 'opacity 0.4s ease' }}
           />
 
-          {/* Conexiones del centro a cada sub-hub */}
+          {/* Conexiones del centro a cada sub-hub. Las de los
+              sub-hubs ocultos también desaparecen. */}
           {hubPositions.map((p, i) => {
             const isActiveLine = activeKey === hubs[i].key
+            const isHiddenLine = activeHub != null && !isActiveLine
             return (
               <line
                 key={`line-main-${i}`}
@@ -114,8 +124,8 @@ export function EcosystemHub({ hubs }: Props) {
                 className="mf-hub-line"
                 style={{
                   animationDelay: `${i * 0.1}s`,
-                  opacity: activeHub && !isActiveLine ? 0.15 : 1,
-                  transition: 'opacity 0.4s ease, stroke-width 0.3s ease',
+                  opacity: isHiddenLine ? 0 : 1,
+                  transition: 'opacity 0.35s ease, stroke-width 0.3s ease',
                 }}
               />
             )
@@ -168,10 +178,12 @@ export function EcosystemHub({ hubs }: Props) {
           </div>
         </div>
 
-        {/* Sub-hubs alrededor del centro */}
+        {/* Sub-hubs alrededor del centro. Los inactivos se ocultan
+            cuando hay uno activo para liberar espacio a las
+            integraciones y evitar solapes. */}
         {hubs.map((h, i) => {
           const isActive = activeKey === h.key
-          const isDimmed = activeHub != null && !isActive
+          const isHidden = activeHub != null && !isActive
           const p = hubPositions[i]
           return (
             <button
@@ -187,10 +199,12 @@ export function EcosystemHub({ hubs }: Props) {
                 aspectRatio: '1 / 1',
                 animationDelay: `${i * 0.12}s`,
                 zIndex: isActive ? 20 : 4,
-                opacity: isDimmed ? 0.3 : 1,
-                transition: 'opacity 0.4s ease',
+                opacity: isHidden ? 0 : 1,
+                pointerEvents: isHidden ? 'none' : 'auto',
+                transition: 'opacity 0.35s ease',
               }}
               aria-expanded={isActive}
+              aria-hidden={isHidden}
               aria-label={h.name}
             >
               <div
@@ -224,15 +238,17 @@ export function EcosystemHub({ hubs }: Props) {
               transform: 'translate(-50%, -50%)',
               animationDelay: `${0.25 + i * 0.05}s`,
               zIndex: 15,
+              maxWidth: 'min(160px, 28vw)',
             }}
           >
             <div
-              className="bg-white border border-primary/30 rounded-full whitespace-nowrap"
+              className="bg-white border border-primary/30 rounded-full text-center"
               style={{
-                fontSize: 10,
-                padding: '4px 10px',
+                fontSize: 11,
+                padding: '5px 12px',
                 fontWeight: 600,
-                boxShadow: '0 4px 12px rgba(0,0,0,0.10)',
+                boxShadow: '0 6px 16px rgba(0,0,0,0.12)',
+                lineHeight: 1.2,
               }}
             >
               {p.label}
@@ -240,7 +256,8 @@ export function EcosystemHub({ hubs }: Props) {
           </div>
         ))}
 
-        {/* Badge nombre del sub-hub activo + cerrar */}
+        {/* Badge nombre del sub-hub activo + cerrar (en el centro,
+            donde antes estaba el HUB Motorflash). */}
         {activeHub && (
           <div
             className="absolute mf-hub-int-pop"
@@ -252,15 +269,15 @@ export function EcosystemHub({ hubs }: Props) {
               animationDelay: '0.05s',
             }}
           >
-            <div className="bg-white border-2 border-primary rounded-2xl shadow-2xl px-5 py-3 text-center min-w-[200px]">
+            <div className="bg-white border-2 border-primary rounded-2xl shadow-2xl px-5 py-3 text-center min-w-[220px] max-w-[280px]">
               <div className="flex items-center gap-2 mb-1">
                 <span className="material-symbols-outlined text-primary" style={{ fontSize: 22 }}>{activeHub.icon}</span>
-                <h3 className="text-sm font-bold m-0 text-left">{activeHub.name}</h3>
+                <h3 className="text-sm font-bold m-0 text-left flex-1">{activeHub.name}</h3>
                 <button
                   type="button"
                   onClick={() => setActiveKey(null)}
                   aria-label="Cerrar"
-                  className="ml-auto w-7 h-7 rounded-full hover:bg-surface-container flex items-center justify-center transition-colors"
+                  className="w-7 h-7 rounded-full hover:bg-surface-container flex items-center justify-center transition-colors shrink-0"
                 >
                   <span className="material-symbols-outlined text-on-surface-variant" style={{ fontSize: 18 }}>close</span>
                 </button>
