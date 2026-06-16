@@ -60,9 +60,17 @@ export function computeProductLine(
       }
     } else {
       const isChecked = raw == null ? item.defaultChecked : raw === '1' || raw === 'true' || raw === 'on'
-      if (isChecked && item.unitPriceCents > 0) {
-        itemsCents += item.unitPriceCents
-        itemsDetail.push({ label: item.label, valueLabel: '✓', cents: item.unitPriceCents })
+      if (isChecked) {
+        if (item.unitPriceCents > 0) {
+          itemsCents += item.unitPriceCents
+          itemsDetail.push({ label: item.label, valueLabel: '✓', cents: item.unitPriceCents })
+        } else {
+          // Checkbox marcado sin cuota mensual: lo registramos en el
+          // desglose como "Activado · facturación aparte" para que el
+          // cliente vea que su elección queda recogida y el comercial
+          // sepa que tiene que cotizarlo por separado.
+          itemsDetail.push({ label: item.label, valueLabel: 'activado · facturación aparte', cents: 0 })
+        }
       }
     }
   }

@@ -57,7 +57,7 @@ try {
         ] },
         { itemKey: 'feed_datos', label: 'Feed de datos con exportaciones ilimitadas', helpText: '120 €/mes — ficheros de salida ilimitados con tus exportaciones. Cobra sentido si tienes integraciones automáticas con terceros.', type: 'checkbox', unitPriceCents: 12000, required: false, checkboxDefault: false },
         { itemKey: 'modulo_tasacion', label: 'Licencia módulo de tasación', helpText: '50 €/mes — habilita el tasador interno integrado en la ficha de cada vehículo.', type: 'checkbox', unitPriceCents: 5000, required: false, checkboxDefault: false },
-        { itemKey: 'creacion_premium', label: 'Creación premium de anuncios (por VIN)', helpText: 'Tarifa 3 €/bastidor único enviado al mes. El importe del configurador es una estimación mensual; el real se factura por bastidores acumulados.', type: 'checkbox', unitPriceCents: 25000, required: false, checkboxDefault: false },
+        { itemKey: 'creacion_premium', label: 'Creación premium de anuncios (por VIN)', helpText: 'Marca esta opción si te interesa la creación premium por bastidor. Se factura 3 €/VIN único enviado al mes y no se suma al total mensual del configurador — el comercial te cotiza el volumen.', type: 'checkbox', unitPriceCents: 0, required: false, checkboxDefault: false },
         { itemKey: 'marcas_agua', label: 'Marcas de agua · mantenimiento', helpText: '24 €/mes — mantenimiento de marcas de agua. La creación inicial son 120 € (pago único, no incluido en el configurador).', type: 'checkbox', unitPriceCents: 2400, required: false, checkboxDefault: false },
       ],
     },
@@ -160,6 +160,36 @@ try {
       ],
     },
   ]
+
+  // Migración fina Multipublicador: si el item 'creacion_premium'
+  // tiene aún el unitPriceCents 25000 (estimación mensual antigua),
+  // lo bajamos a 0 para que sea un check de opción sin cálculo
+  // (precio real por VIN se cotiza aparte).
+  {
+    const { docs: mpFix } = await payload.find({
+      collection: 'pricing-plans',
+      where: { productSlug: { equals: 'exportaciones' } },
+      limit: 1,
+    })
+    const mpPlan = mpFix[0]
+    if (mpPlan && Array.isArray(mpPlan.items)) {
+      const premiumItem = mpPlan.items.find((i) => i.itemKey === 'creacion_premium')
+      if (premiumItem && premiumItem.unitPriceCents > 0) {
+        premiumItem.unitPriceCents = 0
+        premiumItem.helpText = 'Marca esta opción si te interesa la creación premium por bastidor. Se factura 3 €/VIN único enviado al mes y no se suma al total mensual del configurador — el comercial te cotiza el volumen.'
+        try {
+          await payload.update({
+            collection: 'pricing-plans',
+            id: mpPlan.id,
+            data: { items: mpPlan.items },
+          })
+          console.log('[sync-schema] ↻ Multipublicador: creacion_premium pasa a check sin cálculo (precio por VIN)')
+        } catch (err) {
+          console.warn('[sync-schema] ✗ ajuste creacion_premium:', err?.message || err)
+        }
+      }
+    }
+  }
 
   // Migración puntual Multipublicador: el seed antiguo tenía items
   // 'portales_premium' y 'auto_optimization' que no encajan con las
