@@ -1,11 +1,19 @@
+import Image from 'next/image'
 import Link from 'next/link'
 import type { Product } from '@/catalog/products'
 import { productContentBySlug } from '@/catalog/product-content'
 import { orderedProducts } from '@/catalog/products'
 
+// Productos que muestran una imagen real en el hero en lugar del
+// icono de Material Symbols con el tile naranja.
+const HERO_IMAGE_BY_SLUG: Record<string, { src: string; alt: string }> = {
+  'motorflash-message': { src: '/images/products/whatsapp.webp', alt: 'WhatsApp Business' },
+}
+
 export function GenericProductPage({ product }: { product: Product }) {
   const content = productContentBySlug(product.slug)
   const others = orderedProducts().filter((p) => p.slug !== product.slug).slice(0, 8)
+  const heroImage = HERO_IMAGE_BY_SLUG[product.slug]
 
   return (
     <>
@@ -39,9 +47,38 @@ export function GenericProductPage({ product }: { product: Product }) {
               </div>
             </div>
             <div className="hidden lg:flex lg:col-span-5 justify-center">
-              <div className="mf-icon-tile" style={{ width: 240, height: 240, borderRadius: '2.5rem', boxShadow: '0 24px 48px rgba(255, 128, 0, 0.18)' }}>
-                <span className="material-symbols-outlined" style={{ fontSize: 120 }}>{product.icon}</span>
-              </div>
+              {heroImage ? (
+                <div
+                  className="relative flex items-center justify-center"
+                  style={{
+                    width: 280,
+                    height: 280,
+                  }}
+                >
+                  <div
+                    aria-hidden
+                    className="absolute inset-0 rounded-full"
+                    style={{
+                      background: 'radial-gradient(circle, rgba(37, 211, 102, 0.18), transparent 65%)',
+                    }}
+                  />
+                  <Image
+                    src={heroImage.src}
+                    alt={heroImage.alt}
+                    width={240}
+                    height={240}
+                    priority
+                    className="relative drop-shadow-2xl"
+                    style={{
+                      filter: 'drop-shadow(0 24px 48px rgba(37, 211, 102, 0.35))',
+                    }}
+                  />
+                </div>
+              ) : (
+                <div className="mf-icon-tile" style={{ width: 240, height: 240, borderRadius: '2.5rem', boxShadow: '0 24px 48px rgba(255, 128, 0, 0.18)' }}>
+                  <span className="material-symbols-outlined" style={{ fontSize: 120 }}>{product.icon}</span>
+                </div>
+              )}
             </div>
           </div>
         </div>
