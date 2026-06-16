@@ -198,14 +198,18 @@ export function EcosystemHub({ hubs }: Props) {
 
         {/* Sub-hubs alrededor del centro. Los inactivos se ocultan
             cuando hay uno activo para liberar espacio a las
-            integraciones y evitar solapes. */}
+            integraciones y evitar solapes.
+            Sólo el icono dentro del círculo — la etiqueta de texto
+            se renderiza FUERA, debajo o encima según si el sub-hub
+            está en la mitad inferior o superior, para que no se
+            atraviese el círculo. */}
         {hubs.map((h, i) => {
           const isActive = activeKey === h.key
           const isHidden = activeHub != null && !isActive
           const p = hubPositions[i]
           return (
             <button
-              key={h.key}
+              key={`btn-${h.key}`}
               type="button"
               onClick={() => setActiveKey((k) => (k === h.key ? null : h.key))}
               className="absolute group mf-hub-node"
@@ -213,7 +217,7 @@ export function EcosystemHub({ hubs }: Props) {
                 left: `${p.x}%`,
                 top: `${p.y}%`,
                 transform: 'translate(-50%, -50%)',
-                width: '20%',
+                width: '15%',
                 aspectRatio: '1 / 1',
                 animationDelay: `${i * 0.12}s`,
                 zIndex: isActive ? 20 : 4,
@@ -226,8 +230,8 @@ export function EcosystemHub({ hubs }: Props) {
               aria-label={h.name}
             >
               <div
-                className={`w-full h-full rounded-full flex flex-col items-center justify-center text-center transition-all duration-300 ${
-                  isActive ? 'scale-115' : 'group-hover:scale-105'
+                className={`w-full h-full rounded-full flex items-center justify-center transition-all duration-300 ${
+                  isActive ? '' : 'group-hover:scale-105'
                 }`}
                 style={{
                   background: isActive ? 'linear-gradient(135deg, rgba(255,128,0,0.18), rgba(255,128,0,0.05))' : '#ffffff',
@@ -238,10 +242,58 @@ export function EcosystemHub({ hubs }: Props) {
                   transform: isActive ? 'scale(1.15)' : undefined,
                 }}
               >
-                <span className="material-symbols-outlined text-primary" style={{ fontSize: 22 }}>{h.icon}</span>
-                <span className="text-[10px] font-bold uppercase tracking-wider text-on-surface mt-1 px-2 leading-tight">{h.shortLabel}</span>
+                <span className="material-symbols-outlined text-primary" style={{ fontSize: 28 }}>{h.icon}</span>
               </div>
             </button>
+          )
+        })}
+
+        {/* Etiquetas de los sub-hubs (fuera del círculo, posicionadas
+            según el cuadrante para que no se solapen con la línea
+            radial). Texto compacto y centrado. */}
+        {hubs.map((h, i) => {
+          const isActive = activeKey === h.key
+          const isHidden = activeHub != null && !isActive
+          const p = hubPositions[i]
+          // Si el sub-hub está en la mitad superior del viewBox, la
+          // etiqueta va ENCIMA del círculo; si está en la mitad
+          // inferior, va DEBAJO. Ambos casos: hacia afuera del HUB
+          // central.
+          const isUpperHalf = p.y < 50
+          // Offset desde el centro del círculo, lejos del centro:
+          // 9% del viewBox (círculo radio ~7,5 + un poco de aire).
+          const labelY = isUpperHalf ? p.y - 9.5 : p.y + 9.5
+          return (
+            <div
+              key={`label-${h.key}`}
+              className="absolute mf-hub-node pointer-events-none"
+              style={{
+                left: `${p.x}%`,
+                top: `${labelY}%`,
+                transform: isUpperHalf ? 'translate(-50%, -100%)' : 'translate(-50%, 0)',
+                animationDelay: `${i * 0.12 + 0.05}s`,
+                width: '22%',
+                opacity: isHidden ? 0 : 1,
+                transition: 'opacity 0.35s ease',
+                zIndex: isActive ? 21 : 4,
+                textAlign: 'center',
+              }}
+              aria-hidden
+            >
+              <span
+                className={`inline-block text-[10px] font-bold uppercase tracking-wider leading-tight ${
+                  isActive ? 'text-primary' : 'text-on-surface'
+                }`}
+                style={{
+                  background: 'rgba(255,255,255,0.85)',
+                  padding: '2px 6px',
+                  borderRadius: 6,
+                  boxShadow: '0 2px 6px rgba(0,0,0,0.06)',
+                }}
+              >
+                {h.shortLabel}
+              </span>
+            </div>
           )
         })}
 
