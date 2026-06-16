@@ -182,4 +182,19 @@
     .mf-hub-pulse, .mf-hub-line, .mf-hub-node, .mf-hub-center,
     .mf-hub-int-pop, .mf-hub-int-line { animation: none !important; }
   }
+
+  /* Scrollbar más fina y discreta para la timeline de productos */
+  .mf-timeline-scroll::-webkit-scrollbar { height: 6px; }
+  .mf-timeline-scroll::-webkit-scrollbar-track { background: transparent; }
+  .mf-timeline-scroll::-webkit-scrollbar-thumb {
+    background: rgba(255, 128, 0, 0.35);
+    border-radius: 3px;
+  }
+  .mf-timeline-scroll::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 128, 0, 0.6);
+  }
+  .mf-timeline-scroll {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 128, 0, 0.35) transparent;
+  }
 }

@@ -4,6 +4,7 @@ import { orderedProducts } from '@/catalog/products'
 import { Reveal } from '@/components/Reveal'
 import { AnimatedCounter } from '@/components/AnimatedCounter'
 import { ProductCarousel } from '@/components/ProductCarousel'
+import { ProductsTimeline } from '@/components/ProductsTimeline'
 
 export default function HomePage() {
   const products = orderedProducts()
@@ -395,36 +396,48 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Nuestra historia teaser → /compania */}
+      {/* Nuestra historia teaser → /compania (texto a ancho completo) */}
       <section className="py-24 bg-surface-container">
         <div className="mf-container">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <Reveal>
+          <Reveal>
+            <div className="max-w-4xl mx-auto text-center">
               <span className="mf-eyebrow">Nuestra historia</span>
-              <h2 className="text-3xl md:text-display-lg font-semibold mb-6">
+              <h2 className="text-3xl md:text-display-lg font-semibold mb-6 leading-tight">
                 De portal de clasificados a ecosistema digital con IA
               </h2>
-              <p className="text-lg text-on-surface-variant mb-6 leading-relaxed">
+              <p className="text-lg text-on-surface-variant mb-4 leading-relaxed">
                 Empezamos en 2007 con un portal y Audi Selection Plus como primer gran cliente. Hoy operamos un ecosistema completo: publicación, gestión de stock, CRM, contact center e IA conversacional — todo conectado y respaldado por +20 años de experiencia en el sector.
               </p>
-              <Link href="/compania" className="btn-secondary">
-                Ver toda nuestra historia
-                <span className="material-symbols-outlined">arrow_forward</span>
-              </Link>
-            </Reveal>
-
-            <Reveal delay={200}>
-              <div className="relative rounded-3xl overflow-hidden shadow-2xl">
-                <Image src="/images/home-expertise.png" alt="Equipo Motorflash" width={720} height={480} className="w-full h-auto" />
-                <div aria-hidden className="absolute inset-0 bg-gradient-to-t from-on-surface/40 to-transparent" />
-                <div className="absolute bottom-8 left-8 text-white">
-                  <p className="font-display text-2xl font-semibold m-0">+20 Años</p>
-                  <p className="text-xs uppercase tracking-widest opacity-80 m-0">Liderando la innovación</p>
-                </div>
+              <p className="text-lg text-on-surface-variant mb-8 leading-relaxed">
+                Cada uno de nuestros productos nació de un problema real de los concesionarios y grupos del sector. Esa cercanía es la que hace que Motorflash sea hoy referencia tecnológica en automoción en España.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                <Link href="/compania" className="btn-secondary">
+                  Ver toda nuestra historia
+                  <span className="material-symbols-outlined">arrow_forward</span>
+                </Link>
+                <Link href="/compania#trabaja-con-nosotros" className="btn-secondary">
+                  Trabaja con nosotros
+                  <span className="material-symbols-outlined">arrow_forward</span>
+                </Link>
               </div>
-            </Reveal>
-          </div>
+            </div>
+          </Reveal>
         </div>
+      </section>
+
+      {/* Línea de tiempo de productos (full-width) */}
+      <section className="pb-24 bg-surface-container overflow-hidden">
+        <Reveal>
+          <div className="mf-container mb-10">
+            <div className="max-w-3xl mx-auto text-center">
+              <span className="mf-eyebrow">Catálogo en una línea</span>
+              <h3 className="text-2xl md:text-3xl font-semibold mb-2">15 productos. Un único ecosistema.</h3>
+              <p className="text-on-surface-variant">Desde la publicación del stock hasta la gestión del fin de renting, cada pieza encaja con el resto. Recorre la línea para ver todo lo que tenemos.</p>
+            </div>
+          </div>
+          <ProductsTimeline />
+        </Reveal>
       </section>
 
       {/* Contact CTA */}
