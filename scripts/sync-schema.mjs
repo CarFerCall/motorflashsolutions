@@ -45,10 +45,20 @@ try {
     {
       productSlug: 'exportaciones',
       productName: 'Multipublicador',
-      basePriceCents: 14900,
+      basePriceCents: 6000, // 60 €/mes para XS (15-50 vehículos)
       items: [
-        { itemKey: 'portales_premium', label: 'Portales premium adicionales', helpText: 'Coches.net, AutoScout24, etc.', type: 'number', unitPriceCents: 2900, required: false, numberMin: 0, numberMax: 10, numberDefault: 0, numberUnit: 'portal' },
-        { itemKey: 'auto_optimization', label: 'Optimización IA de fichas', helpText: 'Reescritura automática de descripciones para SEO.', type: 'checkbox', unitPriceCents: 4900, required: false, checkboxDefault: false },
+        { itemKey: 'tier_tamano', label: 'Tamaño del stock', helpText: 'Tier por número de vehículos. Las exportaciones a Coches.net y portales verticales cuentan con cuentas ilimitadas. El total incluye cargador + exportaciones a Coches.net + portales verticales según el PPT 2026.', type: 'select', unitPriceCents: 0, required: true, selectOptions: [
+          { value: 'xs', label: 'XS · 15 a 50 vehículos (60 €/mes total)', priceCents: 0, setupCents: 0, isDefault: true },
+          { value: 's', label: 'S · 51 a 100 vehículos (96 €/mes total)', priceCents: 3600, setupCents: 0, isDefault: false },
+          { value: 'm', label: 'M · 101 a 150 vehículos (~135 €/mes est.)', priceCents: 7500, setupCents: 0, isDefault: false },
+          { value: 'l', label: 'L · 151 a 250 vehículos (~240 €/mes est.)', priceCents: 18000, setupCents: 0, isDefault: false },
+          { value: 'xl', label: 'XL · 251 a 500 vehículos (~444 €/mes est.)', priceCents: 38400, setupCents: 0, isDefault: false },
+          { value: 'xxl', label: 'XXL · 501 a 1.000 vehículos (~792 €/mes est.)', priceCents: 73200, setupCents: 0, isDefault: false },
+        ] },
+        { itemKey: 'feed_datos', label: 'Feed de datos con exportaciones ilimitadas', helpText: '120 €/mes — ficheros de salida ilimitados con tus exportaciones. Cobra sentido si tienes integraciones automáticas con terceros.', type: 'checkbox', unitPriceCents: 12000, required: false, checkboxDefault: false },
+        { itemKey: 'modulo_tasacion', label: 'Licencia módulo de tasación', helpText: '50 €/mes — habilita el tasador interno integrado en la ficha de cada vehículo.', type: 'checkbox', unitPriceCents: 5000, required: false, checkboxDefault: false },
+        { itemKey: 'creacion_premium', label: 'Creación premium de anuncios (por VIN)', helpText: 'Tarifa 3 €/bastidor único enviado al mes. El importe del configurador es una estimación mensual; el real se factura por bastidores acumulados.', type: 'checkbox', unitPriceCents: 25000, required: false, checkboxDefault: false },
+        { itemKey: 'marcas_agua', label: 'Marcas de agua · mantenimiento', helpText: '24 €/mes — mantenimiento de marcas de agua. La creación inicial son 120 € (pago único, no incluido en el configurador).', type: 'checkbox', unitPriceCents: 2400, required: false, checkboxDefault: false },
       ],
     },
     {
@@ -150,6 +160,47 @@ try {
       ],
     },
   ]
+
+  // Migración puntual Multipublicador: el seed antiguo tenía items
+  // 'portales_premium' y 'auto_optimization' que no encajan con las
+  // tarifas reales del PPT 2026 (tier XS/S/M/L/XL/XXL + opcionales
+  // feed/tasación/premium/marcas de agua). Si el plan en BD aún
+  // tiene 'portales_premium', reemplazamos todo el set por el del
+  // PPT.
+  {
+    const { docs: mp } = await payload.find({
+      collection: 'pricing-plans',
+      where: { productSlug: { equals: 'exportaciones' } },
+      limit: 1,
+    })
+    const existingMp = mp[0]
+    if (existingMp && Array.isArray(existingMp.items) && existingMp.items.some((i) => i.itemKey === 'portales_premium')) {
+      const newMpItems = [
+        { itemKey: 'tier_tamano', label: 'Tamaño del stock', helpText: 'Tier por número de vehículos. Las exportaciones a Coches.net y portales verticales cuentan con cuentas ilimitadas. El total incluye cargador + exportaciones a Coches.net + portales verticales según el PPT 2026.', type: 'select', unitPriceCents: 0, required: true, selectOptions: [
+          { value: 'xs', label: 'XS · 15 a 50 vehículos (60 €/mes total)', priceCents: 0, setupCents: 0, isDefault: true },
+          { value: 's', label: 'S · 51 a 100 vehículos (96 €/mes total)', priceCents: 3600, setupCents: 0, isDefault: false },
+          { value: 'm', label: 'M · 101 a 150 vehículos (~135 €/mes est.)', priceCents: 7500, setupCents: 0, isDefault: false },
+          { value: 'l', label: 'L · 151 a 250 vehículos (~240 €/mes est.)', priceCents: 18000, setupCents: 0, isDefault: false },
+          { value: 'xl', label: 'XL · 251 a 500 vehículos (~444 €/mes est.)', priceCents: 38400, setupCents: 0, isDefault: false },
+          { value: 'xxl', label: 'XXL · 501 a 1.000 vehículos (~792 €/mes est.)', priceCents: 73200, setupCents: 0, isDefault: false },
+        ] },
+        { itemKey: 'feed_datos', label: 'Feed de datos con exportaciones ilimitadas', helpText: '120 €/mes — ficheros de salida ilimitados con tus exportaciones. Cobra sentido si tienes integraciones automáticas con terceros.', type: 'checkbox', unitPriceCents: 12000, required: false, checkboxDefault: false },
+        { itemKey: 'modulo_tasacion', label: 'Licencia módulo de tasación', helpText: '50 €/mes — habilita el tasador interno integrado en la ficha de cada vehículo.', type: 'checkbox', unitPriceCents: 5000, required: false, checkboxDefault: false },
+        { itemKey: 'creacion_premium', label: 'Creación premium de anuncios (por VIN)', helpText: 'Tarifa 3 €/bastidor único enviado al mes. El importe del configurador es una estimación mensual; el real se factura por bastidores acumulados.', type: 'checkbox', unitPriceCents: 25000, required: false, checkboxDefault: false },
+        { itemKey: 'marcas_agua', label: 'Marcas de agua · mantenimiento', helpText: '24 €/mes — mantenimiento de marcas de agua. La creación inicial son 120 € (pago único, no incluido en el configurador).', type: 'checkbox', unitPriceCents: 2400, required: false, checkboxDefault: false },
+      ]
+      try {
+        await payload.update({
+          collection: 'pricing-plans',
+          id: existingMp.id,
+          data: { basePriceCents: 6000, items: newMpItems },
+        })
+        console.log('[sync-schema] ↻ Multipublicador: items migrados a tarifas del PPT (tier XS-XXL + opcionales)')
+      } catch (err) {
+        console.warn('[sync-schema] ✗ migración Multipublicador:', err?.message || err)
+      }
+    }
+  }
 
   // Migración puntual MF Message: el seed antiguo tenía items
   // 'agentes' (1.900 c/mes) e 'ia_respuestas' que no coinciden con
