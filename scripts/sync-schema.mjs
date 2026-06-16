@@ -78,10 +78,17 @@ try {
     {
       productSlug: 'motorflash-message',
       productName: 'WhatsApp Business',
-      basePriceCents: 5900,
+      basePriceCents: 15000, // 150 €/mes licencia de uso MF Message
       items: [
-        { itemKey: 'agentes', label: 'Agentes adicionales', helpText: 'Cada agente puede gestionar chats simultáneos.', type: 'number', unitPriceCents: 1900, required: false, numberMin: 0, numberMax: 20, numberDefault: 0, numberUnit: 'agente' },
-        { itemKey: 'ia_respuestas', label: 'IA de respuestas automáticas', helpText: 'Genera respuestas y concierta citas sin intervención.', type: 'checkbox', unitPriceCents: 3900, required: false, checkboxDefault: false },
+        { itemKey: 'contratacion', label: 'Tipo de contratación', helpText: 'El set up se cobra una sola vez a la firma e incluye la configuración de línea con META, la configuración inicial del servicio y un mes piloto.', type: 'select', unitPriceCents: 0, required: true, selectOptions: [
+          { value: 'nueva', label: 'Alta nueva (incluye set up 180 €)', priceCents: 0, setupCents: 18000, isDefault: true },
+          { value: 'existente', label: 'Cliente existente (sin set up)', priceCents: 0, setupCents: 0, isDefault: false },
+        ] },
+        { itemKey: 'lineas', label: 'Líneas WhatsApp activas', helpText: 'Cada línea es un número WhatsApp dedicado (60 €/línea/mes). Una línea por departamento o empresa.', type: 'number', unitPriceCents: 6000, required: true, numberMin: 1, numberMax: 20, numberDefault: 1, numberUnit: 'línea' },
+        { itemKey: 'agentes_basicos', label: 'Agentes activos (hasta 100)', helpText: 'Tarifa por agente para los primeros 100. Cada agente puede gestionar varias conversaciones simultáneamente.', type: 'number', unitPriceCents: 1500, required: true, numberMin: 1, numberMax: 100, numberDefault: 3, numberUnit: 'agente' },
+        { itemKey: 'agentes_intermedios', label: 'Agentes activos (101 - 200)', helpText: 'Tramo intermedio a 12 €/agente.', type: 'number', unitPriceCents: 1200, required: false, numberMin: 0, numberMax: 100, numberDefault: 0, numberUnit: 'agente' },
+        { itemKey: 'agentes_premium', label: 'Agentes activos (201 en adelante)', helpText: 'Tramo high-volume a 8 €/agente.', type: 'number', unitPriceCents: 800, required: false, numberMin: 0, numberMax: 500, numberDefault: 0, numberUnit: 'agente' },
+        { itemKey: 'integracion_crm', label: 'Integración con CRM o IVR (terceros)', helpText: 'Conexión API a tu CRM (CRM4YOU, Salesforce, HubSpot, etc.) o IVR para call deflection.', type: 'checkbox', unitPriceCents: 9900, required: false, checkboxDefault: false },
       ],
     },
     {
@@ -143,6 +150,44 @@ try {
       ],
     },
   ]
+
+  // Migración puntual MF Message: el seed antiguo tenía items
+  // 'agentes' (1.900 c/mes) e 'ia_respuestas' que no coinciden con
+  // las tarifas reales del PPT (licencia 150 € + 60 €/línea +
+  // tramos de agentes 15/12/8 € + 180 € setup). Si el plan en BD
+  // aún tiene 'ia_respuestas', reemplazamos todos los items por el
+  // seed nuevo.
+  {
+    const { docs: mfm } = await payload.find({
+      collection: 'pricing-plans',
+      where: { productSlug: { equals: 'motorflash-message' } },
+      limit: 1,
+    })
+    const existingMfm = mfm[0]
+    if (existingMfm && Array.isArray(existingMfm.items) && existingMfm.items.some((i) => i.itemKey === 'ia_respuestas')) {
+      const newMfmItems = [
+        { itemKey: 'contratacion', label: 'Tipo de contratación', helpText: 'El set up se cobra una sola vez a la firma e incluye la configuración de línea con META, la configuración inicial del servicio y un mes piloto.', type: 'select', unitPriceCents: 0, required: true, selectOptions: [
+          { value: 'nueva', label: 'Alta nueva (incluye set up 180 €)', priceCents: 0, setupCents: 18000, isDefault: true },
+          { value: 'existente', label: 'Cliente existente (sin set up)', priceCents: 0, setupCents: 0, isDefault: false },
+        ] },
+        { itemKey: 'lineas', label: 'Líneas WhatsApp activas', helpText: 'Cada línea es un número WhatsApp dedicado (60 €/línea/mes). Una línea por departamento o empresa.', type: 'number', unitPriceCents: 6000, required: true, numberMin: 1, numberMax: 20, numberDefault: 1, numberUnit: 'línea' },
+        { itemKey: 'agentes_basicos', label: 'Agentes activos (hasta 100)', helpText: 'Tarifa por agente para los primeros 100. Cada agente puede gestionar varias conversaciones simultáneamente.', type: 'number', unitPriceCents: 1500, required: true, numberMin: 1, numberMax: 100, numberDefault: 3, numberUnit: 'agente' },
+        { itemKey: 'agentes_intermedios', label: 'Agentes activos (101 - 200)', helpText: 'Tramo intermedio a 12 €/agente.', type: 'number', unitPriceCents: 1200, required: false, numberMin: 0, numberMax: 100, numberDefault: 0, numberUnit: 'agente' },
+        { itemKey: 'agentes_premium', label: 'Agentes activos (201 en adelante)', helpText: 'Tramo high-volume a 8 €/agente.', type: 'number', unitPriceCents: 800, required: false, numberMin: 0, numberMax: 500, numberDefault: 0, numberUnit: 'agente' },
+        { itemKey: 'integracion_crm', label: 'Integración con CRM o IVR (terceros)', helpText: 'Conexión API a tu CRM (CRM4YOU, Salesforce, HubSpot, etc.) o IVR para call deflection.', type: 'checkbox', unitPriceCents: 9900, required: false, checkboxDefault: false },
+      ]
+      try {
+        await payload.update({
+          collection: 'pricing-plans',
+          id: existingMfm.id,
+          data: { basePriceCents: 15000, items: newMfmItems },
+        })
+        console.log('[sync-schema] ↻ MF Message: items migrados a tarifas del PPT (150 € + 60 €/línea + tramos de agentes)')
+      } catch (err) {
+        console.warn('[sync-schema] ✗ migración MF Message:', err?.message || err)
+      }
+    }
+  }
 
   // Migración puntual CRM4YOU: el seed antiguo tenía items
   // 'licencias' y 'whatsapp_integration' con precios que no encajan
