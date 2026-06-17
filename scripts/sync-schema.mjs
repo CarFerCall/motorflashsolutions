@@ -45,23 +45,33 @@ try {
     {
       productSlug: 'exportaciones',
       productName: 'Multipublicador',
-      basePriceCents: 6000, // 60 €/mes para XS (15-50 vehículos)
+      basePriceCents: 1200, // 12 €/mes cargador básico XS
       items: [
-        { itemKey: 'tier_tamano', label: 'Tamaño del stock', helpText: 'Tier por número de vehículos. Las exportaciones a Coches.net y portales verticales cuentan con cuentas ilimitadas. El total incluye cargador + exportaciones a Coches.net + portales verticales según el PPT 2026.', type: 'select', unitPriceCents: 0, required: true, selectOptions: [
-          { value: 'xs', label: 'XS · 15 a 50 vehículos (60 €/mes total)', priceCents: 0, setupCents: 0, isDefault: true },
-          { value: 's', label: 'S · 51 a 100 vehículos (96 €/mes total)', priceCents: 3600, setupCents: 0, isDefault: false },
-          { value: 'm', label: 'M · 101 a 150 vehículos (~135 €/mes est.)', priceCents: 7500, setupCents: 0, isDefault: false },
-          { value: 'l', label: 'L · 151 a 250 vehículos (~240 €/mes est.)', priceCents: 18000, setupCents: 0, isDefault: false },
-          { value: 'xl', label: 'XL · 251 a 500 vehículos (~444 €/mes est.)', priceCents: 38400, setupCents: 0, isDefault: false },
-          { value: 'xxl', label: 'XXL · 501 a 1.000 vehículos (~792 €/mes est.)', priceCents: 73200, setupCents: 0, isDefault: false },
+        { itemKey: 'tier_cargador', label: 'Cargador básico — Tamaño del stock', helpText: 'Tarifa del cargador básico según número de vehículos. NO incluye exportaciones (se eligen aparte abajo).', type: 'select', unitPriceCents: 0, required: true, selectOptions: [
+          { value: 'xs', label: 'XS · 12 €/mes (15-50 vehículos)', priceCents: 0, setupCents: 0, isDefault: true },
+          { value: 's', label: 'S · 24 €/mes (51-100 vehículos)', priceCents: 1200, setupCents: 0, isDefault: false },
+          { value: 'm', label: 'M · 36 €/mes (101-150 vehículos)', priceCents: 2400, setupCents: 0, isDefault: false },
+          { value: 'l', label: 'L · 48 €/mes (151-250 vehículos)', priceCents: 3600, setupCents: 0, isDefault: false },
+          { value: 'xl', label: 'XL · 60 €/mes (251-500 vehículos)', priceCents: 4800, setupCents: 0, isDefault: false },
+          { value: 'xxl', label: 'XXL · 72 €/mes (501-1.000 vehículos)', priceCents: 6000, setupCents: 0, isDefault: false },
         ] },
-        { itemKey: 'portal_motorflash', label: 'Portal · Motorflash.com', helpText: 'Incluido en todos los tier. Los 10 primeros leads del mes son gratis.', type: 'checkbox', unitPriceCents: 0, required: false, checkboxDefault: true },
-        { itemKey: 'portal_cochesnet', label: 'Portal · Coches.net', helpText: 'Cuentas ilimitadas. Incluido en tu tier base — sin coste adicional.', type: 'checkbox', unitPriceCents: 0, required: false, checkboxDefault: true },
-        { itemKey: 'portal_sumauto', label: 'Portal · Sumauto', helpText: 'Cuentas ilimitadas. Incluido dentro de los portales verticales de tu tier base.', type: 'checkbox', unitPriceCents: 0, required: false, checkboxDefault: false },
-        { itemKey: 'portal_cochescom', label: 'Portal · Coches.com', helpText: 'Cuentas ilimitadas. Incluido dentro de los portales verticales de tu tier base.', type: 'checkbox', unitPriceCents: 0, required: false, checkboxDefault: false },
-        { itemKey: 'portal_autocasion', label: 'Portal · Autocasión', helpText: 'Cuentas ilimitadas. Incluido dentro de los portales verticales de tu tier base.', type: 'checkbox', unitPriceCents: 0, required: false, checkboxDefault: false },
-        { itemKey: 'portal_autoscout24', label: 'Portal · AutoScout24', helpText: 'Cuentas ilimitadas. Incluido dentro de los portales verticales de tu tier base.', type: 'checkbox', unitPriceCents: 0, required: false, checkboxDefault: false },
-        { itemKey: 'portal_wallapop', label: 'Portal · Wallapop', helpText: 'Cuentas ilimitadas. Incluido dentro de los portales verticales de tu tier base.', type: 'checkbox', unitPriceCents: 0, required: false, checkboxDefault: false },
+        { itemKey: 'exportacion_cochesnet', label: 'Exportación a Coches.net', helpText: 'Cuentas ilimitadas en Coches.net. La tarifa es fija para XS/S y por coche publicado para M-XXL (0,48 €/coche, facturación por consumo).', type: 'select', unitPriceCents: 0, required: true, selectOptions: [
+          { value: 'no', label: 'No quiero publicar en Coches.net', priceCents: 0, setupCents: 0, isDefault: false },
+          { value: 'xs', label: 'XS · 24 €/mes (tarifa fija)', priceCents: 2400, setupCents: 0, isDefault: true },
+          { value: 's', label: 'S · 36 €/mes (tarifa fija)', priceCents: 3600, setupCents: 0, isDefault: false },
+          { value: 'por_coche', label: 'M-XXL · 0,48 €/coche (cotización por consumo)', priceCents: 0, setupCents: 0, isDefault: false },
+        ] },
+        { itemKey: 'exportacion_verticales', label: 'Exportación a portales verticales', helpText: 'Coches.com, Sumauto, Autocasión, AutoScout24, Wallapop. Cuentas ilimitadas. Tarifa fija para XS/S y por coche para M-XXL (0,48 €/coche).', type: 'select', unitPriceCents: 0, required: true, selectOptions: [
+          { value: 'no', label: 'No quiero publicar en verticales', priceCents: 0, setupCents: 0, isDefault: false },
+          { value: 'xs', label: 'XS · 24 €/mes (tarifa fija)', priceCents: 2400, setupCents: 0, isDefault: true },
+          { value: 's', label: 'S · 36 €/mes (tarifa fija)', priceCents: 3600, setupCents: 0, isDefault: false },
+          { value: 'por_coche', label: 'M-XXL · 0,48 €/coche (cotización por consumo)', priceCents: 0, setupCents: 0, isDefault: false },
+        ] },
+        { itemKey: 'portal_sumauto', label: 'Portal vertical · Sumauto', helpText: 'Indica si quieres publicar en Sumauto. Incluido en la tarifa de portales verticales seleccionada arriba.', type: 'checkbox', unitPriceCents: 0, required: false, checkboxDefault: false },
+        { itemKey: 'portal_cochescom', label: 'Portal vertical · Coches.com', helpText: 'Indica si quieres publicar en Coches.com. Incluido en la tarifa de portales verticales.', type: 'checkbox', unitPriceCents: 0, required: false, checkboxDefault: false },
+        { itemKey: 'portal_autocasion', label: 'Portal vertical · Autocasión', helpText: 'Indica si quieres publicar en Autocasión. Incluido en la tarifa de portales verticales.', type: 'checkbox', unitPriceCents: 0, required: false, checkboxDefault: false },
+        { itemKey: 'portal_autoscout24', label: 'Portal vertical · AutoScout24', helpText: 'Indica si quieres publicar en AutoScout24. Incluido en la tarifa de portales verticales.', type: 'checkbox', unitPriceCents: 0, required: false, checkboxDefault: false },
+        { itemKey: 'portal_wallapop', label: 'Portal vertical · Wallapop', helpText: 'Indica si quieres publicar en Wallapop. Incluido en la tarifa de portales verticales.', type: 'checkbox', unitPriceCents: 0, required: false, checkboxDefault: false },
         { itemKey: 'feed_datos', label: 'Feed de datos con exportaciones ilimitadas', helpText: '120 €/mes — ficheros de salida ilimitados con tus exportaciones. Cobra sentido si tienes integraciones automáticas con terceros.', type: 'checkbox', unitPriceCents: 12000, required: false, checkboxDefault: false },
         { itemKey: 'modulo_tasacion', label: 'Licencia módulo de tasación', helpText: '50 €/mes — habilita el tasador interno integrado en la ficha de cada vehículo.', type: 'checkbox', unitPriceCents: 5000, required: false, checkboxDefault: false },
         { itemKey: 'creacion_premium', label: 'Creación premium de anuncios (por VIN)', helpText: 'Marca esta opción si te interesa la creación premium por bastidor. Se factura 3 €/VIN único enviado al mes y no se suma al total mensual del configurador — el comercial te cotiza el volumen.', type: 'checkbox', unitPriceCents: 0, required: false, checkboxDefault: false },
@@ -168,7 +178,74 @@ try {
     },
   ]
 
-  // Migración fina Multipublicador:
+  // Migración v3 Multipublicador: si el plan en BD aún tiene
+  // 'tier_tamano' (modelo total fijo) o 'portal_motorflash'
+  // (checkboxes redundantes con los selects nuevos), reemplazamos
+  // todo el set de items por el modelo v3:
+  //   - basePriceCents 1200 (XS cargador 12 €/mes)
+  //   - tier_cargador (cargador básico por tier)
+  //   - exportacion_cochesnet (select con tarifa por tier)
+  //   - exportacion_verticales (select con tarifa por tier)
+  //   - 5 checkboxes de portales verticales (Sumauto, Coches.com,
+  //     Autocasión, AutoScout24, Wallapop)
+  //   - feed_datos / modulo_tasacion / creacion_premium / marcas_agua
+  {
+    const { docs: mpFix2 } = await payload.find({
+      collection: 'pricing-plans',
+      where: { productSlug: { equals: 'exportaciones' } },
+      limit: 1,
+    })
+    const mpPlan2 = mpFix2[0]
+    const needsV3 = mpPlan2 && Array.isArray(mpPlan2.items) && (
+      mpPlan2.items.some((i) => i.itemKey === 'tier_tamano') ||
+      mpPlan2.items.some((i) => i.itemKey === 'portal_motorflash')
+    )
+    if (needsV3) {
+      const newItems = [
+        { itemKey: 'tier_cargador', label: 'Cargador básico — Tamaño del stock', helpText: 'Tarifa del cargador básico según número de vehículos. NO incluye exportaciones (se eligen aparte abajo).', type: 'select', unitPriceCents: 0, required: true, selectOptions: [
+          { value: 'xs', label: 'XS · 12 €/mes (15-50 vehículos)', priceCents: 0, setupCents: 0, isDefault: true },
+          { value: 's', label: 'S · 24 €/mes (51-100 vehículos)', priceCents: 1200, setupCents: 0, isDefault: false },
+          { value: 'm', label: 'M · 36 €/mes (101-150 vehículos)', priceCents: 2400, setupCents: 0, isDefault: false },
+          { value: 'l', label: 'L · 48 €/mes (151-250 vehículos)', priceCents: 3600, setupCents: 0, isDefault: false },
+          { value: 'xl', label: 'XL · 60 €/mes (251-500 vehículos)', priceCents: 4800, setupCents: 0, isDefault: false },
+          { value: 'xxl', label: 'XXL · 72 €/mes (501-1.000 vehículos)', priceCents: 6000, setupCents: 0, isDefault: false },
+        ] },
+        { itemKey: 'exportacion_cochesnet', label: 'Exportación a Coches.net', helpText: 'Cuentas ilimitadas en Coches.net. La tarifa es fija para XS/S y por coche publicado para M-XXL (0,48 €/coche, facturación por consumo).', type: 'select', unitPriceCents: 0, required: true, selectOptions: [
+          { value: 'no', label: 'No quiero publicar en Coches.net', priceCents: 0, setupCents: 0, isDefault: false },
+          { value: 'xs', label: 'XS · 24 €/mes (tarifa fija)', priceCents: 2400, setupCents: 0, isDefault: true },
+          { value: 's', label: 'S · 36 €/mes (tarifa fija)', priceCents: 3600, setupCents: 0, isDefault: false },
+          { value: 'por_coche', label: 'M-XXL · 0,48 €/coche (cotización por consumo)', priceCents: 0, setupCents: 0, isDefault: false },
+        ] },
+        { itemKey: 'exportacion_verticales', label: 'Exportación a portales verticales', helpText: 'Coches.com, Sumauto, Autocasión, AutoScout24, Wallapop. Cuentas ilimitadas. Tarifa fija para XS/S y por coche para M-XXL (0,48 €/coche).', type: 'select', unitPriceCents: 0, required: true, selectOptions: [
+          { value: 'no', label: 'No quiero publicar en verticales', priceCents: 0, setupCents: 0, isDefault: false },
+          { value: 'xs', label: 'XS · 24 €/mes (tarifa fija)', priceCents: 2400, setupCents: 0, isDefault: true },
+          { value: 's', label: 'S · 36 €/mes (tarifa fija)', priceCents: 3600, setupCents: 0, isDefault: false },
+          { value: 'por_coche', label: 'M-XXL · 0,48 €/coche (cotización por consumo)', priceCents: 0, setupCents: 0, isDefault: false },
+        ] },
+        { itemKey: 'portal_sumauto', label: 'Portal vertical · Sumauto', helpText: 'Indica si quieres publicar en Sumauto. Incluido en la tarifa de portales verticales seleccionada arriba.', type: 'checkbox', unitPriceCents: 0, required: false, checkboxDefault: false },
+        { itemKey: 'portal_cochescom', label: 'Portal vertical · Coches.com', helpText: 'Indica si quieres publicar en Coches.com. Incluido en la tarifa de portales verticales.', type: 'checkbox', unitPriceCents: 0, required: false, checkboxDefault: false },
+        { itemKey: 'portal_autocasion', label: 'Portal vertical · Autocasión', helpText: 'Indica si quieres publicar en Autocasión. Incluido en la tarifa de portales verticales.', type: 'checkbox', unitPriceCents: 0, required: false, checkboxDefault: false },
+        { itemKey: 'portal_autoscout24', label: 'Portal vertical · AutoScout24', helpText: 'Indica si quieres publicar en AutoScout24. Incluido en la tarifa de portales verticales.', type: 'checkbox', unitPriceCents: 0, required: false, checkboxDefault: false },
+        { itemKey: 'portal_wallapop', label: 'Portal vertical · Wallapop', helpText: 'Indica si quieres publicar en Wallapop. Incluido en la tarifa de portales verticales.', type: 'checkbox', unitPriceCents: 0, required: false, checkboxDefault: false },
+        { itemKey: 'feed_datos', label: 'Feed de datos con exportaciones ilimitadas', helpText: '120 €/mes — ficheros de salida ilimitados con tus exportaciones. Cobra sentido si tienes integraciones automáticas con terceros.', type: 'checkbox', unitPriceCents: 12000, required: false, checkboxDefault: false },
+        { itemKey: 'modulo_tasacion', label: 'Licencia módulo de tasación', helpText: '50 €/mes — habilita el tasador interno integrado en la ficha de cada vehículo.', type: 'checkbox', unitPriceCents: 5000, required: false, checkboxDefault: false },
+        { itemKey: 'creacion_premium', label: 'Creación premium de anuncios (por VIN)', helpText: 'Marca esta opción si te interesa la creación premium por bastidor. Se factura 3 €/VIN único enviado al mes y no se suma al total mensual del configurador — el comercial te cotiza el volumen.', type: 'checkbox', unitPriceCents: 0, required: false, checkboxDefault: false },
+        { itemKey: 'marcas_agua', label: 'Marcas de agua · mantenimiento', helpText: '24 €/mes — mantenimiento de marcas de agua. La creación inicial son 120 € (pago único, no incluido en el configurador).', type: 'checkbox', unitPriceCents: 2400, required: false, checkboxDefault: false },
+      ]
+      try {
+        await payload.update({
+          collection: 'pricing-plans',
+          id: mpPlan2.id,
+          data: { basePriceCents: 1200, items: newItems },
+        })
+        console.log('[sync-schema] ↻ Multipublicador: migrado a v3 (cargador + exportacion_cochesnet + exportacion_verticales)')
+      } catch (err) {
+        console.warn('[sync-schema] ✗ migración v3 Multipublicador:', err?.message || err)
+      }
+    }
+  }
+
+  // Migración fina Multipublicador (legado v2):
   //  1) Si 'creacion_premium' tiene aún el unitPriceCents 25000
   //     (estimación mensual antigua), lo bajamos a 0 para que sea
   //     un check de opción sin cálculo (precio real por VIN se
