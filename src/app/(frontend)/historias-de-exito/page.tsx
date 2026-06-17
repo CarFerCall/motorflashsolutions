@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import Link from 'next/link'
 import { Reveal } from '@/components/Reveal'
 import { AnimatedCounter } from '@/components/AnimatedCounter'
@@ -36,13 +37,25 @@ interface BrandStyle {
   wordmarkClass?: string
 }
 
+interface ClientLogo {
+  src: string
+  // Relación ancho/alto del logo original — la usamos para reservar el
+  // espacio sin romper el layout con CLS.
+  width: number
+  height: number
+  alt: string
+}
+
 interface SuccessCase {
   slug: string
   brand: string
-  // Texto exacto del wordmark (case sensitivity respetado).
+  // Texto del wordmark de respaldo si no hay logo de imagen.
   wordmark: string
   // Subtítulo bajo el wordmark — tagline corta de marca.
   tagline: string
+  // Logo oficial del cliente (imagen). Si no hay, se usa el wordmark
+  // tipográfico como respaldo (case sensitivity respetado).
+  logo?: ClientLogo
   style: BrandStyle
   badge: string
   headline: string
@@ -61,13 +74,14 @@ const CASES: SuccessCase[] = [
   {
     slug: 'jarmauto',
     brand: 'JARMAUTO',
-    wordmark: 'JARMAUTO',
+    wordmark: 'Jarmauto',
     tagline: 'Grupo automoción · Madrid',
+    logo: { src: '/images/clients/jarmauto.png', width: 1920, height: 480, alt: 'Jarmauto' },
     style: {
-      primary: '#E30613', // rojo Jarmauto
-      ink: '#0D0D0D',
-      banner: 'linear-gradient(135deg, #1A0203 0%, #3A0509 55%, #E30613 100%)',
-      wordmarkClass: 'tracking-[0.18em] font-extrabold',
+      primary: '#111111', // negro Jarmauto (wordmark monocromo)
+      ink: '#0A0A0A',
+      banner: 'linear-gradient(135deg, #0A0A0A 0%, #1F1F1F 55%, #4A4A4A 100%)',
+      wordmarkClass: 'tracking-[-0.01em] font-bold',
     },
     badge: 'Cliente Premium · Ecosistema completo',
     headline: 'El cliente número 1 de la compañía',
@@ -98,13 +112,14 @@ const CASES: SuccessCase[] = [
   {
     slug: 'ocasionplus',
     brand: 'OCASIONPLUS',
-    wordmark: 'Ocasionplus',
+    wordmark: 'ocasionplus.com',
     tagline: 'Red nacional de VO',
+    logo: { src: '/images/clients/ocasionplus.png', width: 1200, height: 220, alt: 'Ocasionplus' },
     style: {
-      primary: '#EE3924', // rojo coral Ocasionplus
-      ink: '#0A1A2A',
-      banner: 'linear-gradient(135deg, #0A1A2A 0%, #16314F 60%, #EE3924 100%)',
-      wordmarkClass: 'tracking-[-0.01em] font-bold italic',
+      primary: '#00A3D7', // cian Ocasionplus
+      ink: '#0E1E2A',
+      banner: 'linear-gradient(135deg, #0E1E2A 0%, #103B5A 55%, #00A3D7 100%)',
+      wordmarkClass: 'tracking-[-0.02em] font-bold',
     },
     badge: 'Especialista en stock · Cliente operativo',
     headline: 'Una de las mayores redes de VO de España, apoyada en nuestra gestión de stock',
@@ -134,13 +149,14 @@ const CASES: SuccessCase[] = [
   {
     slug: 'flexicar',
     brand: 'FLEXICAR',
-    wordmark: 'FLEXICAR',
+    wordmark: 'flexicar',
     tagline: 'Red de VO · Iberia',
+    logo: { src: '/images/clients/flexicar.png', width: 800, height: 320, alt: 'Flexicar' },
     style: {
-      primary: '#DA1F26', // rojo Flexicar
-      ink: '#111111',
-      banner: 'linear-gradient(135deg, #111111 0%, #2B0508 55%, #DA1F26 100%)',
-      wordmarkClass: 'tracking-[0.22em] font-black',
+      primary: '#F37B20', // naranja Flexicar
+      ink: '#1E1E1E',
+      banner: 'linear-gradient(135deg, #1E1E1E 0%, #3B2410 55%, #F37B20 100%)',
+      wordmarkClass: 'tracking-[-0.02em] font-black italic lowercase',
     },
     badge: 'Cliente · Motorflash Message',
     headline: 'Toda la potencia de WhatsApp para VO con Motorflash Message',
@@ -171,13 +187,14 @@ const CASES: SuccessCase[] = [
   {
     slug: 'muy-car',
     brand: 'MUY CAR',
-    wordmark: 'muy car',
+    wordmark: 'MUY CAR',
     tagline: 'Concesionario nativo digital',
+    logo: { src: '/images/clients/muy-car.png', width: 900, height: 260, alt: 'Muy Car' },
     style: {
-      primary: '#3D2A8C', // morado/azul Muy Car
-      ink: '#1A1340',
-      banner: 'linear-gradient(135deg, #1A1340 0%, #2F2273 55%, #5A47C2 100%)',
-      wordmarkClass: 'tracking-[-0.02em] font-bold lowercase',
+      primary: '#1FB44E', // verde Muy Car
+      ink: '#0E1A12',
+      banner: 'linear-gradient(135deg, #0E1A12 0%, #143A22 55%, #1FB44E 100%)',
+      wordmarkClass: 'tracking-[0.04em] font-black',
     },
     badge: 'Nacieron con Motorflash · Crecieron con nosotros',
     headline: 'Nacieron con Motorflash y han crecido con nosotros',
@@ -287,15 +304,25 @@ export default function CasosExitoPage() {
                 <a
                   key={c.slug}
                   href={`#${c.slug}`}
-                  className="group flex items-center justify-center px-3 py-6 md:py-8 rounded-2xl border border-outline-variant bg-white hover:border-current transition-all hover:shadow-lg"
-                  style={{ color: c.style.primary }}
+                  className="group flex items-center justify-center px-4 py-6 md:py-8 rounded-2xl border border-outline-variant bg-white hover:shadow-lg transition-all"
+                  style={{ borderColor: undefined }}
                 >
-                  <span
-                    className={`font-display text-xl md:text-2xl leading-none whitespace-nowrap ${c.style.wordmarkClass ?? 'font-bold'}`}
-                    style={{ color: c.style.primary }}
-                  >
-                    {c.wordmark}
-                  </span>
+                  {c.logo ? (
+                    <Image
+                      src={c.logo.src}
+                      alt={c.logo.alt}
+                      width={c.logo.width}
+                      height={c.logo.height}
+                      className="h-8 md:h-10 w-auto object-contain"
+                    />
+                  ) : (
+                    <span
+                      className={`font-display text-xl md:text-2xl leading-none whitespace-nowrap ${c.style.wordmarkClass ?? 'font-bold'}`}
+                      style={{ color: c.style.primary }}
+                    >
+                      {c.wordmark}
+                    </span>
+                  )}
                 </a>
               ))}
               <a
@@ -359,12 +386,25 @@ function CaseSection({ caseItem, isAlt, index }: { caseItem: SuccessCase; isAlt:
             }} />
             <div className="relative z-10 p-8 md:p-12 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
               <div>
-                <span
-                  className={`block font-display text-4xl md:text-6xl leading-none mb-3 text-white ${style.wordmarkClass ?? 'font-bold'}`}
-                >
-                  {caseItem.wordmark}
-                </span>
-                <span className="text-xs md:text-sm font-semibold uppercase tracking-[0.2em] text-white/70">
+                {caseItem.logo ? (
+                  <div className="inline-flex items-center justify-center bg-white rounded-2xl px-5 py-3 md:px-6 md:py-4 mb-4 shadow-lg">
+                    <Image
+                      src={caseItem.logo.src}
+                      alt={caseItem.logo.alt}
+                      width={caseItem.logo.width}
+                      height={caseItem.logo.height}
+                      className="h-10 md:h-14 w-auto object-contain"
+                      priority
+                    />
+                  </div>
+                ) : (
+                  <span
+                    className={`block font-display text-4xl md:text-6xl leading-none mb-3 text-white ${style.wordmarkClass ?? 'font-bold'}`}
+                  >
+                    {caseItem.wordmark}
+                  </span>
+                )}
+                <span className="block text-xs md:text-sm font-semibold uppercase tracking-[0.2em] text-white/70">
                   {caseItem.tagline}
                 </span>
               </div>
