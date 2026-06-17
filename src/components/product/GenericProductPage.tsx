@@ -3,6 +3,7 @@ import Link from 'next/link'
 import type { Product } from '@/catalog/products'
 import { productContentBySlug } from '@/catalog/product-content'
 import { orderedProducts } from '@/catalog/products'
+import { MultipublicadorAnimation } from './MultipublicadorAnimation'
 
 // Productos que muestran una imagen real en el hero en lugar del
 // icono de Material Symbols con el tile naranja.
@@ -10,10 +11,18 @@ const HERO_IMAGE_BY_SLUG: Record<string, { src: string; alt: string }> = {
   'motorflash-message': { src: '/images/products/whatsapp.webp', alt: 'WhatsApp Business' },
 }
 
+// Componentes custom que se inyectan justo debajo del hero por
+// slug. Permite enriquecer un producto concreto con animaciones o
+// demos sin tocar el resto del layout.
+const AFTER_HERO_BY_SLUG: Record<string, React.ComponentType> = {
+  exportaciones: MultipublicadorAnimation,
+}
+
 export function GenericProductPage({ product }: { product: Product }) {
   const content = productContentBySlug(product.slug)
   const others = orderedProducts().filter((p) => p.slug !== product.slug).slice(0, 8)
   const heroImage = HERO_IMAGE_BY_SLUG[product.slug]
+  const AfterHero = AFTER_HERO_BY_SLUG[product.slug]
 
   return (
     <>
@@ -83,6 +92,8 @@ export function GenericProductPage({ product }: { product: Product }) {
           </div>
         </div>
       </section>
+
+      {AfterHero && <AfterHero />}
 
       {product.placeholder && (
         <section className="py-24 bg-surface-container">
