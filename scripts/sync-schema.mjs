@@ -45,26 +45,21 @@ try {
     {
       productSlug: 'exportaciones',
       productName: 'Multipublicador',
-      basePriceCents: 1200, // 12 €/mes cargador básico XS
+      basePriceCents: 0, // Sin cargador independiente: precio total se calcula a partir de los selects de exportación
       items: [
-        { itemKey: 'tier_cargador', label: 'Cargador básico — Tamaño del stock', helpText: 'Tarifa del cargador básico según número de vehículos. NO incluye exportaciones (se eligen aparte abajo).', type: 'select', unitPriceCents: 0, required: true, selectOptions: [
-          { value: 'xs', label: 'XS · 12 €/mes (15-50 vehículos)', priceCents: 0, setupCents: 0, isDefault: true },
-          { value: 's', label: 'S · 24 €/mes (51-100 vehículos)', priceCents: 1200, setupCents: 0, isDefault: false },
-          { value: 'm', label: 'M · 36 €/mes (101-150 vehículos)', priceCents: 2400, setupCents: 0, isDefault: false },
-          { value: 'l', label: 'L · 48 €/mes (151-250 vehículos)', priceCents: 3600, setupCents: 0, isDefault: false },
-          { value: 'xl', label: 'XL · 60 €/mes (251-500 vehículos)', priceCents: 4800, setupCents: 0, isDefault: false },
-          { value: 'xxl', label: 'XXL · 72 €/mes (501-1.000 vehículos)', priceCents: 6000, setupCents: 0, isDefault: false },
-        ] },
-        { itemKey: 'exportacion_cochesnet', label: 'Exportación a Coches.net', helpText: 'Cuentas ilimitadas en Coches.net. La tarifa es fija para XS/S y por coche publicado para M-XXL (0,48 €/coche, facturación por consumo).', type: 'select', unitPriceCents: 0, required: true, selectOptions: [
+        { itemKey: 'exportacion_cochesnet', label: 'Exportación a Coches.net (incluye cargador básico)', helpText: 'Cuentas ilimitadas. El precio ya incluye el cargador básico por tier según el PPT. Para M-XXL la exportación es 0,48 €/coche y se cotiza por consumo aparte.', type: 'select', unitPriceCents: 0, required: true, selectOptions: [
           { value: 'no', label: 'No quiero publicar en Coches.net', priceCents: 0, setupCents: 0, isDefault: false },
-          { value: 'xs', label: 'XS · 24 €/mes (tarifa fija)', priceCents: 2400, setupCents: 0, isDefault: true },
-          { value: 's', label: 'S · 36 €/mes (tarifa fija)', priceCents: 3600, setupCents: 0, isDefault: false },
-          { value: 'por_coche', label: 'M-XXL · 0,48 €/coche (cotización por consumo)', priceCents: 0, setupCents: 0, isDefault: false },
+          { value: 'xs', label: 'XS · 36 €/mes (15-50 vehículos)', priceCents: 3600, setupCents: 0, isDefault: true },
+          { value: 's', label: 'S · 60 €/mes (51-100 vehículos)', priceCents: 6000, setupCents: 0, isDefault: false },
+          { value: 'm', label: 'M · 36 €/mes + 0,48 €/coche (101-150)', priceCents: 3600, setupCents: 0, isDefault: false },
+          { value: 'l', label: 'L · 48 €/mes + 0,48 €/coche (151-250)', priceCents: 4800, setupCents: 0, isDefault: false },
+          { value: 'xl', label: 'XL · 60 €/mes + 0,48 €/coche (251-500)', priceCents: 6000, setupCents: 0, isDefault: false },
+          { value: 'xxl', label: 'XXL · 72 €/mes + 0,48 €/coche (501-1.000)', priceCents: 7200, setupCents: 0, isDefault: false },
         ] },
-        { itemKey: 'exportacion_verticales', label: 'Exportación a portales verticales', helpText: 'Coches.com, Sumauto, Autocasión, AutoScout24, Wallapop. Cuentas ilimitadas. Tarifa fija para XS/S y por coche para M-XXL (0,48 €/coche).', type: 'select', unitPriceCents: 0, required: true, selectOptions: [
+        { itemKey: 'exportacion_verticales', label: 'Exportación a portales verticales', helpText: 'Coches.com, Sumauto, Autocasión, AutoScout24, Wallapop. Cuentas ilimitadas. Tarifa fija para XS/S y por coche para M-XXL (0,48 €/coche, cotización por consumo aparte).', type: 'select', unitPriceCents: 0, required: true, selectOptions: [
           { value: 'no', label: 'No quiero publicar en verticales', priceCents: 0, setupCents: 0, isDefault: false },
-          { value: 'xs', label: 'XS · 24 €/mes (tarifa fija)', priceCents: 2400, setupCents: 0, isDefault: true },
-          { value: 's', label: 'S · 36 €/mes (tarifa fija)', priceCents: 3600, setupCents: 0, isDefault: false },
+          { value: 'xs', label: 'XS · 24 €/mes (15-50 vehículos)', priceCents: 2400, setupCents: 0, isDefault: true },
+          { value: 's', label: 'S · 36 €/mes (51-100 vehículos)', priceCents: 3600, setupCents: 0, isDefault: false },
           { value: 'por_coche', label: 'M-XXL · 0,48 €/coche (cotización por consumo)', priceCents: 0, setupCents: 0, isDefault: false },
         ] },
         { itemKey: 'portal_sumauto', label: 'Portal vertical · Sumauto', helpText: 'Indica si quieres publicar en Sumauto. Incluido en la tarifa de portales verticales seleccionada arriba.', type: 'checkbox', unitPriceCents: 0, required: false, checkboxDefault: false },
@@ -178,6 +173,68 @@ try {
     },
   ]
 
+  // Migración v5 Multipublicador: eliminamos 'tier_cargador' y
+  // fusionamos su precio en las opciones de 'exportacion_cochesnet'
+  // (XS 12+24=36, S 24+36=60, M/L/XL/XXL = solo cargador + por coche).
+  // 'exportacion_verticales' se mantiene como exportación pura.
+  // Si el plan en BD aún tiene tier_cargador, lo eliminamos y
+  // actualizamos las opciones del select de Coches.net.
+  {
+    const { docs: mpV5 } = await payload.find({
+      collection: 'pricing-plans',
+      where: { productSlug: { equals: 'exportaciones' } },
+      limit: 1,
+    })
+    const mpPlanV5 = mpV5[0]
+    if (mpPlanV5 && Array.isArray(mpPlanV5.items) && mpPlanV5.items.some((i) => i.itemKey === 'tier_cargador')) {
+      // Quitamos tier_cargador del array.
+      const items = mpPlanV5.items.filter((it) => it.itemKey !== 'tier_cargador')
+      // Sustituimos las opciones del select de Coches.net con las del
+      // nuevo modelo (precio = cargador + exportación).
+      const cnIdx = items.findIndex((i) => i.itemKey === 'exportacion_cochesnet')
+      if (cnIdx >= 0) {
+        items[cnIdx] = {
+          ...items[cnIdx],
+          label: 'Exportación a Coches.net (incluye cargador básico)',
+          helpText: 'Cuentas ilimitadas. El precio ya incluye el cargador básico por tier según el PPT. Para M-XXL la exportación es 0,48 €/coche y se cotiza por consumo aparte.',
+          selectOptions: [
+            { value: 'no', label: 'No quiero publicar en Coches.net', priceCents: 0, setupCents: 0, isDefault: false },
+            { value: 'xs', label: 'XS · 36 €/mes (15-50 vehículos)', priceCents: 3600, setupCents: 0, isDefault: true },
+            { value: 's', label: 'S · 60 €/mes (51-100 vehículos)', priceCents: 6000, setupCents: 0, isDefault: false },
+            { value: 'm', label: 'M · 36 €/mes + 0,48 €/coche (101-150)', priceCents: 3600, setupCents: 0, isDefault: false },
+            { value: 'l', label: 'L · 48 €/mes + 0,48 €/coche (151-250)', priceCents: 4800, setupCents: 0, isDefault: false },
+            { value: 'xl', label: 'XL · 60 €/mes + 0,48 €/coche (251-500)', priceCents: 6000, setupCents: 0, isDefault: false },
+            { value: 'xxl', label: 'XXL · 72 €/mes + 0,48 €/coche (501-1.000)', priceCents: 7200, setupCents: 0, isDefault: false },
+          ],
+        }
+      }
+      // Ajustamos los labels de exportacion_verticales para mantener
+      // coherencia (rangos por tier visibles).
+      const vIdx = items.findIndex((i) => i.itemKey === 'exportacion_verticales')
+      if (vIdx >= 0) {
+        items[vIdx] = {
+          ...items[vIdx],
+          selectOptions: [
+            { value: 'no', label: 'No quiero publicar en verticales', priceCents: 0, setupCents: 0, isDefault: false },
+            { value: 'xs', label: 'XS · 24 €/mes (15-50 vehículos)', priceCents: 2400, setupCents: 0, isDefault: true },
+            { value: 's', label: 'S · 36 €/mes (51-100 vehículos)', priceCents: 3600, setupCents: 0, isDefault: false },
+            { value: 'por_coche', label: 'M-XXL · 0,48 €/coche (cotización por consumo)', priceCents: 0, setupCents: 0, isDefault: false },
+          ],
+        }
+      }
+      try {
+        await payload.update({
+          collection: 'pricing-plans',
+          id: mpPlanV5.id,
+          data: { basePriceCents: 0, items },
+        })
+        console.log('[sync-schema] ↻ Multipublicador v5: cargador básico fusionado en las opciones de Coches.net')
+      } catch (err) {
+        console.warn('[sync-schema] ✗ migración v5 Multipublicador:', err?.message || err)
+      }
+    }
+  }
+
   // Migración v4 Multipublicador: si el plan en BD tiene checkboxes
   // 'portal_*' (modelo v3), los reemplazamos por inputs numéricos
   // 'cuentas_*' para que el cliente declare cuántas cuentas tiene
@@ -241,8 +298,9 @@ try {
       limit: 1,
     })
     const mpPlan2 = mpFix2[0]
-    // Guard: si el plan ya está en v4 (tiene 'cuentas_*'), no
-    // rehacer la migración v3 (que sobreescribiría las cuentas).
+    // Guard: si el plan ya está en v4+ (tiene 'cuentas_*') o en v5+
+    // (sin 'tier_cargador'), no rehacer la migración v3 (que
+    // sobreescribiría modelos posteriores).
     const alreadyV4 = mpPlan2 && Array.isArray(mpPlan2.items) && mpPlan2.items.some((i) => i.itemKey?.startsWith?.('cuentas_'))
     const needsV3 = !alreadyV4 && mpPlan2 && Array.isArray(mpPlan2.items) && (
       mpPlan2.items.some((i) => i.itemKey === 'tier_tamano') ||
