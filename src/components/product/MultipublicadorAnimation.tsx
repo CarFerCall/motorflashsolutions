@@ -21,14 +21,15 @@ const PORTALS = [
   { id: 'motorflash', label: 'Motorflash.com', icon: 'bolt' },
 ]
 
-// viewBox grande para que el componente escale bien en cualquier
-// tamaño y mantenga proporciones. Centro = (CENTER_X, CENTER_Y).
-const VIEW_W = 1000
-const VIEW_H = 560
+// viewBox del SVG. El contenedor padre adopta esta misma proporción
+// (aspect-ratio) para que los portales HTML posicionados en % caigan
+// exactamente sobre los extremos de las líneas SVG sin descentrado.
+const VIEW_W = 880
+const VIEW_H = 480
 const CENTER_X = VIEW_W / 2
 const CENTER_Y = VIEW_H / 2
-const RADIUS_X = 380
-const RADIUS_Y = 200
+const RADIUS_X = 310
+const RADIUS_Y = 165
 
 // Reparte los portales en un óvalo alrededor del centro empezando
 // desde arriba y avanzando en sentido horario.
@@ -46,27 +47,82 @@ const STAGGER = TRAVEL_DURATION / PORTALS.length // desfase entre destellos
 
 export function MultipublicadorAnimation() {
   return (
-    <section className="py-16 md:py-24 relative overflow-hidden" aria-label="Animación: cómo Motorflash publica tu stock en los portales">
+    <section className="py-12 md:py-16 relative overflow-hidden" aria-label="Animación: cómo Motorflash publica tu stock en los portales">
       <div aria-hidden className="absolute inset-0 -z-10" style={{ background: 'radial-gradient(ellipse at 50% 50%, rgba(255,128,0,0.08), transparent 60%)' }} />
 
       <div className="mf-container">
-        <div className="text-center mb-10 max-w-2xl mx-auto">
+        <div className="text-center mb-8 max-w-2xl mx-auto">
           <span className="mf-eyebrow">Cómo funciona</span>
-          <h2 className="text-2xl md:text-3xl font-semibold mb-3">
+          <h2 className="text-xl md:text-2xl font-semibold mb-2">
             Un solo clic. Tu coche en cada portal.
           </h2>
-          <p className="text-on-surface-variant">
+          <p className="text-sm md:text-base text-on-surface-variant">
             Subes el vehículo una vez a Motorflash y replicamos su anuncio en tiempo real a Coches.net, AutoScout24, Wallapop y el resto de portales del sector.
           </p>
         </div>
 
+        {/* Diagrama estático para móvil (la animación SVG queda
+            ilegible en pantallas estrechas). Muestra Motorflash
+            arriba, una flecha de "envío" y un grid 2×4 con los 7
+            portales como destinos. */}
+        <div className="md:hidden">
+          <div className="flex flex-col items-center">
+            <div
+              className="flex items-center gap-3 rounded-2xl text-white shadow-2xl px-5 py-3"
+              style={{
+                background: 'linear-gradient(135deg, #ff8c1a 0%, #ff7000 60%, #d96f00 100%)',
+                boxShadow: '0 12px 28px rgba(255,128,0,0.40), 0 0 0 8px rgba(255,128,0,0.10)',
+              }}
+            >
+              <span className="material-symbols-outlined" style={{ fontSize: 28 }}>
+                directions_car
+              </span>
+              <div className="leading-tight">
+                <div className="font-display font-bold text-sm">MOTORFLASH</div>
+                <div className="text-[10px] uppercase tracking-widest opacity-80">Publica · 1 clic</div>
+              </div>
+            </div>
+            <div className="flex flex-col items-center my-3" aria-hidden>
+              <span className="material-symbols-outlined text-primary" style={{ fontSize: 18 }}>
+                south
+              </span>
+              <span className="text-[10px] font-bold uppercase tracking-widest text-primary">Envía a</span>
+              <span className="material-symbols-outlined text-primary" style={{ fontSize: 18 }}>
+                south
+              </span>
+            </div>
+          </div>
+          <div className="grid grid-cols-2 gap-2.5">
+            {PORTALS.map((p) => (
+              <div
+                key={`mobile-portal-${p.id}`}
+                className="bg-white border border-outline-variant rounded-xl px-3 py-2.5 flex items-center gap-2 shadow-sm"
+              >
+                <span
+                  className="flex items-center justify-center rounded-lg shrink-0"
+                  style={{ width: 28, height: 28, background: 'rgba(255,128,0,0.10)' }}
+                >
+                  <span className="material-symbols-outlined text-primary" style={{ fontSize: 16 }}>
+                    {p.icon}
+                  </span>
+                </span>
+                <span className="text-xs font-semibold text-on-surface leading-tight">
+                  {p.label}
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Animación SVG completa: solo desktop/tablet (≥ md). */}
         <div
-          className="relative mx-auto"
-          style={{ maxWidth: 1000 }}
+          className="relative mx-auto hidden md:block"
+          style={{ maxWidth: 760, aspectRatio: `${VIEW_W} / ${VIEW_H}` }}
         >
           <svg
             viewBox={`0 0 ${VIEW_W} ${VIEW_H}`}
-            className="block w-full h-auto"
+            preserveAspectRatio="xMidYMid meet"
+            className="absolute inset-0 w-full h-full"
             role="img"
             aria-hidden
           >
@@ -142,21 +198,21 @@ export function MultipublicadorAnimation() {
             }}
           >
             <div
-              className="relative flex flex-col items-center justify-center rounded-3xl text-white shadow-2xl"
+              className="relative flex flex-col items-center justify-center rounded-2xl text-white shadow-2xl"
               style={{
-                width: 'clamp(140px, 16vw, 200px)',
+                width: 'clamp(108px, 13vw, 152px)',
                 aspectRatio: '1 / 1',
                 background: 'linear-gradient(135deg, #ff8c1a 0%, #ff7000 60%, #d96f00 100%)',
-                boxShadow: '0 18px 48px rgba(255,128,0,0.45), 0 0 0 14px rgba(255,128,0,0.10)',
+                boxShadow: '0 14px 36px rgba(255,128,0,0.40), 0 0 0 10px rgba(255,128,0,0.10)',
               }}
             >
-              <span className="material-symbols-outlined" style={{ fontSize: 'clamp(40px, 5vw, 56px)' }}>
+              <span className="material-symbols-outlined" style={{ fontSize: 'clamp(28px, 3.6vw, 42px)' }}>
                 directions_car
               </span>
-              <span className="font-display font-bold mt-1" style={{ fontSize: 'clamp(11px, 1.1vw, 14px)' }}>
+              <span className="font-display font-bold mt-0.5" style={{ fontSize: 'clamp(10px, 0.95vw, 12px)' }}>
                 MOTORFLASH
               </span>
-              <span className="text-[10px] uppercase tracking-widest opacity-80">
+              <span className="uppercase tracking-widest opacity-80" style={{ fontSize: 'clamp(8px, 0.7vw, 10px)' }}>
                 Publica · 1 clic
               </span>
             </div>
@@ -176,7 +232,7 @@ export function MultipublicadorAnimation() {
                 }}
               >
                 <div
-                  className="bg-white border border-outline-variant rounded-2xl shadow-lg flex items-center gap-2 px-3 py-2 md:px-4 md:py-3 whitespace-nowrap"
+                  className="bg-white border border-outline-variant rounded-xl shadow-md flex items-center gap-1.5 px-2.5 py-1.5 md:px-3 md:py-2 whitespace-nowrap"
                   style={{
                     // El portal "pulsa" justo cuando el destello llega
                     // (al final del ciclo). Empieza con su delay y se
@@ -184,10 +240,10 @@ export function MultipublicadorAnimation() {
                     animation: `mfPortalPulse ${TRAVEL_DURATION}s ease-out ${delay + TRAVEL_DURATION * 0.9}s infinite`,
                   }}
                 >
-                  <span className="material-symbols-outlined text-primary" style={{ fontSize: 20 }}>
+                  <span className="material-symbols-outlined text-primary" style={{ fontSize: 16 }}>
                     {p.icon}
                   </span>
-                  <span className="text-xs md:text-sm font-semibold text-on-surface">
+                  <span className="text-[11px] md:text-xs font-semibold text-on-surface">
                     {p.label}
                   </span>
                 </div>
@@ -197,16 +253,16 @@ export function MultipublicadorAnimation() {
         </div>
 
         {/* Pie con stats sintéticas */}
-        <div className="mt-10 grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
+        <div className="mt-8 grid grid-cols-2 md:grid-cols-4 gap-3 max-w-3xl mx-auto">
           {[
             { v: '+50', l: 'Portales conectados' },
             { v: '99 %', l: 'Integración por API' },
             { v: '<5 min', l: 'Hasta publicar' },
             { v: '24/7', l: 'Sincronización automática' },
           ].map((s) => (
-            <div key={s.l} className="text-center bg-white border border-outline-variant rounded-2xl p-4">
-              <div className="font-display text-2xl md:text-3xl font-bold text-primary leading-none mb-1">{s.v}</div>
-              <div className="text-[11px] md:text-xs font-semibold uppercase tracking-widest text-on-surface-variant">{s.l}</div>
+            <div key={s.l} className="text-center bg-white border border-outline-variant rounded-xl p-3">
+              <div className="font-display text-xl md:text-2xl font-bold text-primary leading-none mb-1">{s.v}</div>
+              <div className="text-[10px] md:text-[11px] font-semibold uppercase tracking-widest text-on-surface-variant">{s.l}</div>
             </div>
           ))}
         </div>
