@@ -327,28 +327,24 @@ try {
         { itemKey: 'portal_autoscout24', label: 'Portal · AutoScout24', helpText: 'Cuentas ilimitadas. Incluido dentro de los portales verticales de tu tier base.', checkboxDefault: false },
         { itemKey: 'portal_wallapop', label: 'Portal · Wallapop', helpText: 'Cuentas ilimitadas. Incluido dentro de los portales verticales de tu tier base.', checkboxDefault: false },
       ]
-      const hasAnyPortal = mpPlan.items.some((i) => i.itemKey?.startsWith?.('portal_'))
-      if (!hasAnyPortal) {
-        // Insertamos los portales justo antes del primer item opcional
-        // (feed_datos / modulo_tasacion / creacion_premium / marcas_agua).
-        const insertIdx = mpPlan.items.findIndex((i) => ['feed_datos', 'modulo_tasacion', 'creacion_premium', 'marcas_agua'].includes(i.itemKey))
-        const newPortals = portalSeeds.map((p) => ({
-          itemKey: p.itemKey,
-          label: p.label,
-          helpText: p.helpText,
-          type: 'checkbox',
-          unitPriceCents: 0,
-          required: false,
-          checkboxDefault: p.checkboxDefault,
-        }))
-        if (insertIdx >= 0) {
-          mpPlan.items.splice(insertIdx, 0, ...newPortals)
-        } else {
-          mpPlan.items.push(...newPortals)
-        }
+      // Esta migración legacy se queda en NO-OP: el modelo v4
+      // sustituye los checkboxes 'portal_*' por inputs 'cuentas_*',
+      // así que ya no añadimos los checkboxes aunque no estén.
+      // Si por alguna razón quedaron 'portal_*' colados (por orden
+      // de ejecución en deploys previos), los limpiamos aquí.
+      const portalIdxs = mpPlan.items
+        .map((it, idx) => (it.itemKey?.startsWith?.('portal_') && it.type === 'checkbox' ? idx : -1))
+        .filter((idx) => idx >= 0)
+      const hasCuentas = mpPlan.items.some((i) => i.itemKey?.startsWith?.('cuentas_'))
+      if (portalIdxs.length > 0 && hasCuentas) {
+        mpPlan.items = mpPlan.items.filter((it) => !(it.itemKey?.startsWith?.('portal_') && it.type === 'checkbox'))
         mutated = true
-        console.log(`[sync-schema] ↻ Multipublicador: +${newPortals.length} checkboxes de portales añadidos`)
+        console.log(`[sync-schema] ↻ Multipublicador: -${portalIdxs.length} checkboxes 'portal_*' legacy eliminados (ya están como cuentas_*)`)
       }
+      // Silencio el seed: si no hay ni portales ni cuentas, ya no
+      // añadimos los checkboxes legacy. La migración v4 se ocupa.
+      // (Eliminamos el bloque que añadía portales nuevos.)
+      void portalSeeds
 
       if (mutated) {
         try {
