@@ -241,7 +241,10 @@ try {
       limit: 1,
     })
     const mpPlan2 = mpFix2[0]
-    const needsV3 = mpPlan2 && Array.isArray(mpPlan2.items) && (
+    // Guard: si el plan ya está en v4 (tiene 'cuentas_*'), no
+    // rehacer la migración v3 (que sobreescribiría las cuentas).
+    const alreadyV4 = mpPlan2 && Array.isArray(mpPlan2.items) && mpPlan2.items.some((i) => i.itemKey?.startsWith?.('cuentas_'))
+    const needsV3 = !alreadyV4 && mpPlan2 && Array.isArray(mpPlan2.items) && (
       mpPlan2.items.some((i) => i.itemKey === 'tier_tamano') ||
       mpPlan2.items.some((i) => i.itemKey === 'portal_motorflash')
     )
