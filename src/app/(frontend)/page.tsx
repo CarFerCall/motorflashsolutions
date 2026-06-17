@@ -5,6 +5,22 @@ import { Reveal } from '@/components/Reveal'
 import { AnimatedCounter } from '@/components/AnimatedCounter'
 import { ProductCarousel } from '@/components/ProductCarousel'
 import { ProductsTimeline } from '@/components/ProductsTimeline'
+import { HomeSectionNav } from '@/components/HomeSectionNav'
+
+const HOME_SECTIONS = [
+  { id: 'home-hero', label: 'Inicio' },
+  { id: 'catalogo-timeline', label: 'Catálogo en una línea' },
+  { id: 'sobre-motorflash', label: 'Sobre Motorflash' },
+  { id: 'que-resolvemos', label: 'Qué resolvemos' },
+  { id: 'como-te-ayudamos', label: 'Cómo te ayudamos' },
+  { id: 'resultados-reales', label: 'Resultados reales' },
+  { id: 'catalogo-productos', label: 'Catálogo de productos' },
+  { id: 'ecosistema-tecnico-teaser', label: 'Ecosistema técnico' },
+  { id: 'para-quien', label: 'Para quién' },
+  { id: 'testimonios', label: 'Lo que dicen' },
+  { id: 'nuestra-historia', label: 'Nuestra historia' },
+  { id: 'contacto-cta', label: 'Hablemos' },
+]
 
 export default function HomePage() {
   const products = orderedProducts()
@@ -14,7 +30,7 @@ export default function HomePage() {
       {/* ============================================================
           Hero
           ============================================================ */}
-      <section className="relative min-h-screen flex items-center overflow-hidden bg-white pt-20 pb-16">
+      <section id="home-hero" className="relative min-h-screen flex items-center overflow-hidden bg-white pt-20 pb-16">
         <div aria-hidden className="absolute -top-[10%] -right-[10%] w-1/2 h-1/2 rounded-full blur-[120px]" style={{ background: 'rgba(255, 128, 0, 0.06)' }} />
         <div aria-hidden className="absolute -bottom-[10%] -left-[10%] w-2/5 h-2/5 rounded-full blur-[120px]" style={{ background: 'rgba(255, 128, 0, 0.06)' }} />
 
@@ -44,8 +60,11 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* Menú desplegable sticky con las secciones de la home */}
+      <HomeSectionNav sections={HOME_SECTIONS} />
+
       {/* Línea de tiempo de productos justo debajo del hero */}
-      <section className="py-16 bg-white overflow-hidden">
+      <section id="catalogo-timeline" className="py-16 bg-white overflow-hidden">
         <Reveal>
           <div className="mf-container mb-10">
             <div className="max-w-3xl mx-auto text-center">
@@ -72,7 +91,7 @@ export default function HomePage() {
       </section>
 
       {/* Sobre Motorflash */}
-      <section className="py-24">
+      <section id="sobre-motorflash" className="py-24">
         <div className="mf-container">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
             <Reveal className="lg:col-span-7">
@@ -84,7 +103,7 @@ export default function HomePage() {
                 Llevamos <strong>+20 años</strong> analizando datos, procesos y comportamientos del mercado del VO. Sabemos cómo cambia la demanda, cómo se comportan los usuarios y qué necesitan los equipos de venta para trabajar mejor.
               </p>
               <p className="text-lg text-on-surface-variant mb-6 leading-relaxed">
-                Hoy somos un equipo de <strong>+180 especialistas en IT</strong>. Publicamos 30K vehículos al mes, exportamos millones de anuncios, gestionamos 70.000 llamadas mensuales y crecemos cada día con más de 150 talentos comprometidos con el sector del motor.
+                Hoy somos un equipo de <strong>+200 especialistas en IT</strong>. Publicamos 30K vehículos al mes, exportamos millones de anuncios, gestionamos 70.000 llamadas mensuales y crecemos cada día con talento comprometido con el sector del motor.
               </p>
               <Link href="/compania" className="btn-secondary mt-2">
                 Conocer la compañía
@@ -98,7 +117,7 @@ export default function HomePage() {
                   { v: 20, suffix: '+', l: 'Años en el sector' },
                   { v: 1500, suffix: '+', l: 'Clientes activos' },
                   { v: 10, suffix: 'M€', l: 'Facturación 2024' },
-                  { v: 180, suffix: '+', l: 'Especialistas en IT' },
+                  { v: 200, suffix: '+', l: 'Especialistas en IT' },
                 ].map((s) => (
                   <div key={s.l} className="mf-product-card" style={{ padding: '1.5rem' }}>
                     <div className="font-display text-3xl md:text-4xl font-semibold text-primary mb-1">
@@ -114,7 +133,7 @@ export default function HomePage() {
       </section>
 
       {/* Qué resolvemos */}
-      <section className="py-24 bg-surface-container">
+      <section id="que-resolvemos" className="py-24 bg-surface-container">
         <div className="mf-container">
           <Reveal>
             <div className="text-center mb-12 max-w-3xl mx-auto">
@@ -154,7 +173,7 @@ export default function HomePage() {
       </section>
 
       {/* Cómo te ayudamos (workflow) */}
-      <section className="py-24">
+      <section id="como-te-ayudamos" className="py-24">
         <div className="mf-container">
           <Reveal>
             <div className="text-center mb-12 max-w-3xl mx-auto">
@@ -196,7 +215,7 @@ export default function HomePage() {
       </section>
 
       {/* Resultados reales (banda naranja) */}
-      <section className="py-24" style={{ background: 'linear-gradient(135deg, #ff8000 0%, #ff9533 100%)' }}>
+      <section id="resultados-reales" className="py-24" style={{ background: 'linear-gradient(135deg, #ff8000 0%, #ff9533 100%)' }}>
         <div className="mf-container">
           <Reveal>
             <div className="text-center mb-12 max-w-3xl mx-auto">
@@ -231,12 +250,12 @@ export default function HomePage() {
       </section>
 
       {/* Carrusel productos con flechas */}
-      <section className="py-24 overflow-hidden">
+      <section id="catalogo-productos" className="py-24 overflow-hidden">
         <ProductCarousel products={products} />
       </section>
 
       {/* Ecosistema técnico teaser → /ecosistema-tecnico */}
-      <section className="py-24">
+      <section id="ecosistema-tecnico-teaser" className="py-24">
         <div className="mf-container">
           <Reveal>
             <div className="rounded-3xl overflow-hidden relative" style={{ background: 'linear-gradient(135deg, #121414 0%, #1f1f1f 100%)' }}>
@@ -312,7 +331,7 @@ export default function HomePage() {
       </section>
 
       {/* Para quién */}
-      <section className="py-24 bg-surface-container">
+      <section id="para-quien" className="py-24 bg-surface-container">
         <div className="mf-container">
           <Reveal>
             <div className="text-center mb-12 max-w-3xl mx-auto">
@@ -362,7 +381,7 @@ export default function HomePage() {
       </section>
 
       {/* Testimonios */}
-      <section className="py-24">
+      <section id="testimonios" className="py-24">
         <div className="mf-container">
           <Reveal>
             <div className="text-center mb-12">
@@ -396,7 +415,7 @@ export default function HomePage() {
       </section>
 
       {/* Nuestra historia teaser → /compania */}
-      <section className="py-24 bg-surface-container">
+      <section id="nuestra-historia" className="py-24 bg-surface-container">
         <div className="mf-container">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <Reveal>
@@ -428,7 +447,7 @@ export default function HomePage() {
       </section>
 
       {/* Contact CTA */}
-      <section className="py-24">
+      <section id="contacto-cta" className="py-24">
         <div className="mf-container">
           <Reveal>
             <div className="rounded-[3rem] overflow-hidden shadow-2xl" style={{ background: '#121414' }}>
