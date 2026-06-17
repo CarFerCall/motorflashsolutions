@@ -161,10 +161,14 @@ try {
     },
   ]
 
-  // Migración fina Multipublicador: si el item 'creacion_premium'
-  // tiene aún el unitPriceCents 25000 (estimación mensual antigua),
-  // lo bajamos a 0 para que sea un check de opción sin cálculo
-  // (precio real por VIN se cotiza aparte).
+  // Migración fina Multipublicador:
+  //  1) Si 'creacion_premium' tiene aún el unitPriceCents 25000
+  //     (estimación mensual antigua), lo bajamos a 0 para que sea
+  //     un check de opción sin cálculo (precio real por VIN se
+  //     cotiza aparte).
+  //  2) Si el plan no tiene aún los checkboxes de portales
+  //     (portal_motorflash, portal_cochesnet, etc.), los añadimos
+  //     justo antes de feed_datos.
   {
     const { docs: mpFix } = await payload.find({
       collection: 'pricing-plans',
@@ -173,19 +177,59 @@ try {
     })
     const mpPlan = mpFix[0]
     if (mpPlan && Array.isArray(mpPlan.items)) {
+      let mutated = false
+
+      // (1) Ajuste creacion_premium
       const premiumItem = mpPlan.items.find((i) => i.itemKey === 'creacion_premium')
       if (premiumItem && premiumItem.unitPriceCents > 0) {
         premiumItem.unitPriceCents = 0
         premiumItem.helpText = 'Marca esta opción si te interesa la creación premium por bastidor. Se factura 3 €/VIN único enviado al mes y no se suma al total mensual del configurador — el comercial te cotiza el volumen.'
+        mutated = true
+        console.log('[sync-schema] ↻ Multipublicador: creacion_premium pasa a check sin cálculo')
+      }
+
+      // (2) Añadir checkboxes de portales si no existen
+      const portalSeeds = [
+        { itemKey: 'portal_motorflash', label: 'Portal · Motorflash.com', helpText: 'Incluido en todos los tier. Los 10 primeros leads del mes son gratis.', checkboxDefault: true },
+        { itemKey: 'portal_cochesnet', label: 'Portal · Coches.net', helpText: 'Cuentas ilimitadas. Incluido en tu tier base — sin coste adicional.', checkboxDefault: true },
+        { itemKey: 'portal_sumauto', label: 'Portal · Sumauto', helpText: 'Cuentas ilimitadas. Incluido dentro de los portales verticales de tu tier base.', checkboxDefault: false },
+        { itemKey: 'portal_cochescom', label: 'Portal · Coches.com', helpText: 'Cuentas ilimitadas. Incluido dentro de los portales verticales de tu tier base.', checkboxDefault: false },
+        { itemKey: 'portal_autocasion', label: 'Portal · Autocasión', helpText: 'Cuentas ilimitadas. Incluido dentro de los portales verticales de tu tier base.', checkboxDefault: false },
+        { itemKey: 'portal_autoscout24', label: 'Portal · AutoScout24', helpText: 'Cuentas ilimitadas. Incluido dentro de los portales verticales de tu tier base.', checkboxDefault: false },
+        { itemKey: 'portal_wallapop', label: 'Portal · Wallapop', helpText: 'Cuentas ilimitadas. Incluido dentro de los portales verticales de tu tier base.', checkboxDefault: false },
+      ]
+      const hasAnyPortal = mpPlan.items.some((i) => i.itemKey?.startsWith?.('portal_'))
+      if (!hasAnyPortal) {
+        // Insertamos los portales justo antes del primer item opcional
+        // (feed_datos / modulo_tasacion / creacion_premium / marcas_agua).
+        const insertIdx = mpPlan.items.findIndex((i) => ['feed_datos', 'modulo_tasacion', 'creacion_premium', 'marcas_agua'].includes(i.itemKey))
+        const newPortals = portalSeeds.map((p) => ({
+          itemKey: p.itemKey,
+          label: p.label,
+          helpText: p.helpText,
+          type: 'checkbox',
+          unitPriceCents: 0,
+          required: false,
+          checkboxDefault: p.checkboxDefault,
+        }))
+        if (insertIdx >= 0) {
+          mpPlan.items.splice(insertIdx, 0, ...newPortals)
+        } else {
+          mpPlan.items.push(...newPortals)
+        }
+        mutated = true
+        console.log(`[sync-schema] ↻ Multipublicador: +${newPortals.length} checkboxes de portales añadidos`)
+      }
+
+      if (mutated) {
         try {
           await payload.update({
             collection: 'pricing-plans',
             id: mpPlan.id,
             data: { items: mpPlan.items },
           })
-          console.log('[sync-schema] ↻ Multipublicador: creacion_premium pasa a check sin cálculo (precio por VIN)')
         } catch (err) {
-          console.warn('[sync-schema] ✗ ajuste creacion_premium:', err?.message || err)
+          console.warn('[sync-schema] ✗ ajuste Multipublicador:', err?.message || err)
         }
       }
     }

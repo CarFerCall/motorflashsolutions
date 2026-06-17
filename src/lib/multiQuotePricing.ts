@@ -65,11 +65,12 @@ export function computeProductLine(
           itemsCents += item.unitPriceCents
           itemsDetail.push({ label: item.label, valueLabel: '✓', cents: item.unitPriceCents })
         } else {
-          // Checkbox marcado sin cuota mensual: lo registramos en el
-          // desglose como "Activado · facturación aparte" para que el
-          // cliente vea que su elección queda recogida y el comercial
-          // sepa que tiene que cotizarlo por separado.
-          itemsDetail.push({ label: item.label, valueLabel: 'activado · facturación aparte', cents: 0 })
+          // Checkbox marcado sin cuota mensual: queda registrado en
+          // el desglose como "seleccionado" sin afectar al total.
+          // Sirve tanto para opciones incluidas en el tier base
+          // (p. ej. portales en los que publicar) como para
+          // opciones que se cotizan aparte por consumo real.
+          itemsDetail.push({ label: item.label, valueLabel: 'seleccionado', cents: 0 })
         }
       }
     }
