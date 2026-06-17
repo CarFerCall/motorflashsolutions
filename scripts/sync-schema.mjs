@@ -178,6 +178,51 @@ try {
     },
   ]
 
+  // Migración v4 Multipublicador: si el plan en BD tiene checkboxes
+  // 'portal_*' (modelo v3), los reemplazamos por inputs numéricos
+  // 'cuentas_*' para que el cliente declare cuántas cuentas tiene
+  // por portal sin afectar al precio total.
+  {
+    const { docs: mpV4 } = await payload.find({
+      collection: 'pricing-plans',
+      where: { productSlug: { equals: 'exportaciones' } },
+      limit: 1,
+    })
+    const mpPlanV4 = mpV4[0]
+    if (mpPlanV4 && Array.isArray(mpPlanV4.items)) {
+      const portalCheckIdxs = []
+      mpPlanV4.items.forEach((it, idx) => {
+        if (it.itemKey?.startsWith?.('portal_') && it.type === 'checkbox') portalCheckIdxs.push(idx)
+      })
+      const hasCuentas = mpPlanV4.items.some((i) => i.itemKey?.startsWith?.('cuentas_'))
+      if (portalCheckIdxs.length > 0 && !hasCuentas) {
+        // Reemplazamos los checkboxes portal_* por los nuevos
+        // number cuentas_* en su misma posición.
+        const newCuentaItems = [
+          { itemKey: 'cuentas_cochesnet', label: 'Cuentas de Coches.net', helpText: 'Cuántas cuentas de Coches.net tienes que configurar. No afecta al total mensual del configurador — sirve para que el comercial dimensione la cotización real.', type: 'number', unitPriceCents: 0, required: false, numberMin: 0, numberMax: 50, numberDefault: 1, numberUnit: 'cuenta' },
+          { itemKey: 'cuentas_sumauto', label: 'Cuentas de Sumauto', helpText: 'Cuántas cuentas de Sumauto tienes que configurar. No afecta al total mensual del configurador.', type: 'number', unitPriceCents: 0, required: false, numberMin: 0, numberMax: 50, numberDefault: 0, numberUnit: 'cuenta' },
+          { itemKey: 'cuentas_cochescom', label: 'Cuentas de Coches.com', helpText: 'Cuántas cuentas de Coches.com tienes que configurar. No afecta al total mensual.', type: 'number', unitPriceCents: 0, required: false, numberMin: 0, numberMax: 50, numberDefault: 0, numberUnit: 'cuenta' },
+          { itemKey: 'cuentas_autocasion', label: 'Cuentas de Autocasión', helpText: 'Cuántas cuentas de Autocasión tienes que configurar. No afecta al total mensual.', type: 'number', unitPriceCents: 0, required: false, numberMin: 0, numberMax: 50, numberDefault: 0, numberUnit: 'cuenta' },
+          { itemKey: 'cuentas_autoscout24', label: 'Cuentas de AutoScout24', helpText: 'Cuántas cuentas de AutoScout24 tienes que configurar. No afecta al total mensual.', type: 'number', unitPriceCents: 0, required: false, numberMin: 0, numberMax: 50, numberDefault: 0, numberUnit: 'cuenta' },
+          { itemKey: 'cuentas_wallapop', label: 'Cuentas de Wallapop', helpText: 'Cuántas cuentas de Wallapop tienes que configurar. No afecta al total mensual.', type: 'number', unitPriceCents: 0, required: false, numberMin: 0, numberMax: 50, numberDefault: 0, numberUnit: 'cuenta' },
+        ]
+        const firstPortalIdx = portalCheckIdxs[0]
+        const itemsWithoutPortals = mpPlanV4.items.filter((i) => !(i.itemKey?.startsWith?.('portal_') && i.type === 'checkbox'))
+        itemsWithoutPortals.splice(firstPortalIdx, 0, ...newCuentaItems)
+        try {
+          await payload.update({
+            collection: 'pricing-plans',
+            id: mpPlanV4.id,
+            data: { items: itemsWithoutPortals },
+          })
+          console.log('[sync-schema] ↻ Multipublicador v4: portal_* (checkbox) → cuentas_* (number sin coste)')
+        } catch (err) {
+          console.warn('[sync-schema] ✗ migración v4 Multipublicador:', err?.message || err)
+        }
+      }
+    }
+  }
+
   // Migración v3 Multipublicador: si el plan en BD aún tiene
   // 'tier_tamano' (modelo total fijo) o 'portal_motorflash'
   // (checkboxes redundantes con los selects nuevos), reemplazamos

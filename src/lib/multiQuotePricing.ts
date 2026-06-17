@@ -39,11 +39,19 @@ export function computeProductLine(
     const raw = sel[item.itemKey]
     if (item.type === 'number') {
       const qty = clamp(Number(raw ?? item.default) || 0, item.min, item.max)
-      if (qty > 0 && item.unitPriceCents > 0) {
-        const cents = qty * item.unitPriceCents
-        itemsCents += cents
-        const unitSuffix = item.unit ? ` × ${item.unit}${qty === 1 ? '' : 's'}` : ''
-        itemsDetail.push({ label: item.label, valueLabel: `${qty}${unitSuffix}`, cents })
+      if (qty > 0) {
+        if (item.unitPriceCents > 0) {
+          const cents = qty * item.unitPriceCents
+          itemsCents += cents
+          const unitSuffix = item.unit ? ` × ${item.unit}${qty === 1 ? '' : 's'}` : ''
+          itemsDetail.push({ label: item.label, valueLabel: `${qty}${unitSuffix}`, cents })
+        } else {
+          // Number informativo: registra la cantidad sin sumar al total.
+          // Útil para que el comercial vea volúmenes (cuentas por
+          // portal, etc.) sin distorsionar la estimación mensual.
+          const unitLabel = item.unit ? `${qty} ${item.unit}${qty === 1 ? '' : 's'}` : `${qty}`
+          itemsDetail.push({ label: item.label, valueLabel: unitLabel, cents: 0 })
+        }
       }
     } else if (item.type === 'select') {
       const fallback = item.options.find((o) => o.isDefault) ?? item.options[0]
