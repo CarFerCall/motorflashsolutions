@@ -70,10 +70,34 @@ export function PricingConfigurator({ products }: Props) {
   }
 
   const updateSelection = (productSlug: string, itemKey: string, value: string) => {
-    setSelections((prev) => ({
-      ...prev,
-      [productSlug]: { ...(prev[productSlug] ?? {}), [itemKey]: value },
-    }))
+    setSelections((prev) => {
+      const productSel: Record<string, string> = { ...(prev[productSlug] ?? {}), [itemKey]: value }
+
+      // Vinculación específica de Multipublicador: al cambiar el tier
+      // del cargador básico, sincronizamos los selects de exportación
+      // a Coches.net y verticales al mismo tier para que el cliente no
+      // tenga que elegirlo tres veces. La opción "No publicar" se
+      // respeta si el cliente ya la había escogido manualmente.
+      if (productSlug === 'exportaciones' && itemKey === 'tier_cargador') {
+        const TIER_TO_EXPORT: Record<string, string> = {
+          xs: 'xs',
+          s: 's',
+          m: 'por_coche',
+          l: 'por_coche',
+          xl: 'por_coche',
+          xxl: 'por_coche',
+        }
+        const mapped = TIER_TO_EXPORT[value]
+        if (mapped) {
+          const cur1 = productSel['exportacion_cochesnet']
+          if (cur1 !== 'no') productSel['exportacion_cochesnet'] = mapped
+          const cur2 = productSel['exportacion_verticales']
+          if (cur2 !== 'no') productSel['exportacion_verticales'] = mapped
+        }
+      }
+
+      return { ...prev, [productSlug]: productSel }
+    })
   }
 
   const lines = useMemo(() => {
