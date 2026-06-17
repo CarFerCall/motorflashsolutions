@@ -21,9 +21,29 @@ interface Stat {
   suffix?: string
 }
 
+// Look & feel corporativo de cada cliente: color principal de marca
+// (wordmark / accents) y "tinta" de apoyo. Permite aplicar la identidad
+// del cliente a la card del caso sin necesidad de subir el logo oficial
+// (los wordmarks se renderizan tipográficamente).
+interface BrandStyle {
+  // Color hex del wordmark y de los accents principales.
+  primary: string
+  // Color de tinta de la card del cliente (fondo del wordmark / banner).
+  ink: string
+  // Color del banner del caso (gradiente sutil).
+  banner: string
+  // Estilo tipográfico del wordmark (tracking + weight) — opcional.
+  wordmarkClass?: string
+}
+
 interface SuccessCase {
   slug: string
   brand: string
+  // Texto exacto del wordmark (case sensitivity respetado).
+  wordmark: string
+  // Subtítulo bajo el wordmark — tagline corta de marca.
+  tagline: string
+  style: BrandStyle
   badge: string
   headline: string
   intro: React.ReactNode
@@ -33,13 +53,22 @@ interface SuccessCase {
   ecosystemTitle: string
   ecosystemLead: string
   ecosystemItems: string[]
-  accent: 'orange' | 'dark' | 'light'
+  // Fondo del quote: light (con borde), dark (con tinta del cliente).
+  quoteVariant: 'light' | 'dark'
 }
 
 const CASES: SuccessCase[] = [
   {
     slug: 'jarmauto',
     brand: 'JARMAUTO',
+    wordmark: 'JARMAUTO',
+    tagline: 'Grupo automoción · Madrid',
+    style: {
+      primary: '#E30613', // rojo Jarmauto
+      ink: '#0D0D0D',
+      banner: 'linear-gradient(135deg, #1A0203 0%, #3A0509 55%, #E30613 100%)',
+      wordmarkClass: 'tracking-[0.18em] font-extrabold',
+    },
     badge: 'Cliente Premium · Ecosistema completo',
     headline: 'El cliente número 1 de la compañía',
     intro: (
@@ -64,11 +93,19 @@ const CASES: SuccessCase[] = [
       'Contact Center · Customer Manager',
       'Marketing Digital gestionado por Motorflash',
     ],
-    accent: 'orange',
+    quoteVariant: 'dark',
   },
   {
     slug: 'ocasionplus',
     brand: 'OCASIONPLUS',
+    wordmark: 'Ocasionplus',
+    tagline: 'Red nacional de VO',
+    style: {
+      primary: '#EE3924', // rojo coral Ocasionplus
+      ink: '#0A1A2A',
+      banner: 'linear-gradient(135deg, #0A1A2A 0%, #16314F 60%, #EE3924 100%)',
+      wordmarkClass: 'tracking-[-0.01em] font-bold italic',
+    },
     badge: 'Especialista en stock · Cliente operativo',
     headline: 'Una de las mayores redes de VO de España, apoyada en nuestra gestión de stock',
     intro: (
@@ -92,11 +129,19 @@ const CASES: SuccessCase[] = [
       'Multipublicación en portales del sector',
       'Tasación online del stock',
     ],
-    accent: 'dark',
+    quoteVariant: 'dark',
   },
   {
     slug: 'flexicar',
     brand: 'FLEXICAR',
+    wordmark: 'FLEXICAR',
+    tagline: 'Red de VO · Iberia',
+    style: {
+      primary: '#DA1F26', // rojo Flexicar
+      ink: '#111111',
+      banner: 'linear-gradient(135deg, #111111 0%, #2B0508 55%, #DA1F26 100%)',
+      wordmarkClass: 'tracking-[0.22em] font-black',
+    },
     badge: 'Cliente · Motorflash Message',
     headline: 'Toda la potencia de WhatsApp para VO con Motorflash Message',
     intro: (
@@ -121,11 +166,19 @@ const CASES: SuccessCase[] = [
       'Plantillas y respuestas rápidas por centro',
       'Reporting de conversaciones y conversión',
     ],
-    accent: 'light',
+    quoteVariant: 'light',
   },
   {
     slug: 'muy-car',
     brand: 'MUY CAR',
+    wordmark: 'muy car',
+    tagline: 'Concesionario nativo digital',
+    style: {
+      primary: '#3D2A8C', // morado/azul Muy Car
+      ink: '#1A1340',
+      banner: 'linear-gradient(135deg, #1A1340 0%, #2F2273 55%, #5A47C2 100%)',
+      wordmarkClass: 'tracking-[-0.02em] font-bold lowercase',
+    },
     badge: 'Nacieron con Motorflash · Crecieron con nosotros',
     headline: 'Nacieron con Motorflash y han crecido con nosotros',
     intro: (
@@ -149,11 +202,19 @@ const CASES: SuccessCase[] = [
       'Web corporativa Motorflash',
       'Motorflash Message · WhatsApp profesional',
     ],
-    accent: 'orange',
+    quoteVariant: 'light',
   },
   {
     slug: 'auto-elia',
     brand: 'AUTO ELIA',
+    wordmark: 'AUTO ELIA',
+    tagline: 'Volvo · Lynk & Co — concesionario oficial',
+    style: {
+      primary: '#1A3A5C', // azul Volvo
+      ink: '#0F1A2A',
+      banner: 'linear-gradient(135deg, #0F1A2A 0%, #1A3A5C 60%, #BC8B4A 100%)',
+      wordmarkClass: 'tracking-[0.32em] font-light',
+    },
     badge: 'Cliente · Leads de calidad',
     headline: 'Concesionario oficial premium que capta leads de calidad con Motorflash Exclusive',
     intro: (
@@ -178,11 +239,9 @@ const CASES: SuccessCase[] = [
       'Publicación de stock optimizada',
       'Motorflash Exclusive — leads premium',
     ],
-    accent: 'dark',
+    quoteVariant: 'dark',
   },
 ]
-
-const BRAND_PILLS = ['Jarmauto', 'Ocasionplus', 'Flexicar', 'Auto Elia', 'Muy Car', '+1.500 más']
 
 function isNumericStat(v: string) {
   return /^[+\-]?\d+([%]?)$/.test(v)
@@ -211,13 +270,44 @@ export default function CasosExitoPage() {
               <p className="text-base md:text-lg text-on-surface-variant mb-8">
                 Resultados reales de concesionarios líderes que han crecido con Motorflash Solutions. Desde grupos multimarca con el ecosistema completo hasta especialistas que usan solo una pieza muy concreta.
               </p>
-              <div className="flex flex-wrap justify-center gap-2">
-                {BRAND_PILLS.map((b) => (
-                  <span key={b} className="inline-flex items-center px-4 py-1.5 rounded-full bg-white border border-outline-variant text-sm font-semibold text-on-surface">
-                    {b}
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* Cinta de logos / wordmarks corporativos */}
+      <section className="py-12 md:py-16 bg-white border-y border-outline-variant">
+        <div className="mf-container">
+          <Reveal>
+            <p className="text-center text-xs md:text-sm font-bold uppercase tracking-[0.2em] text-on-surface-variant mb-8">
+              Confían en nosotros
+            </p>
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 md:gap-6 items-center">
+              {CASES.map((c) => (
+                <a
+                  key={c.slug}
+                  href={`#${c.slug}`}
+                  className="group flex items-center justify-center px-3 py-6 md:py-8 rounded-2xl border border-outline-variant bg-white hover:border-current transition-all hover:shadow-lg"
+                  style={{ color: c.style.primary }}
+                >
+                  <span
+                    className={`font-display text-xl md:text-2xl leading-none whitespace-nowrap ${c.style.wordmarkClass ?? 'font-bold'}`}
+                    style={{ color: c.style.primary }}
+                  >
+                    {c.wordmark}
                   </span>
-                ))}
-              </div>
+                </a>
+              ))}
+              <a
+                href="#mas"
+                className="group flex items-center justify-center px-3 py-6 md:py-8 rounded-2xl border border-dashed border-outline-variant bg-surface-container-low"
+              >
+                <span className="font-display text-base md:text-lg font-semibold text-on-surface-variant text-center leading-tight">
+                  +1.500
+                  <br />
+                  <span className="text-[10px] md:text-xs font-bold uppercase tracking-widest">clientes más</span>
+                </span>
+              </a>
             </div>
           </Reveal>
         </div>
@@ -231,7 +321,7 @@ export default function CasosExitoPage() {
       </div>
 
       {/* CTA */}
-      <section className="py-20 md:py-28">
+      <section id="mas" className="py-20 md:py-28">
         <div className="mf-container">
           <Reveal>
             <div className="bg-primary text-white rounded-2xl md:rounded-3xl p-8 sm:p-12 md:p-16 text-center">
@@ -253,33 +343,75 @@ export default function CasosExitoPage() {
 
 function CaseSection({ caseItem, isAlt, index }: { caseItem: SuccessCase; isAlt: boolean; index: number }) {
   const bgClass = isAlt ? 'bg-surface-container' : 'bg-white'
+  const { style } = caseItem
   return (
-    <section className={`py-16 md:py-24 ${bgClass}`}>
+    <section id={caseItem.slug} className={`py-16 md:py-24 ${bgClass} scroll-mt-20`}>
       <div className="mf-container">
         <Reveal>
+          {/* Banner corporativo del cliente con su look & feel */}
+          <div
+            className="relative overflow-hidden rounded-3xl mb-8 md:mb-10"
+            style={{ background: style.banner }}
+          >
+            <div aria-hidden className="absolute inset-0 opacity-[0.07]" style={{
+              backgroundImage: 'radial-gradient(circle at 10% 20%, white 1px, transparent 1.5px)',
+              backgroundSize: '24px 24px',
+            }} />
+            <div className="relative z-10 p-8 md:p-12 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+              <div>
+                <span
+                  className={`block font-display text-4xl md:text-6xl leading-none mb-3 text-white ${style.wordmarkClass ?? 'font-bold'}`}
+                >
+                  {caseItem.wordmark}
+                </span>
+                <span className="text-xs md:text-sm font-semibold uppercase tracking-[0.2em] text-white/70">
+                  {caseItem.tagline}
+                </span>
+              </div>
+              <div className="flex items-center gap-3">
+                <span
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-full backdrop-blur"
+                  style={{
+                    background: 'rgba(255,255,255,0.12)',
+                    border: '1px solid rgba(255,255,255,0.2)',
+                  }}
+                >
+                  <span
+                    className="w-2 h-2 rounded-full"
+                    style={{ background: style.primary, boxShadow: `0 0 12px ${style.primary}` }}
+                  />
+                  <span className="text-xs md:text-sm font-bold uppercase tracking-widest text-white">
+                    {caseItem.badge}
+                  </span>
+                </span>
+              </div>
+            </div>
+          </div>
+
           {/* Header del caso */}
           <div className={`grid grid-cols-1 lg:grid-cols-12 gap-8 mb-10 ${isAlt ? 'lg:[&>div:first-child]:order-2' : ''}`}>
             <div className="lg:col-span-7">
-              <span className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-primary mb-3">
-                <span className="w-2 h-2 rounded-full bg-primary" />
-                {caseItem.badge}
-              </span>
               <h2 className="text-2xl sm:text-3xl md:text-4xl font-semibold leading-tight mb-4">
-                <span className="font-display block text-sm md:text-base text-primary uppercase tracking-widest mb-1">{caseItem.brand}</span>
                 {caseItem.headline}
               </h2>
               <p className="text-base md:text-lg text-on-surface-variant leading-relaxed">{caseItem.intro}</p>
             </div>
 
-            {/* Stats */}
+            {/* Stats con accent del cliente */}
             <div className="lg:col-span-5">
               <div className="grid grid-cols-2 gap-3 md:gap-4">
                 {caseItem.stats.map((s, i) => {
                   const delay = (Math.min(3, i) * 100) as 0 | 100 | 200 | 300
                   return (
                     <Reveal key={s.label} delay={delay}>
-                      <div className="bg-white border border-outline-variant rounded-2xl p-4 md:p-5 h-full">
-                        <div className="font-display text-2xl md:text-3xl font-bold text-primary leading-none mb-2 tabular-nums">
+                      <div
+                        className="bg-white rounded-2xl p-4 md:p-5 h-full border-t-4"
+                        style={{ borderTopColor: style.primary, borderRight: '1px solid var(--outline-variant)', borderBottom: '1px solid var(--outline-variant)', borderLeft: '1px solid var(--outline-variant)' }}
+                      >
+                        <div
+                          className="font-display text-2xl md:text-3xl font-bold leading-none mb-2 tabular-nums"
+                          style={{ color: style.primary }}
+                        >
                           {isNumericStat(s.value) ? (
                             <>
                               {parseNumericValue(s.value).num < 0 && '-'}
@@ -300,12 +432,24 @@ function CaseSection({ caseItem, isAlt, index }: { caseItem: SuccessCase; isAlt:
 
           {/* Quote */}
           <Reveal delay={100}>
-            <blockquote className={`rounded-2xl md:rounded-3xl p-6 md:p-8 mb-10 ${caseItem.accent === 'dark' ? 'bg-on-surface text-white' : 'bg-white border border-outline-variant'}`}>
-              <span className="material-symbols-outlined text-primary mb-3 block" style={{ fontSize: 28 }}>format_quote</span>
-              <p className={`text-lg md:text-xl font-medium leading-relaxed mb-4 ${caseItem.accent === 'dark' ? 'text-white' : 'text-on-surface'}`}>
+            <blockquote
+              className="rounded-2xl md:rounded-3xl p-6 md:p-8 mb-10 relative overflow-hidden"
+              style={
+                caseItem.quoteVariant === 'dark'
+                  ? { background: style.ink, color: '#fff' }
+                  : { background: '#fff', borderLeft: `4px solid ${style.primary}`, border: `1px solid var(--outline-variant)`, borderLeftWidth: 4, borderLeftColor: style.primary }
+              }
+            >
+              <span
+                className="material-symbols-outlined mb-3 block"
+                style={{ fontSize: 28, color: style.primary }}
+              >
+                format_quote
+              </span>
+              <p className={`text-lg md:text-xl font-medium leading-relaxed mb-4 ${caseItem.quoteVariant === 'dark' ? 'text-white' : 'text-on-surface'}`}>
                 "{caseItem.quote}"
               </p>
-              <footer className={`text-sm font-semibold ${caseItem.accent === 'dark' ? 'text-white/70' : 'text-on-surface-variant'}`}>
+              <footer className={`text-sm font-semibold ${caseItem.quoteVariant === 'dark' ? 'text-white/70' : 'text-on-surface-variant'}`}>
                 — {caseItem.author}
               </footer>
             </blockquote>
@@ -315,14 +459,27 @@ function CaseSection({ caseItem, isAlt, index }: { caseItem: SuccessCase; isAlt:
           <Reveal delay={200}>
             <div className="bg-white border border-outline-variant rounded-2xl md:rounded-3xl p-6 md:p-8">
               <div className="mb-5">
-                <span className="text-xs font-bold uppercase tracking-widest text-primary block mb-2">PRODUCTOS CONTRATADOS</span>
+                <span
+                  className="text-xs font-bold uppercase tracking-widest block mb-2"
+                  style={{ color: style.primary }}
+                >
+                  PRODUCTOS CONTRATADOS
+                </span>
                 <h3 className="text-xl md:text-2xl font-semibold mb-2">{caseItem.ecosystemTitle}</h3>
                 <p className="text-sm md:text-base text-on-surface-variant">{caseItem.ecosystemLead}</p>
               </div>
               <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 {caseItem.ecosystemItems.map((it) => (
-                  <li key={it} className="flex items-center gap-3 px-4 py-3 rounded-xl bg-surface-container-low border border-outline-variant">
-                    <span className="material-symbols-outlined text-primary shrink-0" style={{ fontSize: 22 }}>check_circle</span>
+                  <li
+                    key={it}
+                    className="flex items-center gap-3 px-4 py-3 rounded-xl bg-surface-container-low border border-outline-variant"
+                  >
+                    <span
+                      className="material-symbols-outlined shrink-0"
+                      style={{ fontSize: 22, color: style.primary }}
+                    >
+                      check_circle
+                    </span>
                     <span className="text-sm font-medium">{it}</span>
                   </li>
                 ))}
