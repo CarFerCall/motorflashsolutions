@@ -1,8 +1,12 @@
 import React from 'react'
 import type { Metadata, Viewport } from 'next'
+import { notFound } from 'next/navigation'
+import { hasLocale, NextIntlClientProvider } from 'next-intl'
+import { setRequestLocale } from 'next-intl/server'
 import './styles.css'
 import { Navbar } from '@/components/Navbar'
 import { Footer } from '@/components/Footer'
+import { routing } from '@/i18n/routing'
 import { getSiteUrl } from '@/lib/seo/site-url'
 import { organizationSchema, websiteSchema, jsonLdScript } from '@/lib/seo/schema'
 
@@ -11,12 +15,23 @@ const DEFAULT_TITLE = 'Motorflash | Solución 360 e IA para Automoción'
 const DEFAULT_DESCRIPTION =
   'Motorflash Ibérica: solución 360 con IA para marcas y concesionarios del motor. Multipublicador, CRM4YOU, Contact Center, IA en WhatsApp y más.'
 
+export function generateStaticParams() {
+  return routing.locales.map((locale) => ({ locale }))
+}
+
 export const metadata: Metadata = {
   metadataBase: new URL(getSiteUrl()),
   title: { default: DEFAULT_TITLE, template: '%s | Motorflash' },
   description: DEFAULT_DESCRIPTION,
   applicationName: SITE_NAME,
-  alternates: { canonical: '/' },
+  alternates: {
+    canonical: '/',
+    languages: {
+      es: '/',
+      en: '/en',
+      zh: '/zh',
+    },
+  },
   openGraph: {
     type: 'website',
     siteName: SITE_NAME,
@@ -59,11 +74,28 @@ export const viewport: Viewport = {
   themeColor: '#ff8000',
 }
 
-export default async function FrontendLayout({ children }: { children: React.ReactNode }) {
+export default async function FrontendLayout({
+  children,
+  params,
+}: {
+  children: React.ReactNode
+  params: Promise<{ locale: string }>
+}) {
+  const { locale } = await params
+  // Validamos el locale del segmento. Si la URL viene con un valor
+  // distinto a 'es' | 'en' | 'zh', devolvemos 404 — evita que el
+  // middleware deje pasar prefijos no soportados.
+  if (!hasLocale(routing.locales, locale)) {
+    notFound()
+  }
+  // Indica a next-intl el locale activo para que pueda hidratar
+  // server components con `getTranslations` y similares.
+  setRequestLocale(locale)
+
   const orgJsonLd = jsonLdScript([organizationSchema(), websiteSchema()])
 
   return (
-    <html lang="es">
+    <html lang={locale}>
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
@@ -81,9 +113,11 @@ export default async function FrontendLayout({ children }: { children: React.Rea
         />
       </head>
       <body>
-        {await Navbar()}
-        <main className="pt-20">{children}</main>
-        <Footer />
+        <NextIntlClientProvider>
+          {await Navbar()}
+          <main className="pt-20">{children}</main>
+          <Footer />
+        </NextIntlClientProvider>
       </body>
     </html>
   )

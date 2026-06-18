@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useEffect, useRef, useState } from 'react'
 import type { MainMenuData, MenuItem } from '@/lib/navigation'
+import { LanguageSwitcher } from './LanguageSwitcher'
 
 interface Props {
   menu: MainMenuData
@@ -99,6 +100,11 @@ export function NavbarClient({ menu }: Props) {
           </div>
 
           <div className="ml-auto md:ml-0 flex items-center gap-3">
+            {/* Selector de idioma (oculto en móvil porque ya aparece dentro del drawer) */}
+            <div className="hidden md:block">
+              <LanguageSwitcher />
+            </div>
+
             {menu.cta?.label && menu.cta?.url && (
               <Link href={menu.cta.url} className="btn-primary !py-2.5 !px-6 !text-sm hidden sm:inline-flex">
                 {menu.cta.label}
@@ -279,6 +285,11 @@ function MobileDrawer({
               </Link>
             </div>
           )}
+
+          {/* Selector de idioma dentro del drawer móvil */}
+          <div className="mt-6 pt-6 border-t border-outline-variant">
+            <LanguageSwitcher fullWidth />
+          </div>
         </nav>
       </aside>
     </>

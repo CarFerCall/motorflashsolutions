@@ -1,0 +1,155 @@
+{
+  "Locale": {
+    "name": "English",
+    "shortName": "EN",
+    "flag": "🇬🇧"
+  },
+  "LanguageSwitcher": {
+    "label": "Language",
+    "ariaLabel": "Language selector",
+    "current": "Current language"
+  },
+  "Navbar": {
+    "home": "Home",
+    "services": "Services",
+    "company": "Company",
+    "successStories": "Success stories",
+    "pricing": "Pricing",
+    "ecosystem": "Tech ecosystem",
+    "contact": "Contact",
+    "menuLabel": "Open menu",
+    "closeMenu": "Close menu"
+  },
+  "Footer": {
+    "tagline": "Your digital partner in the automotive sector.",
+    "rights": "All rights reserved.",
+    "legal": "Legal notice",
+    "privacy": "Privacy policy",
+    "cookies": "Cookie policy",
+    "contactUs": "Contact",
+    "products": "Products",
+    "company": "Company"
+  },
+  "Common": {
+    "loading": "Loading…",
+    "submit": "Send",
+    "cancel": "Cancel",
+    "close": "Close",
+    "more": "Learn more",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous",
+    "viewAll": "View all",
+    "viewMore": "View more",
+    "requestInfo": "Request information",
+    "contactSpecialist": "Talk to a specialist",
+    "exploreServices": "Explore our services",
+    "exploreAllServices": "View all services",
+    "contactNow": "Contact us now",
+    "workWithUs": "Work with us"
+  },
+  "Home": {
+    "metaTitle": "Motorflash Solutions — The 360 solution for the automotive industry",
+    "metaDescription": "Digital product ecosystem for dealerships, groups and manufacturers: publication, CRM, contact center, AI and more.",
+    "hero": {
+      "chip": "AI Integrated · Automotive",
+      "title": "The 360 solution for brands and",
+      "titleAccent": "automotive dealerships",
+      "subtitle": "\"Your invisible assistant: fast, accurate and always available\". Technology that connects every service to make it smarter — and sell more."
+    },
+    "sectionsNav": {
+      "jumpTo": "Jump to",
+      "label": "Go to section"
+    },
+    "timeline": {
+      "eyebrow": "The full catalogue in one line",
+      "title": "15 products. One single ecosystem.",
+      "lead": "From publishing your stock to managing end-of-leasing, every piece clicks into place. Slide through the timeline to see them all."
+    },
+    "socialProof": "{dealers} dealerships use Motorflash · over {calls} calls handled per month · {cars} used vehicles published per month",
+    "about": {
+      "eyebrow": "About Motorflash",
+      "title": "Your digital partner in the automotive sector.",
+      "p1": "For <strong>over 20 years</strong> we've been analysing data, processes and behaviour in the used vehicle market. We know how demand shifts, how users behave and what sales teams need to work better.",
+      "p2": "Today we are a team of <strong>200+ IT specialists</strong>. We publish 30K vehicles a month, export millions of listings, handle 70,000 monthly calls and keep growing with talent committed to the automotive industry.",
+      "cta": "Get to know the company",
+      "stats": {
+        "years": "Years in the sector",
+        "clients": "Active clients",
+        "revenue": "2024 revenue",
+        "team": "IT specialists"
+      }
+    },
+    "solve": {
+      "eyebrow": "What we solve",
+      "title": "Stock, leads, portals, web and AI. All connected.",
+      "lead": "Publishing one car across five portals by hand. Chasing leads without a system. Calls that go unanswered. Mediocre photos. We know the dealership's bottlenecks — and we've solved them one by one.",
+      "before": "Before",
+      "after": "Now"
+    },
+    "help": {
+      "eyebrow": "How we help you",
+      "title": "From the lot to the signed deal, with zero friction.",
+      "lead": "Our tools cover every phase of the sales cycle. They work on their own but shine when combined."
+    },
+    "results": {
+      "eyebrow": "Real results",
+      "title": "What dealerships gain when they use Motorflash",
+      "lead": "Numbers measured across active clients over the past 12 months."
+    },
+    "audiences": {
+      "eyebrow": "Who it's for",
+      "title": "Three business models. Three ways to use Motorflash."
+    },
+    "testimonials": {
+      "eyebrow": "What they say",
+      "title": "Dealerships already selling more",
+      "ndaNotice": "Identifiable cases available under NDA.",
+      "ndaLink": "See full success stories →"
+    },
+    "history": {
+      "eyebrow": "Our story",
+      "title": "From classifieds portal to AI-powered digital ecosystem",
+      "lead": "We started in 2007 with a portal and Audi Selection Plus as our first major client. Today we run a complete ecosystem: publication, stock management, CRM, contact center and conversational AI — all connected and backed by 20+ years of sector experience.",
+      "cta": "See our full story"
+    },
+    "ecosystemTeaser": {
+      "eyebrow": "Tech ecosystem",
+      "title": "Motorflash is the <accent>HUB</accent> that connects your entire automotive stack",
+      "lead": "A single integration point between your DMS (Keyloop, Autoline, Quiter…), the portals (Coches.net, Autoscout24, Wallapop…), your CRM, the lenders (Santander, CaixaBank, BBVA…), logistics and the sector databases (JATO, Autovista, Carfax).",
+      "stats": "{hubs} hubs · {integrations} integrations · {entryPoints} entry point",
+      "cta": "See the full diagram"
+    },
+    "ctaContact": {
+      "title": "Shall we talk about your business?",
+      "lead": "Tell us your case and a specialist will call you within 24 hours to analyse how we can help you sell more.",
+      "primary": "Request contact"
+    }
+  },
+  "Pages": {
+    "company": "Company",
+    "services": "Services",
+    "successStories": "Success stories",
+    "pricing": "Pricing",
+    "ecosystem": "Tech ecosystem",
+    "contact": "Contact"
+  },
+  "Contact": {
+    "title": "Contact",
+    "subtitle": "Tell us about your project and our team will call you back within 24 hours.",
+    "form": {
+      "name": "Name",
+      "company": "Company",
+      "email": "Email",
+      "phone": "Phone",
+      "service": "Service of interest",
+      "message": "Message",
+      "submit": "Send message",
+      "thankYou": "Thank you! We'll be in touch shortly.",
+      "namePlaceholder": "Your full name",
+      "companyPlaceholder": "Your dealership name",
+      "messagePlaceholder": "Tell us what you need…",
+      "required": "Required field"
+    }
+  }
+}

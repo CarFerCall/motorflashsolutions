@@ -1,0 +1,155 @@
+{
+  "Locale": {
+    "name": "中文",
+    "shortName": "ZH",
+    "flag": "🇨🇳"
+  },
+  "LanguageSwitcher": {
+    "label": "语言",
+    "ariaLabel": "语言选择器",
+    "current": "当前语言"
+  },
+  "Navbar": {
+    "home": "首页",
+    "services": "服务",
+    "company": "公司",
+    "successStories": "成功案例",
+    "pricing": "价格",
+    "ecosystem": "技术生态",
+    "contact": "联系我们",
+    "menuLabel": "打开菜单",
+    "closeMenu": "关闭菜单"
+  },
+  "Footer": {
+    "tagline": "您在汽车行业的数字化合作伙伴。",
+    "rights": "保留所有权利。",
+    "legal": "法律声明",
+    "privacy": "隐私政策",
+    "cookies": "Cookie 政策",
+    "contactUs": "联系我们",
+    "products": "产品",
+    "company": "公司"
+  },
+  "Common": {
+    "loading": "加载中…",
+    "submit": "发送",
+    "cancel": "取消",
+    "close": "关闭",
+    "more": "了解更多",
+    "back": "返回",
+    "next": "下一个",
+    "previous": "上一个",
+    "viewAll": "查看全部",
+    "viewMore": "查看更多",
+    "requestInfo": "申请信息",
+    "contactSpecialist": "与专家沟通",
+    "exploreServices": "浏览我们的服务",
+    "exploreAllServices": "查看所有服务",
+    "contactNow": "立即联系",
+    "workWithUs": "加入我们"
+  },
+  "Home": {
+    "metaTitle": "Motorflash Solutions — 汽车行业的360°解决方案",
+    "metaDescription": "面向经销商、集团和制造商的数字产品生态系统:发布、CRM、客服中心、人工智能等。",
+    "hero": {
+      "chip": "AI 集成 · 汽车行业",
+      "title": "面向品牌与",
+      "titleAccent": "汽车经销商的360°解决方案",
+      "subtitle": "\"您隐形的助手:快速、准确、随时可用\"。将每项服务连接起来的技术,让一切更智能,卖得更多。"
+    },
+    "sectionsNav": {
+      "jumpTo": "跳转到",
+      "label": "前往章节"
+    },
+    "timeline": {
+      "eyebrow": "一条线上的完整目录",
+      "title": "15款产品。一个统一的生态系统。",
+      "lead": "从发布库存到管理租期结束,每一块都完美契合。沿着时间线浏览所有产品。"
+    },
+    "socialProof": "{dealers} 家经销商使用 Motorflash · 每月处理超过 {calls} 通电话 · 每月发布 {cars} 辆二手车",
+    "about": {
+      "eyebrow": "关于 Motorflash",
+      "title": "您在汽车行业的数字化合作伙伴。",
+      "p1": "我们拥有<strong>超过20年</strong>的二手车市场数据、流程和行为分析经验。我们了解需求的变化、用户的行为以及销售团队需要什么来更好地工作。",
+      "p2": "今天,我们是一个由<strong>200多名IT专家</strong>组成的团队。我们每月发布3万辆汽车,导出数百万条广告,处理7万通电话,并以致力于汽车行业的人才不断成长。",
+      "cta": "了解公司",
+      "stats": {
+        "years": "深耕行业年数",
+        "clients": "活跃客户",
+        "revenue": "2024年营业额",
+        "team": "IT 专家"
+      }
+    },
+    "solve": {
+      "eyebrow": "我们解决什么",
+      "title": "库存、客户线索、门户、网站和人工智能。全部互联互通。",
+      "lead": "手动把一辆车发布到五个门户。没有系统地追逐客户线索。无人接听的电话。糟糕的照片。我们知道经销商的瓶颈在哪里 —— 并且逐一解决了它们。",
+      "before": "以前",
+      "after": "现在"
+    },
+    "help": {
+      "eyebrow": "我们如何帮助您",
+      "title": "从停车场到签约,无任何摩擦。",
+      "lead": "我们的工具覆盖销售周期的每个阶段。它们独立运作,但组合使用时表现更出色。"
+    },
+    "results": {
+      "eyebrow": "实际成果",
+      "title": "使用 Motorflash 的经销商获得了什么",
+      "lead": "数据来自过去12个月的活跃客户。"
+    },
+    "audiences": {
+      "eyebrow": "适用对象",
+      "title": "三种业务模式。三种使用 Motorflash 的方式。"
+    },
+    "testimonials": {
+      "eyebrow": "他们怎么说",
+      "title": "已经卖得更多的经销商",
+      "ndaNotice": "可识别案例需签署保密协议后查看。",
+      "ndaLink": "查看完整成功案例 →"
+    },
+    "history": {
+      "eyebrow": "我们的故事",
+      "title": "从分类信息门户到由人工智能驱动的数字生态系统",
+      "lead": "我们于2007年从一个门户起步,Audi Selection Plus 是我们的首个大客户。今天,我们运营着一个完整的生态系统:发布、库存管理、CRM、客服中心和对话式人工智能 —— 一切互联互通,并由20多年的行业经验支持。",
+      "cta": "查看我们的完整故事"
+    },
+    "ecosystemTeaser": {
+      "eyebrow": "技术生态",
+      "title": "Motorflash 是连接整个汽车技术栈的<accent>枢纽 (HUB)</accent>",
+      "lead": "一个集成点,连接您的 DMS(Keyloop、Autoline、Quiter…)、门户(Coches.net、Autoscout24、Wallapop…)、您的 CRM、金融机构(Santander、CaixaBank、BBVA…)、物流和行业数据库(JATO、Autovista、Carfax)。",
+      "stats": "{hubs} 个枢纽 · {integrations} 项集成 · {entryPoints} 个接入点",
+      "cta": "查看完整图示"
+    },
+    "ctaContact": {
+      "title": "聊聊您的业务?",
+      "lead": "告诉我们您的情况,专家将在24小时内回电,分析我们如何帮助您卖得更多。",
+      "primary": "申请联系"
+    }
+  },
+  "Pages": {
+    "company": "公司",
+    "services": "服务",
+    "successStories": "成功案例",
+    "pricing": "价格",
+    "ecosystem": "技术生态",
+    "contact": "联系我们"
+  },
+  "Contact": {
+    "title": "联系我们",
+    "subtitle": "告诉我们您的项目,我们的团队将在24小时内回电。",
+    "form": {
+      "name": "姓名",
+      "company": "公司",
+      "email": "邮箱",
+      "phone": "电话",
+      "service": "感兴趣的服务",
+      "message": "留言",
+      "submit": "发送留言",
+      "thankYou": "感谢您!我们会尽快与您联系。",
+      "namePlaceholder": "您的全名",
+      "companyPlaceholder": "您的经销商名称",
+      "messagePlaceholder": "告诉我们您需要什么…",
+      "required": "必填项"
+    }
+  }
+}

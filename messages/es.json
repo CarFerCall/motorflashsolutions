@@ -1,0 +1,155 @@
+{
+  "Locale": {
+    "name": "Español",
+    "shortName": "ES",
+    "flag": "🇪🇸"
+  },
+  "LanguageSwitcher": {
+    "label": "Idioma",
+    "ariaLabel": "Selector de idioma",
+    "current": "Idioma actual"
+  },
+  "Navbar": {
+    "home": "Inicio",
+    "services": "Servicios",
+    "company": "Compañía",
+    "successStories": "Casos de éxito",
+    "pricing": "Precios",
+    "ecosystem": "Ecosistema técnico",
+    "contact": "Contacto",
+    "menuLabel": "Abrir menú",
+    "closeMenu": "Cerrar menú"
+  },
+  "Footer": {
+    "tagline": "Tu socio digital en el sector del motor.",
+    "rights": "Todos los derechos reservados.",
+    "legal": "Aviso legal",
+    "privacy": "Política de privacidad",
+    "cookies": "Política de cookies",
+    "contactUs": "Contacto",
+    "products": "Productos",
+    "company": "Compañía"
+  },
+  "Common": {
+    "loading": "Cargando…",
+    "submit": "Enviar",
+    "cancel": "Cancelar",
+    "close": "Cerrar",
+    "more": "Saber más",
+    "back": "Volver",
+    "next": "Siguiente",
+    "previous": "Anterior",
+    "viewAll": "Ver todos",
+    "viewMore": "Ver más",
+    "requestInfo": "Solicitar información",
+    "contactSpecialist": "Hablar con un especialista",
+    "exploreServices": "Ver nuestros servicios",
+    "exploreAllServices": "Ver todos los servicios",
+    "contactNow": "Contactar ahora",
+    "workWithUs": "Trabaja con nosotros"
+  },
+  "Home": {
+    "metaTitle": "Motorflash Solutions — La solución 360 para el sector del motor",
+    "metaDescription": "Ecosistema de productos digitales para concesionarios, grupos y fabricantes: publicación, CRM, contact center, IA y más.",
+    "hero": {
+      "chip": "IA Integrada · Automoción",
+      "title": "La solución 360 para marcas y",
+      "titleAccent": "concesionarios del motor",
+      "subtitle": "\"Tu asistente invisible: rápido, preciso y siempre disponible\". Tecnología que conecta cada servicio para hacerlo más inteligente y vender más."
+    },
+    "sectionsNav": {
+      "jumpTo": "Saltar a",
+      "label": "Ir a sección"
+    },
+    "timeline": {
+      "eyebrow": "Catálogo en una línea",
+      "title": "15 productos. Un único ecosistema.",
+      "lead": "Desde la publicación del stock hasta la gestión del fin de renting, cada pieza encaja con el resto. Recorre la línea para verlos todos."
+    },
+    "socialProof": "{dealers} concesionarios usan Motorflash · más de {calls} llamadas gestionadas al mes · {cars} vehículos VO publicados al mes",
+    "about": {
+      "eyebrow": "Sobre Motorflash",
+      "title": "Tu socio digital en el sector del motor.",
+      "p1": "Llevamos <strong>+20 años</strong> analizando datos, procesos y comportamientos del mercado del VO. Sabemos cómo cambia la demanda, cómo se comportan los usuarios y qué necesitan los equipos de venta para trabajar mejor.",
+      "p2": "Hoy somos un equipo de <strong>+200 especialistas en IT</strong>. Publicamos 30K vehículos al mes, exportamos millones de anuncios, gestionamos 70.000 llamadas mensuales y crecemos cada día con talento comprometido con el sector del motor.",
+      "cta": "Conocer la compañía",
+      "stats": {
+        "years": "Años en el sector",
+        "clients": "Clientes activos",
+        "revenue": "Facturación 2024",
+        "team": "Especialistas en IT"
+      }
+    },
+    "solve": {
+      "eyebrow": "Qué resolvemos",
+      "title": "Stock, leads, portales, web e IA. Todo conectado.",
+      "lead": "Publicar un coche en cinco portales a mano. Perseguir leads sin un sistema. Llamadas que se quedan sin contestar. Fotos mediocres. Sabemos cuáles son los cuellos de botella del concesionario — y los hemos resuelto uno a uno.",
+      "before": "Antes",
+      "after": "Ahora"
+    },
+    "help": {
+      "eyebrow": "Cómo te ayudamos",
+      "title": "Del coche en la campa al cliente firmando, sin fricción.",
+      "lead": "Nuestras herramientas cubren cada fase del ciclo comercial. Funcionan solas pero brillan cuando se combinan."
+    },
+    "results": {
+      "eyebrow": "Resultados reales",
+      "title": "Lo que ganan los concesionarios que usan Motorflash",
+      "lead": "Cifras medidas en clientes activos durante los últimos 12 meses."
+    },
+    "audiences": {
+      "eyebrow": "Para quién",
+      "title": "Tres modelos de negocio. Tres formas de usar Motorflash."
+    },
+    "testimonials": {
+      "eyebrow": "Lo que dicen",
+      "title": "Concesionarios que ya están vendiendo más",
+      "ndaNotice": "Casos identificativos disponibles bajo NDA.",
+      "ndaLink": "Ver historias de éxito completas →"
+    },
+    "history": {
+      "eyebrow": "Nuestra historia",
+      "title": "De portal de clasificados a ecosistema digital con IA",
+      "lead": "Empezamos en 2007 con un portal y Audi Selection Plus como primer gran cliente. Hoy operamos un ecosistema completo: publicación, gestión de stock, CRM, contact center e IA conversacional — todo conectado y respaldado por +20 años de experiencia en el sector.",
+      "cta": "Ver toda nuestra historia"
+    },
+    "ecosystemTeaser": {
+      "eyebrow": "Ecosistema técnico",
+      "title": "Motorflash es el <accent>HUB</accent> que conecta todo tu stack de automoción",
+      "lead": "Un único punto de integración entre tu DMS (Keyloop, Autoline, Quiter…), los portales (Coches.net, Autoscout24, Wallapop…), tu CRM, las financieras (Santander, CaixaBank, BBVA…), la logística y las bases de datos del sector (JATO, Autovista, Carfax).",
+      "stats": "{hubs} hubs · {integrations} integraciones · {entryPoints} punto de entrada",
+      "cta": "Ver el diagrama completo"
+    },
+    "ctaContact": {
+      "title": "¿Hablamos sobre tu negocio?",
+      "lead": "Cuéntanos tu caso y un especialista te llamará en menos de 24 horas para analizar cómo podemos ayudarte a vender más.",
+      "primary": "Solicitar contacto"
+    }
+  },
+  "Pages": {
+    "company": "Compañía",
+    "services": "Servicios",
+    "successStories": "Casos de éxito",
+    "pricing": "Precios",
+    "ecosystem": "Ecosistema técnico",
+    "contact": "Contacto"
+  },
+  "Contact": {
+    "title": "Contacto",
+    "subtitle": "Cuéntanos tu proyecto y nuestro equipo te llamará en menos de 24 horas.",
+    "form": {
+      "name": "Nombre",
+      "company": "Empresa",
+      "email": "Email",
+      "phone": "Teléfono",
+      "service": "Servicio de interés",
+      "message": "Mensaje",
+      "submit": "Enviar mensaje",
+      "thankYou": "¡Gracias! Te llamaremos pronto.",
+      "namePlaceholder": "Tu nombre completo",
+      "companyPlaceholder": "Nombre de tu concesionario",
+      "messagePlaceholder": "Cuéntanos qué necesitas…",
+      "required": "Campo obligatorio"
+    }
+  }
+}
