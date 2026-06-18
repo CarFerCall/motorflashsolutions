@@ -76,7 +76,7 @@ const CASES: SuccessCase[] = [
     brand: 'JARMAUTO',
     wordmark: 'Jarmauto',
     tagline: 'Grupo automoción · Madrid',
-    logo: { src: '/images/clients/jarmauto.png', width: 1920, height: 480, alt: 'Jarmauto' },
+    logo: { src: '/images/clients/jarmauto.png', width: 4946, height: 1032, alt: 'Jarmauto' },
     style: {
       primary: '#111111', // negro Jarmauto (wordmark monocromo)
       ink: '#0A0A0A',
@@ -114,7 +114,7 @@ const CASES: SuccessCase[] = [
     brand: 'OCASIONPLUS',
     wordmark: 'ocasionplus.com',
     tagline: 'Red nacional de VO',
-    logo: { src: '/images/clients/ocasionplus.png', width: 1200, height: 220, alt: 'Ocasionplus' },
+    logo: { src: '/images/clients/ocasionplus.png', width: 600, height: 60, alt: 'Ocasionplus' },
     style: {
       primary: '#00A3D7', // cian Ocasionplus
       ink: '#0E1E2A',
@@ -151,7 +151,7 @@ const CASES: SuccessCase[] = [
     brand: 'FLEXICAR',
     wordmark: 'flexicar',
     tagline: 'Red de VO · Iberia',
-    logo: { src: '/images/clients/flexicar.png', width: 800, height: 320, alt: 'Flexicar' },
+    logo: { src: '/images/clients/flexicar.png', width: 454, height: 111, alt: 'Flexicar' },
     style: {
       primary: '#F37B20', // naranja Flexicar
       ink: '#1E1E1E',
@@ -189,7 +189,7 @@ const CASES: SuccessCase[] = [
     brand: 'MUY CAR',
     wordmark: 'MUY CAR',
     tagline: 'Concesionario nativo digital',
-    logo: { src: '/images/clients/muy-car.png', width: 900, height: 260, alt: 'Muy Car' },
+    logo: { src: '/images/clients/muy-car.png', width: 439, height: 115, alt: 'Muy Car' },
     style: {
       primary: '#1FB44E', // verde Muy Car
       ink: '#0E1A12',
