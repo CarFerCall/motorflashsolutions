@@ -114,7 +114,7 @@ const CASES: SuccessCase[] = [
     brand: 'OCASIONPLUS',
     wordmark: 'ocasionplus.com',
     tagline: 'Red nacional de VO',
-    logo: { src: '/images/clients/ocasionplus.png', width: 600, height: 60, alt: 'Ocasionplus' },
+    logo: { src: '/images/clients/ocasionplus.jpg', width: 600, height: 60, alt: 'Ocasionplus' },
     style: {
       primary: '#00A3D7', // cian Ocasionplus
       ink: '#0E1E2A',
