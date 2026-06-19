@@ -4,7 +4,7 @@ import { getLocale } from 'next-intl/server'
 import { Reveal } from '@/components/Reveal'
 import { HistoryTimeline } from '@/components/HistoryTimeline'
 
-type LocaleKey = 'es' | 'en' | 'zh'
+type LocaleKey = 'es' | 'ca' | 'en' | 'zh'
 
 interface CompanyCopy {
   metaTitle: string
@@ -85,6 +85,52 @@ const COPY: Record<LocaleKey, CompanyCopy> = {
     isoSecurity: 'ISO 27001 · Seguridad',
     isoQualityTitle: 'Sistema de Gestión de la Calidad',
     isoSecurityTitle: 'Sistema de Gestión de la Seguridad de la Información',
+  },
+  ca: {
+    metaTitle: 'La Companyia',
+    metaDescription: "+20 anys d'experiència i +200 especialistes en IT treballant per la digitalització del sector del motor. Coneix l'equip, els valors i la història de Motorflash Ibérica.",
+    ogDescription: '+20 anys digitalitzant el sector del motor. +1.500 concessionaris actius. 10M€ facturats el 2024.',
+    eyebrow: 'La Companyia',
+    title: 'El teu soci digital al sector del motor',
+    intro1: "+20 anys d'experiència i +200 especialistes en IT treballant per la digitalització del sector.",
+    intro2: 'Motorflash Ibérica de Negocios és la solució 360 per a marques i concessionaris del motor. Més de 1.500 clients i 10M€ de facturació el 2024. Tecnologia amb IA integrada a tots els processos.',
+    ctaContact: 'Contacta amb nosaltres',
+    ctaWork: 'Treballa amb nosaltres',
+    heroBadgeYears: '+20 Anys',
+    heroBadgeLead: 'Liderant la innovació',
+    kpiYears: "Anys d'experiència",
+    kpiClients: 'Clients actius',
+    kpiRevenue: 'Facturació 2024',
+    kpiTeam: 'Especialistes en IT',
+    valuesEyebrow: 'Els nostres valors',
+    valuesTitle: 'Operem amb coneixement, professionalitat i adaptació',
+    valuesLead: "Creiem en una manera de treballar clara: entenent el sector, prenent decisions basades en dades i adaptant-nos a les necessitats reals dels nostres clients. Aquesta combinació és la que fa que les nostres solucions funcionin de veritat.",
+    values: [
+      { icon: 'visibility', title: 'Visió 360° del sector', desc: 'Coneixem cada etapa del cicle comercial. Desenvolupem solucions pròpies que cobreixen des de la publicació i la gestió operativa fins a la comunicació i la venda.' },
+      { icon: 'bar_chart', title: 'Professionalitat basada en dades', desc: 'Totes les nostres eines incorporen mesurament complet. Analitzem, reportem i aportem informació útil per millorar resultats en cada decisió.' },
+      { icon: 'tune', title: 'Adaptació sense límits', desc: "Customitzem les nostres solucions perquè encaixin amb l'operativa de cada client. La tecnologia s'ha d'adaptar a les persones, no al revés." },
+      { icon: 'groups', title: 'Un equip que fa que passin coses', desc: "Treballem amb una mentalitat pràctica i resolutiva. Ens involucrem, col·laborem i busquem sempre la manera més eficient d'ajudar els nostres clients a avançar." },
+      { icon: 'auto_awesome', title: 'IA integrada en cada procés', desc: "La intel·ligència artificial treballa dins de cada eina per automatitzar tasques, analitzar converses i ajudar-te a vendre més, sense canviar la teva manera de treballar." },
+      { icon: 'school', title: 'Aprenentatge continu', desc: 'Visió crítica, empatia amb el client, proactivitat i pensament analític. Aprendre i evolucionar forma part de la nostra cultura.' },
+    ],
+    historyEyebrow: 'La nostra història',
+    historyTitle: 'Com hem arribat fins aquí',
+    timeline: [
+      { year: '2007', title: 'Llançament del portal', desc: 'Vam començar a treballar amb el nostre primer gran client, Audi Selection Plus, i vam llançar el nostre primer portal de classificats. Comencen els nostres primers passos al sector del motor.', icon: 'rocket_launch' },
+      { year: '2011', title: 'Agència de Màrqueting Digital', desc: 'Creem la nostra Agència de Màrqueting Digital. Ampliem capacitats amb un equip especialitzat en màrqueting per a concessionaris i marques.', icon: 'trending_up' },
+      { year: '2015', title: 'Neix el nostre Contact Center', desc: 'Posem en marxa el nostre propi Contact Center per oferir atenció, gestió de leads i suport directe a concessionaris i grups.', icon: 'support_agent' },
+      { year: '2019', title: 'Publicació per matrícula', desc: 'Llancem la nostra eina de publicació per matrícula. Desenvolupem tecnologia pròpia per automatitzar la publicació de vehicles, augmentant rapidesa i precisió.', icon: 'fact_check' },
+      { year: '2021', title: 'Message i CRM4YOU', desc: 'Donem un salt clau incorporant Motorflash Message (WhatsApp empresarial) i CRM4YOU, el nostre CRM especialitzat per al sector del motor, totalment personalitzable.', icon: 'hub' },
+      { year: '2025', title: 'IA + visió 360°', desc: 'Unifiquem dades, processos i comunicació incorporant intel·ligència artificial a tot l\'ecosistema Motorflash per millorar decisions, eficiència i resultats.', icon: 'auto_awesome', accent: true },
+    ],
+    hqEyebrow: 'On som',
+    hqTitle: 'Seu central a Madrid',
+    hqAddress: 'Carrer Basauri 17 – Edif. B, Baixos Esq. D',
+    hqAddress2: '28023 Madrid, Espanya',
+    isoQuality: 'ISO 9001 · Qualitat',
+    isoSecurity: 'ISO 27001 · Seguretat',
+    isoQualityTitle: 'Sistema de Gestió de la Qualitat',
+    isoSecurityTitle: 'Sistema de Gestió de la Seguretat de la Informació',
   },
   en: {
     metaTitle: 'The Company',

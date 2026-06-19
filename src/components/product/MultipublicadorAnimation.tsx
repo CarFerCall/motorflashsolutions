@@ -3,7 +3,7 @@
  */
 import { getLocale } from 'next-intl/server'
 
-type LocaleKey = 'es' | 'en' | 'zh'
+type LocaleKey = 'es' | 'ca' | 'en' | 'zh'
 
 const COPY: Record<LocaleKey, {
   ariaLabel: string
@@ -28,6 +28,21 @@ const COPY: Record<LocaleKey, {
       { v: '99 %', l: 'Integración por API' },
       { v: '<5 min', l: 'Hasta publicar' },
       { v: '24/7', l: 'Sincronización automática' },
+    ],
+  },
+  ca: {
+    ariaLabel: "Com Motorflash publica el teu estoc als portals",
+    eyebrow: 'Com funciona',
+    title: 'Un sol clic. El teu cotxe a cada portal.',
+    lead: 'Puges el vehicle un cop a Motorflash i repliquem el seu anunci en temps real a Coches.net, AutoScout24, Wallapop i la resta de portals del sector.',
+    hubName: 'MOTORFLASH',
+    hubSubline: 'Publica · 1 clic',
+    sendsTo: 'Envia a',
+    stats: [
+      { v: '+50', l: 'Portals connectats' },
+      { v: '99 %', l: 'Integració per API' },
+      { v: '<5 min', l: 'Fins a publicar' },
+      { v: '24/7', l: 'Sincronització automàtica' },
     ],
   },
   en: {

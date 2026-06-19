@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import { getLocale } from 'next-intl/server'
 
-type LocaleKey = 'es' | 'en' | 'zh'
+type LocaleKey = 'es' | 'ca' | 'en' | 'zh'
 
 const COPY: Record<LocaleKey, {
   title: string
@@ -14,6 +14,12 @@ const COPY: Record<LocaleKey, {
     lead: 'Un especialista comercial te contactará en menos de 24 horas. Te hemos enviado también una confirmación a tu email.',
     exploreServices: 'Ver todos los servicios',
     backHome: 'Volver al inicio',
+  },
+  ca: {
+    title: 'Hem rebut el teu missatge',
+    lead: "Un especialista comercial et contactarà en menys de 24 hores. També t'hem enviat una confirmació al teu correu.",
+    exploreServices: 'Veure tots els serveis',
+    backHome: "Tornar a l'inici",
   },
   en: {
     title: 'We have received your message',

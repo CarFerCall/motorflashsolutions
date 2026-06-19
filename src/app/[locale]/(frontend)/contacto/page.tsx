@@ -5,7 +5,7 @@ import { orderedProducts } from '@/catalog/products'
 import { ContactForm } from '@/components/ContactForm'
 import { Reveal } from '@/components/Reveal'
 
-type LocaleKey = 'es' | 'en' | 'zh'
+type LocaleKey = 'es' | 'ca' | 'en' | 'zh'
 
 const COPY: Record<LocaleKey, {
   title: string
@@ -18,6 +18,12 @@ const COPY: Record<LocaleKey, {
     lead: 'Cuéntanos tu caso y un especialista te llamará en menos de 24 horas para analizar cómo podemos ayudarte a vender más.',
     phoneLabel: 'Teléfono',
     emailLabel: 'Correo Comercial',
+  },
+  ca: {
+    title: 'Parlem del teu negoci?',
+    lead: "Explica'ns el teu cas i un especialista et trucarà en menys de 24 hores per analitzar com podem ajudar-te a vendre més.",
+    phoneLabel: 'Telèfon',
+    emailLabel: 'Correu Comercial',
   },
   en: {
     title: 'Shall we talk about your business?',
@@ -45,7 +51,7 @@ export default async function ContactoPage() {
   const locale = ((await getLocale()) as LocaleKey) || 'es'
   const products = orderedProducts(locale).map((p) => ({ slug: p.slug, name: p.name }))
   const t = COPY[locale] ?? COPY.es
-  const loadingLabel = locale === 'en' ? 'Loading…' : locale === 'zh' ? '加载中…' : 'Cargando…'
+  const loadingLabel = locale === 'en' ? 'Loading…' : locale === 'zh' ? '加载中…' : locale === 'ca' ? 'Carregant…' : 'Cargando…'
 
   return (
     <section className="py-32">

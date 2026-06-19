@@ -3,7 +3,7 @@ import { getLocale } from 'next-intl/server'
 import { Reveal } from '@/components/Reveal'
 import { EcosystemHub, type EcosystemHub as EcosystemHubType } from '@/components/EcosystemHub'
 
-type LocaleKey = 'es' | 'en' | 'zh'
+type LocaleKey = 'es' | 'ca' | 'en' | 'zh'
 
 interface PageCopy {
   metaTitle: string
@@ -48,6 +48,27 @@ const COPY: Record<LocaleKey, PageCopy> = {
     ctaTitle: '¿Tu sistema no está en esta lista?',
     ctaLead: 'Tenemos un equipo de integraciones dedicado. Si trabajas con un DMS, CRM o portal que no esté aquí, lo añadimos al HUB y empieza a funcionar para ti.',
     ctaButton: 'Hablar con el equipo técnico',
+  },
+  ca: {
+    metaTitle: 'Ecosistema tècnic',
+    metaDescription: 'Motorflash és el HUB central que connecta DMS, portals, CRM, NSC, logística, finances, admin/legal i bases de dades. +50 integracions reals en producció amb un únic punt d\'entrada.',
+    metaOg: "Motorflash com a HUB d'integració: 8 sub-hubs connecten el teu DMS, portals, CRM, financeres, logística i bases de dades del sector.",
+    eyebrow: 'Ecosistema tècnic',
+    title1: 'Motorflash és el',
+    title2: "que connecta tot el teu stack d'automoció",
+    intro: "Un únic punt d'integració entre el teu DMS, els portals, el teu CRM, les financeres, la logística, les bases de dades del sector i els processos administratius. Tu et connectes a Motorflash; nosaltres ens encarreguem de la resta.",
+    kpiHubs: 'Hubs especialitzats',
+    kpiIntegrations: 'Integracions reals',
+    kpiEntry: "Punt d'entrada",
+    hubsHint: "Prem qualsevol sub-hub per veure'n les integracions reals en producció. Es despleguen dins del propi diagrama.",
+    hubsHintMobile: 'Toca cada hub per veure les integracions que connecta.',
+    fullListEyebrow: 'Llista completa',
+    fullListTitle: 'Cada integració, el seu hub corresponent',
+    fullListLead: "Les integracions porten anys funcionant en producció per als nostres clients. Si la teva no hi és, l'afegim.",
+    integrationsLabel: 'integracions',
+    ctaTitle: 'El teu sistema no és a la llista?',
+    ctaLead: "Tenim un equip d'integracions dedicat. Si treballes amb un DMS, CRM o portal que no hi sigui, l'afegim al HUB i comença a funcionar per a tu.",
+    ctaButton: "Parlar amb l'equip tècnic",
   },
   en: {
     metaTitle: 'Tech ecosystem',

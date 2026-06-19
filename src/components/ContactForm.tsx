@@ -10,7 +10,7 @@ export interface ProductOption {
   name: string
 }
 
-type LocaleKey = 'es' | 'en' | 'zh'
+type LocaleKey = 'es' | 'ca' | 'en' | 'zh'
 
 const COPY: Record<LocaleKey, {
   nameLabel: string
@@ -41,6 +41,21 @@ const COPY: Record<LocaleKey, {
     privacy: 'He leído y acepto la Política de privacidad. Consiento el tratamiento de mis datos.',
     sending: 'Enviando…',
     submit: 'Enviar mensaje',
+  },
+  ca: {
+    nameLabel: 'Nom *',
+    namePlaceholder: 'El teu nom…',
+    emailLabel: 'Correu electrònic *',
+    emailPlaceholder: 'correu@exemple.com',
+    companyLabel: 'Empresa',
+    phoneLabel: 'Telèfon',
+    serviceLabel: "Servei d'interès",
+    servicePlaceholder: 'Selecciona un servei…',
+    messageLabel: 'Missatge',
+    messagePlaceholder: 'En què et podem ajudar?',
+    privacy: 'He llegit i accepto la Política de privadesa. Consento el tractament de les meves dades.',
+    sending: 'Enviant…',
+    submit: 'Envia el missatge',
   },
   en: {
     nameLabel: 'Name *',

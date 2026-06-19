@@ -23,6 +23,7 @@ const stitchPages: Record<string, React.ComponentType> = {
 
 const NOT_FOUND_TITLE: Record<string, string> = {
   es: 'Servicio no encontrado',
+  ca: 'Servei no trobat',
   en: 'Service not found',
   zh: '未找到服务',
 }

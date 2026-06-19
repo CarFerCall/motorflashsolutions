@@ -6,7 +6,7 @@ import { Reveal } from '@/components/Reveal'
 import { PricingConfigurator, type ConfiguratorProduct } from '@/components/PricingConfigurator'
 import { normalizeItem, type RawPricingItem } from '@/lib/pricing'
 
-type LocaleKey = 'es' | 'en' | 'zh'
+type LocaleKey = 'es' | 'ca' | 'en' | 'zh'
 
 const COPY: Record<LocaleKey, {
   metaTitle: string
@@ -41,6 +41,23 @@ const COPY: Record<LocaleKey, {
     onDemandCta: 'Solicitar presupuesto',
     fineTuneTitle: '¿Quieres afinar la configuración de un producto?',
     fineTuneLead: 'Para CRM4YOU y otros productos con módulos opcionales puedes entrar al configurador individual y elegir cada item.',
+  },
+  ca: {
+    metaTitle: 'Preus',
+    metaDescription: "Configura els serveis de Motorflash que necessita el teu concessionari i obtén una estimació en directe. Mensual, anual o pagament únic. Sense permanència.",
+    metaOg: 'Configura els serveis de Motorflash que necessita el teu concessionari i obtén una estimació en directe. Sense permanència.',
+    eyebrow: 'Preus',
+    title: 'Plans a la teva mida',
+    lead: 'Selecciona les eines que el teu concessionari necessita i escala segons el teu volum de negoci. Estimació en directe, sense permanència.',
+    noPlansPre: 'Encara no hi ha plans actius al CMS.',
+    noPlansLink: 'Demana pressupost',
+    noPlansPost: '.',
+    onDemandEyebrow: 'Més serveis',
+    onDemandTitle: 'Solucions a mida',
+    onDemandLead: "La resta del catàleg es cotitza segons les necessitats de cada concessionari. Demana pressupost sense compromís.",
+    onDemandCta: 'Sol·licitar pressupost',
+    fineTuneTitle: "Vols afinar la configuració d'un producte?",
+    fineTuneLead: "Per a CRM4YOU i altres productes amb mòduls opcionals pots entrar al configurador individual i triar cada element.",
   },
   en: {
     metaTitle: 'Pricing',

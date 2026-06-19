@@ -2,7 +2,7 @@ import Link from 'next/link'
 import { getLocale } from 'next-intl/server'
 import { orderedProducts } from '@/catalog/products'
 
-type LocaleKey = 'es' | 'en' | 'zh'
+type LocaleKey = 'es' | 'ca' | 'en' | 'zh'
 
 const COPY: Record<LocaleKey, {
   metaTitle: string
@@ -23,6 +23,16 @@ const COPY: Record<LocaleKey, {
     lead: '15 productos integrados entre sí para cubrir el ciclo comercial completo del concesionario: publicación, stock, captación de leads, atención al cliente, IA y reporting.',
     viewProduct: 'Ver',
     comingSoon: 'Próximamente',
+  },
+  ca: {
+    metaTitle: 'Serveis',
+    metaDescription: "15 productes integrats entre si per cobrir el cicle comercial complet del concessionari: publicació, estoc, captació de leads, atenció al client, IA i reporting.",
+    metaOg: 'Catàleg de 15 productes integrats que cobreixen tot el cicle comercial.',
+    eyebrow: 'Catàleg de Serveis',
+    title: 'Tota la tecnologia per vendre més cotxes',
+    lead: "15 productes integrats entre si per cobrir el cicle comercial complet del concessionari: publicació, estoc, captació de leads, atenció al client, IA i reporting.",
+    viewProduct: 'Veure',
+    comingSoon: 'Properament',
   },
   en: {
     metaTitle: 'Services',
