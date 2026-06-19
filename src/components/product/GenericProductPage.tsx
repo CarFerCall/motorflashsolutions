@@ -1,7 +1,8 @@
 import Image from 'next/image'
 import Link from 'next/link'
+import { getLocale } from 'next-intl/server'
 import type { Product } from '@/catalog/products'
-import { productContentBySlug } from '@/catalog/product-content'
+import { productContentBySlug, type ProductContentLocale } from '@/catalog/product-content'
 import { orderedProducts } from '@/catalog/products'
 import { MultipublicadorAnimation } from './MultipublicadorAnimation'
 
@@ -18,8 +19,12 @@ const AFTER_HERO_BY_SLUG: Record<string, React.ComponentType> = {
   exportaciones: MultipublicadorAnimation,
 }
 
-export function GenericProductPage({ product }: { product: Product }) {
-  const content = productContentBySlug(product.slug)
+export async function GenericProductPage({ product }: { product: Product }) {
+  // Recupera el locale activo del segmento [locale] y selecciona
+  // las traducciones del producto. Si el slug aún no tiene EN/ZH
+  // traducido, productContentBySlug cae a español automáticamente.
+  const locale = (await getLocale()) as ProductContentLocale
+  const content = productContentBySlug(product.slug, locale)
   const others = orderedProducts().filter((p) => p.slug !== product.slug).slice(0, 8)
   const heroImage = HERO_IMAGE_BY_SLUG[product.slug]
   const AfterHero = AFTER_HERO_BY_SLUG[product.slug]
