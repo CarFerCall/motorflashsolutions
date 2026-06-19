@@ -58,8 +58,8 @@ export async function generateMetadata() {
 }
 
 export default async function ServiciosPage() {
-  const products = orderedProducts()
   const locale = ((await getLocale()) as LocaleKey) || 'es'
+  const products = orderedProducts(locale)
   const t = COPY[locale] ?? COPY.es
 
   return (

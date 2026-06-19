@@ -92,8 +92,8 @@ export async function generateMetadata() {
 }
 
 export default async function PreciosPage() {
-  const products = orderedProducts()
   const locale = ((await getLocale()) as LocaleKey) || 'es'
+  const products = orderedProducts(locale)
   const t = COPY[locale] ?? COPY.es
 
   const payload = await getPayloadClient()

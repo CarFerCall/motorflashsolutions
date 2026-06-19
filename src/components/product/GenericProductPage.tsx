@@ -26,7 +26,7 @@ export async function GenericProductPage({ product }: { product: Product }) {
   // traducido, productContentBySlug cae a español automáticamente.
   const locale = (await getLocale()) as ProductContentLocale
   const content = productContentBySlug(product.slug, locale)
-  const others = orderedProducts().filter((p) => p.slug !== product.slug).slice(0, 8)
+  const others = orderedProducts(locale).filter((p) => p.slug !== product.slug).slice(0, 8)
   const heroImage = HERO_IMAGE_BY_SLUG[product.slug]
   const AfterHero = AFTER_HERO_BY_SLUG[product.slug]
 

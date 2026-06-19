@@ -92,9 +92,9 @@ const COPY: Record<LocaleKey, {
 }
 
 export async function Footer() {
-  const products = orderedProducts().slice(0, 6)
-  const year = new Date().getFullYear()
   const locale = ((await getLocale()) as LocaleKey) || 'es'
+  const products = orderedProducts(locale).slice(0, 6)
+  const year = new Date().getFullYear()
   const t = COPY[locale] ?? COPY.es
 
   return (

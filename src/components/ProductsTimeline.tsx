@@ -1,8 +1,16 @@
 'use client'
 
 import Link from 'next/link'
+import { useLocale } from 'next-intl'
 import { useEffect, useRef, useState } from 'react'
 import { orderedProducts } from '@/catalog/products'
+import type { ProductLocale } from '@/catalog/products-i18n'
+
+const SWIPE_HINT: Record<string, string> = {
+  es: '← Desliza para ver todo el catálogo →',
+  en: '← Swipe to see the full catalogue →',
+  zh: '← 滑动查看完整目录 →',
+}
 
 /**
  * Línea horizontal con todos los productos del catálogo.
@@ -19,8 +27,10 @@ import { orderedProducts } from '@/catalog/products'
  * En desktop (lg+): grid sin scroll. En móvil/tablet: scroll lateral.
  */
 export function ProductsTimeline() {
-  const products = orderedProducts()
+  const locale = useLocale() as ProductLocale
+  const products = orderedProducts(locale)
   const total = products.length
+  const swipeHint = SWIPE_HINT[locale] ?? SWIPE_HINT.es
 
   const ref = useRef<HTMLDivElement | null>(null)
   const [inView, setInView] = useState(false)
@@ -224,9 +234,7 @@ export function ProductsTimeline() {
             </ul>
           </div>
         </div>
-        <p className="text-center text-xs text-on-surface-variant mt-3">
-          ← Desliza para ver todo el catálogo →
-        </p>
+        <p className="text-center text-xs text-on-surface-variant mt-3">{swipeHint}</p>
       </div>
     </div>
   )

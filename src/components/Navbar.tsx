@@ -1,12 +1,14 @@
-import { getMainMenu } from '@/lib/navigation'
+import { getLocale } from 'next-intl/server'
+import { getMainMenu, localizeMenu } from '@/lib/navigation'
 import { NavbarClient } from './NavbarClient'
 
 /**
  * Wrapper server-side que carga el menú desde el global y pasa los
- * datos al cliente. Así el menú es 100% editable desde admin sin
- * tener que tocar código.
+ * datos al cliente. Aplica el diccionario de traducciones de labels
+ * conocidos según el locale activo (ver lib/navigation.ts).
  */
 export async function Navbar() {
   const menu = await getMainMenu()
-  return <NavbarClient menu={menu} />
+  const locale = ((await getLocale()) as 'es' | 'en' | 'zh') || 'es'
+  return <NavbarClient menu={localizeMenu(menu, locale)} />
 }

@@ -1,6 +1,8 @@
 import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
+import { getLocale } from 'next-intl/server'
 import { orderedProducts, productBySlug } from '@/catalog/products'
+import type { ProductLocale } from '@/catalog/products-i18n'
 import { GenericProductPage } from '@/components/product/GenericProductPage'
 import { Crm4you } from '@/components/product/stitch/Crm4you'
 import { Spyne } from '@/components/product/stitch/Spyne'
@@ -19,6 +21,12 @@ const stitchPages: Record<string, React.ComponentType> = {
   'soluciones-web': SolucionesWeb,
 }
 
+const NOT_FOUND_TITLE: Record<string, string> = {
+  es: 'Servicio no encontrado',
+  en: 'Service not found',
+  zh: '未找到服务',
+}
+
 export const dynamicParams = false
 
 export function generateStaticParams() {
@@ -27,8 +35,9 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params
-  const product = productBySlug(slug)
-  if (!product) return { title: 'Servicio no encontrado' }
+  const locale = ((await getLocale()) as ProductLocale) || 'es'
+  const product = productBySlug(slug, locale)
+  if (!product) return { title: NOT_FOUND_TITLE[locale] ?? NOT_FOUND_TITLE.es }
   const canonical = `/servicios/${slug}`
   return {
     title: `${product.name}`,
@@ -44,7 +53,8 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
 export default async function ProductPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
-  const product = productBySlug(slug)
+  const locale = ((await getLocale()) as ProductLocale) || 'es'
+  const product = productBySlug(slug, locale)
   if (!product) notFound()
 
   const StitchComponent = stitchPages[slug]

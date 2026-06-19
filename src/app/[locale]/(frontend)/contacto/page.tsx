@@ -42,8 +42,8 @@ export async function generateMetadata() {
 }
 
 export default async function ContactoPage() {
-  const products = orderedProducts().map((p) => ({ slug: p.slug, name: p.name }))
   const locale = ((await getLocale()) as LocaleKey) || 'es'
+  const products = orderedProducts(locale).map((p) => ({ slug: p.slug, name: p.name }))
   const t = COPY[locale] ?? COPY.es
   const loadingLabel = locale === 'en' ? 'Loading…' : locale === 'zh' ? '加载中…' : 'Cargando…'
 

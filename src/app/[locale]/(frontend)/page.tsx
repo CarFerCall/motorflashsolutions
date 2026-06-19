@@ -405,8 +405,8 @@ const COPY: Record<LocaleKey, HomeCopy> = {
 }
 
 export default async function HomePage() {
-  const products = orderedProducts()
   const locale = ((await getLocale()) as LocaleKey) || 'es'
+  const products = orderedProducts(locale)
   const t = COPY[locale] ?? COPY.es
 
   return (

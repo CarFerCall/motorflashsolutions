@@ -188,8 +188,24 @@ export const products: Product[] = [
   },
 ]
 
-export const productBySlug = (slug: string): Product | undefined =>
-  products.find((p) => p.slug === slug)
+import { productI18n, type ProductLocale } from './products-i18n'
 
-export const orderedProducts = (): Product[] =>
-  [...products].sort((a, b) => a.menuOrder - b.menuOrder)
+/**
+ * Aplica la traducción de los campos visibles según locale. Si no
+ * hay traducción específica para el slug en ese idioma, se queda con
+ * el original en español.
+ */
+function localize(product: Product, locale: ProductLocale = 'es'): Product {
+  if (locale === 'es') return product
+  const t = productI18n[locale]?.[product.slug]
+  if (!t) return product
+  return { ...product, ...t }
+}
+
+export const productBySlug = (slug: string, locale: ProductLocale = 'es'): Product | undefined => {
+  const p = products.find((p) => p.slug === slug)
+  return p ? localize(p, locale) : undefined
+}
+
+export const orderedProducts = (locale: ProductLocale = 'es'): Product[] =>
+  [...products].sort((a, b) => a.menuOrder - b.menuOrder).map((p) => localize(p, locale))
