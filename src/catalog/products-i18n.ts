@@ -8,12 +8,119 @@
  */
 import type { Product } from './products'
 
-export type ProductLocale = 'es' | 'en' | 'zh'
+export type ProductLocale = 'es' | 'ca' | 'en' | 'zh'
 
 export type ProductTranslation = Pick<Product, 'name' | 'menuLabel' | 'tagline' | 'heroTitle' | 'intro'>
 
 export const productI18n: Record<ProductLocale, Record<string, ProductTranslation>> = {
   es: {},
+  ca: {
+    dealer: {
+      name: 'Dealer',
+      menuLabel: 'Dealer / Estoc',
+      tagline: 'Gestió intel·ligent del VO de principi a fi.',
+      heroTitle: 'El teu estoc sempre sota control, des de la creació fins a la venda',
+      intro: "Dealer és la plataforma de gestió intel·ligent del VO dissenyada per treballar amb grans i petits volums d'estoc. Crea, revisa i publica el teu estoc des d'un únic entorn. Controla la qualitat, analitza preus i millora l'eficiència de tot el procés.",
+    },
+    exportaciones: {
+      name: 'Multipublicador',
+      menuLabel: 'Multipublicador',
+      tagline: 'Publica un cop, apareix a tots els portals.',
+      heroTitle: 'Publica el teu estoc amb un sol clic. Màxima visibilitat.',
+      intro: 'Publica a Coches.net, Autocasión, AutoScout24, Wallapop i més, amb un 99% d\'integració API amb els principals portals. Mantén el teu estoc actualitzat i guanya temps per al que importa: vendre.',
+    },
+    crm4you: {
+      name: 'CRM4YOU',
+      menuLabel: 'CRM4YOU',
+      tagline: 'El CRM per a grups de concessionaris.',
+      heroTitle: 'Converteix cada oportunitat en una venda real',
+      intro: "CRM4YOU crea una experiència comercial completa: des de la creació de l'estoc fins a la venda. L'únic CRM del sector dissenyat per gestionar múltiples ubicacions, marques i concessionaris. Processos personalitzats, traçabilitat total i IA per ajudar-te a tancar més vendes en menys temps.",
+    },
+    'contact-center': {
+      name: 'Contact Center',
+      menuLabel: 'Contact Center',
+      tagline: 'Atenció omnicanal, eficiència total.',
+      heroTitle: 'Atenció omnicanal, eficiència total',
+      intro: 'Més de 70.000 trucades al mes gestionades. El nostre Contact Center atén, analitza i millora cada conversa gràcies a la intel·ligència artificial i al sistema de Quality Monitoring, que avalua el rendiment i l\'atenció de manera automàtica.',
+    },
+    spyne: {
+      name: 'Photocall IA (Spyne)',
+      menuLabel: 'Photocall IA (Spyne)',
+      tagline: 'Fotografia i vídeo de cotxes amb IA.',
+      heroTitle: 'La solució d\'IA per als teus catàlegs de cotxes',
+      intro: 'Solució d\'intel·ligència artificial per transformar les teves imatges de manera senzilla i ràpida, aconseguint resultats d\'alta qualitat professional. Crea vídeos 360°, elimina fons i genera fitxes de vehicle que venen per tu, directament des del teu mòbil.',
+    },
+    'motorflash-message': {
+      name: 'WhatsApp Business',
+      menuLabel: 'WhatsApp Business',
+      tagline: 'Converses intel·ligents amb IA a WhatsApp.',
+      heroTitle: 'Converses intel·ligents, atenció immediata',
+      intro: 'Els teus clients ja són a WhatsApp, i tu pots ser-hi disponible en qualsevol moment. Amb la IA de Message gestiones converses reals, concertes cites i fas seguiment sense dependre d\'horaris. Segur, connectat amb el teu CRM i 100% adaptat a la normativa RGPD.',
+    },
+    'motorflash-mobile-tracking': {
+      name: 'Imatge avançada + RCS',
+      menuLabel: 'Imatge avançada + RCS',
+      tagline: 'Fotografia IA i missatgeria RCS per als teus vehicles.',
+      heroTitle: 'Fotografia IA i missatgeria evolucionada per presentar millor els teus vehicles',
+      intro: 'Fotografia, vídeo i millores automàtiques amb IA per presentar cada vehicle de manera més atractiva. Complementat amb RCS: missatgeria visual, segura i multimèdia que converteix fins a un 300% més que un SMS tradicional.',
+    },
+    ia: {
+      name: 'Motorflash IA',
+      menuLabel: 'Motorflash IA',
+      tagline: 'IA conversacional per al teu concessionari, 24/7.',
+      heroTitle: 'Tres solucions d\'IA per conversar amb els teus clients',
+      intro: 'Transforma l\'atenció al client del teu concessionari amb intel·ligència artificial conversacional. Capta leads, resol dubtes i concerta cites sense intervenció humana, a qualsevol hora, al canal que el teu client ja fa servir.',
+    },
+    'soluciones-web': {
+      name: 'Serveis Web',
+      menuLabel: 'Serveis Web',
+      tagline: 'Webs i marketplaces per a concessionaris: 3 nivells, d\'Única a Platinum.',
+      heroTitle: 'Webs i marketplaces d\'automoció, en 30 dies',
+      intro: 'Web 100% automoció amb 3 nivells (Platinum, Silver i Única). Publicació real d\'estoc, CMS autogestionable, calculadora financera, passarel·la de pagament, SEO i analítica de fàbrica. Infraestructura 99,9%, SSL, antiDDoS i WAF inclosos. Integrat nativament amb CRM4YOU, Contact Center, MF Message i CHATWEB MF.',
+    },
+    'marketing-digital': {
+      name: 'Marketing Digital',
+      menuLabel: 'Marketing Digital (SEO/SEA)',
+      tagline: 'SEO, SEA i Social Ads orientats a vendre cotxes.',
+      heroTitle: 'Estratègies digitals per vendre més cotxes',
+      intro: "Coneixem el mercat de l'automoció i sabem que cada concessionari necessita una estratègia diferent. El nostre equip combina experiència en màrqueting, anàlisi i tecnologia per millorar la visibilitat del teu negoci. Creem accions personalitzades en SEO, SEA i Social Ads, sempre orientades a la venda.",
+    },
+    'portal-publicacion': {
+      name: 'Classificats (Motorflash.com)',
+      menuLabel: 'Classificats (Motorflash.com)',
+      tagline: 'Visibilitat extra al portal de Motorflash.com.',
+      heroTitle: 'Visibilitat extra per als teus vehicles a Motorflash.com',
+      intro: 'A Motorflash.com hi trobaràs la visibilitat extra per als teus vehicles. Aprofita el trànsit qualificat del nostre portal especialitzat en automoció per impulsar la venda del teu estoc.',
+    },
+    'lead-factory': {
+      name: 'Lead Exclusive',
+      menuLabel: 'Lead Exclusive (5 Estrelles)',
+      tagline: 'Leads verificats, filtrats i a punt per convertir.',
+      heroTitle: 'Leads verificats, filtrats i a punt per convertir-se en clients',
+      intro: "Rep només compradors amb intenció real de compra. Cada lead passa per un procés de verificació i qualificació amb scoring de 0 a 100 abans d'arribar al teu equip de vendes. Més temps tancant vendes, menys gestionant contactes que no converteixen.",
+    },
+    'soluciones-fabricantes': {
+      name: 'Solucions per a Fabricants',
+      menuLabel: 'Solucions per a Fabricants',
+      tagline: 'Tecnologia per a marques i xarxes de concessionaris.',
+      heroTitle: 'Solucions tecnològiques per a fabricants i marques',
+      intro: 'Plataforma integral pensada per a fabricants que necessiten coordinar la seva xarxa de concessionaris, unificar la qualitat de publicació i obtenir mètriques consolidades a nivell de marca.',
+    },
+    'motorflash-connect': {
+      name: 'MotorFlash Connect',
+      menuLabel: 'MotorFlash Connect',
+      tagline: 'Vídeos IA personalitzats per retenir clients de rènting.',
+      heroTitle: 'Converteix cada final de contracte de rènting en una nova venda',
+      intro: 'MotorFlash Connect genera i envia vídeos comercials personalitzats amb IA a cada client el rènting del qual està a punt de finalitzar. El client rep una peça única amb el seu nom, el seu cotxe actual i fins a 5 propostes reals per renovar, canviar o quedar-se el vehicle. El teu equip tanca vendes amb zero treball manual.',
+    },
+    apex: {
+      name: 'Apex by Motorflash Solutions',
+      menuLabel: 'Apex (Tot en un)',
+      tagline: 'La suite tot en un de Motorflash Solutions.',
+      heroTitle: 'Apex: la suite tot en un de Motorflash Solutions',
+      intro: 'Una sola plataforma que integra publicació, gestió d\'estoc, CRM, IA conversacional, contact center i reporting unificat. Pensada per a concessionaris que volen consolidar tot el seu ecosistema digital en una única eina.',
+    },
+  },
   en: {
     dealer: {
       name: 'Dealer',

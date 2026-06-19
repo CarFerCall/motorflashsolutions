@@ -8,6 +8,7 @@ import type { ProductLocale } from '@/catalog/products-i18n'
 
 const SWIPE_HINT: Record<string, string> = {
   es: '← Desliza para ver todo el catálogo →',
+  ca: '← Llisca per veure tot el catàleg →',
   en: '← Swipe to see the full catalogue →',
   zh: '← 滑动查看完整目录 →',
 }

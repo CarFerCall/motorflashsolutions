@@ -5,6 +5,7 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 
 const LABELS: Record<string, { jumpTo: string; sectionLabel: string }> = {
   es: { jumpTo: 'Saltar a', sectionLabel: 'Ir a sección' },
+  ca: { jumpTo: 'Anar a', sectionLabel: 'Anar a la secció' },
   en: { jumpTo: 'Jump to', sectionLabel: 'Go to section' },
   zh: { jumpTo: '跳转到', sectionLabel: '前往章节' },
 }

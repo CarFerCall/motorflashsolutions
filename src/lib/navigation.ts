@@ -44,57 +44,57 @@ export const getMainMenu = cache(async (): Promise<MainMenuData> => {
   }
 })
 
-type MenuLocale = 'es' | 'en' | 'zh'
+type MenuLocale = 'es' | 'ca' | 'en' | 'zh'
 
 // Diccionario de labels conocidos del menú en español, con sus
-// traducciones EN y ZH. Si el contenido del global cambia con
-// labels distintos a los del diccionario, esos quedarán sin
-// traducir. Para tener cobertura completa habría que activar
+// traducciones a los demás idiomas. Si el contenido del global
+// cambia con labels distintos a los del diccionario, esos quedarán
+// sin traducir. Para tener cobertura completa habría que activar
 // localized: true en la colección y mantener el contenido por
 // idioma directamente desde el admin.
-const MENU_LABEL_DICT: Record<string, { en: string; zh: string }> = {
+const MENU_LABEL_DICT: Record<string, { ca: string; en: string; zh: string }> = {
   // Top-level items habituales.
-  'Servicios': { en: 'Services', zh: '服务' },
-  'Compañía': { en: 'Company', zh: '公司' },
-  'La Compañía': { en: 'The Company', zh: '公司' },
-  'Empresa': { en: 'Company', zh: '公司' },
-  'Casos de éxito': { en: 'Success stories', zh: '成功案例' },
-  'Casos de Éxito': { en: 'Success stories', zh: '成功案例' },
-  'Historias de éxito': { en: 'Success stories', zh: '成功案例' },
-  'Precios': { en: 'Pricing', zh: '价格' },
-  'Tarifas': { en: 'Pricing', zh: '价格' },
-  'Contacto': { en: 'Contact', zh: '联系我们' },
-  'Contactar': { en: 'Contact us', zh: '联系我们' },
-  'Ecosistema técnico': { en: 'Tech ecosystem', zh: '技术生态' },
-  'Ecosistema Técnico': { en: 'Tech ecosystem', zh: '技术生态' },
-  'Inicio': { en: 'Home', zh: '首页' },
-  'Productos': { en: 'Products', zh: '产品' },
-  'Soluciones': { en: 'Solutions', zh: '解决方案' },
+  'Servicios': { ca: 'Serveis', en: 'Services', zh: '服务' },
+  'Compañía': { ca: 'Companyia', en: 'Company', zh: '公司' },
+  'La Compañía': { ca: 'La Companyia', en: 'The Company', zh: '公司' },
+  'Empresa': { ca: 'Empresa', en: 'Company', zh: '公司' },
+  'Casos de éxito': { ca: "Casos d'èxit", en: 'Success stories', zh: '成功案例' },
+  'Casos de Éxito': { ca: "Casos d'èxit", en: 'Success stories', zh: '成功案例' },
+  'Historias de éxito': { ca: "Històries d'èxit", en: 'Success stories', zh: '成功案例' },
+  'Precios': { ca: 'Preus', en: 'Pricing', zh: '价格' },
+  'Tarifas': { ca: 'Tarifes', en: 'Pricing', zh: '价格' },
+  'Contacto': { ca: 'Contacte', en: 'Contact', zh: '联系我们' },
+  'Contactar': { ca: 'Contacta', en: 'Contact us', zh: '联系我们' },
+  'Ecosistema técnico': { ca: 'Ecosistema tècnic', en: 'Tech ecosystem', zh: '技术生态' },
+  'Ecosistema Técnico': { ca: 'Ecosistema Tècnic', en: 'Tech ecosystem', zh: '技术生态' },
+  'Inicio': { ca: 'Inici', en: 'Home', zh: '首页' },
+  'Productos': { ca: 'Productes', en: 'Products', zh: '产品' },
+  'Soluciones': { ca: 'Solucions', en: 'Solutions', zh: '解决方案' },
   // Productos / sub-items habituales del catálogo.
-  'Dealer / Stock': { en: 'Dealer / Stock', zh: '经销商库存(Dealer)' },
-  'Multipublicador': { en: 'Multipublisher', zh: '多平台发布器' },
-  'CRM4YOU': { en: 'CRM4YOU', zh: 'CRM4YOU' },
-  'Contact Center': { en: 'Contact Center', zh: '客服中心' },
-  'Photocall IA': { en: 'Photocall AI', zh: 'AI 摄影棚(Spyne)' },
-  'Photocall IA (Spyne)': { en: 'Photocall AI (Spyne)', zh: 'AI 摄影棚(Spyne)' },
-  'WhatsApp Business': { en: 'WhatsApp Business', zh: 'WhatsApp 企业版' },
-  'Imagen avanzada + RCS': { en: 'Advanced Image + RCS', zh: '高级图像 + RCS' },
-  'Motorflash IA': { en: 'Motorflash AI', zh: 'Motorflash 人工智能' },
-  'Servicios Web': { en: 'Web Services', zh: '网站服务' },
-  'Marketing Digital (SEO/SEA)': { en: 'Digital Marketing (SEO/SEA)', zh: '数字营销(SEO/SEA)' },
-  'Marketing Digital': { en: 'Digital Marketing', zh: '数字营销' },
-  'Clasificados (Motorflash.com)': { en: 'Classifieds (Motorflash.com)', zh: '分类信息(Motorflash.com)' },
-  'Lead Exclusive': { en: 'Lead Exclusive', zh: '独家潜客(Lead Exclusive)' },
-  'Lead Exclusive (5 Estrellas)': { en: 'Lead Exclusive (5-Star)', zh: '独家潜客(5 星)' },
-  'MotorFlash Connect': { en: 'MotorFlash Connect', zh: 'MotorFlash 互联' },
-  'Soluciones para Fabricantes': { en: 'Manufacturer Solutions', zh: '主机厂解决方案' },
-  'Apex (Todo en uno)': { en: 'Apex (All-in-one)', zh: 'Apex(一体化)' },
-  'Ver catálogo completo': { en: 'View full catalogue', zh: '查看完整目录' },
+  'Dealer / Stock': { ca: 'Dealer / Estoc', en: 'Dealer / Stock', zh: '经销商库存(Dealer)' },
+  'Multipublicador': { ca: 'Multipublicador', en: 'Multipublisher', zh: '多平台发布器' },
+  'CRM4YOU': { ca: 'CRM4YOU', en: 'CRM4YOU', zh: 'CRM4YOU' },
+  'Contact Center': { ca: 'Contact Center', en: 'Contact Center', zh: '客服中心' },
+  'Photocall IA': { ca: 'Photocall IA', en: 'Photocall AI', zh: 'AI 摄影棚(Spyne)' },
+  'Photocall IA (Spyne)': { ca: 'Photocall IA (Spyne)', en: 'Photocall AI (Spyne)', zh: 'AI 摄影棚(Spyne)' },
+  'WhatsApp Business': { ca: 'WhatsApp Business', en: 'WhatsApp Business', zh: 'WhatsApp 企业版' },
+  'Imagen avanzada + RCS': { ca: 'Imatge avançada + RCS', en: 'Advanced Image + RCS', zh: '高级图像 + RCS' },
+  'Motorflash IA': { ca: 'Motorflash IA', en: 'Motorflash AI', zh: 'Motorflash 人工智能' },
+  'Servicios Web': { ca: 'Serveis Web', en: 'Web Services', zh: '网站服务' },
+  'Marketing Digital (SEO/SEA)': { ca: 'Marketing Digital (SEO/SEA)', en: 'Digital Marketing (SEO/SEA)', zh: '数字营销(SEO/SEA)' },
+  'Marketing Digital': { ca: 'Marketing Digital', en: 'Digital Marketing', zh: '数字营销' },
+  'Clasificados (Motorflash.com)': { ca: 'Classificats (Motorflash.com)', en: 'Classifieds (Motorflash.com)', zh: '分类信息(Motorflash.com)' },
+  'Lead Exclusive': { ca: 'Lead Exclusive', en: 'Lead Exclusive', zh: '独家潜客(Lead Exclusive)' },
+  'Lead Exclusive (5 Estrellas)': { ca: 'Lead Exclusive (5 Estrelles)', en: 'Lead Exclusive (5-Star)', zh: '独家潜客(5 星)' },
+  'MotorFlash Connect': { ca: 'MotorFlash Connect', en: 'MotorFlash Connect', zh: 'MotorFlash 互联' },
+  'Soluciones para Fabricantes': { ca: 'Solucions per a Fabricants', en: 'Manufacturer Solutions', zh: '主机厂解决方案' },
+  'Apex (Todo en uno)': { ca: 'Apex (Tot en un)', en: 'Apex (All-in-one)', zh: 'Apex(一体化)' },
+  'Ver catálogo completo': { ca: 'Veure el catàleg complet', en: 'View full catalogue', zh: '查看完整目录' },
   // CTA habituales.
-  'Solicitar demo': { en: 'Request a demo', zh: '申请演示' },
-  'Pedir demo': { en: 'Request a demo', zh: '申请演示' },
-  'Contáctanos': { en: 'Contact us', zh: '联系我们' },
-  'Trabaja con nosotros': { en: 'Work with us', zh: '加入我们' },
+  'Solicitar demo': { ca: 'Sol·licitar demo', en: 'Request a demo', zh: '申请演示' },
+  'Pedir demo': { ca: 'Demanar demo', en: 'Request a demo', zh: '申请演示' },
+  'Contáctanos': { ca: "Contacta'ns", en: 'Contact us', zh: '联系我们' },
+  'Trabaja con nosotros': { ca: 'Treballa amb nosaltres', en: 'Work with us', zh: '加入我们' },
 }
 
 function translateLabel(label: string, locale: MenuLocale): string {

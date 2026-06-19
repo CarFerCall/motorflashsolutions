@@ -6,7 +6,7 @@ import { productContentBySlug, type ProductContentLocale } from '@/catalog/produ
 import { orderedProducts } from '@/catalog/products'
 import { MultipublicadorAnimation } from './MultipublicadorAnimation'
 
-type LocaleKey = 'es' | 'en' | 'zh'
+type LocaleKey = 'es' | 'ca' | 'en' | 'zh'
 
 const COPY: Record<LocaleKey, {
   breadcrumbHome: string
@@ -41,6 +41,23 @@ const COPY: Record<LocaleKey, {
     ctaRequest: 'Solicitar',
     othersEyebrow: 'Otros servicios',
     othersTitle: 'Combínalo con el resto del ecosistema Motorflash',
+  },
+  ca: {
+    breadcrumbHome: 'Inici',
+    breadcrumbServices: 'Serveis',
+    ctaInfo: 'Sol·licitar informació',
+    ctaViewAll: 'Veure tots els serveis',
+    comingSoonChip: 'Properament',
+    comingSoonTitle: 'Estem preparant el detall d\'aquest servei',
+    comingSoonLead: 'Mentrestant, si vols conèixer-lo a fons, contacta amb el nostre equip comercial i te\'l presentem en persona.',
+    comingSoonCta: 'Parlar amb un especialista',
+    featuresEyebrow: 'Funcionalitats',
+    highlightsEyebrow: 'En profunditat',
+    processEyebrow: 'El procés',
+    ctaEyebrow: 'Comencem?',
+    ctaRequest: 'Sol·licitar',
+    othersEyebrow: 'Altres serveis',
+    othersTitle: 'Combina\'l amb la resta de l\'ecosistema Motorflash',
   },
   en: {
     breadcrumbHome: 'Home',

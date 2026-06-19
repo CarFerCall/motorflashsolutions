@@ -9,6 +9,6 @@ import { NavbarClient } from './NavbarClient'
  */
 export async function Navbar() {
   const menu = await getMainMenu()
-  const locale = ((await getLocale()) as 'es' | 'en' | 'zh') || 'es'
+  const locale = ((await getLocale()) as 'es' | 'ca' | 'en' | 'zh') || 'es'
   return <NavbarClient menu={localizeMenu(menu, locale)} />
 }

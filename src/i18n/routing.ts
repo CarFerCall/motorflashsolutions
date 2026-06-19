@@ -3,6 +3,7 @@ import { defineRouting } from 'next-intl/routing'
 /**
  * Configuración multilingüe de la web pública.
  * - Español: idioma por defecto, URLs SIN prefijo (`/`, `/servicios/...`).
+ * - Catalán: con prefijo (`/ca`, `/ca/servicios/...`).
  * - Inglés: con prefijo (`/en`, `/en/servicios/...`).
  * - Chino simplificado: con prefijo (`/zh`, `/zh/servicios/...`).
  *
@@ -11,10 +12,10 @@ import { defineRouting } from 'next-intl/routing'
  * excluye explícitamente).
  */
 export const routing = defineRouting({
-  locales: ['es', 'en', 'zh'] as const,
+  locales: ['es', 'ca', 'en', 'zh'] as const,
   defaultLocale: 'es',
   // `as-needed`: el idioma por defecto (español) no lleva prefijo
-  // en la URL. Solo `en` y `zh` lo llevan. Mantiene las URLs
+  // en la URL. Los demás llevan su prefijo. Mantiene las URLs
   // existentes en español sin redirects ni cambios de SEO.
   localePrefix: 'as-needed',
 })

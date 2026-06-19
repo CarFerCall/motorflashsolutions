@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { getLocale } from 'next-intl/server'
 import { orderedProducts } from '@/catalog/products'
 
-type LocaleKey = 'es' | 'en' | 'zh'
+type LocaleKey = 'es' | 'ca' | 'en' | 'zh'
 
 const COPY: Record<LocaleKey, {
   tagline: string
@@ -46,6 +46,27 @@ const COPY: Record<LocaleKey, {
     privacy: 'Privacidad',
     cookies: 'Cookies',
     legal: 'Aviso Legal',
+  },
+  ca: {
+    tagline: 'La solució 360 per a marques i concessionaris del motor. Tecnologia amb IA integrada des del 2007.',
+    productsHeading: 'Productes',
+    viewAll: 'Veure tots →',
+    companyHeading: 'La Companyia',
+    aboutUs: 'Coneix-nos',
+    successStories: "Històries d'èxit",
+    pricing: 'Preus',
+    contact: 'Contacte',
+    hqHeading: 'Seu Madrid',
+    hqAddress1: 'Carrer Basauri 17 – Edif. B, Baixos Esq. D',
+    hqAddress2: '28023 Madrid, Espanya',
+    isoQuality: 'ISO 9001 · Qualitat',
+    isoSecurity: 'ISO 27001 · Seguretat',
+    isoQualityTitle: 'Sistema de Gestió de la Qualitat',
+    isoSecurityTitle: 'Sistema de Gestió de la Seguretat de la Informació',
+    copyright: '© {year} Motorflash Ibérica de Negocios S.L. Precise automotive technology.',
+    privacy: 'Privadesa',
+    cookies: 'Galetes',
+    legal: 'Avís legal',
   },
   en: {
     tagline: 'The 360 solution for automotive brands and dealerships. AI-integrated technology since 2007.',
@@ -92,7 +113,8 @@ const COPY: Record<LocaleKey, {
 }
 
 export async function Footer() {
-  const locale = ((await getLocale()) as LocaleKey) || 'es'
+  const localeRaw = ((await getLocale()) as string) || 'es'
+  const locale = (localeRaw in COPY ? localeRaw : 'es') as LocaleKey
   const products = orderedProducts(locale).slice(0, 6)
   const year = new Date().getFullYear()
   const t = COPY[locale] ?? COPY.es

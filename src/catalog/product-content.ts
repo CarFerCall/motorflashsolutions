@@ -50,13 +50,15 @@ export interface ProductContent {
 }
 
 import { productContent as productContentES } from './product-content.es'
+import { productContent as productContentCA } from './product-content.ca'
 import { productContent as productContentEN } from './product-content.en'
 import { productContent as productContentZH } from './product-content.zh'
 
-export type ProductContentLocale = 'es' | 'en' | 'zh'
+export type ProductContentLocale = 'es' | 'ca' | 'en' | 'zh'
 
 const REGISTRY: Record<ProductContentLocale, Record<string, ProductContent>> = {
   es: productContentES,
+  ca: productContentCA,
   en: productContentEN,
   zh: productContentZH,
 }

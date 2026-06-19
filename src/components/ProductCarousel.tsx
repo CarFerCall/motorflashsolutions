@@ -6,7 +6,7 @@ import { useLocale } from 'next-intl'
 import type { Product } from '@/catalog/products'
 import { Reveal } from '@/components/Reveal'
 
-type LocaleKey = 'es' | 'en' | 'zh'
+type LocaleKey = 'es' | 'ca' | 'en' | 'zh'
 
 const COPY: Record<LocaleKey, {
   eyebrow: string
@@ -25,6 +25,15 @@ const COPY: Record<LocaleKey, {
     nextAria: 'Productos siguientes',
     view: 'Ver',
     viewAll: 'Ver catálogo completo',
+  },
+  ca: {
+    eyebrow: 'Catàleg complet',
+    title: '15 productes que es combinen a la teva mida',
+    lead: 'Passa per tots els productes amb les fletxes o llisca per veure\'n més.',
+    prevAria: 'Productes anteriors',
+    nextAria: 'Productes següents',
+    view: 'Veure',
+    viewAll: 'Veure el catàleg complet',
   },
   en: {
     eyebrow: 'Full catalogue',

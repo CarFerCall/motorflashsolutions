@@ -7,6 +7,7 @@ import { routing, type Locale } from '@/i18n/routing'
 
 const LOCALE_META: Record<Locale, { label: string; flag: string; short: string }> = {
   es: { label: 'Español', flag: '🇪🇸', short: 'ES' },
+  ca: { label: 'Català', flag: '🏴󠁥󠁳󠁣󠁴󠁿', short: 'CA' },
   en: { label: 'English', flag: '🇬🇧', short: 'EN' },
   zh: { label: '中文', flag: '🇨🇳', short: 'ZH' },
 }
