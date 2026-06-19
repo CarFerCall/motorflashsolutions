@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import { getLocale } from 'next-intl/server'
 
-type LocaleKey = 'es' | 'en' | 'zh'
+type LocaleKey = 'es' | 'ca' | 'en' | 'zh'
 
 interface IaCopy {
   badge: string
@@ -100,6 +100,63 @@ const COPY: Record<LocaleKey, IaCopy> = {
     ctaTitle: '¿Quieres ver un ejemplo real de tu negocio?',
     ctaLead: 'En la demo te mostramos un caso con tu propio nicho (VN, VO, taller, renting…) y enchufamos uno de los asistentes a una llamada o un WhatsApp en vivo. Decide tú si el cliente final hablaría con esa IA.',
     ctaButton: 'Solicitar Demo Personalizada',
+  },
+  ca: {
+    badge: "SOLUCIONS IA APLICADES · MOTORFLASH SOLUTIONS",
+    title1: "Tres assistents IA i un sistema de qualitat que ",
+    titleAccent: "atenen, qualifiquen i mesuren",
+    title3: ' cada conversa.',
+    heroLead: "WhatsApp IA, WebChat IA i Veu IA conversen amb els teus clients 24/7 al seu canal preferit. Quality Monitoring transcriu, analitza i puntua totes les trucades del teu equip. Tot integrat amb el teu DMS, CRM, Dealer, Multipublicador, Contact Center i webs.",
+    ctaDemo: 'Sol·licita Demo',
+    ctaPricing: 'Veure tarifes a /precios',
+    ecoEyebrow: "ECOSISTEMA IA MOTORFLASH",
+    ecoTitle: "Un sol integrador entre els teus processos, els teus canals i la IA",
+    ecoLead: "Actuem com a Integrador / Consultor / Arquitecte d'IA: connectem els models al canal correcte i al sistema correcte, perquè cada conversa acabi al CRM amb tot el context.",
+    processesTitle: 'Processos de negoci',
+    channelsTitle: 'Canals',
+    aiTitle: 'Intel·ligència Artificial',
+    integratorTopline: "L'INTEGRADOR",
+    integratorTitle: "Motorflash Solutions · Consultor i arquitecte d'IA",
+    integratorSubline: 'Veu IA · WhatsApp IA · WebChat IA · Copilot · Quality Monitoring · Assistent de continguts web',
+    systemsTitle: 'Sistemes de gestió',
+    processes: ['Vehicles Nous', 'Vehicles Ocasió', 'Postvenda', 'Taller', 'Rènting', 'Lloguer'],
+    channels: [
+      { icon: 'call', label: 'Trucada' },
+      { icon: 'chat', label: 'WhatsApp' },
+      { icon: 'mail', label: 'Correu' },
+    ],
+    foundation: [
+      { icon: 'graphic_eq', label: 'Síntesi de veu' },
+      { icon: 'auto_awesome', label: 'OpenAI' },
+      { icon: 'flare', label: 'Gemini' },
+      { icon: 'psychology_alt', label: 'Anthropic' },
+    ],
+    systems: ['DMS', 'CRM4YOU', 'Dealer', 'Multipublicador', 'Contact Center', 'Webs', 'Integracions API'],
+    productsEyebrow: '3 ASSISTENTS IA',
+    productsTitle: 'WhatsApp, WebChat i Veu — el client tria el canal',
+    productsLead: "Mateix cervell IA, canals diferents. Funcionen per separat o com un sol assistent que passa el context entre ells.",
+    products: [
+      { key: 'whatsapp', name: 'WhatsApp IA', icon: 'chat', tagline: 'IA conversacional sobre el canal que els teus clients ja fan servir', flow: ['Client escriu', 'IA respon', 'Cita o seguiment'], bullets: ['Canal directe i familiar: el client ja fa servir WhatsApp, sense barreres ni descàrregues.', 'Conversa lliure, natural i disponible 24/7: la IA respon sense dependre d\'agents.', 'Personalització real: recorda el context, aprèn de cada conversa i s\'adapta.', "Més conversió: millora l'experiència i augmenta la probabilitat de venda."] },
+      { key: 'webchat', name: 'WebChat IA', icon: 'forum', tagline: 'Capta i conversa amb l\'usuari mentre navega per la teva web', flow: ['Usuari entra', 'Clic al botó', 'Formulari / cita'], bullets: ['Integrat a la web: capta l\'usuari mentre navega.', 'Text i veu en un sol canal: interacció escrita o parlada segons preferència.', "Interacció natural: el xat s'adapta a cada usuari, no al revés.", "Integrable amb altres sistemes: permet consultar i gestionar dades externes."] },
+      { key: 'voz', name: 'Veu IA', icon: 'record_voice_over', tagline: 'Assistent telefònic intel·ligent que agafa les teves trucades', flow: ['Client truca', 'IA respon', 'Concerta cita i envia al CRM'], bullets: ['Assistent de veu intel·ligent que agafa la trucada sense esperes.', 'Comunicació immediata: el client truca i rep atenció personalitzada.', 'Ideal per concertar cites, resoldre dubtes ràpids o completar processos iniciats per xat.', 'Integra anàlisi, transcripció i puntuació automàtica per millorar atenció i venda.'] },
+    ],
+    productCta: 'Prova-ho',
+    flowLabel: 'FLUX',
+    qualityEyebrow: 'QUALITY',
+    qualityTitle: 'Quality Monitoring: cada trucada es mesura',
+    qualityLead: 'El que el teu millor responsable comercial faria si pogués escoltar totes les trucades. Transcriu, analitza, categoritza i puntua de manera automàtica perquè sàpigues què funciona i què cal entrenar.',
+    quality: [
+      { icon: 'transcribe', title: 'Transcripció de totes les trucades', desc: 'Cada trucada dels teus assessors es transcriu automàticament i queda disponible per a revisió i anàlisi.' },
+      { icon: 'insights', title: 'Anàlisi de punts clau', desc: 'Detecció automàtica de salutacions, identificació del client, oferta presentada, objeccions i tancament.' },
+      { icon: 'category', title: 'Categorització per interès', desc: "Cada conversa s'etiqueta pel grau d'interès real del client — calent, tebi o fred." },
+      { icon: 'star_rate', title: 'Puntuació automàtica', desc: 'Cada trucada rep un score basat en KPIs comercials per millorar l\'atenció i la venda.' },
+    ],
+    alertsTitle: "Alertes a partir d'esdeveniments o sobre les dades",
+    alertsLead: 'Rep avisos al moment en què passa quelcom important o quan es compleixen condicions sobre les teves mètriques. Sense haver d\'entrar al panell a buscar-les.',
+    alerts: ['Trucada amb client amb scoring alt sense seguiment', 'Agent amb taxa de transferència per sota del KPI', "WhatsApp sense respondre més de N minuts en horari", "Pic de leads que supera la capacitat de l'equip"],
+    ctaTitle: 'Vols veure un exemple real del teu negoci?',
+    ctaLead: 'A la demo t\'ensenyem un cas amb el teu propi nínxol (VN, VO, taller, rènting…) i connectem un dels assistents a una trucada o un WhatsApp en directe. Decideix tu si el client final parlaria amb aquesta IA.',
+    ctaButton: 'Sol·licitar Demo Personalitzada',
   },
   en: {
     badge: 'APPLIED AI SOLUTIONS · MOTORFLASH SOLUTIONS',

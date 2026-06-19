@@ -2,7 +2,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { getLocale } from 'next-intl/server'
 
-type LocaleKey = 'es' | 'en' | 'zh'
+type LocaleKey = 'es' | 'ca' | 'en' | 'zh'
 
 interface PpCopy {
   badge: string
@@ -67,6 +67,42 @@ const COPY: Record<LocaleKey, PpCopy> = {
       { icon: 'bolt', t: 'Publicación Ultra-Rápida', d: 'Sync en menos de 5 minutos' },
       { icon: 'ads_click', t: 'Leads Exclusivos', d: 'Sin competencia en tus propios leads' },
       { icon: 'monitoring', t: 'Analytics Avanzado', d: 'Métricas de rendimiento por vehículo' },
+    ],
+  },
+  ca: {
+    badge: 'PORTAL PROPI MOTORFLASH.COM',
+    title1: "On l'estoc es converteix en ",
+    titleAccent: 'vendes reals.',
+    heroLead: "Aprofita l'ecosistema líder al sector automotriu. No només publiques; posiciones el teu inventari davant d'una audiència altament qualificada que busca exactament el que ofereixes.",
+    ctaPrimary: 'Publicar Inventari',
+    ctaSecondary: 'Veure Estadístiques',
+    stats: [
+      { icon: 'groups', v: '+2.5M', l: 'Visites Mensuals' },
+      { icon: 'search', v: '15M', l: "Cerques d'Estoc" },
+      { icon: 'timer', v: '4.2min', l: 'Temps de Sessió' },
+      { icon: 'verified', v: '98%', l: 'Leads Qualificats' },
+    ],
+    advantagesTitle: 'Avantatges de Publicar a Motorflash',
+    advantagesLead: "El nostre portal propi és la peça central que connecta el teu estoc amb els majors hubs de trànsit automotriu a Espanya.",
+    visEyebrow: 'VISIBILITAT EXTRA',
+    visTitle: 'Abast Multicanal Instantani',
+    visDesc: "El teu anunci no només viu a Motorflash. Es distribueix automàticament a través de la nostra xarxa de partners i feeds exclusius, garantint un 40% més d'impressions que en portals genèrics.",
+    aiEyebrow: 'MOTORFLASH IA',
+    aiTitle: 'Optimització amb IA',
+    aiDesc: 'Analitzem les tendències de cerca en temps real per suggerir-te canvis al preu o descripció que augmentin els teus clics.',
+    crmEyebrow: 'CRM INTEGRAT',
+    crmTitle: 'Control Total a CRM4YOU',
+    crmDesc: 'Gestiona cada lead que entra des del portal directament al teu CRM, sense pèrdues de dades ni esperes.',
+    trafficTitle: 'Trànsit que Converteix',
+    trafficDesc: "Els nostres usuaris tenen una intenció de compra un 35% superior a la mitjana del mercat, centrada en producte d'estoc professional.",
+    finalCtaTitle: 'Llest per dominar el mercat digital?',
+    finalCtaLead: "Uneix-te als més de 3.500 concessionaris que ja confien en la xarxa Motorflash per moure el seu inventari.",
+    finalCtaPrimary: 'Sol·licita Demo',
+    finalCtaSecondary: 'Parla amb un expert',
+    benefits: [
+      { icon: 'bolt', t: 'Publicació Ultra-Ràpida', d: 'Sync en menys de 5 minuts' },
+      { icon: 'ads_click', t: 'Leads Exclusius', d: 'Sense competència als teus propis leads' },
+      { icon: 'monitoring', t: 'Analytics Avançat', d: 'Mètriques de rendiment per vehicle' },
     ],
   },
   en: {

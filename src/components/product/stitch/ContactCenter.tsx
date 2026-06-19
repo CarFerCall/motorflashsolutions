@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import { getLocale } from 'next-intl/server'
 
-type LocaleKey = 'es' | 'en' | 'zh'
+type LocaleKey = 'es' | 'ca' | 'en' | 'zh'
 
 interface CcCopy {
   badge: string
@@ -123,6 +123,88 @@ const COPY: Record<LocaleKey, CcCopy> = {
     ctaTitle: '¿Listo para externalizar tu atención al cliente?',
     ctaLead: 'Cuéntanos cuántos leads recibes al mes y te enseñamos un dashboard real con un grupo de tu tamaño. En 30 minutos sabes el coste y el ROI estimado.',
     ctaButton: 'Solicitar Demo Personalizada',
+  },
+  ca: {
+    badge: 'CONTACT CENTER · MOTORFLASH SOLUTIONS',
+    title1: 'El que no es mesura, ',
+    titleAccent: 'no es pot millorar',
+    heroLead: "Servei de Contact Center exclusiu del sector de l'automoció. Atenem el 100% dels teus leads a tots els canals (veu, WhatsApp, correu, xat, XXSS) amb plataformes pròpies, equip especialitzat i reporting en temps real.",
+    ctaDemo: 'Sol·licita Demo',
+    ctaPricing: 'Veure tarifes a /precios',
+    pillarsEyebrow: 'SERVEIS EXCLUSIUS EN AUTOMOCIÓ',
+    pillarsTitle: '6 raons per les quals som diferents',
+    pillarsLead: 'No som un Contact Center generalista. Vivim del sector del motor des de fa 7 anys i tot el nostre stack està pensat per a concessionaris.',
+    pillars: [
+      { icon: 'campaign', title: 'Motor Lead Management', desc: 'El nostre servei estrella en gestió de leads per a automoció.' },
+      { icon: 'memory', title: 'Tecnologia pròpia', desc: "Plataformes d'última generació desenvolupades per nosaltres." },
+      { icon: 'groups', title: 'Equip especialitzat', desc: '50 agents formats en el sector del motor.' },
+      { icon: 'insights', title: 'Reporting en temps real', desc: 'Informes customitzables per portal, origen, canal, producte i comercial.' },
+      { icon: 'price_check', title: 'Proposta competitiva', desc: 'La tarifa més ajustada del sector amb model per ús real.' },
+      { icon: 'verified', title: 'Cartera consolidada', desc: '+400 clients i 2.000 concessionaris avalen el servei.' },
+    ],
+    channelsEyebrow: 'TECNOLOGIA MULTICANAL',
+    channelsTitle: 'Atenem on és el teu client',
+    channelsLead: 'Les solucions tècniques més avançades del sector. Plataformes pròpies per customitzar qualsevol servei i créixer amb les teves operacions.',
+    channels: [
+      { icon: 'call', title: 'Trucades entrants i sortints', desc: 'Atenem el 100% de les trucades amb infraestructura cloud i plataformes pròpies.' },
+      { icon: 'chat', title: 'WhatsApp Business API', desc: 'Únics al mercat amb desenvolupament propi que mesura la conversió del canal per excel·lència.' },
+      { icon: 'mail', title: 'Correus i Click-to-Call', desc: 'Integrem els formularis de contacte procedents de qualsevol canal web.' },
+      { icon: 'forum', title: 'Xats i xarxes socials', desc: 'Responem amb immediatesa a dubtes tècnics o comercials a qualsevol canal.' },
+    ],
+    complianceTopline: 'COMPLIMENT I CONVERSIÓ',
+    compliance: [
+      'Gravació de totes les trucades fins a 5 anys, conforme RGPD',
+      "Recollida de consentiments per a accions de remarketing posteriors",
+      "Estoc publicat a tots els canals per a estratègies de preus i conversió a venda",
+    ],
+    teamEyebrow: 'EQUIP MULTIDISCIPLINAR',
+    teamTitle: 'Atenció al client integral amb KPIs garantits',
+    teamLead: "Gestionem els teus prospectes i leads amb un equip especialitzat en automoció. Treballem de dilluns a dissabte en horari ininterromput, amb possibilitat d'ampliació a caps de setmana.",
+    kpis: [
+      { v: '>90 %', l: 'Atenció en recepció' },
+      { v: '<10 min', l: 'Temps de contacte en emissió' },
+      { v: '195.000', l: 'Trucades/mes ateses' },
+      { v: '100 %', l: 'Respostes garantides' },
+    ],
+    teamStats: [
+      { v: '50', l: 'AGENTS' },
+      { v: '+400', l: 'CLIENTS', primary: true },
+      { v: '7', l: "ANYS D'EXPERIÈNCIA" },
+      { v: '2.000', l: 'CONCESSIONARIS' },
+    ],
+    servicesEyebrow: 'QUÈ FEM PER TU',
+    servicesTitle: 'Des de la captura del lead fins a la postvenda',
+    servicesLead: "Un flux complet d'atenció: qualifiquem, filtrem, derivem equitativament entre els teus comercials i reportem cada interacció.",
+    services: [
+      { icon: 'phone_callback', title: 'Recepció i emissió', desc: 'Qualificació de contacte + RGPD des del primer minut.' },
+      { icon: 'thermostat', title: 'Qualificació de temperatura', desc: "Filtre de leads segons intenció real de compra." },
+      { icon: 'event_available', title: 'Cites de prova i taller', desc: "Gestió i confirmació d'assistència a cites." },
+      { icon: 'support', title: 'Postvenda i gestió', desc: "Acompanyem el client després de l'entrega." },
+      { icon: 'inbox', title: 'Back office i CRM', desc: 'Gestió de correus, depuració de BBDD i mystery calls.' },
+      { icon: 'language', title: 'Servei multilingüe', desc: 'Castellà, anglès, francès, català i portuguès.' },
+    ],
+    reportingEyebrow: 'REPORTING EN TEMPS REAL',
+    reportingTitle: "Sistemes d'informació que sí que mouen l'agulla",
+    reportingLead: "Accés a un gestor exclusiu amb mètriques de control i informes detallats de tota l'activitat. Saps en cada moment quins leads tens, d'on vénen i què fa cada comercial amb ells.",
+    reportingPoints: [
+      'Registre complet de contactes destacant els leads més calents',
+      'Accés a gestor exclusiu amb totes les mètriques de control',
+      'Estratègies de seguiment "Nurturing" sobre els teus potencials',
+      'Accés il·limitat a totes les gravacions dels teus clients',
+      'Reports per portal, origen, canal, producte, departament i comercial',
+      'Visió de derivació equitativa entre comercials VO i VN',
+    ],
+    derivationStats: [
+      { v: '37 %', l: 'Transferits en línia' },
+      { v: '35 %', l: 'No transferits' },
+      { v: '18 %', l: 'Altres estats' },
+      { v: '10 %', l: 'Derivats via correu' },
+    ],
+    derivationExampleTopline: 'EXEMPLE REAL DE GESTIÓ',
+    derivationExample: "164 leads gestionats en un mes per a un grup de concessionaris, amb derivació equitativa entre 5 comercials.",
+    ctaTitle: "Llest per externalitzar la teva atenció al client?",
+    ctaLead: "Explica'ns quants leads reps al mes i t'ensenyem un dashboard real amb un grup de la teva mida. En 30 minuts saps el cost i el ROI estimat.",
+    ctaButton: 'Sol·licitar Demo Personalitzada',
   },
   en: {
     badge: 'CONTACT CENTER · MOTORFLASH SOLUTIONS',
