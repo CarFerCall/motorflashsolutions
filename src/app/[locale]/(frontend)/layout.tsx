@@ -116,7 +116,7 @@ export default async function FrontendLayout({
         <NextIntlClientProvider>
           {await Navbar()}
           <main className="pt-20">{children}</main>
-          <Footer />
+          {await Footer()}
         </NextIntlClientProvider>
       </body>
     </html>

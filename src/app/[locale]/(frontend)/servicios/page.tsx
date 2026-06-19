@@ -1,32 +1,74 @@
 import Link from 'next/link'
+import { getLocale } from 'next-intl/server'
 import { orderedProducts } from '@/catalog/products'
 
-export const metadata = {
-  title: 'Servicios',
-  description:
-    '14 productos integrados entre sí para cubrir el ciclo comercial completo del concesionario: publicación, stock, captación de leads, atención al cliente, IA y reporting.',
-  alternates: { canonical: '/servicios' },
-  openGraph: {
-    title: 'Servicios — Motorflash',
-    description:
-      '14 productos integrados que cubren el ciclo comercial completo del concesionario.',
-    url: '/servicios',
+type LocaleKey = 'es' | 'en' | 'zh'
+
+const COPY: Record<LocaleKey, {
+  metaTitle: string
+  metaDescription: string
+  metaOg: string
+  eyebrow: string
+  title: string
+  lead: string
+  viewProduct: string
+  comingSoon: string
+}> = {
+  es: {
+    metaTitle: 'Servicios',
+    metaDescription: '15 productos integrados entre sí para cubrir el ciclo comercial completo del concesionario: publicación, stock, captación de leads, atención al cliente, IA y reporting.',
+    metaOg: '15 productos integrados que cubren el ciclo comercial completo del concesionario.',
+    eyebrow: 'Catálogo de Servicios',
+    title: 'Toda la tecnología para vender más coches',
+    lead: '15 productos integrados entre sí para cubrir el ciclo comercial completo del concesionario: publicación, stock, captación de leads, atención al cliente, IA y reporting.',
+    viewProduct: 'Ver',
+    comingSoon: 'Próximamente',
+  },
+  en: {
+    metaTitle: 'Services',
+    metaDescription: '15 integrated products covering the dealership’s full sales cycle: publication, stock, lead capture, customer service, AI and reporting.',
+    metaOg: "15 integrated products covering the dealership's full sales cycle.",
+    eyebrow: 'Services catalogue',
+    title: 'The technology to sell more cars',
+    lead: "15 integrated products covering the dealership’s full sales cycle: publication, stock, lead capture, customer service, AI and reporting.",
+    viewProduct: 'See',
+    comingSoon: 'Coming soon',
+  },
+  zh: {
+    metaTitle: '服务',
+    metaDescription: '15 款相互集成的产品,覆盖经销店完整销售周期:发布、库存、潜客获取、客户服务、AI 与报告。',
+    metaOg: '15 款相互集成的产品,覆盖经销店完整销售周期。',
+    eyebrow: '服务目录',
+    title: '为卖出更多车而生的全部技术',
+    lead: '15 款相互集成的产品,覆盖经销店完整销售周期:发布、库存、潜客获取、客户服务、AI 与报告。',
+    viewProduct: '查看',
+    comingSoon: '即将推出',
   },
 }
 
-export default function ServiciosPage() {
+export async function generateMetadata() {
+  const locale = ((await getLocale()) as LocaleKey) || 'es'
+  const t = COPY[locale] ?? COPY.es
+  return {
+    title: t.metaTitle,
+    description: t.metaDescription,
+    alternates: { canonical: '/servicios' },
+    openGraph: { title: `${t.metaTitle} — Motorflash`, description: t.metaOg, url: '/servicios' },
+  }
+}
+
+export default async function ServiciosPage() {
   const products = orderedProducts()
+  const locale = ((await getLocale()) as LocaleKey) || 'es'
+  const t = COPY[locale] ?? COPY.es
 
   return (
     <section className="py-32">
       <div className="mf-container">
         <div className="text-center mb-12">
-          <span className="mf-eyebrow">Catálogo de Servicios</span>
-          <h1 className="text-4xl md:text-display-lg font-semibold mb-3">Toda la tecnología para vender más coches</h1>
-          <p className="text-on-surface-variant mx-auto max-w-2xl">
-            14 productos integrados entre sí para cubrir el ciclo comercial completo del concesionario: publicación, stock,
-            captación de leads, atención al cliente, IA y reporting.
-          </p>
+          <span className="mf-eyebrow">{t.eyebrow}</span>
+          <h1 className="text-4xl md:text-display-lg font-semibold mb-3">{t.title}</h1>
+          <p className="text-on-surface-variant mx-auto max-w-2xl">{t.lead}</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -42,11 +84,11 @@ export default function ServiciosPage() {
               <h3 className="text-xl font-semibold mb-3">{product.name}</h3>
               <p className={`mb-4 ${product.highlight ? '' : 'text-on-surface-variant'}`}>{product.tagline}</p>
               <span className={`inline-flex items-center gap-2 font-bold ${product.highlight ? '' : 'text-primary'}`}>
-                Ver {product.name}
+                {t.viewProduct} {product.name}
                 <span className="material-symbols-outlined">east</span>
               </span>
               {product.placeholder && (
-                <span className="mt-3 inline-flex mf-chip" style={{ fontSize: 10 }}>Próximamente</span>
+                <span className="mt-3 inline-flex mf-chip" style={{ fontSize: 10 }}>{t.comingSoon}</span>
               )}
             </Link>
           ))}

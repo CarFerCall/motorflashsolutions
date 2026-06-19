@@ -1,46 +1,25 @@
 import Image from 'next/image'
 import Link from 'next/link'
+import { getLocale } from 'next-intl/server'
 import { Reveal } from '@/components/Reveal'
 import { AnimatedCounter } from '@/components/AnimatedCounter'
 
-export const metadata = {
-  title: 'Casos de éxito',
-  description:
-    'Clientes que confían en Motorflash Solutions desde hace años. Resultados reales de Jarmauto, Ocasionplus, Flexicar, Muy Car y Auto Elia.',
-  alternates: { canonical: '/historias-de-exito' },
-  openGraph: {
-    title: 'Casos de éxito — Motorflash',
-    description: 'Jarmauto, Ocasionplus, Flexicar, Muy Car y Auto Elia: resultados reales de concesionarios líderes.',
-    url: '/historias-de-exito',
-  },
-}
+type LocaleKey = 'es' | 'en' | 'zh'
 
 interface Stat {
   value: string
   label: string
-  numeric?: number
-  suffix?: string
 }
 
-// Look & feel corporativo de cada cliente: color principal de marca
-// (wordmark / accents) y "tinta" de apoyo. Permite aplicar la identidad
-// del cliente a la card del caso sin necesidad de subir el logo oficial
-// (los wordmarks se renderizan tipográficamente).
 interface BrandStyle {
-  // Color hex del wordmark y de los accents principales.
   primary: string
-  // Color de tinta de la card del cliente (fondo del wordmark / banner).
   ink: string
-  // Color del banner del caso (gradiente sutil).
   banner: string
-  // Estilo tipográfico del wordmark (tracking + weight) — opcional.
   wordmarkClass?: string
 }
 
 interface ClientLogo {
   src: string
-  // Relación ancho/alto del logo original — la usamos para reservar el
-  // espacio sin romper el layout con CLS.
   width: number
   height: number
   alt: string
@@ -49,216 +28,139 @@ interface ClientLogo {
 interface SuccessCase {
   slug: string
   brand: string
-  // Texto del wordmark de respaldo si no hay logo de imagen.
   wordmark: string
-  // Subtítulo bajo el wordmark — tagline corta de marca.
   tagline: string
-  // Logo oficial del cliente (imagen). Si no hay, se usa el wordmark
-  // tipográfico como respaldo (case sensitivity respetado).
   logo?: ClientLogo
   style: BrandStyle
   badge: string
   headline: string
-  intro: React.ReactNode
+  // HTML con etiquetas <strong> permitidas (sin scripts).
+  introHtml: string
   quote: string
   author: string
   stats: Stat[]
   ecosystemTitle: string
   ecosystemLead: string
   ecosystemItems: string[]
-  // Fondo del quote: light (con borde), dark (con tinta del cliente).
   quoteVariant: 'light' | 'dark'
 }
 
-const CASES: SuccessCase[] = [
-  {
-    slug: 'jarmauto',
-    brand: 'JARMAUTO',
-    wordmark: 'Jarmauto',
-    tagline: 'Grupo automoción · Madrid',
-    logo: { src: '/images/clients/jarmauto.png', width: 4946, height: 1032, alt: 'Jarmauto' },
-    style: {
-      primary: '#111111', // negro Jarmauto (wordmark monocromo)
-      ink: '#0A0A0A',
-      banner: 'linear-gradient(135deg, #0A0A0A 0%, #1F1F1F 55%, #4A4A4A 100%)',
-      wordmarkClass: 'tracking-[-0.01em] font-bold',
-    },
-    badge: 'Cliente Premium · Ecosistema completo',
-    headline: 'El cliente número 1 de la compañía',
-    intro: (
-      <>
-        Jarmauto es el cliente número 1 de Motorflash Solutions. Grupo multimarca con varios puntos de venta en la Comunidad de Madrid, tiene contratados <strong>todos los productos</strong> de la compañía —web, CRM4YOU, Contact Center (Customer Manager) y Marketing Digital— para cubrir de extremo a extremo la captación, gestión y cierre de leads.
-      </>
-    ),
-    quote:
-      'Motorflash ha sido clave en la transformación digital de Jarmauto. Tener la web, el CRM, el Contact Center y el marketing digital del mismo partner nos permite trabajar con datos consistentes y una única versión de la verdad.',
-    author: 'Dirección Comercial, Jarmauto',
-    stats: [
-      { value: '4', label: 'Productos Motorflash contratados', numeric: 4 },
-      { value: '+180%', label: 'Leads online en 3 años', numeric: 180, suffix: '%' },
-      { value: '-32%', label: 'Coste por lead', numeric: -32, suffix: '%' },
-      { value: '360°', label: 'Visión del cliente' },
+interface PageCopy {
+  metaTitle: string
+  metaDescription: string
+  metaOg: string
+  heroEyebrow: string
+  heroTitle1: string
+  heroTitle2: string
+  heroLead: string
+  trustHeading: string
+  morePill1: string
+  morePill2: string
+  productsLabel: string
+  ctaTitle: string
+  ctaLead: string
+  ctaButton: string
+  cases: SuccessCase[]
+}
+
+// Estilos visuales por cliente (compartidos entre locales — no se traducen).
+const STYLE_JARMAUTO: BrandStyle = { primary: '#111111', ink: '#0A0A0A', banner: 'linear-gradient(135deg, #0A0A0A 0%, #1F1F1F 55%, #4A4A4A 100%)', wordmarkClass: 'tracking-[-0.01em] font-bold' }
+const STYLE_OCASIONPLUS: BrandStyle = { primary: '#00A3D7', ink: '#0E1E2A', banner: 'linear-gradient(135deg, #0E1E2A 0%, #103B5A 55%, #00A3D7 100%)', wordmarkClass: 'tracking-[-0.02em] font-bold' }
+const STYLE_FLEXICAR: BrandStyle = { primary: '#F37B20', ink: '#1E1E1E', banner: 'linear-gradient(135deg, #1E1E1E 0%, #3B2410 55%, #F37B20 100%)', wordmarkClass: 'tracking-[-0.02em] font-black italic lowercase' }
+const STYLE_MUYCAR: BrandStyle = { primary: '#1FB44E', ink: '#0E1A12', banner: 'linear-gradient(135deg, #0E1A12 0%, #143A22 55%, #1FB44E 100%)', wordmarkClass: 'tracking-[0.04em] font-black' }
+const STYLE_AUTOELIA: BrandStyle = { primary: '#1A3A5C', ink: '#0F1A2A', banner: 'linear-gradient(135deg, #0F1A2A 0%, #1A3A5C 60%, #BC8B4A 100%)', wordmarkClass: 'tracking-[0.32em] font-light' }
+
+const LOGO_JARMAUTO: ClientLogo = { src: '/images/clients/jarmauto.png', width: 4946, height: 1032, alt: 'Jarmauto' }
+const LOGO_OCASIONPLUS: ClientLogo = { src: '/images/clients/ocasionplus.jpg', width: 600, height: 60, alt: 'Ocasionplus' }
+const LOGO_FLEXICAR: ClientLogo = { src: '/images/clients/flexicar.png', width: 454, height: 111, alt: 'Flexicar' }
+const LOGO_MUYCAR: ClientLogo = { src: '/images/clients/muy-car.png', width: 439, height: 115, alt: 'Muy Car' }
+
+const COPY: Record<LocaleKey, PageCopy> = {
+  es: {
+    metaTitle: 'Casos de éxito',
+    metaDescription: 'Clientes que confían en Motorflash Solutions desde hace años. Resultados reales de Jarmauto, Ocasionplus, Flexicar, Muy Car y Auto Elia.',
+    metaOg: 'Jarmauto, Ocasionplus, Flexicar, Muy Car y Auto Elia: resultados reales de concesionarios líderes.',
+    heroEyebrow: 'Casos de éxito',
+    heroTitle1: 'Clientes que confían en nosotros',
+    heroTitle2: 'desde hace años',
+    heroLead: 'Resultados reales de concesionarios líderes que han crecido con Motorflash Solutions. Desde grupos multimarca con el ecosistema completo hasta especialistas que usan solo una pieza muy concreta.',
+    trustHeading: 'Confían en nosotros',
+    morePill1: '+1.500',
+    morePill2: 'clientes más',
+    productsLabel: 'PRODUCTOS CONTRATADOS',
+    ctaTitle: '¿Quieres que tu marca sea el próximo caso?',
+    ctaLead: 'Cuéntanos cuál es tu reto comercial y te enseñamos un caso de un grupo de tu tamaño. En 30 minutos sabes qué piezas necesitas, cuánto cuesta y cuándo empezarías a vender más.',
+    ctaButton: 'Hablar con un especialista',
+    cases: [
+      { slug: 'jarmauto', brand: 'JARMAUTO', wordmark: 'Jarmauto', tagline: 'Grupo automoción · Madrid', logo: LOGO_JARMAUTO, style: STYLE_JARMAUTO, badge: 'Cliente Premium · Ecosistema completo', headline: 'El cliente número 1 de la compañía', introHtml: 'Jarmauto es el cliente número 1 de Motorflash Solutions. Grupo multimarca con varios puntos de venta en la Comunidad de Madrid, tiene contratados <strong>todos los productos</strong> de la compañía —web, CRM4YOU, Contact Center (Customer Manager) y Marketing Digital— para cubrir de extremo a extremo la captación, gestión y cierre de leads.', quote: 'Motorflash ha sido clave en la transformación digital de Jarmauto. Tener la web, el CRM, el Contact Center y el marketing digital del mismo partner nos permite trabajar con datos consistentes y una única versión de la verdad.', author: 'Dirección Comercial, Jarmauto', stats: [ { value: '4', label: 'Productos Motorflash contratados' }, { value: '+180%', label: 'Leads online en 3 años' }, { value: '-32%', label: 'Coste por lead' }, { value: '360°', label: 'Visión del cliente' } ], ecosystemTitle: 'Un partner tecnológico 360°', ecosystemLead: 'Jarmauto opera sobre el ecosistema completo de Motorflash Solutions.', ecosystemItems: [ 'Web corporativa Motorflash', 'CRM4YOU — gestión comercial del grupo', 'Contact Center · Customer Manager', 'Marketing Digital gestionado por Motorflash' ], quoteVariant: 'dark' },
+      { slug: 'ocasionplus', brand: 'OCASIONPLUS', wordmark: 'ocasionplus.com', tagline: 'Red nacional de VO', logo: LOGO_OCASIONPLUS, style: STYLE_OCASIONPLUS, badge: 'Especialista en stock · Cliente operativo', headline: 'Una de las mayores redes de VO de España, apoyada en nuestra gestión de stock', introHtml: 'Ocasionplus utiliza Motorflash Solutions como motor de gestión de stock: exportación de coches a portales y partners, <strong>multipublicación</strong> para maximizar visibilidad y <strong>tasación online</strong> para acelerar la compra de vehículo usado. Tres piezas quirúrgicas que potencian su operativa nacional sin tocar su ecosistema interno.', quote: 'Necesitábamos especialistas que entendieran cómo funciona un stock de VO a gran escala. Motorflash no aplica una receta cerrada: se adapta a cada marca, modelo y casuística del stock, lo que a nivel operativo es tremendamente complejo y marca la diferencia.', author: 'Dirección de Operaciones, Ocasionplus', stats: [ { value: '3', label: 'Servicios Motorflash contratados' }, { value: '+45%', label: 'Rotación de stock' }, { value: '-28%', label: 'Días medios de venta' }, { value: '24h', label: 'Tasación online' } ], ecosystemTitle: 'Rotación y visibilidad de stock a escala nacional', ecosystemLead: 'Ocasionplus apoya la operación de stock en Motorflash Solutions: exportación, multipublicación y tasación online.', ecosystemItems: [ 'Servicios de exportación de coches', 'Multipublicación en portales del sector', 'Tasación online del stock' ], quoteVariant: 'dark' },
+      { slug: 'flexicar', brand: 'FLEXICAR', wordmark: 'flexicar', tagline: 'Red de VO · Iberia', logo: LOGO_FLEXICAR, style: STYLE_FLEXICAR, badge: 'Cliente · Motorflash Message', headline: 'Toda la potencia de WhatsApp para VO con Motorflash Message', introHtml: 'Flexicar, la mayor red de VO de Iberia, tiene contratado con Motorflash <strong>únicamente</strong> el servicio de <strong>Motorflash Message</strong> para gestionar WhatsApp a escala. La plataforma les permite unificar las conversaciones de todos sus centros, asignar leads al comercial adecuado y medir el rendimiento por tienda.', quote: 'WhatsApp se ha convertido en el canal número 1 de conversación con el comprador. Motorflash Message nos permite tratarlo como un canal profesional: con reglas, asignaciones y reporting por centro.', author: 'Dirección Digital, Grupo Flexicar', stats: [ { value: '1', label: 'Servicio contratado: Motorflash Message' }, { value: '+180', label: 'Centros con WhatsApp unificado' }, { value: '+62%', label: 'Respuestas en menos de 5 min' }, { value: 'ES+PT', label: 'Operativa Iberia' } ], ecosystemTitle: 'WhatsApp como canal profesional de ventas', ecosystemLead: 'Flexicar usa Motorflash Message para gestionar conversaciones comerciales por WhatsApp en toda su red.', ecosystemItems: [ 'WhatsApp Business unificado por grupo', 'Asignación automática de leads al comercial', 'Plantillas y respuestas rápidas por centro', 'Reporting de conversaciones y conversión' ], quoteVariant: 'light' },
+      { slug: 'muy-car', brand: 'MUY CAR', wordmark: 'MUY CAR', tagline: 'Concesionario nativo digital', logo: LOGO_MUYCAR, style: STYLE_MUYCAR, badge: 'Nacieron con Motorflash · Crecieron con nosotros', headline: 'Nacieron con Motorflash y han crecido con nosotros', introHtml: 'Muy Car es uno de esos casos que nos enorgullecen: <strong>nacieron con Motorflash y han crecido con nosotros</strong>. Hoy tienen contratado el <strong>CRM4YOU</strong> para gestionar de forma ordenada todo el ciclo comercial, la <strong>web corporativa</strong> como escaparate online profesional y <strong>Motorflash Message</strong> para trabajar WhatsApp como canal de ventas.', quote: 'Arrancamos el proyecto de la mano de Motorflash y hemos ido sumando piezas a medida que crecíamos. Primero el CRM4YOU, luego la web y ahora Motorflash Message para WhatsApp: todo encaja y trabaja con los mismos datos.', author: 'Responsable de VO, Muy Car', stats: [ { value: '3', label: 'Productos contratados (CRM + web + Message)' }, { value: 'Día 1', label: 'Cliente desde el nacimiento del negocio' }, { value: '×3,2', label: 'Leads online en su evolución' }, { value: '24/7', label: 'CRM, web y WhatsApp activos' } ], ecosystemTitle: 'Un cliente desde el día uno', ecosystemLead: 'Muy Car nació apoyándose en Motorflash y ha ido incorporando cada vez más soluciones conforme crecía el negocio.', ecosystemItems: [ 'CRM4YOU integrado con la operativa comercial', 'Web corporativa Motorflash', 'Motorflash Message · WhatsApp profesional' ], quoteVariant: 'light' },
+      { slug: 'auto-elia', brand: 'AUTO ELIA', wordmark: 'AUTO ELIA', tagline: 'Volvo · Lynk & Co — concesionario oficial', style: STYLE_AUTOELIA, badge: 'Cliente · Leads de calidad', headline: 'Concesionario oficial premium que capta leads de calidad con Motorflash Exclusive', introHtml: 'Auto Elia, concesionario oficial Volvo y Lynk &amp; Co, opera con un pack Motorflash muy orientado a captación cualificada: <strong>web corporativa</strong>, <strong>marketing digital</strong>, <strong>publicación de stock</strong> y el servicio premium <strong>Motorflash Exclusive</strong> para <strong>conseguir leads de calidad</strong>, con alta intención de compra y mejor conversión a venta.', quote: 'Operamos con estándares de marca muy exigentes y necesitamos leads realmente cualificados. Motorflash Exclusive, junto a la web y el marketing digital, nos trae contactos con verdadera intención de compra coherentes con Volvo y Lynk & Co.', author: 'Dirección de Marketing, Grupo Auto Elia', stats: [ { value: '4', label: 'Productos Motorflash contratados' }, { value: '+74%', label: 'Leads cualificados captados' }, { value: '+55%', label: 'Conversión a venta km 0 y VO premium' }, { value: 'Exclusive', label: 'Leads de calidad premium' } ], ecosystemTitle: 'Captación cualificada multimarca', ecosystemLead: 'Auto Elia combina web, marketing digital, publicación de stock y Motorflash Exclusive para generar leads con alta intención de compra.', ecosystemItems: [ 'Web corporativa Motorflash', 'Marketing Digital gestionado', 'Publicación de stock optimizada', 'Motorflash Exclusive — leads premium' ], quoteVariant: 'dark' },
     ],
-    ecosystemTitle: 'Un partner tecnológico 360°',
-    ecosystemLead: 'Jarmauto opera sobre el ecosistema completo de Motorflash Solutions.',
-    ecosystemItems: [
-      'Web corporativa Motorflash',
-      'CRM4YOU — gestión comercial del grupo',
-      'Contact Center · Customer Manager',
-      'Marketing Digital gestionado por Motorflash',
-    ],
-    quoteVariant: 'dark',
   },
-  {
-    slug: 'ocasionplus',
-    brand: 'OCASIONPLUS',
-    wordmark: 'ocasionplus.com',
-    tagline: 'Red nacional de VO',
-    logo: { src: '/images/clients/ocasionplus.jpg', width: 600, height: 60, alt: 'Ocasionplus' },
-    style: {
-      primary: '#00A3D7', // cian Ocasionplus
-      ink: '#0E1E2A',
-      banner: 'linear-gradient(135deg, #0E1E2A 0%, #103B5A 55%, #00A3D7 100%)',
-      wordmarkClass: 'tracking-[-0.02em] font-bold',
-    },
-    badge: 'Especialista en stock · Cliente operativo',
-    headline: 'Una de las mayores redes de VO de España, apoyada en nuestra gestión de stock',
-    intro: (
-      <>
-        Ocasionplus utiliza Motorflash Solutions como motor de gestión de stock: exportación de coches a portales y partners, <strong>multipublicación</strong> para maximizar visibilidad y <strong>tasación online</strong> para acelerar la compra de vehículo usado. Tres piezas quirúrgicas que potencian su operativa nacional sin tocar su ecosistema interno.
-      </>
-    ),
-    quote:
-      'Necesitábamos especialistas que entendieran cómo funciona un stock de VO a gran escala. Motorflash no aplica una receta cerrada: se adapta a cada marca, modelo y casuística del stock, lo que a nivel operativo es tremendamente complejo y marca la diferencia.',
-    author: 'Dirección de Operaciones, Ocasionplus',
-    stats: [
-      { value: '3', label: 'Servicios Motorflash contratados', numeric: 3 },
-      { value: '+45%', label: 'Rotación de stock', numeric: 45, suffix: '%' },
-      { value: '-28%', label: 'Días medios de venta', numeric: -28, suffix: '%' },
-      { value: '24h', label: 'Tasación online' },
+  en: {
+    metaTitle: 'Success stories',
+    metaDescription: 'Customers trusting Motorflash Solutions for years. Real results from Jarmauto, Ocasionplus, Flexicar, Muy Car and Auto Elia.',
+    metaOg: 'Jarmauto, Ocasionplus, Flexicar, Muy Car and Auto Elia: real results from leading dealerships.',
+    heroEyebrow: 'Success stories',
+    heroTitle1: 'Clients that trust us',
+    heroTitle2: 'for years',
+    heroLead: 'Real results from leading dealerships that have grown with Motorflash Solutions. From multi-brand groups running the full ecosystem to specialists using just one specific piece.',
+    trustHeading: 'They trust us',
+    morePill1: '+1,500',
+    morePill2: 'more clients',
+    productsLabel: 'PRODUCTS USED',
+    ctaTitle: 'Want your brand to be the next case?',
+    ctaLead: "Tell us your commercial challenge and we'll walk you through a case from a group your size. In 30 minutes you know which pieces you need, what they cost and when you'd start selling more.",
+    ctaButton: 'Talk to a specialist',
+    cases: [
+      { slug: 'jarmauto', brand: 'JARMAUTO', wordmark: 'Jarmauto', tagline: 'Automotive group · Madrid', logo: LOGO_JARMAUTO, style: STYLE_JARMAUTO, badge: 'Premium client · Full ecosystem', headline: 'The number 1 client of the company', introHtml: 'Jarmauto is Motorflash Solutions’ number 1 client. A multi-brand group with several locations in the Madrid region, it has contracted <strong>every product</strong> we offer — web, CRM4YOU, Contact Center (Customer Manager) and Digital Marketing — to cover lead capture, management and closing end to end.', quote: 'Motorflash has been key to Jarmauto’s digital transformation. Having the web, CRM, Contact Center and digital marketing from the same partner lets us work with consistent data and a single source of truth.', author: 'Sales Management, Jarmauto', stats: [ { value: '4', label: 'Motorflash products in use' }, { value: '+180%', label: 'Online leads over 3 years' }, { value: '-32%', label: 'Cost per lead' }, { value: '360°', label: 'Customer view' } ], ecosystemTitle: 'A 360° technology partner', ecosystemLead: 'Jarmauto runs on the full Motorflash Solutions ecosystem.', ecosystemItems: [ 'Motorflash corporate website', 'CRM4YOU — group sales management', 'Contact Center · Customer Manager', 'Digital Marketing managed by Motorflash' ], quoteVariant: 'dark' },
+      { slug: 'ocasionplus', brand: 'OCASIONPLUS', wordmark: 'ocasionplus.com', tagline: 'National used-vehicle network', logo: LOGO_OCASIONPLUS, style: STYLE_OCASIONPLUS, badge: 'Stock specialist · Operational client', headline: "One of Spain's largest used-vehicle networks, supported by our stock management", introHtml: 'Ocasionplus uses Motorflash Solutions as a stock management engine: vehicle export to portals and partners, <strong>multi-publishing</strong> to maximise visibility and <strong>online appraisal</strong> to speed up used-vehicle purchases. Three surgical pieces that boost their national operation without touching their internal ecosystem.', quote: 'We needed specialists who understood how a used-vehicle stock works at scale. Motorflash doesn’t apply a closed recipe: they adapt to each brand, model and stock case, which at operational level is tremendously complex and makes the difference.', author: 'Operations, Ocasionplus', stats: [ { value: '3', label: 'Motorflash services in use' }, { value: '+45%', label: 'Stock rotation' }, { value: '-28%', label: 'Average days to sale' }, { value: '24h', label: 'Online appraisal' } ], ecosystemTitle: 'Stock rotation and visibility at national scale', ecosystemLead: 'Ocasionplus supports its stock operation with Motorflash Solutions: export, multi-publishing and online appraisal.', ecosystemItems: [ 'Vehicle export services', 'Multi-publishing across sector portals', 'Online stock appraisal' ], quoteVariant: 'dark' },
+      { slug: 'flexicar', brand: 'FLEXICAR', wordmark: 'flexicar', tagline: 'Used-vehicle network · Iberia', logo: LOGO_FLEXICAR, style: STYLE_FLEXICAR, badge: 'Client · Motorflash Message', headline: 'All the power of WhatsApp for used vehicles with Motorflash Message', introHtml: 'Flexicar, the largest used-vehicle network in Iberia, has contracted <strong>only</strong> the <strong>Motorflash Message</strong> service to manage WhatsApp at scale. The platform lets them unify conversations across every centre, assign leads to the right rep and measure performance per store.', quote: "WhatsApp has become the number 1 conversation channel with the buyer. Motorflash Message lets us treat it as a professional channel: with rules, assignments and per-centre reporting.", author: 'Digital, Grupo Flexicar', stats: [ { value: '1', label: 'Service in use: Motorflash Message' }, { value: '+180', label: 'Centres with unified WhatsApp' }, { value: '+62%', label: 'Replies in under 5 min' }, { value: 'ES+PT', label: 'Iberian operation' } ], ecosystemTitle: 'WhatsApp as a professional sales channel', ecosystemLead: 'Flexicar uses Motorflash Message to manage sales conversations on WhatsApp across the whole network.', ecosystemItems: [ 'WhatsApp Business unified by group', 'Automatic lead assignment to sales rep', 'Per-centre templates and quick replies', 'Conversation and conversion reporting' ], quoteVariant: 'light' },
+      { slug: 'muy-car', brand: 'MUY CAR', wordmark: 'MUY CAR', tagline: 'Digital-native dealership', logo: LOGO_MUYCAR, style: STYLE_MUYCAR, badge: 'Born with Motorflash · Grew with us', headline: 'Born with Motorflash, grown with us', introHtml: 'Muy Car is one of those cases that make us proud: <strong>they were born with Motorflash and have grown with us</strong>. Today they use <strong>CRM4YOU</strong> to run the full sales cycle, the <strong>corporate website</strong> as a professional online storefront and <strong>Motorflash Message</strong> to handle WhatsApp as a sales channel.', quote: "We started the project alongside Motorflash and we've added pieces as we grew. First CRM4YOU, then the website and now Motorflash Message for WhatsApp: everything fits and works with the same data.", author: 'Head of Used Vehicles, Muy Car', stats: [ { value: '3', label: 'Products in use (CRM + web + Message)' }, { value: 'Day 1', label: 'Client from the start of the business' }, { value: '×3.2', label: 'Online lead growth' }, { value: '24/7', label: 'CRM, web and WhatsApp active' } ], ecosystemTitle: 'A client from day one', ecosystemLead: 'Muy Car was born on top of Motorflash and has added more solutions as the business grew.', ecosystemItems: [ 'CRM4YOU integrated with sales operations', 'Motorflash corporate website', 'Motorflash Message · professional WhatsApp' ], quoteVariant: 'light' },
+      { slug: 'auto-elia', brand: 'AUTO ELIA', wordmark: 'AUTO ELIA', tagline: 'Volvo · Lynk & Co — official dealership', style: STYLE_AUTOELIA, badge: 'Client · Quality leads', headline: 'Premium official dealership capturing quality leads with Motorflash Exclusive', introHtml: 'Auto Elia, official Volvo and Lynk &amp; Co dealership, runs a Motorflash pack tailored for qualified lead capture: <strong>corporate website</strong>, <strong>digital marketing</strong>, <strong>stock publication</strong> and the premium <strong>Motorflash Exclusive</strong> service for <strong>quality leads</strong>, with high purchase intent and better conversion to sale.', quote: 'We operate to very demanding brand standards and need truly qualified leads. Motorflash Exclusive, together with the website and digital marketing, brings us contacts with real purchase intent — coherent with Volvo and Lynk & Co.', author: 'Marketing, Grupo Auto Elia', stats: [ { value: '4', label: 'Motorflash products in use' }, { value: '+74%', label: 'Qualified leads captured' }, { value: '+55%', label: 'Conversion to km 0 / premium UV sale' }, { value: 'Exclusive', label: 'Premium-quality leads' } ], ecosystemTitle: 'Multi-brand qualified lead capture', ecosystemLead: 'Auto Elia combines web, digital marketing, stock publishing and Motorflash Exclusive to generate high-intent leads.', ecosystemItems: [ 'Motorflash corporate website', 'Managed Digital Marketing', 'Optimised stock publication', 'Motorflash Exclusive — premium leads' ], quoteVariant: 'dark' },
     ],
-    ecosystemTitle: 'Rotación y visibilidad de stock a escala nacional',
-    ecosystemLead: 'Ocasionplus apoya la operación de stock en Motorflash Solutions: exportación, multipublicación y tasación online.',
-    ecosystemItems: [
-      'Servicios de exportación de coches',
-      'Multipublicación en portales del sector',
-      'Tasación online del stock',
-    ],
-    quoteVariant: 'dark',
   },
-  {
-    slug: 'flexicar',
-    brand: 'FLEXICAR',
-    wordmark: 'flexicar',
-    tagline: 'Red de VO · Iberia',
-    logo: { src: '/images/clients/flexicar.png', width: 454, height: 111, alt: 'Flexicar' },
-    style: {
-      primary: '#F37B20', // naranja Flexicar
-      ink: '#1E1E1E',
-      banner: 'linear-gradient(135deg, #1E1E1E 0%, #3B2410 55%, #F37B20 100%)',
-      wordmarkClass: 'tracking-[-0.02em] font-black italic lowercase',
-    },
-    badge: 'Cliente · Motorflash Message',
-    headline: 'Toda la potencia de WhatsApp para VO con Motorflash Message',
-    intro: (
-      <>
-        Flexicar, la mayor red de VO de Iberia, tiene contratado con Motorflash <strong>únicamente</strong> el servicio de <strong>Motorflash Message</strong> para gestionar WhatsApp a escala. La plataforma les permite unificar las conversaciones de todos sus centros, asignar leads al comercial adecuado y medir el rendimiento por tienda.
-      </>
-    ),
-    quote:
-      'WhatsApp se ha convertido en el canal número 1 de conversación con el comprador. Motorflash Message nos permite tratarlo como un canal profesional: con reglas, asignaciones y reporting por centro.',
-    author: 'Dirección Digital, Grupo Flexicar',
-    stats: [
-      { value: '1', label: 'Servicio contratado: Motorflash Message', numeric: 1 },
-      { value: '+180', label: 'Centros con WhatsApp unificado', numeric: 180, suffix: '' },
-      { value: '+62%', label: 'Respuestas en menos de 5 min', numeric: 62, suffix: '%' },
-      { value: 'ES+PT', label: 'Operativa Iberia' },
+  zh: {
+    metaTitle: '成功案例',
+    metaDescription: '多年来信赖 Motorflash Solutions 的客户。来自 Jarmauto、Ocasionplus、Flexicar、Muy Car 与 Auto Elia 的真实成果。',
+    metaOg: 'Jarmauto、Ocasionplus、Flexicar、Muy Car 与 Auto Elia:领先经销商的真实成果。',
+    heroEyebrow: '成功案例',
+    heroTitle1: '多年来信赖我们的',
+    heroTitle2: '客户',
+    heroLead: '与 Motorflash Solutions 共同成长的领先经销商的真实成果。从拥有完整生态的多品牌集团,到只使用某一特定模块的专业玩家。',
+    trustHeading: '他们信赖我们',
+    morePill1: '+1,500',
+    morePill2: '其他客户',
+    productsLabel: '已使用产品',
+    ctaTitle: '想让您的品牌成为下一个案例吗?',
+    ctaLead: '告诉我们您的商业挑战,我们为您展示与您规模相近的集团案例。30 分钟内您就能明白需要哪些模块、成本几何,以及何时能开始卖出更多。',
+    ctaButton: '与专家沟通',
+    cases: [
+      { slug: 'jarmauto', brand: 'JARMAUTO', wordmark: 'Jarmauto', tagline: '汽车集团 · 马德里', logo: LOGO_JARMAUTO, style: STYLE_JARMAUTO, badge: '高级客户 · 完整生态', headline: '公司的第一大客户', introHtml: 'Jarmauto 是 Motorflash Solutions 的第一大客户。这家位于马德里大区的多品牌集团使用我们的<strong>全部产品</strong> — 网站、CRM4YOU、Contact Center(Customer Manager)与数字营销 — 覆盖从获客、管理到成交的全流程。', quote: 'Motorflash 是 Jarmauto 数字化转型的关键。让网站、CRM、Contact Center 与数字营销由同一合作伙伴提供,使我们能够基于一致的数据和单一事实来源开展工作。', author: 'Jarmauto 销售管理层', stats: [ { value: '4', label: '在用的 Motorflash 产品' }, { value: '+180%', label: '3 年内线上潜客' }, { value: '-32%', label: '潜客成本' }, { value: '360°', label: '客户视角' } ], ecosystemTitle: '360° 技术合作伙伴', ecosystemLead: 'Jarmauto 运行于 Motorflash Solutions 的完整生态。', ecosystemItems: [ 'Motorflash 企业网站', 'CRM4YOU — 集团销售管理', 'Contact Center · Customer Manager', '由 Motorflash 管理的数字营销' ], quoteVariant: 'dark' },
+      { slug: 'ocasionplus', brand: 'OCASIONPLUS', wordmark: 'ocasionplus.com', tagline: '全国二手车网络', logo: LOGO_OCASIONPLUS, style: STYLE_OCASIONPLUS, badge: '库存专家 · 运营型客户', headline: '西班牙最大的二手车网络之一,以我们的库存管理为支撑', introHtml: 'Ocasionplus 将 Motorflash Solutions 用作库存管理引擎:向门户与合作方导出车辆、用 <strong>多平台发布</strong> 最大化曝光,并用 <strong>在线估值</strong> 加速二手车收购。这三块精准模块在不动其内部生态的前提下增强了其全国运营。', quote: '我们需要懂得大规模二手车库存运作的专家。Motorflash 不强加固定方案:他们针对每个品牌、车型与库存情况进行适配,这在运营层面非常复杂,却也正是差异化所在。', author: 'Ocasionplus 运营部', stats: [ { value: '3', label: '在用的 Motorflash 服务' }, { value: '+45%', label: '库存周转' }, { value: '-28%', label: '平均成交天数' }, { value: '24h', label: '在线估值' } ], ecosystemTitle: '全国级的库存周转与曝光', ecosystemLead: 'Ocasionplus 依靠 Motorflash Solutions 支撑其库存运营:导出、多平台发布与在线估值。', ecosystemItems: [ '车辆导出服务', '面向行业门户的多平台发布', '在线库存估值' ], quoteVariant: 'dark' },
+      { slug: 'flexicar', brand: 'FLEXICAR', wordmark: 'flexicar', tagline: '二手车网络 · 伊比利亚', logo: LOGO_FLEXICAR, style: STYLE_FLEXICAR, badge: '客户 · Motorflash Message', headline: '用 Motorflash Message 释放二手车 WhatsApp 的全部潜力', introHtml: 'Flexicar 是伊比利亚最大的二手车网络,与 Motorflash <strong>仅</strong>使用 <strong>Motorflash Message</strong> 服务以规模化运营 WhatsApp。该平台让其统一所有门店的对话、将潜客分配给合适的销售并按门店衡量绩效。', quote: 'WhatsApp 已成为与买家沟通的头号渠道。Motorflash Message 让我们把它作为专业渠道运营:有规则、有分配、按门店有报告。', author: 'Grupo Flexicar 数字化部', stats: [ { value: '1', label: '在用服务:Motorflash Message' }, { value: '+180', label: '统一 WhatsApp 的门店' }, { value: '+62%', label: '5 分钟内回复占比' }, { value: 'ES+PT', label: '伊比利亚运营' } ], ecosystemTitle: '把 WhatsApp 作为专业销售渠道', ecosystemLead: 'Flexicar 使用 Motorflash Message 在整个网络中通过 WhatsApp 管理销售对话。', ecosystemItems: [ '按集团统一的 WhatsApp Business', '潜客自动分配给销售', '按门店的模板与快速回复', '对话与转化报告' ], quoteVariant: 'light' },
+      { slug: 'muy-car', brand: 'MUY CAR', wordmark: 'MUY CAR', tagline: '数字原生经销商', logo: LOGO_MUYCAR, style: STYLE_MUYCAR, badge: '与 Motorflash 同生 · 与我们共成长', headline: '诞生于 Motorflash,与我们共同成长', introHtml: 'Muy Car 是让我们引以为豪的客户之一:<strong>他们诞生于 Motorflash 并与我们一同成长</strong>。如今他们使用 <strong>CRM4YOU</strong> 管理完整销售周期、<strong>企业网站</strong> 作为专业在线门面,并以 <strong>Motorflash Message</strong> 将 WhatsApp 作为销售渠道。', quote: '项目从一开始就与 Motorflash 同行,随着业务成长不断增添模块。先是 CRM4YOU,然后是网站,现在是用于 WhatsApp 的 Motorflash Message:一切契合且共用同一份数据。', author: 'Muy Car 二手车负责人', stats: [ { value: '3', label: '在用产品(CRM + 网站 + Message)' }, { value: '第 1 天', label: '业务诞生即为客户' }, { value: '×3.2', label: '线上潜客的增长' }, { value: '24/7', label: 'CRM、网站与 WhatsApp 始终在线' } ], ecosystemTitle: '从第一天起就在我们的客户行列', ecosystemLead: 'Muy Car 以 Motorflash 起步,并随业务成长不断加入更多解决方案。', ecosystemItems: [ 'CRM4YOU 与销售运营集成', 'Motorflash 企业网站', 'Motorflash Message · 专业 WhatsApp' ], quoteVariant: 'light' },
+      { slug: 'auto-elia', brand: 'AUTO ELIA', wordmark: 'AUTO ELIA', tagline: 'Volvo · Lynk & Co — 官方经销商', style: STYLE_AUTOELIA, badge: '客户 · 优质潜客', headline: '使用 Motorflash Exclusive 获取优质潜客的高端官方经销商', introHtml: 'Auto Elia 是 Volvo 与 Lynk &amp; Co 官方经销商,使用面向精准获客的 Motorflash 套件:<strong>企业网站</strong>、<strong>数字营销</strong>、<strong>库存发布</strong>,以及高端 <strong>Motorflash Exclusive</strong> 服务,以获取 <strong>购买意向高、转化更佳</strong> 的优质潜客。', quote: '我们以严格的品牌标准运营,需要真正高质量的潜客。Motorflash Exclusive 配合网站与数字营销,带来与 Volvo 与 Lynk & Co 一致、具有真实购买意向的客户。', author: 'Grupo Auto Elia 市场部', stats: [ { value: '4', label: '在用的 Motorflash 产品' }, { value: '+74%', label: '已获取的优质潜客' }, { value: '+55%', label: 'km 0 与优质二手车转化' }, { value: 'Exclusive', label: '高端优质潜客' } ], ecosystemTitle: '多品牌的精准获客', ecosystemLead: 'Auto Elia 通过网站、数字营销、库存发布与 Motorflash Exclusive,产生高购买意向的潜客。', ecosystemItems: [ 'Motorflash 企业网站', '受托管的数字营销', '优化的库存发布', 'Motorflash Exclusive — 高端潜客' ], quoteVariant: 'dark' },
     ],
-    ecosystemTitle: 'WhatsApp como canal profesional de ventas',
-    ecosystemLead: 'Flexicar usa Motorflash Message para gestionar conversaciones comerciales por WhatsApp en toda su red.',
-    ecosystemItems: [
-      'WhatsApp Business unificado por grupo',
-      'Asignación automática de leads al comercial',
-      'Plantillas y respuestas rápidas por centro',
-      'Reporting de conversaciones y conversión',
-    ],
-    quoteVariant: 'light',
   },
-  {
-    slug: 'muy-car',
-    brand: 'MUY CAR',
-    wordmark: 'MUY CAR',
-    tagline: 'Concesionario nativo digital',
-    logo: { src: '/images/clients/muy-car.png', width: 439, height: 115, alt: 'Muy Car' },
-    style: {
-      primary: '#1FB44E', // verde Muy Car
-      ink: '#0E1A12',
-      banner: 'linear-gradient(135deg, #0E1A12 0%, #143A22 55%, #1FB44E 100%)',
-      wordmarkClass: 'tracking-[0.04em] font-black',
+}
+
+export async function generateMetadata() {
+  const locale = ((await getLocale()) as LocaleKey) || 'es'
+  const t = COPY[locale] ?? COPY.es
+  return {
+    title: t.metaTitle,
+    description: t.metaDescription,
+    alternates: { canonical: '/historias-de-exito' },
+    openGraph: {
+      title: `${t.metaTitle} — Motorflash`,
+      description: t.metaOg,
+      url: '/historias-de-exito',
     },
-    badge: 'Nacieron con Motorflash · Crecieron con nosotros',
-    headline: 'Nacieron con Motorflash y han crecido con nosotros',
-    intro: (
-      <>
-        Muy Car es uno de esos casos que nos enorgullecen: <strong>nacieron con Motorflash y han crecido con nosotros</strong>. Hoy tienen contratado el <strong>CRM4YOU</strong> para gestionar de forma ordenada todo el ciclo comercial, la <strong>web corporativa</strong> como escaparate online profesional y <strong>Motorflash Message</strong> para trabajar WhatsApp como canal de ventas: seguimiento de leads centralizado, presencia online impecable y conversaciones profesionales con el comprador.
-      </>
-    ),
-    quote:
-      'Arrancamos el proyecto de la mano de Motorflash y hemos ido sumando piezas a medida que crecíamos. Primero el CRM4YOU, luego la web y ahora Motorflash Message para WhatsApp: todo encaja y trabaja con los mismos datos.',
-    author: 'Responsable de VO, Muy Car',
-    stats: [
-      { value: '3', label: 'Productos contratados (CRM + web + Message)', numeric: 3 },
-      { value: 'Día 1', label: 'Cliente desde el nacimiento del negocio' },
-      { value: '×3,2', label: 'Leads online en su evolución' },
-      { value: '24/7', label: 'CRM, web y WhatsApp activos' },
-    ],
-    ecosystemTitle: 'Un cliente desde el día uno',
-    ecosystemLead: 'Muy Car nació apoyándose en Motorflash y ha ido incorporando cada vez más soluciones conforme crecía el negocio.',
-    ecosystemItems: [
-      'CRM4YOU integrado con la operativa comercial',
-      'Web corporativa Motorflash',
-      'Motorflash Message · WhatsApp profesional',
-    ],
-    quoteVariant: 'light',
-  },
-  {
-    slug: 'auto-elia',
-    brand: 'AUTO ELIA',
-    wordmark: 'AUTO ELIA',
-    tagline: 'Volvo · Lynk & Co — concesionario oficial',
-    style: {
-      primary: '#1A3A5C', // azul Volvo
-      ink: '#0F1A2A',
-      banner: 'linear-gradient(135deg, #0F1A2A 0%, #1A3A5C 60%, #BC8B4A 100%)',
-      wordmarkClass: 'tracking-[0.32em] font-light',
-    },
-    badge: 'Cliente · Leads de calidad',
-    headline: 'Concesionario oficial premium que capta leads de calidad con Motorflash Exclusive',
-    intro: (
-      <>
-        Auto Elia, concesionario oficial Volvo y Lynk &amp; Co, opera con un pack Motorflash muy orientado a captación cualificada: <strong>web corporativa</strong>, <strong>marketing digital</strong>, <strong>publicación de stock</strong> y el servicio premium <strong>Motorflash Exclusive</strong> para <strong>conseguir leads de calidad</strong>, con alta intención de compra y mejor conversión a venta.
-      </>
-    ),
-    quote:
-      'Operamos con estándares de marca muy exigentes y necesitamos leads realmente cualificados. Motorflash Exclusive, junto a la web y el marketing digital, nos trae contactos con verdadera intención de compra coherentes con Volvo y Lynk & Co.',
-    author: 'Dirección de Marketing, Grupo Auto Elia',
-    stats: [
-      { value: '4', label: 'Productos Motorflash contratados', numeric: 4 },
-      { value: '+74%', label: 'Leads cualificados captados', numeric: 74, suffix: '%' },
-      { value: '+55%', label: 'Conversión a venta km 0 y VO premium', numeric: 55, suffix: '%' },
-      { value: 'Exclusive', label: 'Leads de calidad premium' },
-    ],
-    ecosystemTitle: 'Captación cualificada multimarca',
-    ecosystemLead: 'Auto Elia combina web, marketing digital, publicación de stock y Motorflash Exclusive para generar leads con alta intención de compra.',
-    ecosystemItems: [
-      'Web corporativa Motorflash',
-      'Marketing Digital gestionado',
-      'Publicación de stock optimizada',
-      'Motorflash Exclusive — leads premium',
-    ],
-    quoteVariant: 'dark',
-  },
-]
+  }
+}
 
 function isNumericStat(v: string) {
   return /^[+\-]?\d+([%]?)$/.test(v)
@@ -271,7 +173,10 @@ function parseNumericValue(v: string): { num: number; suffix: string } {
   return { num: sign * parseInt(m[2], 10), suffix: m[3] }
 }
 
-export default function CasosExitoPage() {
+export default async function CasosExitoPage() {
+  const locale = ((await getLocale()) as LocaleKey) || 'es'
+  const t = COPY[locale] ?? COPY.es
+
   return (
     <>
       {/* Hero */}
@@ -280,32 +185,31 @@ export default function CasosExitoPage() {
         <div className="mf-container relative z-10">
           <Reveal>
             <div className="text-center max-w-3xl mx-auto">
-              <span className="mf-eyebrow">Casos de éxito</span>
+              <span className="mf-eyebrow">{t.heroEyebrow}</span>
               <h1 className="text-3xl sm:text-4xl md:text-display-lg font-semibold leading-tight mb-6">
-                Clientes que confían en nosotros <span className="text-primary">desde hace años</span>
+                {t.heroTitle1} <span className="text-primary">{t.heroTitle2}</span>
               </h1>
               <p className="text-base md:text-lg text-on-surface-variant mb-8">
-                Resultados reales de concesionarios líderes que han crecido con Motorflash Solutions. Desde grupos multimarca con el ecosistema completo hasta especialistas que usan solo una pieza muy concreta.
+                {t.heroLead}
               </p>
             </div>
           </Reveal>
         </div>
       </section>
 
-      {/* Cinta de logos / wordmarks corporativos */}
+      {/* Cinta de logos */}
       <section className="py-12 md:py-16 bg-white border-y border-outline-variant">
         <div className="mf-container">
           <Reveal>
             <p className="text-center text-xs md:text-sm font-bold uppercase tracking-[0.2em] text-on-surface-variant mb-8">
-              Confían en nosotros
+              {t.trustHeading}
             </p>
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 md:gap-6 items-center">
-              {CASES.map((c) => (
+              {t.cases.map((c) => (
                 <a
                   key={c.slug}
                   href={`#${c.slug}`}
                   className="group flex items-center justify-center px-4 py-6 md:py-8 rounded-2xl border border-outline-variant bg-white hover:shadow-lg transition-all"
-                  style={{ borderColor: undefined }}
                 >
                   {c.logo ? (
                     <Image
@@ -330,9 +234,9 @@ export default function CasosExitoPage() {
                 className="group flex items-center justify-center px-3 py-6 md:py-8 rounded-2xl border border-dashed border-outline-variant bg-surface-container-low"
               >
                 <span className="font-display text-base md:text-lg font-semibold text-on-surface-variant text-center leading-tight">
-                  +1.500
+                  {t.morePill1}
                   <br />
-                  <span className="text-[10px] md:text-xs font-bold uppercase tracking-widest">clientes más</span>
+                  <span className="text-[10px] md:text-xs font-bold uppercase tracking-widest">{t.morePill2}</span>
                 </span>
               </a>
             </div>
@@ -342,8 +246,8 @@ export default function CasosExitoPage() {
 
       {/* Casos */}
       <div className="space-y-0">
-        {CASES.map((c, idx) => (
-          <CaseSection key={c.slug} caseItem={c} isAlt={idx % 2 === 1} index={idx} />
+        {t.cases.map((c, idx) => (
+          <CaseSection key={c.slug} caseItem={c} isAlt={idx % 2 === 1} productsLabel={t.productsLabel} />
         ))}
       </div>
 
@@ -352,12 +256,10 @@ export default function CasosExitoPage() {
         <div className="mf-container">
           <Reveal>
             <div className="bg-primary text-white rounded-2xl md:rounded-3xl p-8 sm:p-12 md:p-16 text-center">
-              <h2 className="text-2xl sm:text-3xl md:text-4xl font-semibold mb-3 leading-tight">¿Quieres que tu marca sea el próximo caso?</h2>
-              <p className="text-base md:text-lg opacity-90 mb-8 max-w-2xl mx-auto">
-                Cuéntanos cuál es tu reto comercial y te enseñamos un caso de un grupo de tu tamaño. En 30 minutos sabes qué piezas necesitas, cuánto cuesta y cuándo empezarías a vender más.
-              </p>
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-semibold mb-3 leading-tight">{t.ctaTitle}</h2>
+              <p className="text-base md:text-lg opacity-90 mb-8 max-w-2xl mx-auto">{t.ctaLead}</p>
               <Link href="/contacto" className="inline-flex items-center gap-2 bg-white text-primary px-7 md:px-8 py-3 md:py-4 rounded-full text-sm font-semibold hover:opacity-90 transition-opacity">
-                Hablar con un especialista
+                {t.ctaButton}
                 <span className="material-symbols-outlined">arrow_forward</span>
               </Link>
             </div>
@@ -368,7 +270,7 @@ export default function CasosExitoPage() {
   )
 }
 
-function CaseSection({ caseItem, isAlt, index }: { caseItem: SuccessCase; isAlt: boolean; index: number }) {
+function CaseSection({ caseItem, isAlt, productsLabel }: { caseItem: SuccessCase; isAlt: boolean; productsLabel: string }) {
   const bgClass = isAlt ? 'bg-surface-container' : 'bg-white'
   const { style } = caseItem
   return (
@@ -376,53 +278,23 @@ function CaseSection({ caseItem, isAlt, index }: { caseItem: SuccessCase; isAlt:
       <div className="mf-container">
         <Reveal>
           {/* Banner corporativo del cliente con su look & feel */}
-          <div
-            className="relative overflow-hidden rounded-3xl mb-8 md:mb-10"
-            style={{ background: style.banner }}
-          >
-            <div aria-hidden className="absolute inset-0 opacity-[0.07]" style={{
-              backgroundImage: 'radial-gradient(circle at 10% 20%, white 1px, transparent 1.5px)',
-              backgroundSize: '24px 24px',
-            }} />
+          <div className="relative overflow-hidden rounded-3xl mb-8 md:mb-10" style={{ background: style.banner }}>
+            <div aria-hidden className="absolute inset-0 opacity-[0.07]" style={{ backgroundImage: 'radial-gradient(circle at 10% 20%, white 1px, transparent 1.5px)', backgroundSize: '24px 24px' }} />
             <div className="relative z-10 p-8 md:p-12 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
               <div>
                 {caseItem.logo ? (
                   <div className="inline-flex items-center justify-center bg-white rounded-2xl px-5 py-3 md:px-6 md:py-4 mb-4 shadow-lg">
-                    <Image
-                      src={caseItem.logo.src}
-                      alt={caseItem.logo.alt}
-                      width={caseItem.logo.width}
-                      height={caseItem.logo.height}
-                      className="h-10 md:h-14 w-auto object-contain"
-                      priority
-                    />
+                    <Image src={caseItem.logo.src} alt={caseItem.logo.alt} width={caseItem.logo.width} height={caseItem.logo.height} className="h-10 md:h-14 w-auto object-contain" priority />
                   </div>
                 ) : (
-                  <span
-                    className={`block font-display text-4xl md:text-6xl leading-none mb-3 text-white ${style.wordmarkClass ?? 'font-bold'}`}
-                  >
-                    {caseItem.wordmark}
-                  </span>
+                  <span className={`block font-display text-4xl md:text-6xl leading-none mb-3 text-white ${style.wordmarkClass ?? 'font-bold'}`}>{caseItem.wordmark}</span>
                 )}
-                <span className="block text-xs md:text-sm font-semibold uppercase tracking-[0.2em] text-white/70">
-                  {caseItem.tagline}
-                </span>
+                <span className="block text-xs md:text-sm font-semibold uppercase tracking-[0.2em] text-white/70">{caseItem.tagline}</span>
               </div>
               <div className="flex items-center gap-3">
-                <span
-                  className="inline-flex items-center gap-2 px-4 py-2 rounded-full backdrop-blur"
-                  style={{
-                    background: 'rgba(255,255,255,0.12)',
-                    border: '1px solid rgba(255,255,255,0.2)',
-                  }}
-                >
-                  <span
-                    className="w-2 h-2 rounded-full"
-                    style={{ background: style.primary, boxShadow: `0 0 12px ${style.primary}` }}
-                  />
-                  <span className="text-xs md:text-sm font-bold uppercase tracking-widest text-white">
-                    {caseItem.badge}
-                  </span>
+                <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full backdrop-blur" style={{ background: 'rgba(255,255,255,0.12)', border: '1px solid rgba(255,255,255,0.2)' }}>
+                  <span className="w-2 h-2 rounded-full" style={{ background: style.primary, boxShadow: `0 0 12px ${style.primary}` }} />
+                  <span className="text-xs md:text-sm font-bold uppercase tracking-widest text-white">{caseItem.badge}</span>
                 </span>
               </div>
             </div>
@@ -431,27 +303,18 @@ function CaseSection({ caseItem, isAlt, index }: { caseItem: SuccessCase; isAlt:
           {/* Header del caso */}
           <div className={`grid grid-cols-1 lg:grid-cols-12 gap-8 mb-10 ${isAlt ? 'lg:[&>div:first-child]:order-2' : ''}`}>
             <div className="lg:col-span-7">
-              <h2 className="text-2xl sm:text-3xl md:text-4xl font-semibold leading-tight mb-4">
-                {caseItem.headline}
-              </h2>
-              <p className="text-base md:text-lg text-on-surface-variant leading-relaxed">{caseItem.intro}</p>
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-semibold leading-tight mb-4">{caseItem.headline}</h2>
+              <p className="text-base md:text-lg text-on-surface-variant leading-relaxed" dangerouslySetInnerHTML={{ __html: caseItem.introHtml }} />
             </div>
 
-            {/* Stats con accent del cliente */}
             <div className="lg:col-span-5">
               <div className="grid grid-cols-2 gap-3 md:gap-4">
                 {caseItem.stats.map((s, i) => {
                   const delay = (Math.min(3, i) * 100) as 0 | 100 | 200 | 300
                   return (
                     <Reveal key={s.label} delay={delay}>
-                      <div
-                        className="bg-white rounded-2xl p-4 md:p-5 h-full border-t-4"
-                        style={{ borderTopColor: style.primary, borderRight: '1px solid var(--outline-variant)', borderBottom: '1px solid var(--outline-variant)', borderLeft: '1px solid var(--outline-variant)' }}
-                      >
-                        <div
-                          className="font-display text-2xl md:text-3xl font-bold leading-none mb-2 tabular-nums"
-                          style={{ color: style.primary }}
-                        >
+                      <div className="bg-white rounded-2xl p-4 md:p-5 h-full border-t-4" style={{ borderTopColor: style.primary, borderRight: '1px solid var(--outline-variant)', borderBottom: '1px solid var(--outline-variant)', borderLeft: '1px solid var(--outline-variant)' }}>
+                        <div className="font-display text-2xl md:text-3xl font-bold leading-none mb-2 tabular-nums" style={{ color: style.primary }}>
                           {isNumericStat(s.value) ? (
                             <>
                               {parseNumericValue(s.value).num < 0 && '-'}
@@ -480,14 +343,9 @@ function CaseSection({ caseItem, isAlt, index }: { caseItem: SuccessCase; isAlt:
                   : { background: '#fff', borderLeft: `4px solid ${style.primary}`, border: `1px solid var(--outline-variant)`, borderLeftWidth: 4, borderLeftColor: style.primary }
               }
             >
-              <span
-                className="material-symbols-outlined mb-3 block"
-                style={{ fontSize: 28, color: style.primary }}
-              >
-                format_quote
-              </span>
+              <span className="material-symbols-outlined mb-3 block" style={{ fontSize: 28, color: style.primary }}>format_quote</span>
               <p className={`text-lg md:text-xl font-medium leading-relaxed mb-4 ${caseItem.quoteVariant === 'dark' ? 'text-white' : 'text-on-surface'}`}>
-                "{caseItem.quote}"
+                &ldquo;{caseItem.quote}&rdquo;
               </p>
               <footer className={`text-sm font-semibold ${caseItem.quoteVariant === 'dark' ? 'text-white/70' : 'text-on-surface-variant'}`}>
                 — {caseItem.author}
@@ -499,27 +357,14 @@ function CaseSection({ caseItem, isAlt, index }: { caseItem: SuccessCase; isAlt:
           <Reveal delay={200}>
             <div className="bg-white border border-outline-variant rounded-2xl md:rounded-3xl p-6 md:p-8">
               <div className="mb-5">
-                <span
-                  className="text-xs font-bold uppercase tracking-widest block mb-2"
-                  style={{ color: style.primary }}
-                >
-                  PRODUCTOS CONTRATADOS
-                </span>
+                <span className="text-xs font-bold uppercase tracking-widest block mb-2" style={{ color: style.primary }}>{productsLabel}</span>
                 <h3 className="text-xl md:text-2xl font-semibold mb-2">{caseItem.ecosystemTitle}</h3>
                 <p className="text-sm md:text-base text-on-surface-variant">{caseItem.ecosystemLead}</p>
               </div>
               <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 {caseItem.ecosystemItems.map((it) => (
-                  <li
-                    key={it}
-                    className="flex items-center gap-3 px-4 py-3 rounded-xl bg-surface-container-low border border-outline-variant"
-                  >
-                    <span
-                      className="material-symbols-outlined shrink-0"
-                      style={{ fontSize: 22, color: style.primary }}
-                    >
-                      check_circle
-                    </span>
+                  <li key={it} className="flex items-center gap-3 px-4 py-3 rounded-xl bg-surface-container-low border border-outline-variant">
+                    <span className="material-symbols-outlined shrink-0" style={{ fontSize: 22, color: style.primary }}>check_circle</span>
                     <span className="text-sm font-medium">{it}</span>
                   </li>
                 ))}

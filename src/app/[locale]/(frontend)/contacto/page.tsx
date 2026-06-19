@@ -1,24 +1,51 @@
 import Image from 'next/image'
 import { Suspense } from 'react'
+import { getLocale, getTranslations } from 'next-intl/server'
 import { orderedProducts } from '@/catalog/products'
 import { ContactForm } from '@/components/ContactForm'
 import { Reveal } from '@/components/Reveal'
 
-export const metadata = {
-  title: 'Contacto',
-  description:
-    'Cuéntanos tu caso y un especialista de Motorflash te llamará en menos de 24 horas para analizar cómo digitalizar tu concesionario.',
-  alternates: { canonical: '/contacto' },
-  openGraph: {
-    title: 'Contacto — Motorflash',
-    description:
-      'Cuéntanos tu caso y un especialista de Motorflash te llamará en menos de 24 horas.',
-    url: '/contacto',
+type LocaleKey = 'es' | 'en' | 'zh'
+
+const COPY: Record<LocaleKey, {
+  title: string
+  lead: string
+  phoneLabel: string
+  emailLabel: string
+}> = {
+  es: {
+    title: '¿Hablamos sobre tu negocio?',
+    lead: 'Cuéntanos tu caso y un especialista te llamará en menos de 24 horas para analizar cómo podemos ayudarte a vender más.',
+    phoneLabel: 'Teléfono',
+    emailLabel: 'Correo Comercial',
+  },
+  en: {
+    title: 'Shall we talk about your business?',
+    lead: 'Tell us your case and a specialist will call you within 24 hours to analyse how we can help you sell more.',
+    phoneLabel: 'Phone',
+    emailLabel: 'Sales email',
+  },
+  zh: {
+    title: '聊聊您的业务?',
+    lead: '告诉我们您的情况,专家将在 24 小时内回电,分析我们如何帮助您卖得更多。',
+    phoneLabel: '电话',
+    emailLabel: '商务邮箱',
   },
 }
 
-export default function ContactoPage() {
+export async function generateMetadata() {
+  const t = await getTranslations('Pages')
+  return {
+    title: t('contact'),
+    alternates: { canonical: '/contacto' },
+  }
+}
+
+export default async function ContactoPage() {
   const products = orderedProducts().map((p) => ({ slug: p.slug, name: p.name }))
+  const locale = ((await getLocale()) as LocaleKey) || 'es'
+  const t = COPY[locale] ?? COPY.es
+  const loadingLabel = locale === 'en' ? 'Loading…' : locale === 'zh' ? '加载中…' : 'Cargando…'
 
   return (
     <section className="py-32">
@@ -28,9 +55,9 @@ export default function ContactoPage() {
             <div className="grid grid-cols-1 lg:grid-cols-2">
               {/* Info dark */}
               <div className="p-12 md:p-16" style={{ background: '#121414', color: '#fff' }}>
-                <h1 className="text-3xl md:text-display-lg font-semibold mb-6">¿Hablamos sobre tu negocio?</h1>
+                <h1 className="text-3xl md:text-display-lg font-semibold mb-6">{t.title}</h1>
                 <p className="mb-12 text-lg" style={{ color: 'rgba(255,255,255,0.85)' }}>
-                  Cuéntanos tu caso y un especialista te llamará en menos de 24 horas para analizar cómo podemos ayudarte a vender más.
+                  {t.lead}
                 </p>
 
                 <a href="tel:+34910788575" className="flex items-center gap-6 mb-8 group">
@@ -38,7 +65,7 @@ export default function ContactoPage() {
                     <span className="material-symbols-outlined">call</span>
                   </div>
                   <div>
-                    <p className="text-xs uppercase tracking-widest m-0" style={{ opacity: 0.55 }}>Teléfono</p>
+                    <p className="text-xs uppercase tracking-widest m-0" style={{ opacity: 0.55 }}>{t.phoneLabel}</p>
                     <p className="text-lg font-bold m-0">+34 910 788 575</p>
                   </div>
                 </a>
@@ -48,7 +75,7 @@ export default function ContactoPage() {
                     <span className="material-symbols-outlined">mail</span>
                   </div>
                   <div>
-                    <p className="text-xs uppercase tracking-widest m-0" style={{ opacity: 0.55 }}>Correo Comercial</p>
+                    <p className="text-xs uppercase tracking-widest m-0" style={{ opacity: 0.55 }}>{t.emailLabel}</p>
                     <p className="text-lg font-bold m-0">comercial@motorflash.com</p>
                   </div>
                 </a>
@@ -60,7 +87,7 @@ export default function ContactoPage() {
 
               {/* Form */}
               <div className="p-12 md:p-16 bg-white">
-                <Suspense fallback={<div>Cargando…</div>}>
+                <Suspense fallback={<div>{loadingLabel}</div>}>
                   <ContactForm products={products} />
                 </Suspense>
               </div>
