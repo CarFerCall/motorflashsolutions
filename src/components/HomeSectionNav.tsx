@@ -1,6 +1,13 @@
 'use client'
 
+import { useLocale } from 'next-intl'
 import { useCallback, useEffect, useRef, useState } from 'react'
+
+const LABELS: Record<string, { jumpTo: string; sectionLabel: string }> = {
+  es: { jumpTo: 'Saltar a', sectionLabel: 'Ir a sección' },
+  en: { jumpTo: 'Jump to', sectionLabel: 'Go to section' },
+  zh: { jumpTo: '跳转到', sectionLabel: '前往章节' },
+}
 
 export interface HomeSection {
   id: string
@@ -25,6 +32,8 @@ export function HomeSectionNav({ sections }: Props) {
   const [open, setOpen] = useState(false)
   const [activeId, setActiveId] = useState<string | null>(sections[0]?.id ?? null)
   const containerRef = useRef<HTMLDivElement | null>(null)
+  const locale = useLocale()
+  const labels = LABELS[locale] ?? LABELS.es
 
   // Cierra el panel al hacer click fuera o pulsar Escape.
   useEffect(() => {
@@ -75,7 +84,7 @@ export function HomeSectionNav({ sections }: Props) {
     setOpen(false)
   }, [])
 
-  const activeLabel = sections.find((s) => s.id === activeId)?.label ?? sections[0]?.label ?? 'Saltar a sección'
+  const activeLabel = sections.find((s) => s.id === activeId)?.label ?? sections[0]?.label ?? labels.sectionLabel
 
   return (
     <div className="sticky top-20 z-30 flex justify-center px-4 -mt-4 mb-4" ref={containerRef}>
@@ -92,7 +101,7 @@ export function HomeSectionNav({ sections }: Props) {
               menu_book
             </span>
             <span className="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant shrink-0">
-              Saltar a
+              {labels.jumpTo}
             </span>
             <span className="text-sm font-semibold text-on-surface truncate">{activeLabel}</span>
           </span>
