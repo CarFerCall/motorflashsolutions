@@ -6,6 +6,78 @@ import { productContentBySlug, type ProductContentLocale } from '@/catalog/produ
 import { orderedProducts } from '@/catalog/products'
 import { MultipublicadorAnimation } from './MultipublicadorAnimation'
 
+type LocaleKey = 'es' | 'en' | 'zh'
+
+const COPY: Record<LocaleKey, {
+  breadcrumbHome: string
+  breadcrumbServices: string
+  ctaInfo: string
+  ctaViewAll: string
+  comingSoonChip: string
+  comingSoonTitle: string
+  comingSoonLead: string
+  comingSoonCta: string
+  featuresEyebrow: string
+  highlightsEyebrow: string
+  processEyebrow: string
+  ctaEyebrow: string
+  ctaRequest: string // se usa con el nombre del producto ej: "Request {name}"
+  othersEyebrow: string
+  othersTitle: string
+}> = {
+  es: {
+    breadcrumbHome: 'Inicio',
+    breadcrumbServices: 'Servicios',
+    ctaInfo: 'Solicitar información',
+    ctaViewAll: 'Ver todos los servicios',
+    comingSoonChip: 'Próximamente',
+    comingSoonTitle: 'Estamos preparando el detalle de este servicio',
+    comingSoonLead: 'Mientras tanto, si quieres conocerlo en profundidad, contacta con nuestro equipo comercial y te lo presentamos en persona.',
+    comingSoonCta: 'Hablar con un especialista',
+    featuresEyebrow: 'Funcionalidades',
+    highlightsEyebrow: 'En profundidad',
+    processEyebrow: 'El proceso',
+    ctaEyebrow: '¿Empezamos?',
+    ctaRequest: 'Solicitar',
+    othersEyebrow: 'Otros servicios',
+    othersTitle: 'Combínalo con el resto del ecosistema Motorflash',
+  },
+  en: {
+    breadcrumbHome: 'Home',
+    breadcrumbServices: 'Services',
+    ctaInfo: 'Request information',
+    ctaViewAll: 'View all services',
+    comingSoonChip: 'Coming soon',
+    comingSoonTitle: "We're preparing the details of this service",
+    comingSoonLead: 'In the meantime, if you want to get to know it in depth, contact our sales team and we will introduce it to you in person.',
+    comingSoonCta: 'Talk to a specialist',
+    featuresEyebrow: 'Features',
+    highlightsEyebrow: 'In depth',
+    processEyebrow: 'The process',
+    ctaEyebrow: "Shall we start?",
+    ctaRequest: 'Request',
+    othersEyebrow: 'Other services',
+    othersTitle: 'Combine it with the rest of the Motorflash ecosystem',
+  },
+  zh: {
+    breadcrumbHome: '首页',
+    breadcrumbServices: '服务',
+    ctaInfo: '申请资料',
+    ctaViewAll: '查看所有服务',
+    comingSoonChip: '即将推出',
+    comingSoonTitle: '我们正在准备此服务的详情',
+    comingSoonLead: '在此期间,如果您想深入了解,请联系我们的销售团队,我们将亲自为您介绍。',
+    comingSoonCta: '与专家沟通',
+    featuresEyebrow: '功能',
+    highlightsEyebrow: '深入了解',
+    processEyebrow: '流程',
+    ctaEyebrow: '开始吧?',
+    ctaRequest: '申请',
+    othersEyebrow: '其他服务',
+    othersTitle: '与 Motorflash 生态的其他模块组合使用',
+  },
+}
+
 // Productos que muestran una imagen real en el hero en lugar del
 // icono de Material Symbols con el tile naranja.
 const HERO_IMAGE_BY_SLUG: Record<string, { src: string; alt: string }> = {
@@ -24,7 +96,8 @@ export async function GenericProductPage({ product }: { product: Product }) {
   // Recupera el locale activo del segmento [locale] y selecciona
   // las traducciones del producto. Si el slug aún no tiene EN/ZH
   // traducido, productContentBySlug cae a español automáticamente.
-  const locale = (await getLocale()) as ProductContentLocale
+  const locale = ((await getLocale()) as ProductContentLocale) || 'es'
+  const t = COPY[(locale as LocaleKey)] ?? COPY.es
   const content = productContentBySlug(product.slug, locale)
   const others = orderedProducts(locale).filter((p) => p.slug !== product.slug).slice(0, 8)
   const heroImage = HERO_IMAGE_BY_SLUG[product.slug]
@@ -37,9 +110,9 @@ export async function GenericProductPage({ product }: { product: Product }) {
         <div aria-hidden className="absolute -top-[10%] -right-[10%] w-1/2 h-1/2 rounded-full blur-[120px]" style={{ background: 'rgba(255, 128, 0, 0.06)' }} />
         <div className="mf-container relative z-10">
           <nav aria-label="breadcrumb" className="mb-6 text-sm text-on-surface-variant">
-            <Link href="/" className="hover:text-primary">Inicio</Link>
+            <Link href="/" className="hover:text-primary">{t.breadcrumbHome}</Link>
             {' / '}
-            <Link href="/servicios" className="hover:text-primary">Servicios</Link>
+            <Link href="/servicios" className="hover:text-primary">{t.breadcrumbServices}</Link>
             {' / '}
             <span className="text-on-surface">{product.name}</span>
           </nav>
@@ -55,10 +128,10 @@ export async function GenericProductPage({ product }: { product: Product }) {
               <p className="text-lg text-on-surface-variant mb-8 max-w-2xl">{product.intro}</p>
               <div className="flex flex-col sm:flex-row gap-3">
                 <Link href={`/contacto?servicio=${product.slug}`} className="btn-primary">
-                  Solicitar información
+                  {t.ctaInfo}
                   <span className="material-symbols-outlined">arrow_forward</span>
                 </Link>
-                <Link href="/servicios" className="btn-secondary">Ver todos los servicios</Link>
+                <Link href="/servicios" className="btn-secondary">{t.ctaViewAll}</Link>
               </div>
             </div>
             <div className="hidden lg:flex lg:col-span-5 justify-center">
@@ -104,13 +177,11 @@ export async function GenericProductPage({ product }: { product: Product }) {
       {product.placeholder && (
         <section className="py-24 bg-surface-container">
           <div className="mf-container text-center">
-            <span className="mf-chip mb-4">Próximamente</span>
-            <h2 className="text-3xl font-semibold mb-3">Estamos preparando el detalle de este servicio</h2>
-            <p className="text-on-surface-variant mx-auto max-w-lg">
-              Mientras tanto, si quieres conocerlo en profundidad, contacta con nuestro equipo comercial y te lo presentamos en persona.
-            </p>
+            <span className="mf-chip mb-4">{t.comingSoonChip}</span>
+            <h2 className="text-3xl font-semibold mb-3">{t.comingSoonTitle}</h2>
+            <p className="text-on-surface-variant mx-auto max-w-lg">{t.comingSoonLead}</p>
             <Link href={`/contacto?servicio=${product.slug}`} className="btn-primary mt-6">
-              Hablar con un especialista
+              {t.comingSoonCta}
               <span className="material-symbols-outlined">arrow_forward</span>
             </Link>
           </div>
@@ -124,7 +195,7 @@ export async function GenericProductPage({ product }: { product: Product }) {
             <section key={idx} className={`py-24 ${soft ? 'bg-surface-container' : ''}`}>
               <div className="mf-container">
                 <div className="text-center mb-12">
-                  <span className="mf-eyebrow">Funcionalidades</span>
+                  <span className="mf-eyebrow">{t.featuresEyebrow}</span>
                   <h2 className="text-3xl md:text-headline-lg font-semibold mb-3">{section.title}</h2>
                   {section.lead && (
                     <p className="text-on-surface-variant mx-auto max-w-3xl">{section.lead}</p>
@@ -151,7 +222,7 @@ export async function GenericProductPage({ product }: { product: Product }) {
               <div className="mf-container">
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
                   <div className="lg:col-span-5">
-                    <span className="mf-eyebrow">En profundidad</span>
+                    <span className="mf-eyebrow">{t.highlightsEyebrow}</span>
                     <h2 className="text-3xl md:text-headline-lg font-semibold mb-4">{section.title}</h2>
                     {section.lead && <p className="text-on-surface-variant mb-6 leading-relaxed">{section.lead}</p>}
                     {section.bullets?.length > 0 && (
@@ -186,7 +257,7 @@ export async function GenericProductPage({ product }: { product: Product }) {
             <section key={idx} className={`py-24 ${soft ? 'bg-surface-container' : ''}`}>
               <div className="mf-container">
                 <div className="text-center mb-12">
-                  <span className="mf-eyebrow">El proceso</span>
+                  <span className="mf-eyebrow">{t.processEyebrow}</span>
                   <h2 className="text-3xl md:text-headline-lg font-semibold">{section.title}</h2>
                 </div>
                 <div className={`grid grid-cols-1 ${cols} gap-6`}>
@@ -210,12 +281,12 @@ export async function GenericProductPage({ product }: { product: Product }) {
               <div className="mf-container">
                 <div className="rounded-[3rem] overflow-hidden shadow-2xl" style={{ background: '#121414' }}>
                   <div className="p-12 md:p-20 text-center">
-                    <span className="block text-sm font-semibold uppercase tracking-widest mb-4" style={{ color: 'rgba(255,255,255,0.6)' }}>¿Empezamos?</span>
+                    <span className="block text-sm font-semibold uppercase tracking-widest mb-4" style={{ color: 'rgba(255,255,255,0.6)' }}>{t.ctaEyebrow}</span>
                     <h2 className="text-3xl md:text-display-lg font-semibold mb-4 text-white">{section.title}</h2>
                     <p className="mb-10 mx-auto text-lg max-w-2xl" style={{ color: 'rgba(255,255,255,0.85)' }}>{section.lead}</p>
                     <div className="flex flex-col sm:flex-row gap-3 justify-center">
                       <Link href={`/contacto?servicio=${product.slug}`} className="btn-primary">
-                        Solicitar {product.name}
+                        {t.ctaRequest} {product.name}
                         <span className="material-symbols-outlined">arrow_forward</span>
                       </Link>
                       <Link
@@ -223,7 +294,7 @@ export async function GenericProductPage({ product }: { product: Product }) {
                         className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full text-sm font-semibold text-white"
                         style={{ border: '1px solid rgba(255,255,255,0.2)' }}
                       >
-                        Ver todos los servicios
+                        {t.ctaViewAll}
                       </Link>
                     </div>
                   </div>
@@ -239,8 +310,8 @@ export async function GenericProductPage({ product }: { product: Product }) {
       <section className="py-24 bg-surface-container">
         <div className="mf-container">
           <div className="text-center mb-12">
-            <span className="mf-eyebrow">Otros servicios</span>
-            <h2 className="text-3xl md:text-headline-lg font-semibold">Combínalo con el resto del ecosistema Motorflash</h2>
+            <span className="mf-eyebrow">{t.othersEyebrow}</span>
+            <h2 className="text-3xl md:text-headline-lg font-semibold">{t.othersTitle}</h2>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 overflow-x-auto">
             {others.map((other) => (
