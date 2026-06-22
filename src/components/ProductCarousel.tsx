@@ -9,7 +9,7 @@ import {
   STATIC_PRODUCT_UI,
   type ProductUiCopy,
   type ProductUiLocale,
-} from '@/lib/product-ui-content'
+} from '@/lib/product-ui-static'
 
 /**
  * Subset del copy del CMS que necesita el carrusel. Cuando viene por
