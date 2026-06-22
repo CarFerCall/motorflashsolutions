@@ -1286,49 +1286,54 @@ try {
       ...copy,
       aboutStats: (copy.aboutStats || []).map((label) => ({ label })),
     })
-    // Arrays localized del Home — Payload exige que al sembrar un locale
-    // distinto al defecto, cada fila lleve el id que ya existe en ES (si no,
-    // explota con "The following field is invalid: id"). Mapeamos por
-    // posición desde el doc ES recién sembrado.
+    // Campos array — Payload exige que al sembrar un locale distinto al
+    // defecto, cada fila lleve el id que ya existe en ES. Como conseguir
+    // esos IDs desde el script vía findGlobal no es del todo fiable (el
+    // shape devuelto difiere ligeramente del esperado por updateGlobal y
+    // explota con "The following field is invalid: id"), en ca/en/zh
+    // sembramos SOLO los scalars. Los arrays caen al fallback ES vía
+    // localization.fallback:true. Negocio puede traducirlos a mano desde
+    // el admin si lo necesita.
     const ARRAY_FIELDS = [
       'navSections', 'aboutStats', 'solveRows', 'helpSteps',
       'resultsStats', 'audiences', 'testimonials',
     ]
-    const applyIdsFrom = (data, refDoc) => {
-      const out = { ...data }
-      for (const k of ARRAY_FIELDS) {
-        if (!Array.isArray(out[k])) continue
-        const refArr = Array.isArray(refDoc?.[k]) ? refDoc[k] : []
-        out[k] = out[k].map((item, i) => (refArr[i]?.id ? { ...item, id: refArr[i].id } : item))
-      }
+    const scalarsOnly = (copy) => {
+      const out = { ...copy }
+      for (const k of ARRAY_FIELDS) delete out[k]
       return out
     }
-    // 1) Siembra ES (idempotente si ya tiene contenido). Es la fuente
-    // de IDs para los demás locales.
+    // 1) Sembrar ES (idempotente) con TODO (scalars + arrays).
     if (!homeES || !homeES.heroTitle1) {
       try {
         await payload.updateGlobal({ slug: 'home-page', locale: 'es', data: toPayloadShape(STATIC_HOME.es) })
-        console.log('[sync-schema] home: ES sembrado')
+        console.log('[sync-schema] home: ES sembrado (scalars + arrays)')
       } catch (err) {
         console.warn('[sync-schema] ✗ seed home (es):', err?.message || err)
       }
     }
-    // 2) Releer ES para obtener IDs reales asignados por Payload.
+    // 2) Releer ES para detectar fallback en otros locales.
     let homeESWithIds
     try {
       homeESWithIds = await payload.findGlobal({ slug: 'home-page', locale: 'es', depth: 0 })
     } catch {}
-    // 3) Sembrar cada locale no-ES solo si está vacío. Reutiliza IDs ES.
+    // 3) Sembrar ca/en/zh con SCALARS ONLY (sin arrays). Si el locale
+    // ya tiene un heroTitle1 propio (distinto al ES), no tocamos.
     for (const locale of ['ca', 'en', 'zh']) {
       try {
         const cur = await payload.findGlobal({ slug: 'home-page', locale, depth: 0 })
         const heroVal = cur?.heroTitle1 ?? ''
         const esHero = homeESWithIds?.heroTitle1 ?? ''
-        // Si ya tiene contenido propio (distinto al fallback ES), no tocar.
-        if (heroVal && heroVal !== esHero) continue
-        const payloadData = applyIdsFrom(toPayloadShape(STATIC_HOME[locale]), homeESWithIds)
-        await payload.updateGlobal({ slug: 'home-page', locale, data: payloadData })
-        console.log(`[sync-schema] home: ${locale} sembrado`)
+        if (heroVal && heroVal !== esHero) {
+          console.log(`[sync-schema] = home ${locale}: ya tiene texto propio, sin tocar`)
+          continue
+        }
+        await payload.updateGlobal({
+          slug: 'home-page',
+          locale,
+          data: scalarsOnly(STATIC_HOME[locale]),
+        })
+        console.log(`[sync-schema] home: ${locale} sembrado (scalars)`)
       } catch (err) {
         console.warn(`[sync-schema] ✗ seed home (${locale}):`, err?.message || err)
       }
