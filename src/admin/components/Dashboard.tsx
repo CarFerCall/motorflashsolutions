@@ -18,6 +18,35 @@ function timeAgo(date: Date): string {
   return date.toLocaleDateString('es-ES')
 }
 
+// Tiles que reflejan el contenido editable real — los Globals y colecciones
+// que negocio va a tocar todos los días. Cada uno apunta al endpoint del
+// admin correspondiente.
+const PAGE_TILES: { href: string; icon: string; title: string; hint: string }[] = [
+  { href: '/admin/globals/home-page', icon: '🏠', title: 'Home', hint: 'Hero, KPIs, secciones, CTAs' },
+  { href: '/admin/globals/company-page', icon: '🏢', title: 'Compañía', hint: 'Sobre Motorflash, valores e historia' },
+  { href: '/admin/globals/ecosystem-page', icon: '🛰️', title: 'Ecosistema técnico', hint: 'HUB e integraciones' },
+  { href: '/admin/globals/services-listing-page', icon: '📋', title: 'Servicios (listado)', hint: 'Catálogo público' },
+  { href: '/admin/globals/pricing-page', icon: '💰', title: 'Precios', hint: 'Textos del configurador' },
+  { href: '/admin/globals/success-stories-page', icon: '⭐', title: 'Casos de éxito', hint: 'Hero y CTA' },
+  { href: '/admin/globals/contact-page', icon: '✉️', title: 'Contacto', hint: 'Bloque oscuro y datos' },
+  { href: '/admin/globals/footer', icon: '🦶', title: 'Pie de página', hint: 'Tagline, columnas, sellos ISO' },
+  { href: '/admin/globals/main-menu', icon: '🧭', title: 'Menú principal', hint: 'Servicios y subdesplegables' },
+]
+
+const CATALOG_TILES = [
+  { href: '/admin/collections/products', icon: '📦', title: 'Productos', hint: '15 productos del catálogo' },
+  { href: '/admin/collections/product-content', icon: '📝', title: 'Fichas de producto', hint: 'Contenido rico de cada slug' },
+  { href: '/admin/collections/success-cases', icon: '🏆', title: 'Casos de éxito', hint: '5 clientes con look propio' },
+  { href: '/admin/collections/media', icon: '🖼️', title: 'Imágenes', hint: 'Logos y fotografías subidas' },
+]
+
+const OPERATIVE_TILES = [
+  { href: '/admin/collections/pricing-plans', icon: '🏷️', title: 'Planes de precios', hint: 'Items y tarifas del configurador' },
+  { href: '/admin/collections/quotes', icon: '📨', title: 'Cotizaciones recibidas', hint: 'Solicitudes desde la web' },
+  { href: '/admin/collections/pages', icon: '🧱', title: 'Landings (Puck)', hint: 'Páginas con drag-and-drop' },
+  { href: '/admin/collections/users', icon: '👤', title: 'Usuarios', hint: 'Altas y contraseñas' },
+]
+
 export default async function Dashboard() {
   const payload = await getPayload({ config })
 
@@ -52,22 +81,15 @@ export default async function Dashboard() {
   ).docs.reduce((acc, q: any) => acc + (q.totalCents ?? 0), 0)
 
   return (
-    <div style={{ padding: '24px 0' }}>
-      <h1
-        style={{
-          fontFamily: "'Outfit', system-ui, sans-serif",
-          fontSize: 32,
-          fontWeight: 600,
-          margin: '0 0 8px',
-          letterSpacing: '-0.02em',
-        }}
-      >
-        Hola 👋
-      </h1>
-      <p style={{ color: '#454747', margin: '0 0 24px' }}>
-        Resumen del CMS de Motorflash Ibérica.
-      </p>
+    <div className="mf-dashboard-shell">
+      <header className="mf-dashboard__header">
+        <h1 className="mf-dashboard__title">Hola 👋</h1>
+        <p className="mf-dashboard__subtitle">
+          Resumen del CMS de Motorflash Ibérica.
+        </p>
+      </header>
 
+      {/* KPIs */}
       <div className="mf-dashboard">
         <div className="mf-kpi mf-kpi--accent">
           <div className="mf-kpi__icon">📩</div>
@@ -100,88 +122,76 @@ export default async function Dashboard() {
         </div>
       </div>
 
-      <p className="mf-section-title">Accesos rápidos</p>
-      <div className="mf-shortcuts">
-        <Link href="/admin/collections/pricing-plans/create" className="mf-shortcut">
-          <span className="mf-shortcut__icon">➕</span>
-          <div>
-            <p className="mf-shortcut__title">Crear plan de precios</p>
-            <p className="mf-shortcut__hint">Da de alta el configurador de un nuevo producto</p>
-          </div>
-        </Link>
+      {/* Editar páginas de la web */}
+      <section className="mf-dashboard__section">
+        <div className="mf-dashboard__section-head">
+          <h2 className="mf-section-heading">Editar páginas de la web</h2>
+          <p className="mf-section-lead">Cada bloque es una página del sitio. Edita textos por idioma desde la pestaña superior.</p>
+        </div>
+        <div className="mf-tile-grid">
+          {PAGE_TILES.map((t) => (
+            <Link key={t.href} href={t.href} className="mf-tile">
+              <span className="mf-tile__icon">{t.icon}</span>
+              <span className="mf-tile__title">{t.title}</span>
+              <span className="mf-tile__hint">{t.hint}</span>
+            </Link>
+          ))}
+        </div>
+      </section>
 
-        <Link href="/admin/collections/pricing-plans" className="mf-shortcut">
-          <span className="mf-shortcut__icon">🏷️</span>
-          <div>
-            <p className="mf-shortcut__title">Ver planes</p>
-            <p className="mf-shortcut__hint">{activePlans} {activePlans === 1 ? 'plan activo' : 'planes activos'}</p>
-          </div>
-        </Link>
+      {/* Catálogo */}
+      <section className="mf-dashboard__section">
+        <div className="mf-dashboard__section-head">
+          <h2 className="mf-section-heading">Catálogo y contenido</h2>
+          <p className="mf-section-lead">Productos, fichas, casos y media que se muestran a lo largo de la web.</p>
+        </div>
+        <div className="mf-tile-grid">
+          {CATALOG_TILES.map((t) => (
+            <Link key={t.href} href={t.href} className="mf-tile">
+              <span className="mf-tile__icon">{t.icon}</span>
+              <span className="mf-tile__title">{t.title}</span>
+              <span className="mf-tile__hint">{t.hint}</span>
+            </Link>
+          ))}
+        </div>
+      </section>
 
-        <Link href="/admin/collections/quotes" className="mf-shortcut">
-          <span className="mf-shortcut__icon">📨</span>
-          <div>
-            <p className="mf-shortcut__title">Bandeja de cotizaciones</p>
-            <p className="mf-shortcut__hint">{newQuotes} {newQuotes === 1 ? 'nueva' : 'nuevas'}</p>
-          </div>
-        </Link>
+      {/* Operativa */}
+      <section className="mf-dashboard__section">
+        <div className="mf-dashboard__section-head">
+          <h2 className="mf-section-heading">Operativa</h2>
+          <p className="mf-section-lead">Configurador de precios, leads y administración.</p>
+        </div>
+        <div className="mf-tile-grid">
+          {OPERATIVE_TILES.map((t) => (
+            <Link key={t.href} href={t.href} className="mf-tile">
+              <span className="mf-tile__icon">{t.icon}</span>
+              <span className="mf-tile__title">{t.title}</span>
+              <span className="mf-tile__hint">{t.hint}</span>
+            </Link>
+          ))}
+        </div>
+      </section>
 
-        <Link href="/admin/collections/users" className="mf-shortcut">
-          <span className="mf-shortcut__icon">👤</span>
-          <div>
-            <p className="mf-shortcut__title">Gestionar usuarios</p>
-            <p className="mf-shortcut__hint">Altas, cambios de contraseña</p>
-          </div>
-        </Link>
-      </div>
-
+      {/* Últimas cotizaciones */}
       {recentQuotes.length > 0 && (
-        <>
-          <p className="mf-section-title">Últimas cotizaciones</p>
-          <div
-            style={{
-              background: '#fff',
-              border: '1px solid #e2e2e2',
-              borderRadius: 12,
-              overflow: 'hidden',
-              marginBottom: 32,
-            }}
-          >
-            {recentQuotes.map((q: any, i) => (
-              <Link
-                key={q.id}
-                href={`/admin/collections/quotes/${q.id}`}
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                  padding: '14px 18px',
-                  borderBottom: i < recentQuotes.length - 1 ? '1px solid #f0f0f0' : 'none',
-                  textDecoration: 'none',
-                  color: 'inherit',
-                  gap: 16,
-                }}
-              >
-                <div style={{ minWidth: 0 }}>
-                  <div style={{ fontWeight: 600, marginBottom: 2 }}>
-                    {q.productName} · {q.contactName}
-                  </div>
-                  <div style={{ fontSize: 13, color: '#454747', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                    {q.email} · {timeAgo(new Date(q.createdAt))}
-                  </div>
+        <section className="mf-dashboard__section">
+          <div className="mf-dashboard__section-head">
+            <h2 className="mf-section-heading">Últimas cotizaciones</h2>
+            <Link href="/admin/collections/quotes" className="mf-section-link">Ver todas →</Link>
+          </div>
+          <div className="mf-quotes-list">
+            {recentQuotes.map((q: any) => (
+              <Link key={q.id} href={`/admin/collections/quotes/${q.id}`} className="mf-quote-row">
+                <div className="mf-quote-row__main">
+                  <div className="mf-quote-row__title">{q.productName} · {q.contactName}</div>
+                  <div className="mf-quote-row__meta">{q.email} · {timeAgo(new Date(q.createdAt))}</div>
                 </div>
-                <div style={{ textAlign: 'right', flexShrink: 0 }}>
-                  <div style={{ fontWeight: 700, color: '#ff8000', fontSize: 16 }}>
-                    {fmt(q.totalCents ?? 0)}
-                  </div>
+                <div className="mf-quote-row__side">
+                  <div className="mf-quote-row__amount">{fmt(q.totalCents ?? 0)}</div>
                   <div
-                    style={{
-                      fontSize: 11,
-                      fontWeight: 700,
-                      textTransform: 'uppercase',
-                      letterSpacing: '0.08em',
-                      color: statusColor(q.status),
-                    }}
+                    className="mf-quote-row__status"
+                    style={{ color: statusColor(q.status) }}
                   >
                     {statusLabel(q.status)}
                   </div>
@@ -189,7 +199,7 @@ export default async function Dashboard() {
               </Link>
             ))}
           </div>
-        </>
+        </section>
       )}
     </div>
   )
