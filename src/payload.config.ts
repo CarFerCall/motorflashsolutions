@@ -20,6 +20,7 @@ import { FooterGlobal } from './globals/FooterGlobal'
 import { ContactGlobal } from './globals/ContactGlobal'
 import { PricingGlobal } from './globals/PricingGlobal'
 import { CompanyGlobal } from './globals/CompanyGlobal'
+import { HomeGlobal } from './globals/HomeGlobal'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -90,7 +91,7 @@ export default buildConfig({
     },
   },
   collections: [Users, Pages, PricingPlans, Quotes, Media, Products, ProductContent, SuccessCases],
-  globals: [MainMenu, FooterGlobal, ContactGlobal, PricingGlobal, CompanyGlobal],
+  globals: [MainMenu, FooterGlobal, ContactGlobal, PricingGlobal, CompanyGlobal, HomeGlobal],
   // Localización nativa: todo campo con `localized: true` se guarda
   // en columnas separadas por idioma. El frontend pasa el locale
   // activo en cada query (via payload.findGlobal({ ..., locale })).

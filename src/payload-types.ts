@@ -110,6 +110,7 @@ export interface Config {
     'contact-page': ContactPage;
     'pricing-page': PricingPage;
     'company-page': CompanyPage;
+    'home-page': HomePage;
   };
   globalsSelect: {
     'main-menu': MainMenuSelect<false> | MainMenuSelect<true>;
@@ -117,6 +118,7 @@ export interface Config {
     'contact-page': ContactPageSelect<false> | ContactPageSelect<true>;
     'pricing-page': PricingPageSelect<false> | PricingPageSelect<true>;
     'company-page': CompanyPageSelect<false> | CompanyPageSelect<true>;
+    'home-page': HomePageSelect<false> | HomePageSelect<true>;
   };
   locale: 'es' | 'ca' | 'en' | 'zh';
   widgets: {
@@ -1229,6 +1231,116 @@ export interface CompanyPage {
   createdAt?: string | null;
 }
 /**
+ * Página /. Edita por idioma (es/ca/en/zh) desde la pestaña superior del admin.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "home-page".
+ */
+export interface HomePage {
+  id: number;
+  heroChip: string;
+  heroTitle1: string;
+  heroTitleAccent: string;
+  heroLead: string;
+  heroCtaServices: string;
+  heroCtaContact: string;
+  heroCtaWork: string;
+  timelineEyebrow: string;
+  timelineTitle: string;
+  timelineLead: string;
+  socialProofPre?: string | null;
+  socialProofDealers: string;
+  socialProofMid: string;
+  socialProofCalls: string;
+  socialProofMid2: string;
+  socialProofCars: string;
+  socialProofPost?: string | null;
+  aboutEyebrow: string;
+  aboutTitle: string;
+  aboutP1Pre: string;
+  aboutP1Strong: string;
+  aboutP1Post: string;
+  aboutP2Pre: string;
+  aboutP2Strong: string;
+  aboutP2Post: string;
+  aboutCta: string;
+  aboutStats: {
+    label: string;
+    id?: string | null;
+  }[];
+  solveEyebrow: string;
+  solveTitle: string;
+  solveLead: string;
+  solveBefore: string;
+  solveAfter: string;
+  solveRows: {
+    icon: string;
+    before: string;
+    after: string;
+    id?: string | null;
+  }[];
+  helpEyebrow: string;
+  helpTitle: string;
+  helpLead: string;
+  helpSteps: {
+    icon: string;
+    t: string;
+    d: string;
+    id?: string | null;
+  }[];
+  resultsEyebrow: string;
+  resultsTitle: string;
+  resultsLead: string;
+  resultsStats: {
+    v: number;
+    suffix: string;
+    l: string;
+    id?: string | null;
+  }[];
+  ecoEyebrowAccent: string;
+  ecoTitle1: string;
+  ecoTitle2?: string | null;
+  ecoLead: string;
+  ecoStatHubs: string;
+  ecoStatInt: string;
+  ecoStatEntry: string;
+  ecoCta: string;
+  audiencesEyebrow: string;
+  audiencesTitle: string;
+  audiences: {
+    icon: string;
+    tag: string;
+    title: string;
+    desc: string;
+    id?: string | null;
+  }[];
+  testimonialsEyebrow: string;
+  testimonialsTitle: string;
+  testimonials: {
+    quote: string;
+    name: string;
+    where: string;
+    id?: string | null;
+  }[];
+  testimonialsNda: string;
+  testimonialsLink: string;
+  historyEyebrow: string;
+  historyTitle: string;
+  historyLead: string;
+  historyCta: string;
+  historyBadgeYears: string;
+  historyBadgeLead: string;
+  ctaTitle: string;
+  ctaLead: string;
+  ctaPrimary: string;
+  navSections: {
+    id: string | null;
+    label: string;
+  }[];
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "main-menu_select".
  */
@@ -1383,6 +1495,128 @@ export interface CompanyPageSelect<T extends boolean = true> {
   isoQualityTitle?: T;
   isoSecurity?: T;
   isoSecurityTitle?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "home-page_select".
+ */
+export interface HomePageSelect<T extends boolean = true> {
+  heroChip?: T;
+  heroTitle1?: T;
+  heroTitleAccent?: T;
+  heroLead?: T;
+  heroCtaServices?: T;
+  heroCtaContact?: T;
+  heroCtaWork?: T;
+  timelineEyebrow?: T;
+  timelineTitle?: T;
+  timelineLead?: T;
+  socialProofPre?: T;
+  socialProofDealers?: T;
+  socialProofMid?: T;
+  socialProofCalls?: T;
+  socialProofMid2?: T;
+  socialProofCars?: T;
+  socialProofPost?: T;
+  aboutEyebrow?: T;
+  aboutTitle?: T;
+  aboutP1Pre?: T;
+  aboutP1Strong?: T;
+  aboutP1Post?: T;
+  aboutP2Pre?: T;
+  aboutP2Strong?: T;
+  aboutP2Post?: T;
+  aboutCta?: T;
+  aboutStats?:
+    | T
+    | {
+        label?: T;
+        id?: T;
+      };
+  solveEyebrow?: T;
+  solveTitle?: T;
+  solveLead?: T;
+  solveBefore?: T;
+  solveAfter?: T;
+  solveRows?:
+    | T
+    | {
+        icon?: T;
+        before?: T;
+        after?: T;
+        id?: T;
+      };
+  helpEyebrow?: T;
+  helpTitle?: T;
+  helpLead?: T;
+  helpSteps?:
+    | T
+    | {
+        icon?: T;
+        t?: T;
+        d?: T;
+        id?: T;
+      };
+  resultsEyebrow?: T;
+  resultsTitle?: T;
+  resultsLead?: T;
+  resultsStats?:
+    | T
+    | {
+        v?: T;
+        suffix?: T;
+        l?: T;
+        id?: T;
+      };
+  ecoEyebrowAccent?: T;
+  ecoTitle1?: T;
+  ecoTitle2?: T;
+  ecoLead?: T;
+  ecoStatHubs?: T;
+  ecoStatInt?: T;
+  ecoStatEntry?: T;
+  ecoCta?: T;
+  audiencesEyebrow?: T;
+  audiencesTitle?: T;
+  audiences?:
+    | T
+    | {
+        icon?: T;
+        tag?: T;
+        title?: T;
+        desc?: T;
+        id?: T;
+      };
+  testimonialsEyebrow?: T;
+  testimonialsTitle?: T;
+  testimonials?:
+    | T
+    | {
+        quote?: T;
+        name?: T;
+        where?: T;
+        id?: T;
+      };
+  testimonialsNda?: T;
+  testimonialsLink?: T;
+  historyEyebrow?: T;
+  historyTitle?: T;
+  historyLead?: T;
+  historyCta?: T;
+  historyBadgeYears?: T;
+  historyBadgeLead?: T;
+  ctaTitle?: T;
+  ctaLead?: T;
+  ctaPrimary?: T;
+  navSections?:
+    | T
+    | {
+        id?: T;
+        label?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

@@ -1270,6 +1270,42 @@ try {
   } catch (err) {
     console.warn('[sync-schema] ✗ seed company:', err?.message || err)
   }
+
+  // -------------------------------------------------------------------
+  // Seed del global Home en los 4 locales.
+  // -------------------------------------------------------------------
+  try {
+    const { STATIC_HOME } = await import('../src/lib/home-content.ts')
+    let homeES
+    try {
+      homeES = await payload.findGlobal({ slug: 'home-page', locale: 'es', depth: 0 })
+    } catch {}
+    if (!homeES || !homeES.heroTitle1) {
+      // El shape de STATIC_HOME usa aboutStats como string[] (más cómodo en
+      // el frontend) pero el Global lo guarda como array de { label }.
+      // Adaptamos antes de pasarlo a updateGlobal.
+      const toPayloadShape = (copy) => ({
+        ...copy,
+        aboutStats: (copy.aboutStats || []).map((label) => ({ label })),
+      })
+      for (const locale of ['es', 'ca', 'en', 'zh']) {
+        try {
+          await payload.updateGlobal({
+            slug: 'home-page',
+            locale,
+            data: toPayloadShape(STATIC_HOME[locale]),
+          })
+        } catch (err) {
+          console.warn(`[sync-schema] ✗ seed home (${locale}):`, err?.message || err)
+        }
+      }
+      console.log('[sync-schema] home: 4 locales sembrados')
+    } else {
+      console.log('[sync-schema] = home ya tiene contenido en ES, sin tocar')
+    }
+  } catch (err) {
+    console.warn('[sync-schema] ✗ seed home:', err?.message || err)
+  }
 } catch (err) {
   console.error('[sync-schema] schema check failed:', err?.message || err)
   // No fallamos el build: dejamos que el deploy salga y el problema se
