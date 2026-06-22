@@ -71,6 +71,9 @@ export interface Config {
     pages: Page;
     'pricing-plans': PricingPlan;
     quotes: Quote;
+    media: Media;
+    products: Product;
+    'product-content': ProductContent;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -82,6 +85,9 @@ export interface Config {
     pages: PagesSelect<false> | PagesSelect<true>;
     'pricing-plans': PricingPlansSelect<false> | PricingPlansSelect<true>;
     quotes: QuotesSelect<false> | QuotesSelect<true>;
+    media: MediaSelect<false> | MediaSelect<true>;
+    products: ProductsSelect<false> | ProductsSelect<true>;
+    'product-content': ProductContentSelect<false> | ProductContentSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -90,14 +96,19 @@ export interface Config {
   db: {
     defaultIDType: number;
   };
-  fallbackLocale: null;
+  fallbackLocale:
+    | ('false' | 'none' | 'null')
+    | false
+    | null
+    | ('es' | 'ca' | 'en' | 'zh')
+    | ('es' | 'ca' | 'en' | 'zh')[];
   globals: {
     'main-menu': MainMenu;
   };
   globalsSelect: {
     'main-menu': MainMenuSelect<false> | MainMenuSelect<true>;
   };
-  locale: null;
+  locale: 'es' | 'ca' | 'en' | 'zh';
   widgets: {
     collections: CollectionsWidget;
   };
@@ -152,7 +163,7 @@ export interface User {
   collection: 'users';
 }
 /**
- * Crea landings y otras páginas con bloques arrastrables. Pulsa "Live Preview" arriba a la derecha para verlo en directo mientras editas. URL pública: /<slug>.
+ * Crea landings con el editor visual: arrastra componentes desde la paleta de la izquierda, configúralos en el panel de la derecha. URL pública: /<slug>.
  *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "pages".
@@ -165,155 +176,14 @@ export interface Page {
    */
   slug: string;
   status: 'draft' | 'published';
-  /**
-   * Arrastra para reordenar. Cada bloque se renderiza uno tras otro en la página pública.
-   */
-  blocks?:
-    | (
-        | {
-            eyebrow?: string | null;
-            icon?: string | null;
-            title: string;
-            subtitle?: string | null;
-            /**
-             * Hasta 2 botones. El primero será naranja, el segundo blanco.
-             */
-            ctas?:
-              | {
-                  label: string;
-                  url: string;
-                  variant?: ('primary' | 'secondary') | null;
-                  id?: string | null;
-                }[]
-              | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'hero';
-          }
-        | {
-            content?: {
-              root: {
-                type: string;
-                children: {
-                  type: any;
-                  version: number;
-                  [k: string]: unknown;
-                }[];
-                direction: ('ltr' | 'rtl') | null;
-                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                indent: number;
-                version: number;
-              };
-              [k: string]: unknown;
-            } | null;
-            width?: ('narrow' | 'wide') | null;
-            alignment?: ('left' | 'center') | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'richText';
-          }
-        | {
-            eyebrow?: string | null;
-            title?: string | null;
-            description?: string | null;
-            columns?: ('2' | '3' | '4') | null;
-            features?:
-              | {
-                  icon?: string | null;
-                  title: string;
-                  description?: string | null;
-                  id?: string | null;
-                }[]
-              | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'featureGrid';
-          }
-        | {
-            title: string;
-            description?: string | null;
-            buttonLabel: string;
-            buttonUrl: string;
-            style?: ('orange' | 'dark' | 'light') | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'ctaBanner';
-          }
-        | {
-            eyebrow?: string | null;
-            title?: string | null;
-            items?:
-              | {
-                  quote: string;
-                  author: string;
-                  role?: string | null;
-                  id?: string | null;
-                }[]
-              | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'testimonials';
-          }
-        | {
-            eyebrow?: string | null;
-            title?: string | null;
-            description?: string | null;
-            /**
-             * Elige los productos del catálogo que quieres mostrar en el carrusel.
-             */
-            productSlugs: (
-              | 'dealer'
-              | 'exportaciones'
-              | 'crm4you'
-              | 'contact-center'
-              | 'spyne'
-              | 'motorflash-message'
-              | 'motorflash-mobile-tracking'
-              | 'ia'
-              | 'soluciones-web'
-              | 'marketing-digital'
-              | 'portal-publicacion'
-              | 'lead-factory'
-              | 'soluciones-fabricantes'
-              | 'apex'
-            )[];
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'productCarousel';
-          }
-        | {
-            eyebrow?: string | null;
-            title?: string | null;
-            items?:
-              | {
-                  question: string;
-                  answer: string;
-                  id?: string | null;
-                }[]
-              | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'faq';
-          }
-        | {
-            eyebrow?: string | null;
-            title: string;
-            description?: string | null;
-            /**
-             * Ruta a la imagen (de /public, p. ej. /images/foo.png) o URL externa.
-             */
-            imageUrl?: string | null;
-            imageSide?: ('left' | 'right') | null;
-            imageAlt?: string | null;
-            cta?: {
-              label?: string | null;
-              url?: string | null;
-            };
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'imageText';
-          }
-      )[]
+  puckData?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
     | null;
   /**
    * Opcional. Si lo dejas vacío se usa el título de la página.
@@ -324,7 +194,6 @@ export interface Page {
   };
   updatedAt: string;
   createdAt: string;
-  _status?: ('draft' | 'published') | null;
 }
 /**
  * Cada plan se conecta con su producto del catálogo y define lo que el cliente puede configurar en /precios/{slug}.
@@ -348,6 +217,8 @@ export interface PricingPlan {
     | 'portal-publicacion'
     | 'lead-factory'
     | 'soluciones-fabricantes'
+    | 'motorflash-renting'
+    | 'motorflash-connect'
     | 'apex';
   productName: string;
   /**
@@ -390,9 +261,13 @@ export interface PricingPlan {
               value: string;
               label: string;
               /**
-               * En euros.
+               * Cuota mensual de esta opción.
                */
               priceCents: number;
+              /**
+               * Coste de arranque que se cobra una sola vez al contratar esta opción. Déjalo en 0 si no hay setup.
+               */
+              setupCents?: number | null;
               isDefault?: boolean | null;
               id?: string | null;
             }[]
@@ -437,6 +312,204 @@ export interface Quote {
   createdAt: string;
 }
 /**
+ * Imágenes que se usan en productos, casos de éxito y páginas. Sube en alta resolución; las miniaturas se generan automáticamente.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "media".
+ */
+export interface Media {
+  id: number;
+  /**
+   * Describe la imagen para accesibilidad y SEO. Ej. "Logotipo Jarmauto" o "Equipo Motorflash 2026".
+   */
+  alt: string;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
+  sizes?: {
+    thumbnail?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+    medium?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+    hero?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+  };
+}
+/**
+ * Catálogo de productos del menú, fichas y home. Se edita un único registro por producto; el orden lo controla "menuOrder".
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "products".
+ */
+export interface Product {
+  id: number;
+  /**
+   * Identificador único. Define la URL: /servicios/{slug}.
+   */
+  slug:
+    | 'dealer'
+    | 'exportaciones'
+    | 'crm4you'
+    | 'contact-center'
+    | 'spyne'
+    | 'motorflash-message'
+    | 'motorflash-mobile-tracking'
+    | 'ia'
+    | 'soluciones-web'
+    | 'marketing-digital'
+    | 'portal-publicacion'
+    | 'lead-factory'
+    | 'soluciones-fabricantes'
+    | 'motorflash-connect'
+    | 'apex';
+  /**
+   * Nombre del icono en Material Symbols Outlined. Ej. inventory_2, hub, dynamic_feed.
+   */
+  icon: string;
+  /**
+   * Posición en el menú y catálogo (números menores = antes). Recomendado dejar saltos de 10.
+   */
+  menuOrder: number;
+  /**
+   * Aplica el estilo destacado (fondo naranja) en el listado y carrusel.
+   */
+  highlight?: boolean | null;
+  /**
+   * Marca el producto como "próximamente" en su ficha.
+   */
+  placeholder?: boolean | null;
+  /**
+   * Se muestra como título en el listado, carrusel y CTAs.
+   */
+  name: string;
+  /**
+   * Variante corta que aparece en el dropdown del navbar y la línea de tiempo de productos.
+   */
+  menuLabel: string;
+  /**
+   * Frase corta de marketing que acompaña al nombre en cards y fichas.
+   */
+  tagline: string;
+  /**
+   * Título grande de la ficha del producto.
+   */
+  heroTitle: string;
+  /**
+   * Párrafo introductorio bajo el hero de la ficha.
+   */
+  intro: string;
+  /**
+   * Solo si quieres sustituir el icono naranja por una imagen real (ej. logo de marca).
+   */
+  heroImage?: (number | null) | Media;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * Secciones internas (highlights, features, process, CTA) de cada ficha de producto. Una entrada por producto. Edita el contenido por idioma usando la pestaña superior del admin.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "product-content".
+ */
+export interface ProductContent {
+  id: number;
+  /**
+   * Elige el producto al que pertenece este contenido. Solo puede haber una entrada por producto.
+   */
+  product: number | Product;
+  /**
+   * Texto opcional que aparece bajo el título y sobre la intro.
+   */
+  subtitle?: string | null;
+  /**
+   * Añade secciones en el orden en que las quieras mostrar. Tipos: Funcionalidades, Destacados, Proceso y CTA final.
+   */
+  sections?:
+    | (
+        | {
+            title: string;
+            lead: string;
+            items: {
+              /**
+               * Ej. analytics, hub, sync_alt.
+               */
+              icon: string;
+              title: string;
+              description: string;
+              id?: string | null;
+            }[];
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'features';
+          }
+        | {
+            title: string;
+            lead: string;
+            highlights: {
+              title: string;
+              description: string;
+              id?: string | null;
+            }[];
+            bullets?:
+              | {
+                  text: string;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'highlights';
+          }
+        | {
+            title: string;
+            steps: {
+              title: string;
+              description: string;
+              id?: string | null;
+            }[];
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'process';
+          }
+        | {
+            title: string;
+            lead: string;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'cta';
+          }
+      )[]
+    | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
@@ -475,6 +548,18 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'quotes';
         value: number | Quote;
+      } | null)
+    | ({
+        relationTo: 'media';
+        value: number | Media;
+      } | null)
+    | ({
+        relationTo: 'products';
+        value: number | Product;
+      } | null)
+    | ({
+        relationTo: 'product-content';
+        value: number | ProductContent;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -549,125 +634,7 @@ export interface PagesSelect<T extends boolean = true> {
   title?: T;
   slug?: T;
   status?: T;
-  blocks?:
-    | T
-    | {
-        hero?:
-          | T
-          | {
-              eyebrow?: T;
-              icon?: T;
-              title?: T;
-              subtitle?: T;
-              ctas?:
-                | T
-                | {
-                    label?: T;
-                    url?: T;
-                    variant?: T;
-                    id?: T;
-                  };
-              id?: T;
-              blockName?: T;
-            };
-        richText?:
-          | T
-          | {
-              content?: T;
-              width?: T;
-              alignment?: T;
-              id?: T;
-              blockName?: T;
-            };
-        featureGrid?:
-          | T
-          | {
-              eyebrow?: T;
-              title?: T;
-              description?: T;
-              columns?: T;
-              features?:
-                | T
-                | {
-                    icon?: T;
-                    title?: T;
-                    description?: T;
-                    id?: T;
-                  };
-              id?: T;
-              blockName?: T;
-            };
-        ctaBanner?:
-          | T
-          | {
-              title?: T;
-              description?: T;
-              buttonLabel?: T;
-              buttonUrl?: T;
-              style?: T;
-              id?: T;
-              blockName?: T;
-            };
-        testimonials?:
-          | T
-          | {
-              eyebrow?: T;
-              title?: T;
-              items?:
-                | T
-                | {
-                    quote?: T;
-                    author?: T;
-                    role?: T;
-                    id?: T;
-                  };
-              id?: T;
-              blockName?: T;
-            };
-        productCarousel?:
-          | T
-          | {
-              eyebrow?: T;
-              title?: T;
-              description?: T;
-              productSlugs?: T;
-              id?: T;
-              blockName?: T;
-            };
-        faq?:
-          | T
-          | {
-              eyebrow?: T;
-              title?: T;
-              items?:
-                | T
-                | {
-                    question?: T;
-                    answer?: T;
-                    id?: T;
-                  };
-              id?: T;
-              blockName?: T;
-            };
-        imageText?:
-          | T
-          | {
-              eyebrow?: T;
-              title?: T;
-              description?: T;
-              imageUrl?: T;
-              imageSide?: T;
-              imageAlt?: T;
-              cta?:
-                | T
-                | {
-                    label?: T;
-                    url?: T;
-                  };
-              id?: T;
-              blockName?: T;
-            };
-      };
+  puckData?: T;
   seo?:
     | T
     | {
@@ -676,7 +643,6 @@ export interface PagesSelect<T extends boolean = true> {
       };
   updatedAt?: T;
   createdAt?: T;
-  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -709,6 +675,7 @@ export interface PricingPlansSelect<T extends boolean = true> {
               value?: T;
               label?: T;
               priceCents?: T;
+              setupCents?: T;
               isDefault?: T;
               id?: T;
             };
@@ -736,6 +703,150 @@ export interface QuotesSelect<T extends boolean = true> {
   billingCycle?: T;
   status?: T;
   contactedAt?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "media_select".
+ */
+export interface MediaSelect<T extends boolean = true> {
+  alt?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  url?: T;
+  thumbnailURL?: T;
+  filename?: T;
+  mimeType?: T;
+  filesize?: T;
+  width?: T;
+  height?: T;
+  focalX?: T;
+  focalY?: T;
+  sizes?:
+    | T
+    | {
+        thumbnail?:
+          | T
+          | {
+              url?: T;
+              width?: T;
+              height?: T;
+              mimeType?: T;
+              filesize?: T;
+              filename?: T;
+            };
+        medium?:
+          | T
+          | {
+              url?: T;
+              width?: T;
+              height?: T;
+              mimeType?: T;
+              filesize?: T;
+              filename?: T;
+            };
+        hero?:
+          | T
+          | {
+              url?: T;
+              width?: T;
+              height?: T;
+              mimeType?: T;
+              filesize?: T;
+              filename?: T;
+            };
+      };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "products_select".
+ */
+export interface ProductsSelect<T extends boolean = true> {
+  slug?: T;
+  icon?: T;
+  menuOrder?: T;
+  highlight?: T;
+  placeholder?: T;
+  name?: T;
+  menuLabel?: T;
+  tagline?: T;
+  heroTitle?: T;
+  intro?: T;
+  heroImage?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "product-content_select".
+ */
+export interface ProductContentSelect<T extends boolean = true> {
+  product?: T;
+  subtitle?: T;
+  sections?:
+    | T
+    | {
+        features?:
+          | T
+          | {
+              title?: T;
+              lead?: T;
+              items?:
+                | T
+                | {
+                    icon?: T;
+                    title?: T;
+                    description?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        highlights?:
+          | T
+          | {
+              title?: T;
+              lead?: T;
+              highlights?:
+                | T
+                | {
+                    title?: T;
+                    description?: T;
+                    id?: T;
+                  };
+              bullets?:
+                | T
+                | {
+                    text?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        process?:
+          | T
+          | {
+              title?: T;
+              steps?:
+                | T
+                | {
+                    title?: T;
+                    description?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        cta?:
+          | T
+          | {
+              title?: T;
+              lead?: T;
+              id?: T;
+              blockName?: T;
+            };
+      };
   updatedAt?: T;
   createdAt?: T;
 }

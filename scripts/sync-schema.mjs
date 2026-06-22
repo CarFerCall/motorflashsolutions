@@ -914,6 +914,168 @@ try {
   } catch (err) {
     console.warn('[sync-schema] ✗ seed traducciones menú:', err?.message || err)
   }
+
+  // -------------------------------------------------------------------
+  // Seed de Products + ProductContent en los 4 locales.
+  //
+  // - Idempotente: si un producto ya existe (busca por `slug`), no se
+  //   toca; solo añade los que faltan.
+  // - Para cada locale escribe los campos localizados (name, menuLabel,
+  //   tagline, heroTitle, intro) usando la fuente estática que vive en
+  //   src/catalog/products.ts y src/catalog/products-i18n.ts.
+  // - Para ProductContent: si ya hay una ficha asociada al producto,
+  //   no se toca. Si no, crea la ficha con sus 4 traducciones.
+  // -------------------------------------------------------------------
+  try {
+    const { products: PRODUCTS } = await import('../src/catalog/products.ts')
+    const { productI18n: PRODUCT_I18N } = await import('../src/catalog/products-i18n.ts')
+    const { productContent: PC_ES } = await import('../src/catalog/product-content.es.ts')
+    const { productContent: PC_CA } = await import('../src/catalog/product-content.ca.ts')
+    const { productContent: PC_EN } = await import('../src/catalog/product-content.en.ts')
+    const { productContent: PC_ZH } = await import('../src/catalog/product-content.zh.ts')
+
+    const LOCALES = ['es', 'ca', 'en', 'zh']
+    const PC_REGISTRY = { es: PC_ES, ca: PC_CA, en: PC_EN, zh: PC_ZH }
+
+    let createdProducts = 0
+    let touchedProducts = 0
+    for (const p of PRODUCTS) {
+      let productId
+      try {
+        const existing = await payload.find({
+          collection: 'products',
+          where: { slug: { equals: p.slug } },
+          limit: 1,
+          depth: 0,
+        })
+        if (existing.docs.length > 0) {
+          productId = existing.docs[0].id
+        } else {
+          const created = await payload.create({
+            collection: 'products',
+            locale: 'es',
+            data: {
+              slug: p.slug,
+              icon: p.icon,
+              menuOrder: p.menuOrder,
+              highlight: !!p.highlight,
+              placeholder: !!p.placeholder,
+              name: p.name,
+              menuLabel: p.menuLabel,
+              tagline: p.tagline,
+              heroTitle: p.heroTitle,
+              intro: p.intro,
+            },
+          })
+          productId = created.id
+          createdProducts++
+          // Sembramos las traducciones del resto de locales sobre el doc recién creado
+          for (const locale of ['ca', 'en', 'zh']) {
+            const t = PRODUCT_I18N[locale]?.[p.slug]
+            if (!t) continue
+            try {
+              await payload.update({
+                collection: 'products',
+                id: productId,
+                locale,
+                data: {
+                  name: t.name ?? p.name,
+                  menuLabel: t.menuLabel ?? p.menuLabel,
+                  tagline: t.tagline ?? p.tagline,
+                  heroTitle: t.heroTitle ?? p.heroTitle,
+                  intro: t.intro ?? p.intro,
+                },
+              })
+              touchedProducts++
+            } catch (err) {
+              console.warn(`[sync-schema] ✗ seed product ${p.slug} (${locale}):`, err?.message || err)
+            }
+          }
+        }
+      } catch (err) {
+        console.warn(`[sync-schema] ✗ seed product ${p.slug}:`, err?.message || err)
+        continue
+      }
+
+      // ProductContent — solo si no existe ya una ficha para este producto.
+      try {
+        const existingContent = await payload.find({
+          collection: 'product-content',
+          where: { product: { equals: productId } },
+          limit: 1,
+          depth: 0,
+        })
+        if (existingContent.docs.length > 0) continue
+
+        const buildSections = (locale) => {
+          const fromLocale = PC_REGISTRY[locale]?.[p.slug]
+          const fromES = PC_REGISTRY.es?.[p.slug]
+          const src = fromLocale ?? fromES
+          if (!src) return null
+          return {
+            subtitle: src.subtitle ?? '',
+            sections: (src.sections ?? []).map((s) => {
+              if (s.type === 'features') {
+                return {
+                  blockType: 'features',
+                  title: s.title,
+                  lead: s.lead,
+                  items: s.items.map((i) => ({ icon: i.icon, title: i.title, description: i.description })),
+                }
+              }
+              if (s.type === 'highlights') {
+                return {
+                  blockType: 'highlights',
+                  title: s.title,
+                  lead: s.lead,
+                  highlights: s.highlights.map((h) => ({ title: h.title, description: h.description })),
+                  bullets: (s.bullets ?? []).map((text) => ({ text })),
+                }
+              }
+              if (s.type === 'process') {
+                return {
+                  blockType: 'process',
+                  title: s.title,
+                  steps: s.steps.map((st) => ({ title: st.title, description: st.description })),
+                }
+              }
+              return { blockType: 'cta', title: s.title, lead: s.lead }
+            }),
+          }
+        }
+
+        const esContent = buildSections('es')
+        if (!esContent) continue
+        const createdContent = await payload.create({
+          collection: 'product-content',
+          locale: 'es',
+          data: { product: productId, ...esContent },
+        })
+        // Actualizamos los locales restantes (ca/en/zh) — los array-rows se
+        // mapean por orden, así que mientras la estructura coincida con ES
+        // los textos quedan correctamente alineados.
+        for (const locale of ['ca', 'en', 'zh']) {
+          const localized = buildSections(locale)
+          if (!localized) continue
+          try {
+            await payload.update({
+              collection: 'product-content',
+              id: createdContent.id,
+              locale,
+              data: localized,
+            })
+          } catch (err) {
+            console.warn(`[sync-schema] ✗ seed content ${p.slug} (${locale}):`, err?.message || err)
+          }
+        }
+      } catch (err) {
+        console.warn(`[sync-schema] ✗ seed product-content ${p.slug}:`, err?.message || err)
+      }
+    }
+    console.log(`[sync-schema] catálogo: ${createdProducts} productos creados, ${touchedProducts} traducciones aplicadas`)
+  } catch (err) {
+    console.warn('[sync-schema] ✗ seed catálogo:', err?.message || err)
+  }
 } catch (err) {
   console.error('[sync-schema] schema check failed:', err?.message || err)
   // No fallamos el build: dejamos que el deploy salga y el problema se

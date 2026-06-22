@@ -11,6 +11,9 @@ import { Users } from './collections/Users'
 import { PricingPlans } from './collections/PricingPlans'
 import { Quotes } from './collections/Quotes'
 import { Pages } from './collections/Pages'
+import { Media } from './collections/Media'
+import { Products } from './collections/Products'
+import { ProductContent } from './collections/ProductContent'
 import { MainMenu } from './globals/MainMenu'
 
 const filename = fileURLToPath(import.meta.url)
@@ -81,7 +84,7 @@ export default buildConfig({
       },
     },
   },
-  collections: [Users, Pages, PricingPlans, Quotes],
+  collections: [Users, Pages, PricingPlans, Quotes, Media, Products, ProductContent],
   globals: [MainMenu],
   // Localización nativa: todo campo con `localized: true` se guarda
   // en columnas separadas por idioma. El frontend pasa el locale
