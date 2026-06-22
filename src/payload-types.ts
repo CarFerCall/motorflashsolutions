@@ -108,23 +108,27 @@ export interface Config {
     'main-menu': MainMenu;
     footer: Footer;
     'contact-page': ContactPage;
+    'contact-form': ContactForm;
     'pricing-page': PricingPage;
     'company-page': CompanyPage;
     'home-page': HomePage;
     'services-listing-page': ServicesListingPage;
     'success-stories-page': SuccessStoriesPage;
     'ecosystem-page': EcosystemPage;
+    'product-ui': ProductUi;
   };
   globalsSelect: {
     'main-menu': MainMenuSelect<false> | MainMenuSelect<true>;
     footer: FooterSelect<false> | FooterSelect<true>;
     'contact-page': ContactPageSelect<false> | ContactPageSelect<true>;
+    'contact-form': ContactFormSelect<false> | ContactFormSelect<true>;
     'pricing-page': PricingPageSelect<false> | PricingPageSelect<true>;
     'company-page': CompanyPageSelect<false> | CompanyPageSelect<true>;
     'home-page': HomePageSelect<false> | HomePageSelect<true>;
     'services-listing-page': ServicesListingPageSelect<false> | ServicesListingPageSelect<true>;
     'success-stories-page': SuccessStoriesPageSelect<false> | SuccessStoriesPageSelect<true>;
     'ecosystem-page': EcosystemPageSelect<false> | EcosystemPageSelect<true>;
+    'product-ui': ProductUiSelect<false> | ProductUiSelect<true>;
   };
   locale: 'es' | 'ca' | 'en' | 'zh';
   widgets: {
@@ -1154,6 +1158,34 @@ export interface ContactPage {
   createdAt?: string | null;
 }
 /**
+ * Labels del formulario de contacto y textos de la página /contacto/gracias.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "contact-form".
+ */
+export interface ContactForm {
+  id: number;
+  nameLabel: string;
+  namePlaceholder: string;
+  emailLabel: string;
+  emailPlaceholder: string;
+  companyLabel: string;
+  phoneLabel: string;
+  serviceLabel: string;
+  servicePlaceholder: string;
+  messageLabel: string;
+  messagePlaceholder: string;
+  privacy: string;
+  sending: string;
+  submit: string;
+  thanksTitle: string;
+  thanksLead: string;
+  thanksExploreServices: string;
+  thanksBackHome: string;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
  * Copy editorial de /precios: hero, mensajes de fallback y secciones “Más servicios” y “Afinar producto”. Los planes y precios se editan en la colección Tarifas.
  *
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1432,6 +1464,51 @@ export interface EcosystemPage {
   createdAt?: string | null;
 }
 /**
+ * Labels y textos compartidos por el carrusel, la animación del multipublicador y la plantilla genérica de producto.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "product-ui".
+ */
+export interface ProductUi {
+  id: number;
+  carouselEyebrow: string;
+  carouselTitle: string;
+  carouselLead: string;
+  carouselPrevAria: string;
+  carouselNextAria: string;
+  carouselView: string;
+  carouselViewAll: string;
+  multiAriaLabel: string;
+  multiEyebrow: string;
+  multiTitle: string;
+  multiLead: string;
+  multiHubName: string;
+  multiHubSubline: string;
+  multiSendsTo: string;
+  multiStats: {
+    v: string;
+    l: string;
+    id?: string | null;
+  }[];
+  breadcrumbHome: string;
+  breadcrumbServices: string;
+  ctaInfo: string;
+  ctaViewAll: string;
+  comingSoonChip: string;
+  comingSoonTitle: string;
+  comingSoonLead: string;
+  comingSoonCta: string;
+  featuresEyebrow: string;
+  highlightsEyebrow: string;
+  processEyebrow: string;
+  ctaEyebrow: string;
+  ctaRequest: string;
+  othersEyebrow: string;
+  othersTitle: string;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "main-menu_select".
  */
@@ -1503,6 +1580,32 @@ export interface ContactPageSelect<T extends boolean = true> {
   phoneNumber?: T;
   emailLabel?: T;
   emailAddress?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "contact-form_select".
+ */
+export interface ContactFormSelect<T extends boolean = true> {
+  nameLabel?: T;
+  namePlaceholder?: T;
+  emailLabel?: T;
+  emailPlaceholder?: T;
+  companyLabel?: T;
+  phoneLabel?: T;
+  serviceLabel?: T;
+  servicePlaceholder?: T;
+  messageLabel?: T;
+  messagePlaceholder?: T;
+  privacy?: T;
+  sending?: T;
+  submit?: T;
+  thanksTitle?: T;
+  thanksLead?: T;
+  thanksExploreServices?: T;
+  thanksBackHome?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
@@ -1791,6 +1894,51 @@ export interface EcosystemPageSelect<T extends boolean = true> {
             };
         id?: T;
       };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "product-ui_select".
+ */
+export interface ProductUiSelect<T extends boolean = true> {
+  carouselEyebrow?: T;
+  carouselTitle?: T;
+  carouselLead?: T;
+  carouselPrevAria?: T;
+  carouselNextAria?: T;
+  carouselView?: T;
+  carouselViewAll?: T;
+  multiAriaLabel?: T;
+  multiEyebrow?: T;
+  multiTitle?: T;
+  multiLead?: T;
+  multiHubName?: T;
+  multiHubSubline?: T;
+  multiSendsTo?: T;
+  multiStats?:
+    | T
+    | {
+        v?: T;
+        l?: T;
+        id?: T;
+      };
+  breadcrumbHome?: T;
+  breadcrumbServices?: T;
+  ctaInfo?: T;
+  ctaViewAll?: T;
+  comingSoonChip?: T;
+  comingSoonTitle?: T;
+  comingSoonLead?: T;
+  comingSoonCta?: T;
+  featuresEyebrow?: T;
+  highlightsEyebrow?: T;
+  processEyebrow?: T;
+  ctaEyebrow?: T;
+  ctaRequest?: T;
+  othersEyebrow?: T;
+  othersTitle?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

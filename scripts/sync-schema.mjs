@@ -1408,6 +1408,59 @@ try {
   } catch (err) {
     console.warn('[sync-schema] ✗ seed ecosystem:', err?.message || err)
   }
+
+  // -------------------------------------------------------------------
+  // Seed del global Contact Form (UI del formulario + gracias) en los 4 locales.
+  // -------------------------------------------------------------------
+  try {
+    const { STATIC_CONTACT_FORM } = await import('../src/lib/contact-form-content.ts')
+    let contactFormES
+    try {
+      contactFormES = await payload.findGlobal({ slug: 'contact-form', locale: 'es', depth: 0 })
+    } catch {}
+    if (!contactFormES || !contactFormES.submit) {
+      for (const locale of ['es', 'ca', 'en', 'zh']) {
+        try {
+          await payload.updateGlobal({ slug: 'contact-form', locale, data: STATIC_CONTACT_FORM[locale] })
+        } catch (err) {
+          console.warn(`[sync-schema] ✗ seed contact-form (${locale}):`, err?.message || err)
+        }
+      }
+      console.log('[sync-schema] contact-form: 4 locales sembrados')
+    } else {
+      console.log('[sync-schema] = contact-form ya tiene contenido en ES, sin tocar')
+    }
+  } catch (err) {
+    console.warn('[sync-schema] ✗ seed contact-form:', err?.message || err)
+  }
+
+  // -------------------------------------------------------------------
+  // Seed del global Product UI (carrusel + multipublicador + plantilla
+  // genérica de producto) en los 4 locales. STATIC_PRODUCT_UI usa
+  // multiStats como array de { v, l } — ya coincide con el shape del
+  // Global, así que pasamos el objeto tal cual.
+  // -------------------------------------------------------------------
+  try {
+    const { STATIC_PRODUCT_UI } = await import('../src/lib/product-ui-content.ts')
+    let productUiES
+    try {
+      productUiES = await payload.findGlobal({ slug: 'product-ui', locale: 'es', depth: 0 })
+    } catch {}
+    if (!productUiES || !productUiES.carouselTitle) {
+      for (const locale of ['es', 'ca', 'en', 'zh']) {
+        try {
+          await payload.updateGlobal({ slug: 'product-ui', locale, data: STATIC_PRODUCT_UI[locale] })
+        } catch (err) {
+          console.warn(`[sync-schema] ✗ seed product-ui (${locale}):`, err?.message || err)
+        }
+      }
+      console.log('[sync-schema] product-ui: 4 locales sembrados')
+    } else {
+      console.log('[sync-schema] = product-ui ya tiene contenido en ES, sin tocar')
+    }
+  } catch (err) {
+    console.warn('[sync-schema] ✗ seed product-ui:', err?.message || err)
+  }
 } catch (err) {
   console.error('[sync-schema] schema check failed:', err?.message || err)
   // No fallamos el build: dejamos que el deploy salga y el problema se

@@ -9,6 +9,12 @@ interface Props {
   productSlugs: string[]
 }
 
+/**
+ * Bloque del page builder. El carrusel detecta el locale en cliente y
+ * cae al STATIC del wrapper `product-ui-content`. Cuando se usa fuera
+ * del editor (server pages) puedes pasar `t` directamente al
+ * `<ProductCarousel />` desde el padre con `getProductUiCopy(locale)`.
+ */
 export function ProductCarouselBlock({ eyebrow, title, description, productSlugs }: Props) {
   const products = (productSlugs ?? [])
     .map((s) => productBySlug(s))

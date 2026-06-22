@@ -2,101 +2,43 @@
 
 import { useState, useTransition } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
-import { useLocale } from 'next-intl'
 import { submitContact } from '@/app/actions/submitContact'
+import type { ContactFormCopy } from '@/lib/contact-form-content'
 
 export interface ProductOption {
   slug: string
   name: string
 }
 
-type LocaleKey = 'es' | 'ca' | 'en' | 'zh'
+/**
+ * Subset del copy del CMS necesario para pintar el formulario. El
+ * padre (server component) lee `getContactFormCopy(locale)` y pasa el
+ * objeto por prop, así evitamos importar `@/lib/payload` desde el
+ * cliente.
+ */
+export type ContactFormLabels = Pick<
+  ContactFormCopy,
+  | 'nameLabel'
+  | 'namePlaceholder'
+  | 'emailLabel'
+  | 'emailPlaceholder'
+  | 'companyLabel'
+  | 'phoneLabel'
+  | 'serviceLabel'
+  | 'servicePlaceholder'
+  | 'messageLabel'
+  | 'messagePlaceholder'
+  | 'privacy'
+  | 'sending'
+  | 'submit'
+>
 
-const COPY: Record<LocaleKey, {
-  nameLabel: string
-  namePlaceholder: string
-  emailLabel: string
-  emailPlaceholder: string
-  companyLabel: string
-  phoneLabel: string
-  serviceLabel: string
-  servicePlaceholder: string
-  messageLabel: string
-  messagePlaceholder: string
-  privacy: string
-  sending: string
-  submit: string
-}> = {
-  es: {
-    nameLabel: 'Nombre *',
-    namePlaceholder: 'Tu nombre…',
-    emailLabel: 'Email *',
-    emailPlaceholder: 'email@ejemplo.com',
-    companyLabel: 'Empresa',
-    phoneLabel: 'Teléfono',
-    serviceLabel: 'Servicio de interés',
-    servicePlaceholder: 'Selecciona un servicio…',
-    messageLabel: 'Mensaje',
-    messagePlaceholder: '¿En qué podemos ayudarte?',
-    privacy: 'He leído y acepto la Política de privacidad. Consiento el tratamiento de mis datos.',
-    sending: 'Enviando…',
-    submit: 'Enviar mensaje',
-  },
-  ca: {
-    nameLabel: 'Nom *',
-    namePlaceholder: 'El teu nom…',
-    emailLabel: 'Correu electrònic *',
-    emailPlaceholder: 'correu@exemple.com',
-    companyLabel: 'Empresa',
-    phoneLabel: 'Telèfon',
-    serviceLabel: "Servei d'interès",
-    servicePlaceholder: 'Selecciona un servei…',
-    messageLabel: 'Missatge',
-    messagePlaceholder: 'En què et podem ajudar?',
-    privacy: 'He llegit i accepto la Política de privadesa. Consento el tractament de les meves dades.',
-    sending: 'Enviant…',
-    submit: 'Envia el missatge',
-  },
-  en: {
-    nameLabel: 'Name *',
-    namePlaceholder: 'Your name…',
-    emailLabel: 'Email *',
-    emailPlaceholder: 'email@example.com',
-    companyLabel: 'Company',
-    phoneLabel: 'Phone',
-    serviceLabel: 'Service of interest',
-    servicePlaceholder: 'Pick a service…',
-    messageLabel: 'Message',
-    messagePlaceholder: 'How can we help?',
-    privacy: 'I have read and accept the Privacy Policy. I consent to the processing of my data.',
-    sending: 'Sending…',
-    submit: 'Send message',
-  },
-  zh: {
-    nameLabel: '姓名 *',
-    namePlaceholder: '您的姓名…',
-    emailLabel: '邮箱 *',
-    emailPlaceholder: 'email@example.com',
-    companyLabel: '公司',
-    phoneLabel: '电话',
-    serviceLabel: '感兴趣的服务',
-    servicePlaceholder: '选择服务…',
-    messageLabel: '留言',
-    messagePlaceholder: '我们可以如何帮助您?',
-    privacy: '我已阅读并接受隐私政策,同意对我的数据进行处理。',
-    sending: '发送中…',
-    submit: '发送留言',
-  },
-}
-
-export function ContactForm({ products }: { products: ProductOption[] }) {
+export function ContactForm({ products, t }: { products: ProductOption[]; t: ContactFormLabels }) {
   const router = useRouter()
   const searchParams = useSearchParams()
   const initialService = searchParams.get('servicio') ?? ''
   const [pending, startTransition] = useTransition()
   const [error, setError] = useState<string | null>(null)
-  const locale = useLocale() as LocaleKey
-  const t = COPY[locale] ?? COPY.es
 
   const handleSubmit = async (form: FormData) => {
     setError(null)

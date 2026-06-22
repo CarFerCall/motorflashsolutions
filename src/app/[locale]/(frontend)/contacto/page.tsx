@@ -5,6 +5,7 @@ import { orderedProducts } from '@/catalog/products'
 import { ContactForm } from '@/components/ContactForm'
 import { Reveal } from '@/components/Reveal'
 import { getContactCopy, type ContactLocale } from '@/lib/contact-content'
+import { getContactFormCopy } from '@/lib/contact-form-content'
 
 export async function generateMetadata() {
   const t = await getTranslations('Pages')
@@ -18,6 +19,7 @@ export default async function ContactoPage() {
   const locale = ((await getLocale()) as ContactLocale) || 'es'
   const products = orderedProducts(locale).map((p) => ({ slug: p.slug, name: p.name }))
   const t = await getContactCopy(locale)
+  const formCopy = await getContactFormCopy(locale)
   const loadingLabel = locale === 'en' ? 'Loading…' : locale === 'zh' ? '加载中…' : locale === 'ca' ? 'Carregant…' : 'Cargando…'
   const phoneHref = `tel:${t.phoneNumber.replace(/\s/g, '')}`
   const emailHref = `mailto:${t.emailAddress}`
@@ -63,7 +65,7 @@ export default async function ContactoPage() {
               {/* Form */}
               <div className="p-12 md:p-16 bg-white">
                 <Suspense fallback={<div>{loadingLabel}</div>}>
-                  <ContactForm products={products} />
+                  <ContactForm products={products} t={formCopy} />
                 </Suspense>
               </div>
             </div>

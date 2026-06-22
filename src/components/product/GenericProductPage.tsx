@@ -4,96 +4,8 @@ import { getLocale } from 'next-intl/server'
 import type { Product } from '@/catalog/products'
 import { productContentBySlug, type ProductContentLocale } from '@/catalog/product-content'
 import { orderedProducts } from '@/catalog/products'
+import { getProductUiCopy } from '@/lib/product-ui-content'
 import { MultipublicadorAnimation } from './MultipublicadorAnimation'
-
-type LocaleKey = 'es' | 'ca' | 'en' | 'zh'
-
-const COPY: Record<LocaleKey, {
-  breadcrumbHome: string
-  breadcrumbServices: string
-  ctaInfo: string
-  ctaViewAll: string
-  comingSoonChip: string
-  comingSoonTitle: string
-  comingSoonLead: string
-  comingSoonCta: string
-  featuresEyebrow: string
-  highlightsEyebrow: string
-  processEyebrow: string
-  ctaEyebrow: string
-  ctaRequest: string // se usa con el nombre del producto ej: "Request {name}"
-  othersEyebrow: string
-  othersTitle: string
-}> = {
-  es: {
-    breadcrumbHome: 'Inicio',
-    breadcrumbServices: 'Servicios',
-    ctaInfo: 'Solicitar información',
-    ctaViewAll: 'Ver todos los servicios',
-    comingSoonChip: 'Próximamente',
-    comingSoonTitle: 'Estamos preparando el detalle de este servicio',
-    comingSoonLead: 'Mientras tanto, si quieres conocerlo en profundidad, contacta con nuestro equipo comercial y te lo presentamos en persona.',
-    comingSoonCta: 'Hablar con un especialista',
-    featuresEyebrow: 'Funcionalidades',
-    highlightsEyebrow: 'En profundidad',
-    processEyebrow: 'El proceso',
-    ctaEyebrow: '¿Empezamos?',
-    ctaRequest: 'Solicitar',
-    othersEyebrow: 'Otros servicios',
-    othersTitle: 'Combínalo con el resto del ecosistema Motorflash',
-  },
-  ca: {
-    breadcrumbHome: 'Inici',
-    breadcrumbServices: 'Serveis',
-    ctaInfo: 'Sol·licitar informació',
-    ctaViewAll: 'Veure tots els serveis',
-    comingSoonChip: 'Properament',
-    comingSoonTitle: 'Estem preparant el detall d\'aquest servei',
-    comingSoonLead: 'Mentrestant, si vols conèixer-lo a fons, contacta amb el nostre equip comercial i te\'l presentem en persona.',
-    comingSoonCta: 'Parlar amb un especialista',
-    featuresEyebrow: 'Funcionalitats',
-    highlightsEyebrow: 'En profunditat',
-    processEyebrow: 'El procés',
-    ctaEyebrow: 'Comencem?',
-    ctaRequest: 'Sol·licitar',
-    othersEyebrow: 'Altres serveis',
-    othersTitle: 'Combina\'l amb la resta de l\'ecosistema Motorflash',
-  },
-  en: {
-    breadcrumbHome: 'Home',
-    breadcrumbServices: 'Services',
-    ctaInfo: 'Request information',
-    ctaViewAll: 'View all services',
-    comingSoonChip: 'Coming soon',
-    comingSoonTitle: "We're preparing the details of this service",
-    comingSoonLead: 'In the meantime, if you want to get to know it in depth, contact our sales team and we will introduce it to you in person.',
-    comingSoonCta: 'Talk to a specialist',
-    featuresEyebrow: 'Features',
-    highlightsEyebrow: 'In depth',
-    processEyebrow: 'The process',
-    ctaEyebrow: "Shall we start?",
-    ctaRequest: 'Request',
-    othersEyebrow: 'Other services',
-    othersTitle: 'Combine it with the rest of the Motorflash ecosystem',
-  },
-  zh: {
-    breadcrumbHome: '首页',
-    breadcrumbServices: '服务',
-    ctaInfo: '申请资料',
-    ctaViewAll: '查看所有服务',
-    comingSoonChip: '即将推出',
-    comingSoonTitle: '我们正在准备此服务的详情',
-    comingSoonLead: '在此期间,如果您想深入了解,请联系我们的销售团队,我们将亲自为您介绍。',
-    comingSoonCta: '与专家沟通',
-    featuresEyebrow: '功能',
-    highlightsEyebrow: '深入了解',
-    processEyebrow: '流程',
-    ctaEyebrow: '开始吧?',
-    ctaRequest: '申请',
-    othersEyebrow: '其他服务',
-    othersTitle: '与 Motorflash 生态的其他模块组合使用',
-  },
-}
 
 // Productos que muestran una imagen real en el hero en lugar del
 // icono de Material Symbols con el tile naranja.
@@ -114,7 +26,7 @@ export async function GenericProductPage({ product }: { product: Product }) {
   // las traducciones del producto. Si el slug aún no tiene EN/ZH
   // traducido, productContentBySlug cae a español automáticamente.
   const locale = ((await getLocale()) as ProductContentLocale) || 'es'
-  const t = COPY[(locale as LocaleKey)] ?? COPY.es
+  const t = await getProductUiCopy(locale as any)
   const content = productContentBySlug(product.slug, locale)
   const others = orderedProducts(locale).filter((p) => p.slug !== product.slug).slice(0, 8)
   const heroImage = HERO_IMAGE_BY_SLUG[product.slug]

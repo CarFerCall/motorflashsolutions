@@ -4,15 +4,26 @@ import { getLocale } from 'next-intl/server'
 import { orderedProducts } from '@/catalog/products'
 import { Reveal } from '@/components/Reveal'
 import { AnimatedCounter } from '@/components/AnimatedCounter'
-import { ProductCarousel } from '@/components/ProductCarousel'
+import { ProductCarousel, type ProductCarouselLabels } from '@/components/ProductCarousel'
 import { ProductsTimeline } from '@/components/ProductsTimeline'
 import { HomeSectionNav } from '@/components/HomeSectionNav'
 import { getHomeCopy, type HomeLocale } from '@/lib/home-content'
+import { getProductUiCopy } from '@/lib/product-ui-content'
 
 export default async function HomePage() {
   const locale = ((await getLocale()) as HomeLocale) || 'es'
   const products = orderedProducts(locale)
   const t = await getHomeCopy(locale)
+  const productUi = await getProductUiCopy(locale)
+  const carouselLabels: ProductCarouselLabels = {
+    eyebrow: productUi.carouselEyebrow,
+    title: productUi.carouselTitle,
+    lead: productUi.carouselLead,
+    prevAria: productUi.carouselPrevAria,
+    nextAria: productUi.carouselNextAria,
+    view: productUi.carouselView,
+    viewAll: productUi.carouselViewAll,
+  }
 
   return (
     <>
@@ -197,7 +208,7 @@ export default async function HomePage() {
 
       {/* Carrusel productos */}
       <section id="catalogo-productos" className="py-24 overflow-hidden">
-        <ProductCarousel products={products} />
+        <ProductCarousel products={products} t={carouselLabels} />
       </section>
 
       {/* Ecosistema técnico teaser */}
