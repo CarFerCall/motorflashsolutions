@@ -111,6 +111,9 @@ export interface Config {
     'pricing-page': PricingPage;
     'company-page': CompanyPage;
     'home-page': HomePage;
+    'services-listing-page': ServicesListingPage;
+    'success-stories-page': SuccessStoriesPage;
+    'ecosystem-page': EcosystemPage;
   };
   globalsSelect: {
     'main-menu': MainMenuSelect<false> | MainMenuSelect<true>;
@@ -119,6 +122,9 @@ export interface Config {
     'pricing-page': PricingPageSelect<false> | PricingPageSelect<true>;
     'company-page': CompanyPageSelect<false> | CompanyPageSelect<true>;
     'home-page': HomePageSelect<false> | HomePageSelect<true>;
+    'services-listing-page': ServicesListingPageSelect<false> | ServicesListingPageSelect<true>;
+    'success-stories-page': SuccessStoriesPageSelect<false> | SuccessStoriesPageSelect<true>;
+    'ecosystem-page': EcosystemPageSelect<false> | EcosystemPageSelect<true>;
   };
   locale: 'es' | 'ca' | 'en' | 'zh';
   widgets: {
@@ -1341,6 +1347,91 @@ export interface HomePage {
   createdAt?: string | null;
 }
 /**
+ * Copy editorial de /servicios: hero del listado y etiquetas comunes de las tarjetas. El catálogo de productos se gestiona en la colección Products.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "services-listing-page".
+ */
+export interface ServicesListingPage {
+  id: number;
+  metaTitle: string;
+  metaDescription: string;
+  metaOg: string;
+  eyebrow: string;
+  title: string;
+  lead: string;
+  viewProduct: string;
+  comingSoon: string;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * Copy editorial de /historias-de-exito: meta, hero, pill de "+1.500 clientes más", etiqueta "PRODUCTOS CONTRATADOS" y CTA final. Los casos de cliente se editan en la colección Casos de éxito.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "success-stories-page".
+ */
+export interface SuccessStoriesPage {
+  id: number;
+  metaTitle: string;
+  metaDescription: string;
+  metaOg: string;
+  heroEyebrow: string;
+  heroTitle1: string;
+  heroTitle2: string;
+  heroLead: string;
+  trustHeading: string;
+  morePill1: string;
+  morePill2: string;
+  productsLabel: string;
+  ctaTitle: string;
+  ctaLead: string;
+  ctaButton: string;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * Página /ecosistema-tecnico. Edita por idioma (es/ca/en/zh) desde la pestaña superior del admin.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ecosystem-page".
+ */
+export interface EcosystemPage {
+  id: number;
+  metaTitle: string;
+  metaDescription: string;
+  metaOg: string;
+  eyebrow: string;
+  title1: string;
+  title2?: string | null;
+  intro: string;
+  kpiHubs: string;
+  kpiIntegrations: string;
+  kpiEntry: string;
+  hubsHint: string;
+  hubsHintMobile: string;
+  fullListEyebrow: string;
+  fullListTitle: string;
+  fullListLead: string;
+  integrationsLabel: string;
+  ctaTitle: string;
+  ctaLead: string;
+  ctaButton: string;
+  hubs: {
+    key: string;
+    icon: string;
+    shortLabel: string;
+    name: string;
+    integrations: {
+      name: string;
+      id?: string | null;
+    }[];
+    id?: string | null;
+  }[];
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "main-menu_select".
  */
@@ -1616,6 +1707,89 @@ export interface HomePageSelect<T extends boolean = true> {
     | {
         id?: T;
         label?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "services-listing-page_select".
+ */
+export interface ServicesListingPageSelect<T extends boolean = true> {
+  metaTitle?: T;
+  metaDescription?: T;
+  metaOg?: T;
+  eyebrow?: T;
+  title?: T;
+  lead?: T;
+  viewProduct?: T;
+  comingSoon?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "success-stories-page_select".
+ */
+export interface SuccessStoriesPageSelect<T extends boolean = true> {
+  metaTitle?: T;
+  metaDescription?: T;
+  metaOg?: T;
+  heroEyebrow?: T;
+  heroTitle1?: T;
+  heroTitle2?: T;
+  heroLead?: T;
+  trustHeading?: T;
+  morePill1?: T;
+  morePill2?: T;
+  productsLabel?: T;
+  ctaTitle?: T;
+  ctaLead?: T;
+  ctaButton?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ecosystem-page_select".
+ */
+export interface EcosystemPageSelect<T extends boolean = true> {
+  metaTitle?: T;
+  metaDescription?: T;
+  metaOg?: T;
+  eyebrow?: T;
+  title1?: T;
+  title2?: T;
+  intro?: T;
+  kpiHubs?: T;
+  kpiIntegrations?: T;
+  kpiEntry?: T;
+  hubsHint?: T;
+  hubsHintMobile?: T;
+  fullListEyebrow?: T;
+  fullListTitle?: T;
+  fullListLead?: T;
+  integrationsLabel?: T;
+  ctaTitle?: T;
+  ctaLead?: T;
+  ctaButton?: T;
+  hubs?:
+    | T
+    | {
+        key?: T;
+        icon?: T;
+        shortLabel?: T;
+        name?: T;
+        integrations?:
+          | T
+          | {
+              name?: T;
+              id?: T;
+            };
+        id?: T;
       };
   updatedAt?: T;
   createdAt?: T;

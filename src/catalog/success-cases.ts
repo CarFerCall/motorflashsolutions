@@ -297,16 +297,53 @@ const fetchCmsCases = cache(async (locale: SuccessCaseLocale): Promise<SuccessCa
   }
 })
 
+/** Campos textuales del chrome (todo salvo `cases`). */
+type SuccessCasesChrome = Omit<SuccessCasesPage, 'cases'>
+
+function mergeChrome(
+  doc: Partial<SuccessCasesChrome> | null | undefined,
+  fallback: SuccessCasesChrome,
+): SuccessCasesChrome {
+  if (!doc) return fallback
+  const out: SuccessCasesChrome = { ...fallback }
+  for (const k of Object.keys(fallback) as (keyof SuccessCasesChrome)[]) {
+    const v = doc[k]
+    if (typeof v === 'string' && v.trim().length > 0) out[k] = v
+  }
+  return out
+}
+
+const fetchCmsChrome = cache(async (locale: SuccessCaseLocale): Promise<Partial<SuccessCasesChrome> | null> => {
+  try {
+    const { getPayloadClient } = await import('@/lib/payload')
+    const payload = await getPayloadClient()
+    const doc = (await payload.findGlobal({
+      slug: 'success-stories-page' as any,
+      locale: locale as any,
+      depth: 0,
+    })) as Partial<SuccessCasesChrome> | null
+    return doc ?? null
+  } catch {
+    return null
+  }
+})
+
 /**
  * Devuelve la página de casos de éxito en el locale dado, leyendo
- * del CMS los casos cuando existan y cayendo al catálogo estático
+ * del CMS tanto el chrome (global `success-stories-page`) como los
+ * casos (colección `success-cases`) y cayendo al catálogo estático
  * en caso contrario.
  */
 export async function getSuccessCasesPage(locale: SuccessCaseLocale = 'es'): Promise<SuccessCasesPage> {
-  const base = STATIC_COPY[locale] ?? STATIC_COPY.es
-  const fromCms = await fetchCmsCases(locale)
-  if (!fromCms || fromCms.length === 0) return base
-  return { ...base, cases: fromCms }
+  const baseAll = STATIC_COPY[locale] ?? STATIC_COPY.es
+  const { cases: baseCases, ...baseChrome } = baseAll
+  const [fromCmsCases, fromCmsChrome] = await Promise.all([
+    fetchCmsCases(locale),
+    fetchCmsChrome(locale),
+  ])
+  const chrome = mergeChrome(fromCmsChrome, baseChrome)
+  const cases = fromCmsCases && fromCmsCases.length > 0 ? fromCmsCases : baseCases
+  return { ...chrome, cases }
 }
 
 /** Helpers para el seed — exportados para sync-schema.mjs. */

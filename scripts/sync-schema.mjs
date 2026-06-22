@@ -1306,6 +1306,108 @@ try {
   } catch (err) {
     console.warn('[sync-schema] ✗ seed home:', err?.message || err)
   }
+
+  // -------------------------------------------------------------------
+  // Seed del global Services Listing en los 4 locales.
+  // -------------------------------------------------------------------
+  try {
+    const { STATIC_SERVICES_LISTING } = await import('../src/lib/services-listing-content.ts')
+    let servicesListingES
+    try {
+      servicesListingES = await payload.findGlobal({ slug: 'services-listing-page', locale: 'es', depth: 0 })
+    } catch {}
+    if (!servicesListingES || !servicesListingES.title) {
+      for (const locale of ['es', 'ca', 'en', 'zh']) {
+        try {
+          await payload.updateGlobal({
+            slug: 'services-listing-page',
+            locale,
+            data: STATIC_SERVICES_LISTING[locale],
+          })
+        } catch (err) {
+          console.warn(`[sync-schema] ✗ seed services-listing (${locale}):`, err?.message || err)
+        }
+      }
+      console.log('[sync-schema] services-listing: 4 locales sembrados')
+    } else {
+      console.log('[sync-schema] = services-listing ya tiene contenido en ES, sin tocar')
+    }
+  } catch (err) {
+    console.warn('[sync-schema] ✗ seed services-listing:', err?.message || err)
+  }
+
+  // -------------------------------------------------------------------
+  // Seed del global Success Stories (chrome) en los 4 locales.
+  // Solo siembra el envoltorio (meta, hero, pill, CTA); los casos de
+  // cliente se siembran en su propia colección.
+  // -------------------------------------------------------------------
+  try {
+    const { STATIC_COPY: STATIC_SUCCESS_STORIES } = await import('../src/catalog/success-cases.ts')
+    let successStoriesES
+    try {
+      successStoriesES = await payload.findGlobal({ slug: 'success-stories-page', locale: 'es', depth: 0 })
+    } catch {}
+    if (!successStoriesES || !successStoriesES.heroTitle1) {
+      for (const locale of ['es', 'ca', 'en', 'zh']) {
+        try {
+          // Excluimos `cases` del payload del global: los casos viven en
+          // la colección SuccessCases.
+          const { cases: _cases, ...chrome } = STATIC_SUCCESS_STORIES[locale]
+          await payload.updateGlobal({
+            slug: 'success-stories-page',
+            locale,
+            data: chrome,
+          })
+        } catch (err) {
+          console.warn(`[sync-schema] ✗ seed success-stories (${locale}):`, err?.message || err)
+        }
+      }
+      console.log('[sync-schema] success-stories: 4 locales sembrados')
+    } else {
+      console.log('[sync-schema] = success-stories ya tiene contenido en ES, sin tocar')
+    }
+  } catch (err) {
+    console.warn('[sync-schema] ✗ seed success-stories:', err?.message || err)
+  }
+
+  // -------------------------------------------------------------------
+  // Seed del global Ecosystem (página /ecosistema-tecnico) en los 4 locales.
+  // El shape de STATIC_ECOSYSTEM expone `hubs[i].integrations` como
+  // string[] (forma cómoda para el frontend), pero el Global lo guarda
+  // como array de { name }. Adaptamos antes de pasarlo a updateGlobal.
+  // -------------------------------------------------------------------
+  try {
+    const { STATIC_ECOSYSTEM } = await import('../src/lib/ecosystem-content.ts')
+    let ecosystemES
+    try {
+      ecosystemES = await payload.findGlobal({ slug: 'ecosystem-page', locale: 'es', depth: 0 })
+    } catch {}
+    if (!ecosystemES || !ecosystemES.title1) {
+      const toPayloadShape = (copy) => ({
+        ...copy,
+        hubs: (copy.hubs || []).map((h) => ({
+          ...h,
+          integrations: (h.integrations || []).map((name) => ({ name })),
+        })),
+      })
+      for (const locale of ['es', 'ca', 'en', 'zh']) {
+        try {
+          await payload.updateGlobal({
+            slug: 'ecosystem-page',
+            locale,
+            data: toPayloadShape(STATIC_ECOSYSTEM[locale]),
+          })
+        } catch (err) {
+          console.warn(`[sync-schema] ✗ seed ecosystem (${locale}):`, err?.message || err)
+        }
+      }
+      console.log('[sync-schema] ecosystem: 4 locales sembrados')
+    } else {
+      console.log('[sync-schema] = ecosystem ya tiene contenido en ES, sin tocar')
+    }
+  } catch (err) {
+    console.warn('[sync-schema] ✗ seed ecosystem:', err?.message || err)
+  }
 } catch (err) {
   console.error('[sync-schema] schema check failed:', err?.message || err)
   // No fallamos el build: dejamos que el deploy salga y el problema se
