@@ -1154,6 +1154,72 @@ try {
   } catch (err) {
     console.warn('[sync-schema] ✗ seed success-cases:', err?.message || err)
   }
+
+  // -------------------------------------------------------------------
+  // Seed del Footer global en los 4 locales.
+  // Sólo se rellena el primer despliegue: detectamos "vacío" si el
+  // campo `tagline` en `es` está ausente o sigue como string vacío.
+  // -------------------------------------------------------------------
+  try {
+    const { STATIC_FOOTER } = await import('../src/lib/footer-content.ts')
+    let footerES
+    try {
+      footerES = await payload.findGlobal({ slug: 'footer', locale: 'es', depth: 0 })
+    } catch (err) {
+      console.warn('[sync-schema] ✗ leer footer ES:', err?.message || err)
+    }
+    const needsSeed = !footerES || !footerES.tagline
+    if (needsSeed) {
+      for (const locale of ['es', 'ca', 'en', 'zh']) {
+        try {
+          await payload.updateGlobal({
+            slug: 'footer',
+            locale,
+            data: STATIC_FOOTER[locale],
+          })
+        } catch (err) {
+          console.warn(`[sync-schema] ✗ seed footer (${locale}):`, err?.message || err)
+        }
+      }
+      console.log('[sync-schema] footer: 4 locales sembrados')
+    } else {
+      console.log('[sync-schema] = footer ya tiene contenido en ES, sin tocar')
+    }
+  } catch (err) {
+    console.warn('[sync-schema] ✗ seed footer:', err?.message || err)
+  }
+
+  // -------------------------------------------------------------------
+  // Seed del global Contact en los 4 locales.
+  // -------------------------------------------------------------------
+  try {
+    const { STATIC_CONTACT } = await import('../src/lib/contact-content.ts')
+    let contactES
+    try {
+      contactES = await payload.findGlobal({ slug: 'contact-page', locale: 'es', depth: 0 })
+    } catch (err) {
+      console.warn('[sync-schema] ✗ leer contact ES:', err?.message || err)
+    }
+    const needsSeed = !contactES || !contactES.title
+    if (needsSeed) {
+      for (const locale of ['es', 'ca', 'en', 'zh']) {
+        try {
+          await payload.updateGlobal({
+            slug: 'contact-page',
+            locale,
+            data: STATIC_CONTACT[locale],
+          })
+        } catch (err) {
+          console.warn(`[sync-schema] ✗ seed contact (${locale}):`, err?.message || err)
+        }
+      }
+      console.log('[sync-schema] contact: 4 locales sembrados')
+    } else {
+      console.log('[sync-schema] = contact ya tiene contenido en ES, sin tocar')
+    }
+  } catch (err) {
+    console.warn('[sync-schema] ✗ seed contact:', err?.message || err)
+  }
 } catch (err) {
   console.error('[sync-schema] schema check failed:', err?.message || err)
   // No fallamos el build: dejamos que el deploy salga y el problema se

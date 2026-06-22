@@ -4,40 +4,7 @@ import { getLocale, getTranslations } from 'next-intl/server'
 import { orderedProducts } from '@/catalog/products'
 import { ContactForm } from '@/components/ContactForm'
 import { Reveal } from '@/components/Reveal'
-
-type LocaleKey = 'es' | 'ca' | 'en' | 'zh'
-
-const COPY: Record<LocaleKey, {
-  title: string
-  lead: string
-  phoneLabel: string
-  emailLabel: string
-}> = {
-  es: {
-    title: '¿Hablamos sobre tu negocio?',
-    lead: 'Cuéntanos tu caso y un especialista te llamará en menos de 24 horas para analizar cómo podemos ayudarte a vender más.',
-    phoneLabel: 'Teléfono',
-    emailLabel: 'Correo Comercial',
-  },
-  ca: {
-    title: 'Parlem del teu negoci?',
-    lead: "Explica'ns el teu cas i un especialista et trucarà en menys de 24 hores per analitzar com podem ajudar-te a vendre més.",
-    phoneLabel: 'Telèfon',
-    emailLabel: 'Correu Comercial',
-  },
-  en: {
-    title: 'Shall we talk about your business?',
-    lead: 'Tell us your case and a specialist will call you within 24 hours to analyse how we can help you sell more.',
-    phoneLabel: 'Phone',
-    emailLabel: 'Sales email',
-  },
-  zh: {
-    title: '聊聊您的业务?',
-    lead: '告诉我们您的情况,专家将在 24 小时内回电,分析我们如何帮助您卖得更多。',
-    phoneLabel: '电话',
-    emailLabel: '商务邮箱',
-  },
-}
+import { getContactCopy, type ContactLocale } from '@/lib/contact-content'
 
 export async function generateMetadata() {
   const t = await getTranslations('Pages')
@@ -48,10 +15,12 @@ export async function generateMetadata() {
 }
 
 export default async function ContactoPage() {
-  const locale = ((await getLocale()) as LocaleKey) || 'es'
+  const locale = ((await getLocale()) as ContactLocale) || 'es'
   const products = orderedProducts(locale).map((p) => ({ slug: p.slug, name: p.name }))
-  const t = COPY[locale] ?? COPY.es
+  const t = await getContactCopy(locale)
   const loadingLabel = locale === 'en' ? 'Loading…' : locale === 'zh' ? '加载中…' : locale === 'ca' ? 'Carregant…' : 'Cargando…'
+  const phoneHref = `tel:${t.phoneNumber.replace(/\s/g, '')}`
+  const emailHref = `mailto:${t.emailAddress}`
 
   return (
     <section className="py-32">
@@ -66,23 +35,23 @@ export default async function ContactoPage() {
                   {t.lead}
                 </p>
 
-                <a href="tel:+34910788575" className="flex items-center gap-6 mb-8 group">
+                <a href={phoneHref} className="flex items-center gap-6 mb-8 group">
                   <div className="w-14 h-14 rounded-2xl flex items-center justify-center text-primary" style={{ background: 'rgba(255, 128, 0, 0.20)' }}>
                     <span className="material-symbols-outlined">call</span>
                   </div>
                   <div>
                     <p className="text-xs uppercase tracking-widest m-0" style={{ opacity: 0.55 }}>{t.phoneLabel}</p>
-                    <p className="text-lg font-bold m-0">+34 910 788 575</p>
+                    <p className="text-lg font-bold m-0">{t.phoneNumber}</p>
                   </div>
                 </a>
 
-                <a href="mailto:comercial@motorflash.com" className="flex items-center gap-6 mb-8 group">
+                <a href={emailHref} className="flex items-center gap-6 mb-8 group">
                   <div className="w-14 h-14 rounded-2xl flex items-center justify-center text-primary" style={{ background: 'rgba(255, 128, 0, 0.20)' }}>
                     <span className="material-symbols-outlined">mail</span>
                   </div>
                   <div>
                     <p className="text-xs uppercase tracking-widest m-0" style={{ opacity: 0.55 }}>{t.emailLabel}</p>
-                    <p className="text-lg font-bold m-0">comercial@motorflash.com</p>
+                    <p className="text-lg font-bold m-0">{t.emailAddress}</p>
                   </div>
                 </a>
 

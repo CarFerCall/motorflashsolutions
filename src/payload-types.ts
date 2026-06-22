@@ -106,9 +106,13 @@ export interface Config {
     | ('es' | 'ca' | 'en' | 'zh')[];
   globals: {
     'main-menu': MainMenu;
+    footer: Footer;
+    'contact-page': ContactPage;
   };
   globalsSelect: {
     'main-menu': MainMenuSelect<false> | MainMenuSelect<true>;
+    footer: FooterSelect<false> | FooterSelect<true>;
+    'contact-page': ContactPageSelect<false> | ContactPageSelect<true>;
   };
   locale: 'es' | 'ca' | 'en' | 'zh';
   widgets: {
@@ -1085,6 +1089,59 @@ export interface MainMenu {
   createdAt?: string | null;
 }
 /**
+ * Textos del pie de página común a toda la web. Edita por idioma desde la pestaña superior.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "footer".
+ */
+export interface Footer {
+  id: number;
+  tagline: string;
+  productsHeading: string;
+  viewAll: string;
+  companyHeading: string;
+  aboutUs: string;
+  successStories: string;
+  pricing: string;
+  contact: string;
+  hqHeading: string;
+  hqAddress1: string;
+  hqAddress2: string;
+  isoQuality: string;
+  isoQualityTitle: string;
+  isoSecurity: string;
+  isoSecurityTitle: string;
+  /**
+   * Usa {year} como placeholder para el año actual.
+   */
+  copyright: string;
+  privacy: string;
+  cookies: string;
+  legal: string;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * Textos del bloque oscuro de la página /contacto y datos de contacto (teléfono y email).
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "contact-page".
+ */
+export interface ContactPage {
+  id: number;
+  title: string;
+  lead: string;
+  phoneLabel: string;
+  /**
+   * Ej. +34 910 788 575
+   */
+  phoneNumber: string;
+  emailLabel: string;
+  emailAddress: string;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "main-menu_select".
  */
@@ -1113,6 +1170,49 @@ export interface MainMenuSelect<T extends boolean = true> {
         label?: T;
         url?: T;
       };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "footer_select".
+ */
+export interface FooterSelect<T extends boolean = true> {
+  tagline?: T;
+  productsHeading?: T;
+  viewAll?: T;
+  companyHeading?: T;
+  aboutUs?: T;
+  successStories?: T;
+  pricing?: T;
+  contact?: T;
+  hqHeading?: T;
+  hqAddress1?: T;
+  hqAddress2?: T;
+  isoQuality?: T;
+  isoQualityTitle?: T;
+  isoSecurity?: T;
+  isoSecurityTitle?: T;
+  copyright?: T;
+  privacy?: T;
+  cookies?: T;
+  legal?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "contact-page_select".
+ */
+export interface ContactPageSelect<T extends boolean = true> {
+  title?: T;
+  lead?: T;
+  phoneLabel?: T;
+  phoneNumber?: T;
+  emailLabel?: T;
+  emailAddress?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

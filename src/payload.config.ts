@@ -16,6 +16,8 @@ import { Products } from './collections/Products'
 import { ProductContent } from './collections/ProductContent'
 import { SuccessCases } from './collections/SuccessCases'
 import { MainMenu } from './globals/MainMenu'
+import { FooterGlobal } from './globals/FooterGlobal'
+import { ContactGlobal } from './globals/ContactGlobal'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -86,7 +88,7 @@ export default buildConfig({
     },
   },
   collections: [Users, Pages, PricingPlans, Quotes, Media, Products, ProductContent, SuccessCases],
-  globals: [MainMenu],
+  globals: [MainMenu, FooterGlobal, ContactGlobal],
   // Localización nativa: todo campo con `localized: true` se guarda
   // en columnas separadas por idioma. El frontend pasa el locale
   // activo en cada query (via payload.findGlobal({ ..., locale })).
