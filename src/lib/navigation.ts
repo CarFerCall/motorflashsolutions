@@ -1,19 +1,14 @@
 /**
  * Lectura del menú principal desde el global de Payload. Server-side,
- * cacheado por locale en el ciclo de petición (Next/React cache).
+ * cacheado en el ciclo de petición (Next/React cache).
  *
- * El global MainMenu tiene `localized: true` en los labels: cada
- * idioma se almacena en su propia columna. El frontend pasa el locale
- * activo en cada query (payload.findGlobal({ slug, locale })) y
- * Payload aplica fallback al defaultLocale (es) si la traducción
- * concreta no existe.
- *
- * Adicionalmente, mantenemos un diccionario MENU_LABEL_DICT como
- * **red de seguridad**: si tras pedir el locale activo Payload nos
- * devuelve la versión española (porque la traducción en BD aún no
- * está sembrada), aplicamos el diccionario en memoria. Esto permite
- * iterar el contenido del menú desde el admin sin tener que sembrar
- * todas las traducciones a mano antes de cada cambio.
+ * El global MainMenu **no está localizado en BD** todavía (los labels
+ * viven en Payload sin `localized: true` para evitar una migración
+ * destructiva sobre columnas con datos). Para mostrar el menú en otro
+ * idioma aplicamos el diccionario `MENU_LABEL_DICT` server-side
+ * después de leer el global. El plan a medio plazo es activar
+ * `localized: true` en los campos junto con una migración SQL manual
+ * que rellene los locales nuevos sin perder los datos actuales.
  */
 import { cache } from 'react'
 import { getPayloadClient } from './payload'
@@ -40,35 +35,20 @@ export interface MainMenuData {
 
 export type MenuLocale = 'es' | 'ca' | 'en' | 'zh'
 
-/**
- * Lee el menú principal en el idioma indicado. Aplica fallback de
- * Payload (defaultLocale = 'es') si falta una traducción.
- *
- * Cache por idioma: dos llamadas con el mismo locale en el mismo
- * render no disparan dos queries.
- */
-export const getMainMenu = cache(async (locale: MenuLocale = 'es'): Promise<MainMenuData> => {
+export const getMainMenu = cache(async (): Promise<MainMenuData> => {
   try {
     const payload = await getPayloadClient()
-    // El cast a `any` evita conflicto con `payload-types.ts` mientras
-    // no se regenere — el tipo de locale auto-generado se actualizará
-    // al hacer `payload generate:types` tras añadir la localization.
-    const data = (await payload.findGlobal({ slug: 'main-menu' as any, locale: locale as any })) as any
-    const menu: MainMenuData = {
+    const data = (await payload.findGlobal({ slug: 'main-menu' as any })) as any
+    return {
       items: Array.isArray(data?.items) ? data.items : [],
       cta: data?.cta ?? null,
     }
-    return locale === 'es' ? menu : applyDictionaryFallback(menu, locale)
   } catch {
     return { items: [], cta: null }
   }
 })
 
-// Diccionario de respaldo: traducciones conocidas de los labels más
-// habituales del menú de Motorflash. Se aplica SOLO si el campo
-// llega en español tras pedir un locale distinto (es decir, no hay
-// traducción todavía en el CMS para ese label).
-export const MENU_LABEL_DICT: Record<string, { ca: string; en: string; zh: string }> = {
+const MENU_LABEL_DICT: Record<string, { ca: string; en: string; zh: string }> = {
   // Top-level items habituales.
   'Servicios': { ca: 'Serveis', en: 'Services', zh: '服务' },
   'Compañía': { ca: 'Companyia', en: 'Company', zh: '公司' },
@@ -86,7 +66,6 @@ export const MENU_LABEL_DICT: Record<string, { ca: string; en: string; zh: strin
   'Inicio': { ca: 'Inici', en: 'Home', zh: '首页' },
   'Productos': { ca: 'Productes', en: 'Products', zh: '产品' },
   'Soluciones': { ca: 'Solucions', en: 'Solutions', zh: '解决方案' },
-  // Productos / sub-items habituales del catálogo.
   'Dealer / Stock': { ca: 'Dealer / Estoc', en: 'Dealer / Stock', zh: '经销商库存(Dealer)' },
   'Multipublicador': { ca: 'Multipublicador', en: 'Multipublisher', zh: '多平台发布器' },
   'CRM4YOU': { ca: 'CRM4YOU', en: 'CRM4YOU', zh: 'CRM4YOU' },
@@ -106,7 +85,6 @@ export const MENU_LABEL_DICT: Record<string, { ca: string; en: string; zh: strin
   'Soluciones para Fabricantes': { ca: 'Solucions per a Fabricants', en: 'Manufacturer Solutions', zh: '主机厂解决方案' },
   'Apex (Todo en uno)': { ca: 'Apex (Tot en un)', en: 'Apex (All-in-one)', zh: 'Apex(一体化)' },
   'Ver catálogo completo': { ca: 'Veure el catàleg complet', en: 'View full catalogue', zh: '查看完整目录' },
-  // CTA habituales.
   'Solicitar demo': { ca: 'Sol·licitar demo', en: 'Request a demo', zh: '申请演示' },
   'Pedir demo': { ca: 'Demanar demo', en: 'Request a demo', zh: '申请演示' },
   'Contáctanos': { ca: "Contacta'ns", en: 'Contact us', zh: '联系我们' },
@@ -120,13 +98,8 @@ function translateLabel(label: string, locale: MenuLocale): string {
   return t[locale]
 }
 
-/**
- * Aplica el diccionario de respaldo si el label viene en español
- * (Payload devolvió fallback porque no hay traducción específica
- * en el locale pedido). Útil mientras el CMS no esté sembrado con
- * todas las traducciones.
- */
-function applyDictionaryFallback(menu: MainMenuData, locale: MenuLocale): MainMenuData {
+export function localizeMenu(menu: MainMenuData, locale: MenuLocale): MainMenuData {
+  if (locale === 'es') return menu
   return {
     items: menu.items.map((item) => ({
       ...item,

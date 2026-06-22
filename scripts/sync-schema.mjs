@@ -814,18 +814,15 @@ try {
   }
 
   // -------------------------------------------------------------------
-  // Seed de traducciones del menú principal (ca, en, zh)
+  // Seed de traducciones del menú principal (ca, en, zh) — DESHABILITADO
   //
-  // Tras activar `localization` en payload.config + `localized: true`
-  // en los labels de MainMenu, los locales ca/en/zh quedan vacíos en
-  // BD. Aplicamos el diccionario MENU_LABEL_DICT (idéntico al que vive
-  // en src/lib/navigation.ts) para que la primera carga del admin
-  // muestre traducciones ya hechas. Si negocio edita un label desde
-  // /admin, ese override del CMS prevalece en la siguiente ejecución
-  // (no pisamos lo que el admin haya cambiado: solo escribimos labels
-  // que vengan de la versión española).
+  // El bloque queda desactivado porque MainMenu.items.label aún NO está
+  // marcado como `localized: true` (su migración destructiva detiene el
+  // push de Drizzle). El menú principal usa el diccionario en código
+  // (lib/navigation.ts → localizeMenu) hasta que migremos la columna
+  // manualmente. Cuando se reactive `localized: true`, descomentar.
   // -------------------------------------------------------------------
-  try {
+  if (false) try {
     const MENU_DICT = {
       'Servicios': { ca: 'Serveis', en: 'Services', zh: '服务' },
       'Compañía': { ca: 'Companyia', en: 'Company', zh: '公司' },
