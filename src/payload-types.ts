@@ -108,11 +108,15 @@ export interface Config {
     'main-menu': MainMenu;
     footer: Footer;
     'contact-page': ContactPage;
+    'pricing-page': PricingPage;
+    'company-page': CompanyPage;
   };
   globalsSelect: {
     'main-menu': MainMenuSelect<false> | MainMenuSelect<true>;
     footer: FooterSelect<false> | FooterSelect<true>;
     'contact-page': ContactPageSelect<false> | ContactPageSelect<true>;
+    'pricing-page': PricingPageSelect<false> | PricingPageSelect<true>;
+    'company-page': CompanyPageSelect<false> | CompanyPageSelect<true>;
   };
   locale: 'es' | 'ca' | 'en' | 'zh';
   widgets: {
@@ -1142,6 +1146,89 @@ export interface ContactPage {
   createdAt?: string | null;
 }
 /**
+ * Copy editorial de /precios: hero, mensajes de fallback y secciones “Más servicios” y “Afinar producto”. Los planes y precios se editan en la colección Tarifas.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "pricing-page".
+ */
+export interface PricingPage {
+  id: number;
+  metaTitle: string;
+  metaDescription: string;
+  metaOg: string;
+  eyebrow: string;
+  title: string;
+  lead: string;
+  noPlansPre: string;
+  noPlansLink: string;
+  noPlansPost: string;
+  onDemandEyebrow: string;
+  onDemandTitle: string;
+  onDemandLead: string;
+  onDemandCta: string;
+  fineTuneTitle: string;
+  fineTuneLead: string;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * Página /compania. Edita por idioma (es/ca/en/zh) desde la pestaña superior del admin.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "company-page".
+ */
+export interface CompanyPage {
+  id: number;
+  metaTitle: string;
+  metaDescription: string;
+  ogDescription: string;
+  eyebrow: string;
+  title: string;
+  intro1: string;
+  intro2: string;
+  ctaContact: string;
+  ctaWork: string;
+  heroBadgeYears: string;
+  heroBadgeLead: string;
+  kpiYearsValue: string;
+  kpiYears: string;
+  kpiClientsValue: string;
+  kpiClients: string;
+  kpiRevenueValue: string;
+  kpiRevenue: string;
+  kpiTeamValue: string;
+  kpiTeam: string;
+  valuesEyebrow: string;
+  valuesTitle: string;
+  valuesLead: string;
+  values: {
+    icon: string;
+    title: string;
+    desc: string;
+    id?: string | null;
+  }[];
+  historyEyebrow: string;
+  historyTitle: string;
+  timeline: {
+    year: string;
+    icon: string;
+    accent?: boolean | null;
+    title: string;
+    desc: string;
+    id?: string | null;
+  }[];
+  hqEyebrow: string;
+  hqTitle: string;
+  hqAddress: string;
+  hqAddress2: string;
+  isoQuality: string;
+  isoQualityTitle: string;
+  isoSecurity: string;
+  isoSecurityTitle: string;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "main-menu_select".
  */
@@ -1213,6 +1300,89 @@ export interface ContactPageSelect<T extends boolean = true> {
   phoneNumber?: T;
   emailLabel?: T;
   emailAddress?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "pricing-page_select".
+ */
+export interface PricingPageSelect<T extends boolean = true> {
+  metaTitle?: T;
+  metaDescription?: T;
+  metaOg?: T;
+  eyebrow?: T;
+  title?: T;
+  lead?: T;
+  noPlansPre?: T;
+  noPlansLink?: T;
+  noPlansPost?: T;
+  onDemandEyebrow?: T;
+  onDemandTitle?: T;
+  onDemandLead?: T;
+  onDemandCta?: T;
+  fineTuneTitle?: T;
+  fineTuneLead?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "company-page_select".
+ */
+export interface CompanyPageSelect<T extends boolean = true> {
+  metaTitle?: T;
+  metaDescription?: T;
+  ogDescription?: T;
+  eyebrow?: T;
+  title?: T;
+  intro1?: T;
+  intro2?: T;
+  ctaContact?: T;
+  ctaWork?: T;
+  heroBadgeYears?: T;
+  heroBadgeLead?: T;
+  kpiYearsValue?: T;
+  kpiYears?: T;
+  kpiClientsValue?: T;
+  kpiClients?: T;
+  kpiRevenueValue?: T;
+  kpiRevenue?: T;
+  kpiTeamValue?: T;
+  kpiTeam?: T;
+  valuesEyebrow?: T;
+  valuesTitle?: T;
+  valuesLead?: T;
+  values?:
+    | T
+    | {
+        icon?: T;
+        title?: T;
+        desc?: T;
+        id?: T;
+      };
+  historyEyebrow?: T;
+  historyTitle?: T;
+  timeline?:
+    | T
+    | {
+        year?: T;
+        icon?: T;
+        accent?: T;
+        title?: T;
+        desc?: T;
+        id?: T;
+      };
+  hqEyebrow?: T;
+  hqTitle?: T;
+  hqAddress?: T;
+  hqAddress2?: T;
+  isoQuality?: T;
+  isoQualityTitle?: T;
+  isoSecurity?: T;
+  isoSecurityTitle?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

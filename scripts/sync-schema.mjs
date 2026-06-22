@@ -1220,6 +1220,56 @@ try {
   } catch (err) {
     console.warn('[sync-schema] ✗ seed contact:', err?.message || err)
   }
+
+  // -------------------------------------------------------------------
+  // Seed del global Pricing en los 4 locales.
+  // -------------------------------------------------------------------
+  try {
+    const { STATIC_PRICING } = await import('../src/lib/pricing-content.ts')
+    let pricingES
+    try {
+      pricingES = await payload.findGlobal({ slug: 'pricing-page', locale: 'es', depth: 0 })
+    } catch {}
+    if (!pricingES || !pricingES.title) {
+      for (const locale of ['es', 'ca', 'en', 'zh']) {
+        try {
+          await payload.updateGlobal({ slug: 'pricing-page', locale, data: STATIC_PRICING[locale] })
+        } catch (err) {
+          console.warn(`[sync-schema] ✗ seed pricing (${locale}):`, err?.message || err)
+        }
+      }
+      console.log('[sync-schema] pricing: 4 locales sembrados')
+    } else {
+      console.log('[sync-schema] = pricing ya tiene contenido en ES, sin tocar')
+    }
+  } catch (err) {
+    console.warn('[sync-schema] ✗ seed pricing:', err?.message || err)
+  }
+
+  // -------------------------------------------------------------------
+  // Seed del global Company en los 4 locales.
+  // -------------------------------------------------------------------
+  try {
+    const { STATIC_COMPANY } = await import('../src/lib/company-content.ts')
+    let companyES
+    try {
+      companyES = await payload.findGlobal({ slug: 'company-page', locale: 'es', depth: 0 })
+    } catch {}
+    if (!companyES || !companyES.title) {
+      for (const locale of ['es', 'ca', 'en', 'zh']) {
+        try {
+          await payload.updateGlobal({ slug: 'company-page', locale, data: STATIC_COMPANY[locale] })
+        } catch (err) {
+          console.warn(`[sync-schema] ✗ seed company (${locale}):`, err?.message || err)
+        }
+      }
+      console.log('[sync-schema] company: 4 locales sembrados')
+    } else {
+      console.log('[sync-schema] = company ya tiene contenido en ES, sin tocar')
+    }
+  } catch (err) {
+    console.warn('[sync-schema] ✗ seed company:', err?.message || err)
+  }
 } catch (err) {
   console.error('[sync-schema] schema check failed:', err?.message || err)
   // No fallamos el build: dejamos que el deploy salga y el problema se
