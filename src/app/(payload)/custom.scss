@@ -66,15 +66,17 @@ button.btn--style-primary {
   letter-spacing: 0.12em;
   font-size: 11px;
   font-weight: 800;
-  color: rgba(255, 255, 255, 0.55);
   padding: 8px 12px 6px;
   margin: 0 !important;
+  opacity: 0.6;
 }
 .nav .nav-group__indicator-active,
 .nav .nav-group-indicator-active {
   color: var(--mf-primary) !important;
 }
-/* Cada link del sidebar: caja con padding, hover y estado activo */
+/* Cada link del sidebar: caja con padding, hover y estado activo.
+   Dejamos que el color de texto lo herede del tema (negro en light,
+   blanco en dark). Solo overrideamos hover y active. */
 .nav a,
 .nav .nav__link {
   display: flex !important;
@@ -85,18 +87,29 @@ button.btn--style-primary {
   border-radius: 10px !important;
   font-size: 13.5px !important;
   font-weight: 600 !important;
-  color: rgba(255, 255, 255, 0.82) !important;
   text-decoration: none !important;
   transition: background 0.18s ease, color 0.18s ease, transform 0.18s ease !important;
   border: 1px solid transparent !important;
   line-height: 1.3 !important;
 }
-.nav a:hover,
-.nav .nav__link:hover {
-  background: rgba(255, 128, 0, 0.12) !important;
+/* Hover: light theme → fondo crema naranja, texto ink. Dark theme →
+   fondo translúcido, texto blanco. */
+[data-theme='light'] .nav a:hover,
+[data-theme='light'] .nav .nav__link:hover,
+.payload-default-theme .nav a:hover,
+.payload-default-theme .nav .nav__link:hover {
+  background: var(--mf-surface-soft) !important;
+  color: var(--mf-primary-dark) !important;
+  transform: translateX(2px);
+}
+[data-theme='dark'] .nav a:hover,
+[data-theme='dark'] .nav .nav__link:hover {
+  background: rgba(255, 128, 0, 0.14) !important;
   color: #fff !important;
   transform: translateX(2px);
 }
+/* Active: siempre naranja sólido, texto blanco — funciona en ambos
+   temas. */
 .nav a.active,
 .nav .nav__link--active,
 .nav a[aria-current='page'] {
