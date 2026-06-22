@@ -812,6 +812,111 @@ try {
   } catch (err) {
     console.warn('[sync-schema] ✗ seed menú:', err?.message || err)
   }
+
+  // -------------------------------------------------------------------
+  // Seed de traducciones del menú principal (ca, en, zh)
+  //
+  // Tras activar `localization` en payload.config + `localized: true`
+  // en los labels de MainMenu, los locales ca/en/zh quedan vacíos en
+  // BD. Aplicamos el diccionario MENU_LABEL_DICT (idéntico al que vive
+  // en src/lib/navigation.ts) para que la primera carga del admin
+  // muestre traducciones ya hechas. Si negocio edita un label desde
+  // /admin, ese override del CMS prevalece en la siguiente ejecución
+  // (no pisamos lo que el admin haya cambiado: solo escribimos labels
+  // que vengan de la versión española).
+  // -------------------------------------------------------------------
+  try {
+    const MENU_DICT = {
+      'Servicios': { ca: 'Serveis', en: 'Services', zh: '服务' },
+      'Compañía': { ca: 'Companyia', en: 'Company', zh: '公司' },
+      'La Compañía': { ca: 'La Companyia', en: 'The Company', zh: '公司' },
+      'Empresa': { ca: 'Empresa', en: 'Company', zh: '公司' },
+      'Casos de éxito': { ca: "Casos d'èxit", en: 'Success stories', zh: '成功案例' },
+      'Casos de Éxito': { ca: "Casos d'èxit", en: 'Success stories', zh: '成功案例' },
+      'Historias de éxito': { ca: "Històries d'èxit", en: 'Success stories', zh: '成功案例' },
+      'Precios': { ca: 'Preus', en: 'Pricing', zh: '价格' },
+      'Tarifas': { ca: 'Tarifes', en: 'Pricing', zh: '价格' },
+      'Contacto': { ca: 'Contacte', en: 'Contact', zh: '联系我们' },
+      'Contactar': { ca: 'Contacta', en: 'Contact us', zh: '联系我们' },
+      'Ecosistema técnico': { ca: 'Ecosistema tècnic', en: 'Tech ecosystem', zh: '技术生态' },
+      'Ecosistema Técnico': { ca: 'Ecosistema Tècnic', en: 'Tech ecosystem', zh: '技术生态' },
+      'Inicio': { ca: 'Inici', en: 'Home', zh: '首页' },
+      'Productos': { ca: 'Productes', en: 'Products', zh: '产品' },
+      'Soluciones': { ca: 'Solucions', en: 'Solutions', zh: '解决方案' },
+      'Dealer / Stock': { ca: 'Dealer / Estoc', en: 'Dealer / Stock', zh: '经销商库存(Dealer)' },
+      'Multipublicador': { ca: 'Multipublicador', en: 'Multipublisher', zh: '多平台发布器' },
+      'CRM4YOU': { ca: 'CRM4YOU', en: 'CRM4YOU', zh: 'CRM4YOU' },
+      'Contact Center': { ca: 'Contact Center', en: 'Contact Center', zh: '客服中心' },
+      'Photocall IA': { ca: 'Photocall IA', en: 'Photocall AI', zh: 'AI 摄影棚(Spyne)' },
+      'Photocall IA (Spyne)': { ca: 'Photocall IA (Spyne)', en: 'Photocall AI (Spyne)', zh: 'AI 摄影棚(Spyne)' },
+      'WhatsApp Business': { ca: 'WhatsApp Business', en: 'WhatsApp Business', zh: 'WhatsApp 企业版' },
+      'Imagen avanzada + RCS': { ca: 'Imatge avançada + RCS', en: 'Advanced Image + RCS', zh: '高级图像 + RCS' },
+      'Motorflash IA': { ca: 'Motorflash IA', en: 'Motorflash AI', zh: 'Motorflash 人工智能' },
+      'Servicios Web': { ca: 'Serveis Web', en: 'Web Services', zh: '网站服务' },
+      'Marketing Digital (SEO/SEA)': { ca: 'Marketing Digital (SEO/SEA)', en: 'Digital Marketing (SEO/SEA)', zh: '数字营销(SEO/SEA)' },
+      'Marketing Digital': { ca: 'Marketing Digital', en: 'Digital Marketing', zh: '数字营销' },
+      'Clasificados (Motorflash.com)': { ca: 'Classificats (Motorflash.com)', en: 'Classifieds (Motorflash.com)', zh: '分类信息(Motorflash.com)' },
+      'Lead Exclusive': { ca: 'Lead Exclusive', en: 'Lead Exclusive', zh: '独家潜客(Lead Exclusive)' },
+      'Lead Exclusive (5 Estrellas)': { ca: 'Lead Exclusive (5 Estrelles)', en: 'Lead Exclusive (5-Star)', zh: '独家潜客(5 星)' },
+      'MotorFlash Connect': { ca: 'MotorFlash Connect', en: 'MotorFlash Connect', zh: 'MotorFlash 互联' },
+      'Soluciones para Fabricantes': { ca: 'Solucions per a Fabricants', en: 'Manufacturer Solutions', zh: '主机厂解决方案' },
+      'Apex (Todo en uno)': { ca: 'Apex (Tot en un)', en: 'Apex (All-in-one)', zh: 'Apex(一体化)' },
+      'Ver catálogo completo': { ca: 'Veure el catàleg complet', en: 'View full catalogue', zh: '查看完整目录' },
+      'Solicitar demo': { ca: 'Sol·licitar demo', en: 'Request a demo', zh: '申请演示' },
+      'Pedir demo': { ca: 'Demanar demo', en: 'Request a demo', zh: '申请演示' },
+      'Contáctanos': { ca: "Contacta'ns", en: 'Contact us', zh: '联系我们' },
+      'Trabaja con nosotros': { ca: 'Treballa amb nosaltres', en: 'Work with us', zh: '加入我们' },
+    }
+    function translate(label, locale) {
+      const dict = MENU_DICT[label]
+      return dict ? dict[locale] : label
+    }
+    const menuES = await payload.findGlobal({ slug: 'main-menu', locale: 'es' })
+    if (menuES?.items && menuES.items.length > 0) {
+      for (const locale of ['ca', 'en', 'zh']) {
+        try {
+          const existing = await payload.findGlobal({ slug: 'main-menu', locale })
+          // Sólo escribimos labels que en este locale aún coincidan con
+          // la versión española (es decir, no han sido editados desde
+          // el admin). Si un label en `ca` ya está traducido, lo
+          // dejamos como está.
+          const translatedItems = (menuES.items ?? []).map((esItem, idx) => {
+            const cur = existing?.items?.[idx] || {}
+            return {
+              ...esItem,
+              label: cur.label && cur.label !== esItem.label ? cur.label : translate(esItem.label, locale),
+              children: esItem.children?.map((esChild, ci) => {
+                const curChild = cur.children?.[ci] || {}
+                return {
+                  ...esChild,
+                  label: curChild.label && curChild.label !== esChild.label ? curChild.label : translate(esChild.label, locale),
+                  description: curChild.description ?? esChild.description ?? undefined,
+                }
+              }),
+            }
+          })
+          const esCtaLabel = menuES.cta?.label
+          const curCtaLabel = existing?.cta?.label
+          const translatedCta = menuES.cta
+            ? {
+                ...menuES.cta,
+                label: curCtaLabel && curCtaLabel !== esCtaLabel ? curCtaLabel : translate(esCtaLabel || '', locale),
+              }
+            : menuES.cta
+          await payload.updateGlobal({
+            slug: 'main-menu',
+            locale,
+            data: { items: translatedItems, cta: translatedCta },
+          })
+          console.log(`[sync-schema] ↻ menú principal · traducciones ${locale} sembradas`)
+        } catch (err) {
+          console.warn(`[sync-schema] ✗ traducciones menú ${locale}:`, err?.message || err)
+        }
+      }
+    }
+  } catch (err) {
+    console.warn('[sync-schema] ✗ seed traducciones menú:', err?.message || err)
+  }
 } catch (err) {
   console.error('[sync-schema] schema check failed:', err?.message || err)
   // No fallamos el build: dejamos que el deploy salga y el problema se

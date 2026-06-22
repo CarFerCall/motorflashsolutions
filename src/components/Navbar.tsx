@@ -1,14 +1,15 @@
 import { getLocale } from 'next-intl/server'
-import { getMainMenu, localizeMenu } from '@/lib/navigation'
+import { getMainMenu, type MenuLocale } from '@/lib/navigation'
 import { NavbarClient } from './NavbarClient'
 
 /**
- * Wrapper server-side que carga el menú desde el global y pasa los
- * datos al cliente. Aplica el diccionario de traducciones de labels
- * conocidos según el locale activo (ver lib/navigation.ts).
+ * Wrapper server-side que carga el menú principal desde el global de
+ * Payload en el idioma activo (la propia query a Payload se encarga
+ * de devolver los labels en el locale correcto gracias a
+ * `localized: true` en `MainMenu.ts`).
  */
 export async function Navbar() {
-  const menu = await getMainMenu()
-  const locale = ((await getLocale()) as 'es' | 'ca' | 'en' | 'zh') || 'es'
-  return <NavbarClient menu={localizeMenu(menu, locale)} />
+  const locale = ((await getLocale()) as MenuLocale) || 'es'
+  const menu = await getMainMenu(locale)
+  return <NavbarClient menu={menu} />
 }

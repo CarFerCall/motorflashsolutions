@@ -33,6 +33,7 @@ export const MainMenu: GlobalConfig = {
               name: 'label',
               type: 'text',
               required: true,
+              localized: true,
               label: 'Texto visible',
               admin: { width: '50%' },
             },
@@ -89,7 +90,7 @@ export const MainMenu: GlobalConfig = {
             {
               type: 'row',
               fields: [
-                { name: 'label', type: 'text', required: true, label: 'Texto', admin: { width: '40%' } },
+                { name: 'label', type: 'text', required: true, localized: true, label: 'Texto', admin: { width: '40%' } },
                 { name: 'url', type: 'text', required: true, label: 'URL', admin: { width: '40%' } },
                 {
                   name: 'icon',
@@ -105,6 +106,7 @@ export const MainMenu: GlobalConfig = {
             {
               name: 'description',
               type: 'text',
+              localized: true,
               label: 'Descripción corta',
               admin: { description: 'Opcional. Aparece debajo del enlace en el menú desplegable.' },
             },
@@ -123,7 +125,7 @@ export const MainMenu: GlobalConfig = {
         {
           type: 'row',
           fields: [
-            { name: 'label', type: 'text', label: 'Texto del botón', admin: { width: '50%', placeholder: 'Contacto' } },
+            { name: 'label', type: 'text', localized: true, label: 'Texto del botón', admin: { width: '50%', placeholder: 'Contacto' } },
             { name: 'url', type: 'text', label: 'URL', admin: { width: '50%', placeholder: '/contacto' } },
           ],
         },

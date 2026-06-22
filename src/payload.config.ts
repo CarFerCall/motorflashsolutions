@@ -83,6 +83,20 @@ export default buildConfig({
   },
   collections: [Users, Pages, PricingPlans, Quotes],
   globals: [MainMenu],
+  // Localización nativa: todo campo con `localized: true` se guarda
+  // en columnas separadas por idioma. El frontend pasa el locale
+  // activo en cada query (via payload.findGlobal({ ..., locale })).
+  // Si una traducción falta, fallback al defaultLocale.
+  localization: {
+    locales: [
+      { code: 'es', label: 'Español' },
+      { code: 'ca', label: 'Català' },
+      { code: 'en', label: 'English' },
+      { code: 'zh', label: '中文' },
+    ],
+    defaultLocale: 'es',
+    fallback: true,
+  },
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || 'change-me-in-production',
   typescript: {
