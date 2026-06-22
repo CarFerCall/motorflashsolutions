@@ -1076,6 +1076,84 @@ try {
   } catch (err) {
     console.warn('[sync-schema] ✗ seed catálogo:', err?.message || err)
   }
+
+  // -------------------------------------------------------------------
+  // Seed de Success Cases (5 clientes) en los 4 locales.
+  // Idempotente por slug: si el caso ya existe, no se toca.
+  // -------------------------------------------------------------------
+  try {
+    const { STATIC_COPY: SC_COPY, styleForSlug, logoForSlug } = await import('../src/catalog/success-cases.ts')
+    const ORDER_BY_SLUG = { jarmauto: 10, ocasionplus: 20, flexicar: 30, 'muy-car': 40, 'auto-elia': 50 }
+    let createdCases = 0
+    for (const baseCase of SC_COPY.es.cases) {
+      try {
+        const existing = await payload.find({
+          collection: 'success-cases',
+          where: { slug: { equals: baseCase.slug } },
+          limit: 1,
+          depth: 0,
+        })
+        if (existing.docs.length > 0) continue
+
+        const style = styleForSlug(baseCase.slug)
+        const logo = logoForSlug(baseCase.slug)
+
+        const dataFor = (c) => ({
+          brand: c.brand,
+          wordmark: c.wordmark,
+          tagline: c.tagline,
+          badge: c.badge,
+          headline: c.headline,
+          introHtml: c.introHtml,
+          quote: c.quote,
+          author: c.author,
+          ecosystemTitle: c.ecosystemTitle,
+          ecosystemLead: c.ecosystemLead,
+          stats: c.stats.map((s) => ({ value: s.value, label: s.label })),
+          ecosystemItems: c.ecosystemItems.map((text) => ({ text })),
+        })
+
+        const created = await payload.create({
+          collection: 'success-cases',
+          locale: 'es',
+          data: {
+            slug: baseCase.slug,
+            order: ORDER_BY_SLUG[baseCase.slug] ?? 100,
+            quoteVariant: baseCase.quoteVariant,
+            brandStyle: {
+              primary: style.primary,
+              ink: style.ink,
+              banner: style.banner,
+              wordmarkClass: style.wordmarkClass ?? undefined,
+            },
+            logo: logo ? { src: logo.src, alt: logo.alt, width: logo.width, height: logo.height } : undefined,
+            ...dataFor(baseCase),
+          },
+        })
+        createdCases++
+
+        for (const locale of ['ca', 'en', 'zh']) {
+          const localized = SC_COPY[locale]?.cases.find((c) => c.slug === baseCase.slug)
+          if (!localized) continue
+          try {
+            await payload.update({
+              collection: 'success-cases',
+              id: created.id,
+              locale,
+              data: dataFor(localized),
+            })
+          } catch (err) {
+            console.warn(`[sync-schema] ✗ seed success-case ${baseCase.slug} (${locale}):`, err?.message || err)
+          }
+        }
+      } catch (err) {
+        console.warn(`[sync-schema] ✗ seed success-case ${baseCase.slug}:`, err?.message || err)
+      }
+    }
+    console.log(`[sync-schema] casos de éxito: ${createdCases} creados`)
+  } catch (err) {
+    console.warn('[sync-schema] ✗ seed success-cases:', err?.message || err)
+  }
 } catch (err) {
   console.error('[sync-schema] schema check failed:', err?.message || err)
   // No fallamos el build: dejamos que el deploy salga y el problema se

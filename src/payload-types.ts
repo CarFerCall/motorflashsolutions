@@ -74,6 +74,7 @@ export interface Config {
     media: Media;
     products: Product;
     'product-content': ProductContent;
+    'success-cases': SuccessCase;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -88,6 +89,7 @@ export interface Config {
     media: MediaSelect<false> | MediaSelect<true>;
     products: ProductsSelect<false> | ProductsSelect<true>;
     'product-content': ProductContentSelect<false> | ProductContentSelect<true>;
+    'success-cases': SuccessCasesSelect<false> | SuccessCasesSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -510,6 +512,93 @@ export interface ProductContent {
   createdAt: string;
 }
 /**
+ * Clientes que aparecen en /historias-de-exito. El orden lo controla "order". Edita los textos por idioma desde la pestaña superior.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "success-cases".
+ */
+export interface SuccessCase {
+  id: number;
+  /**
+   * Identificador único (también el ancla #slug en la página).
+   */
+  slug: string;
+  /**
+   * Posición en el listado (números menores = antes). Recomendado dejar saltos de 10.
+   */
+  order: number;
+  /**
+   * Cómo se muestra el bloque de cita del cliente.
+   */
+  quoteVariant: 'dark' | 'light';
+  /**
+   * Colores y estilo tipográfico del banner del cliente. Se aplican igual en los 4 idiomas.
+   */
+  brandStyle: {
+    primary: string;
+    ink: string;
+    /**
+     * P. ej. linear-gradient(135deg, #0A0A0A 0%, #1F1F1F 55%, #4A4A4A 100%)
+     */
+    banner: string;
+    /**
+     * P. ej. tracking-[-0.02em] font-bold
+     */
+    wordmarkClass?: string | null;
+  };
+  /**
+   * Si no rellenas el logo, se mostrará el wordmark con la tipografía de marca.
+   */
+  logo?: {
+    /**
+     * P. ej. /images/clients/jarmauto.png
+     */
+    src?: string | null;
+    alt?: string | null;
+    width?: number | null;
+    height?: number | null;
+  };
+  /**
+   * Nombre del cliente en mayúsculas, usado como heading interno.
+   */
+  brand: string;
+  /**
+   * Texto-logo que aparece en el banner si no hay logo subido.
+   */
+  wordmark: string;
+  /**
+   * Descripción corta bajo el wordmark. P. ej. "Grupo automoción · Madrid".
+   */
+  tagline: string;
+  /**
+   * Etiqueta lateral del banner. P. ej. "Cliente Premium · Ecosistema completo".
+   */
+  badge: string;
+  headline: string;
+  /**
+   * Acepta <strong> para resaltar partes. No incluyas scripts.
+   */
+  introHtml: string;
+  quote: string;
+  author: string;
+  stats: {
+    /**
+     * P. ej. +180%, 360°, 24h.
+     */
+    value: string;
+    label: string;
+    id?: string | null;
+  }[];
+  ecosystemTitle: string;
+  ecosystemLead: string;
+  ecosystemItems: {
+    text: string;
+    id?: string | null;
+  }[];
+  updatedAt: string;
+  createdAt: string;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
@@ -560,6 +649,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'product-content';
         value: number | ProductContent;
+      } | null)
+    | ({
+        relationTo: 'success-cases';
+        value: number | SuccessCase;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -846,6 +939,56 @@ export interface ProductContentSelect<T extends boolean = true> {
               id?: T;
               blockName?: T;
             };
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "success-cases_select".
+ */
+export interface SuccessCasesSelect<T extends boolean = true> {
+  slug?: T;
+  order?: T;
+  quoteVariant?: T;
+  brandStyle?:
+    | T
+    | {
+        primary?: T;
+        ink?: T;
+        banner?: T;
+        wordmarkClass?: T;
+      };
+  logo?:
+    | T
+    | {
+        src?: T;
+        alt?: T;
+        width?: T;
+        height?: T;
+      };
+  brand?: T;
+  wordmark?: T;
+  tagline?: T;
+  badge?: T;
+  headline?: T;
+  introHtml?: T;
+  quote?: T;
+  author?: T;
+  stats?:
+    | T
+    | {
+        value?: T;
+        label?: T;
+        id?: T;
+      };
+  ecosystemTitle?: T;
+  ecosystemLead?: T;
+  ecosystemItems?:
+    | T
+    | {
+        text?: T;
+        id?: T;
       };
   updatedAt?: T;
   createdAt?: T;
