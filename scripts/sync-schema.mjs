@@ -1476,7 +1476,7 @@ try {
   // Global, así que pasamos el objeto tal cual.
   // -------------------------------------------------------------------
   try {
-    const { STATIC_PRODUCT_UI } = await import('../src/lib/product-ui-content.ts')
+    const { STATIC_PRODUCT_UI } = await import('../src/lib/product-ui-static.ts')
     let productUiES
     try {
       productUiES = await payload.findGlobal({ slug: 'product-ui', locale: 'es', depth: 0 })
