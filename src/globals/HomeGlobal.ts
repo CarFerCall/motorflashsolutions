@@ -285,7 +285,7 @@ export const HomeGlobal: GlobalConfig = {
                 {
                   type: 'row',
                   fields: [
-                    { name: 'id', type: 'text', required: true, label: 'ID (ancla DOM)', admin: { width: '40%' } },
+                    { name: 'anchor', type: 'text', required: true, label: 'ID (ancla DOM)', admin: { width: '40%', description: 'Slug DOM tipo "home-hero", "sobre-motorflash"...' } },
                     { name: 'label', type: 'text', required: true, label: 'Etiqueta visible', admin: { width: '60%' } },
                   ],
                 },

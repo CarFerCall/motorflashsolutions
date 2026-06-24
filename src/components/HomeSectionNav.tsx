@@ -11,7 +11,7 @@ const LABELS: Record<string, { jumpTo: string; sectionLabel: string }> = {
 }
 
 export interface HomeSection {
-  id: string
+  anchor: string
   label: string
 }
 
@@ -31,7 +31,7 @@ interface Props {
  */
 export function HomeSectionNav({ sections }: Props) {
   const [open, setOpen] = useState(false)
-  const [activeId, setActiveId] = useState<string | null>(sections[0]?.id ?? null)
+  const [activeId, setActiveId] = useState<string | null>(sections[0]?.anchor ?? null)
   const containerRef = useRef<HTMLDivElement | null>(null)
   const locale = useLocale()
   const labels = LABELS[locale] ?? LABELS.es
@@ -68,7 +68,7 @@ export function HomeSectionNav({ sections }: Props) {
       { rootMargin: '-30% 0px -55% 0px', threshold: [0, 0.25, 0.5, 0.75, 1] },
     )
     sections.forEach((s) => {
-      const el = document.getElementById(s.id)
+      const el = document.getElementById(s.anchor)
       if (el) observer.observe(el)
     })
     return () => observer.disconnect()
@@ -85,7 +85,7 @@ export function HomeSectionNav({ sections }: Props) {
     setOpen(false)
   }, [])
 
-  const activeLabel = sections.find((s) => s.id === activeId)?.label ?? sections[0]?.label ?? labels.sectionLabel
+  const activeLabel = sections.find((s) => s.anchor === activeId)?.label ?? sections[0]?.label ?? labels.sectionLabel
 
   return (
     <div className="sticky top-20 z-30 flex justify-center px-4 -mt-4 mb-4" ref={containerRef}>
@@ -120,12 +120,12 @@ export function HomeSectionNav({ sections }: Props) {
             className="absolute left-0 right-0 mt-2 bg-white border border-outline-variant rounded-2xl shadow-2xl py-2 max-h-[60vh] overflow-y-auto"
           >
             {sections.map((s) => {
-              const isActive = s.id === activeId
+              const isActive = s.anchor === activeId
               return (
-                <li key={s.id}>
+                <li key={s.anchor}>
                   <button
                     type="button"
-                    onClick={() => scrollTo(s.id)}
+                    onClick={() => scrollTo(s.anchor)}
                     className={`w-full text-left px-5 py-2.5 text-sm flex items-center gap-3 transition-colors ${
                       isActive ? 'bg-surface-container-low text-primary font-semibold' : 'text-on-surface hover:bg-surface-container-low'
                     }`}

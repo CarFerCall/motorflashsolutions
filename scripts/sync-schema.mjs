@@ -1311,6 +1311,24 @@ try {
       } catch (err) {
         console.warn('[sync-schema] ✗ seed home (es):', err?.message || err)
       }
+    } else {
+      // Migración: el shape de navSections cambió { id, label } → { anchor, label }
+      // porque el campo "id" chocaba con el id auto-generado de Payload y rompía
+      // el form del admin. Si detectamos navSections sin "anchor", lo migramos.
+      const firstNav = homeES.navSections?.[0]
+      const needsAnchorMigration = firstNav && typeof firstNav === 'object' && !firstNav.anchor
+      if (needsAnchorMigration) {
+        try {
+          await payload.updateGlobal({
+            slug: 'home-page',
+            locale: 'es',
+            data: { navSections: STATIC_HOME.es.navSections },
+          })
+          console.log('[sync-schema] home: navSections ES migrado a { anchor, label }')
+        } catch (err) {
+          console.warn('[sync-schema] ✗ migración navSections ES:', err?.message || err)
+        }
+      }
     }
     // 2) Releer ES para detectar fallback en otros locales.
     let homeESWithIds

@@ -3,7 +3,7 @@ import { cache } from 'react'
 export type HomeLocale = 'es' | 'ca' | 'en' | 'zh'
 
 export interface HomeCopy {
-  navSections: { id: string; label: string }[]
+  navSections: { anchor: string; label: string }[]
   heroChip: string
   heroTitle1: string
   heroTitleAccent: string
@@ -75,18 +75,18 @@ export interface HomeCopy {
 export const STATIC_HOME: Record<HomeLocale, HomeCopy> = {
   es: {
     navSections: [
-      { id: 'home-hero', label: 'Inicio' },
-      { id: 'catalogo-timeline', label: 'Catálogo en una línea' },
-      { id: 'sobre-motorflash', label: 'Sobre Motorflash' },
-      { id: 'que-resolvemos', label: 'Qué resolvemos' },
-      { id: 'como-te-ayudamos', label: 'Cómo te ayudamos' },
-      { id: 'resultados-reales', label: 'Resultados reales' },
-      { id: 'catalogo-productos', label: 'Catálogo de productos' },
-      { id: 'ecosistema-tecnico-teaser', label: 'Ecosistema técnico' },
-      { id: 'para-quien', label: 'Para quién' },
-      { id: 'testimonios', label: 'Lo que dicen' },
-      { id: 'nuestra-historia', label: 'Nuestra historia' },
-      { id: 'contacto-cta', label: 'Hablemos' },
+      { anchor: 'home-hero', label: 'Inicio' },
+      { anchor: 'catalogo-timeline', label: 'Catálogo en una línea' },
+      { anchor: 'sobre-motorflash', label: 'Sobre Motorflash' },
+      { anchor: 'que-resolvemos', label: 'Qué resolvemos' },
+      { anchor: 'como-te-ayudamos', label: 'Cómo te ayudamos' },
+      { anchor: 'resultados-reales', label: 'Resultados reales' },
+      { anchor: 'catalogo-productos', label: 'Catálogo de productos' },
+      { anchor: 'ecosistema-tecnico-teaser', label: 'Ecosistema técnico' },
+      { anchor: 'para-quien', label: 'Para quién' },
+      { anchor: 'testimonios', label: 'Lo que dicen' },
+      { anchor: 'nuestra-historia', label: 'Nuestra historia' },
+      { anchor: 'contacto-cta', label: 'Hablemos' },
     ],
     heroChip: 'IA Integrada · Automoción',
     heroTitle1: 'La solución 360 para marcas y',
@@ -182,18 +182,18 @@ export const STATIC_HOME: Record<HomeLocale, HomeCopy> = {
   },
   ca: {
     navSections: [
-      { id: 'home-hero', label: 'Inici' },
-      { id: 'catalogo-timeline', label: 'Catàleg en una línia' },
-      { id: 'sobre-motorflash', label: 'Sobre Motorflash' },
-      { id: 'que-resolvemos', label: 'Què resolem' },
-      { id: 'como-te-ayudamos', label: "Com t'ajudem" },
-      { id: 'resultados-reales', label: 'Resultats reals' },
-      { id: 'catalogo-productos', label: 'Catàleg de productes' },
-      { id: 'ecosistema-tecnico-teaser', label: 'Ecosistema tècnic' },
-      { id: 'para-quien', label: 'Per a qui' },
-      { id: 'testimonios', label: 'Què en diuen' },
-      { id: 'nuestra-historia', label: 'La nostra història' },
-      { id: 'contacto-cta', label: 'Parlem' },
+      { anchor: 'home-hero', label: 'Inici' },
+      { anchor: 'catalogo-timeline', label: 'Catàleg en una línia' },
+      { anchor: 'sobre-motorflash', label: 'Sobre Motorflash' },
+      { anchor: 'que-resolvemos', label: 'Què resolem' },
+      { anchor: 'como-te-ayudamos', label: "Com t'ajudem" },
+      { anchor: 'resultados-reales', label: 'Resultats reals' },
+      { anchor: 'catalogo-productos', label: 'Catàleg de productes' },
+      { anchor: 'ecosistema-tecnico-teaser', label: 'Ecosistema tècnic' },
+      { anchor: 'para-quien', label: 'Per a qui' },
+      { anchor: 'testimonios', label: 'Què en diuen' },
+      { anchor: 'nuestra-historia', label: 'La nostra història' },
+      { anchor: 'contacto-cta', label: 'Parlem' },
     ],
     heroChip: 'IA integrada · Automoció',
     heroTitle1: 'La solució 360 per a marques i',
@@ -289,18 +289,18 @@ export const STATIC_HOME: Record<HomeLocale, HomeCopy> = {
   },
   en: {
     navSections: [
-      { id: 'home-hero', label: 'Home' },
-      { id: 'catalogo-timeline', label: 'Catalogue in one line' },
-      { id: 'sobre-motorflash', label: 'About Motorflash' },
-      { id: 'que-resolvemos', label: 'What we solve' },
-      { id: 'como-te-ayudamos', label: 'How we help you' },
-      { id: 'resultados-reales', label: 'Real results' },
-      { id: 'catalogo-productos', label: 'Product catalogue' },
-      { id: 'ecosistema-tecnico-teaser', label: 'Tech ecosystem' },
-      { id: 'para-quien', label: "Who it's for" },
-      { id: 'testimonios', label: 'What they say' },
-      { id: 'nuestra-historia', label: 'Our story' },
-      { id: 'contacto-cta', label: "Let's talk" },
+      { anchor: 'home-hero', label: 'Home' },
+      { anchor: 'catalogo-timeline', label: 'Catalogue in one line' },
+      { anchor: 'sobre-motorflash', label: 'About Motorflash' },
+      { anchor: 'que-resolvemos', label: 'What we solve' },
+      { anchor: 'como-te-ayudamos', label: 'How we help you' },
+      { anchor: 'resultados-reales', label: 'Real results' },
+      { anchor: 'catalogo-productos', label: 'Product catalogue' },
+      { anchor: 'ecosistema-tecnico-teaser', label: 'Tech ecosystem' },
+      { anchor: 'para-quien', label: "Who it's for" },
+      { anchor: 'testimonios', label: 'What they say' },
+      { anchor: 'nuestra-historia', label: 'Our story' },
+      { anchor: 'contacto-cta', label: "Let's talk" },
     ],
     heroChip: 'AI Integrated · Automotive',
     heroTitle1: 'The 360 solution for brands and',
@@ -396,18 +396,18 @@ export const STATIC_HOME: Record<HomeLocale, HomeCopy> = {
   },
   zh: {
     navSections: [
-      { id: 'home-hero', label: '首页' },
-      { id: 'catalogo-timeline', label: '一条线上的目录' },
-      { id: 'sobre-motorflash', label: '关于 Motorflash' },
-      { id: 'que-resolvemos', label: '我们解决什么' },
-      { id: 'como-te-ayudamos', label: '我们如何帮助您' },
-      { id: 'resultados-reales', label: '真实成果' },
-      { id: 'catalogo-productos', label: '产品目录' },
-      { id: 'ecosistema-tecnico-teaser', label: '技术生态' },
-      { id: 'para-quien', label: '适用对象' },
-      { id: 'testimonios', label: '他们怎么说' },
-      { id: 'nuestra-historia', label: '我们的故事' },
-      { id: 'contacto-cta', label: '聊一聊' },
+      { anchor: 'home-hero', label: '首页' },
+      { anchor: 'catalogo-timeline', label: '一条线上的目录' },
+      { anchor: 'sobre-motorflash', label: '关于 Motorflash' },
+      { anchor: 'que-resolvemos', label: '我们解决什么' },
+      { anchor: 'como-te-ayudamos', label: '我们如何帮助您' },
+      { anchor: 'resultados-reales', label: '真实成果' },
+      { anchor: 'catalogo-productos', label: '产品目录' },
+      { anchor: 'ecosistema-tecnico-teaser', label: '技术生态' },
+      { anchor: 'para-quien', label: '适用对象' },
+      { anchor: 'testimonios', label: '他们怎么说' },
+      { anchor: 'nuestra-historia', label: '我们的故事' },
+      { anchor: 'contacto-cta', label: '聊一聊' },
     ],
     heroChip: 'AI 集成 · 汽车行业',
     heroTitle1: '面向品牌与',
@@ -544,7 +544,7 @@ function mergeWithFallback(doc: any, fallback: HomeCopy): HomeCopy {
   // Arrays
   if (Array.isArray(doc.navSections) && doc.navSections.length > 0) {
     out.navSections = doc.navSections.map((s: any) => ({
-      id: isFilled(s?.id) ? s.id : '',
+      anchor: isFilled(s?.anchor) ? s.anchor : (isFilled(s?.id) ? s.id : ''),
       label: isFilled(s?.label) ? s.label : '',
     }))
   }
