@@ -36,6 +36,38 @@ try {
   const existing = await payload.find({ collection: 'pricing-plans', limit: 1 })
   console.log('[sync-schema] schema OK — pricing_plans is queryable')
 
+  // -------------------------------------------------------------------
+  // CLEANUP: borrar filas del navSections en BD en ca/en/zh.
+  // El array tenía datos malformados (sub-campo id legacy) que disparaban
+  // 'The following field is invalid: id' en cualquier updateGlobal de
+  // otros locales y bloqueaban TODO el seed del home. Limpiar la BD a
+  // mano vía SQL directo desbloquea la validación.
+  // -------------------------------------------------------------------
+  try {
+    const usesPostgres = /^postgres(ql)?:\/\//i.test(
+      process.env.POSTGRES_URL || process.env.DATABASE_URL || process.env.PRISMA_DATABASE_URL || '',
+    )
+    if (usesPostgres && payload.db?.drizzle) {
+      const { sql } = await import('drizzle-orm')
+      // Probamos los dos nombres más probables (Payload v3 los normaliza
+      // a snake_case del singular del array).
+      const tableCandidates = ['home_page_nav_sections', 'home_page_navSections']
+      for (const t of tableCandidates) {
+        try {
+          const res = await payload.db.drizzle.execute(
+            sql.raw(`DELETE FROM "${t}" WHERE "_locale" IN ('ca','en','zh')`),
+          )
+          console.log(`[sync-schema] cleanup: borradas filas ca/en/zh de ${t} (rowCount=${res?.rowCount ?? 'n/a'})`)
+          break
+        } catch (err) {
+          // Tabla no existe — probar la siguiente.
+        }
+      }
+    }
+  } catch (err) {
+    console.warn('[sync-schema] cleanup nav_sections:', err?.message || err)
+  }
+
   // Catálogo de seed: planes iniciales con sus items configurables.
   // En primer deploy se crean enteros. En deploys posteriores: si un
   // plan ya existe NO se toca el precio base ni los items (para no
