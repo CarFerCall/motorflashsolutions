@@ -1335,25 +1335,31 @@ try {
     try {
       homeESWithIds = await payload.findGlobal({ slug: 'home-page', locale: 'es', depth: 0 })
     } catch {}
-    // 3) Sembrar ca/en/zh saltando la validación de campos de Payload
-    // (no hay forma de bypassear desde updateGlobal porque el navSections
-    // viejo en BD tiene un campo `id` que choca con el id auto-generado).
-    // Usamos payload.db.updateGlobal directamente, que escribe en BD sin
-    // pasar por la cadena beforeValidate/beforeChange.
+    // 3) Sembrar ca/en/zh. La clave: incluimos navSections con el shape
+    // nuevo {anchor, label} para forzar el reemplazo del array viejo en
+    // BD (con shape {id, label}) que rompía la validación. Los demás
+    // arrays se omiten — caen al fallback ES.
     for (const locale of ['ca', 'en', 'zh']) {
       try {
-        const target = scalarsOnly(STATIC_HOME[locale] ?? {})
-        // Necesitamos un req mínimo con el locale activo para que el
-        // adapter sepa a qué columna escribir.
-        const fakeReq = { payload, locale, fallbackLocale: false, t: () => '' }
-        await payload.db.updateGlobal({
+        const cur = await payload.findGlobal({ slug: 'home-page', locale, depth: 0 })
+        const esVal = homeESWithIds?.heroTitle1 ?? ''
+        const curHero = cur?.heroTitle1 ?? ''
+        // Respeta ediciones manuales si el usuario ya guardó algo distinto al ES.
+        if (curHero && curHero !== esVal && curHero.length > 3) {
+          console.log(`[sync-schema] = home ${locale}: texto propio detectado, sin tocar`)
+          continue
+        }
+        await payload.updateGlobal({
           slug: 'home-page',
-          data: target,
-          req: fakeReq,
+          locale,
+          data: {
+            ...scalarsOnly(STATIC_HOME[locale] ?? {}),
+            navSections: STATIC_HOME[locale]?.navSections ?? [],
+          },
         })
-        console.log(`[sync-schema] home: ${locale} sembrado via db.updateGlobal`)
+        console.log(`[sync-schema] home: ${locale} restaurado (scalars + navSections)`)
       } catch (err) {
-        console.warn(`[sync-schema] ✗ seed home db (${locale}):`, err?.message || err)
+        console.warn(`[sync-schema] ✗ seed home (${locale}):`, err?.message || err)
       }
     }
   } catch (err) {
