@@ -1311,35 +1311,18 @@ try {
       } catch (err) {
         console.warn('[sync-schema] ✗ seed home (es):', err?.message || err)
       }
-    } else {
-      // Migración: el shape de navSections cambió { id, label } → { anchor, label }
-      // porque el campo "id" chocaba con el id auto-generado de Payload y rompía
-      // el form del admin. Si detectamos navSections sin "anchor", lo migramos.
-      const firstNav = homeES.navSections?.[0]
-      const needsAnchorMigration = firstNav && typeof firstNav === 'object' && !firstNav.anchor
-      if (needsAnchorMigration) {
-        try {
-          await payload.updateGlobal({
-            slug: 'home-page',
-            locale: 'es',
-            data: { navSections: STATIC_HOME.es.navSections },
-          })
-          console.log('[sync-schema] home: navSections ES migrado a { anchor, label }')
-        } catch (err) {
-          console.warn('[sync-schema] ✗ migración navSections ES:', err?.message || err)
-        }
-      }
     }
+    // El campo navSections se eliminó del Global; el front usa el
+    // fallback estático de STATIC_HOME[locale].navSections vía el
+    // wrapper home-content.ts.
     // 2) Releer ES para detectar fallback en otros locales.
     let homeESWithIds
     try {
       homeESWithIds = await payload.findGlobal({ slug: 'home-page', locale: 'es', depth: 0 })
     } catch {}
-    // 3) Sembrar ca/en/zh. Cada item del array localized lleva un id
-    // auto-generado por Payload. Si pasamos items SIN id en ca/en/zh,
-    // updateGlobal falla con 'id is invalid'. Reaprovechamos los IDs
-    // del ES (que es el doc de referencia) mapeando por posición.
-    const navItemsES = homeESWithIds?.navSections ?? []
+    // 3) Sembrar ca/en/zh con scalars. El campo navSections se eliminó
+    // del Global (estaba envenenado en BD con shape antiguo), así que
+    // ahora updateGlobal pasa sin chocar con 'id is invalid'.
     for (const locale of ['ca', 'en', 'zh']) {
       try {
         const cur = await payload.findGlobal({ slug: 'home-page', locale, depth: 0 })
@@ -1349,19 +1332,12 @@ try {
           console.log(`[sync-schema] = home ${locale}: texto propio detectado, sin tocar`)
           continue
         }
-        const navWithIds = (STATIC_HOME[locale]?.navSections ?? []).map((item, i) => ({
-          ...item,
-          ...(navItemsES[i]?.id ? { id: navItemsES[i].id } : {}),
-        }))
         await payload.updateGlobal({
           slug: 'home-page',
           locale,
-          data: {
-            ...scalarsOnly(STATIC_HOME[locale] ?? {}),
-            navSections: navWithIds,
-          },
+          data: scalarsOnly(STATIC_HOME[locale] ?? {}),
         })
-        console.log(`[sync-schema] home: ${locale} restaurado (scalars + navSections con IDs ES)`)
+        console.log(`[sync-schema] home: ${locale} restaurado (scalars)`)
       } catch (err) {
         console.warn(`[sync-schema] ✗ seed home (${locale}):`, err?.message || err)
       }
