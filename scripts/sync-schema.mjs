@@ -1335,34 +1335,26 @@ try {
     try {
       homeESWithIds = await payload.findGlobal({ slug: 'home-page', locale: 'es', depth: 0 })
     } catch {}
-    // 3) Sembrar ca/en/zh campo por campo. El updateGlobal con scalars
-    // completos falla con "id is invalid" porque Payload intenta validar
-    // arrays heredados de ES y choca con el shape antiguo. Hacerlo campo
-    // a campo evita esa validación cruzada.
+    // 3) Sembrar ca/en/zh saltando la validación de campos de Payload
+    // (no hay forma de bypassear desde updateGlobal porque el navSections
+    // viejo en BD tiene un campo `id` que choca con el id auto-generado).
+    // Usamos payload.db.updateGlobal directamente, que escribe en BD sin
+    // pasar por la cadena beforeValidate/beforeChange.
     for (const locale of ['ca', 'en', 'zh']) {
-      const target = scalarsOnly(STATIC_HOME[locale] ?? {})
-      const cur = await payload.findGlobal({ slug: 'home-page', locale, depth: 0 }).catch(() => null)
-      let okFields = 0
-      let failFields = 0
-      for (const [field, value] of Object.entries(target)) {
-        // Si el locale ya tiene ese campo distinto al ES, respetamos la
-        // edición manual y no sobreescribimos.
-        const curVal = cur?.[field]
-        const esVal = homeESWithIds?.[field]
-        if (curVal && typeof curVal === 'string' && curVal !== esVal) continue
-        if (typeof value !== 'string') continue // saltar arrays / objetos
-        try {
-          await payload.updateGlobal({
-            slug: 'home-page',
-            locale,
-            data: { [field]: value },
-          })
-          okFields++
-        } catch {
-          failFields++
-        }
+      try {
+        const target = scalarsOnly(STATIC_HOME[locale] ?? {})
+        // Necesitamos un req mínimo con el locale activo para que el
+        // adapter sepa a qué columna escribir.
+        const fakeReq = { payload, locale, fallbackLocale: false, t: () => '' }
+        await payload.db.updateGlobal({
+          slug: 'home-page',
+          data: target,
+          req: fakeReq,
+        })
+        console.log(`[sync-schema] home: ${locale} sembrado via db.updateGlobal`)
+      } catch (err) {
+        console.warn(`[sync-schema] ✗ seed home db (${locale}):`, err?.message || err)
       }
-      console.log(`[sync-schema] home: ${locale} sembrado campo a campo — ${okFields} OK, ${failFields} fallaron`)
     }
   } catch (err) {
     console.warn('[sync-schema] ✗ seed home:', err?.message || err)
