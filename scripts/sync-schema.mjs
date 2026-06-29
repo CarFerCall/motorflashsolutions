@@ -1335,26 +1335,34 @@ try {
     try {
       homeESWithIds = await payload.findGlobal({ slug: 'home-page', locale: 'es', depth: 0 })
     } catch {}
-    // 3) Sembrar ca/en/zh con SCALARS ONLY (sin arrays). Si el locale
-    // ya tiene un heroTitle1 propio (distinto al ES), no tocamos.
+    // 3) Sembrar ca/en/zh campo por campo. El updateGlobal con scalars
+    // completos falla con "id is invalid" porque Payload intenta validar
+    // arrays heredados de ES y choca con el shape antiguo. Hacerlo campo
+    // a campo evita esa validación cruzada.
     for (const locale of ['ca', 'en', 'zh']) {
-      try {
-        const cur = await payload.findGlobal({ slug: 'home-page', locale, depth: 0 })
-        const heroVal = cur?.heroTitle1 ?? ''
-        const esHero = homeESWithIds?.heroTitle1 ?? ''
-        if (heroVal && heroVal !== esHero) {
-          console.log(`[sync-schema] = home ${locale}: ya tiene texto propio, sin tocar`)
-          continue
+      const target = scalarsOnly(STATIC_HOME[locale] ?? {})
+      const cur = await payload.findGlobal({ slug: 'home-page', locale, depth: 0 }).catch(() => null)
+      let okFields = 0
+      let failFields = 0
+      for (const [field, value] of Object.entries(target)) {
+        // Si el locale ya tiene ese campo distinto al ES, respetamos la
+        // edición manual y no sobreescribimos.
+        const curVal = cur?.[field]
+        const esVal = homeESWithIds?.[field]
+        if (curVal && typeof curVal === 'string' && curVal !== esVal) continue
+        if (typeof value !== 'string') continue // saltar arrays / objetos
+        try {
+          await payload.updateGlobal({
+            slug: 'home-page',
+            locale,
+            data: { [field]: value },
+          })
+          okFields++
+        } catch {
+          failFields++
         }
-        await payload.updateGlobal({
-          slug: 'home-page',
-          locale,
-          data: scalarsOnly(STATIC_HOME[locale]),
-        })
-        console.log(`[sync-schema] home: ${locale} sembrado (scalars)`)
-      } catch (err) {
-        console.warn(`[sync-schema] ✗ seed home (${locale}):`, err?.message || err)
       }
+      console.log(`[sync-schema] home: ${locale} sembrado campo a campo — ${okFields} OK, ${failFields} fallaron`)
     }
   } catch (err) {
     console.warn('[sync-schema] ✗ seed home:', err?.message || err)
