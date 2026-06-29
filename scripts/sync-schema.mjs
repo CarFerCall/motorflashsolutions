@@ -1335,29 +1335,33 @@ try {
     try {
       homeESWithIds = await payload.findGlobal({ slug: 'home-page', locale: 'es', depth: 0 })
     } catch {}
-    // 3) Sembrar ca/en/zh. La clave: incluimos navSections con el shape
-    // nuevo {anchor, label} para forzar el reemplazo del array viejo en
-    // BD (con shape {id, label}) que rompía la validación. Los demás
-    // arrays se omiten — caen al fallback ES.
+    // 3) Sembrar ca/en/zh. Cada item del array localized lleva un id
+    // auto-generado por Payload. Si pasamos items SIN id en ca/en/zh,
+    // updateGlobal falla con 'id is invalid'. Reaprovechamos los IDs
+    // del ES (que es el doc de referencia) mapeando por posición.
+    const navItemsES = homeESWithIds?.navSections ?? []
     for (const locale of ['ca', 'en', 'zh']) {
       try {
         const cur = await payload.findGlobal({ slug: 'home-page', locale, depth: 0 })
         const esVal = homeESWithIds?.heroTitle1 ?? ''
         const curHero = cur?.heroTitle1 ?? ''
-        // Respeta ediciones manuales si el usuario ya guardó algo distinto al ES.
         if (curHero && curHero !== esVal && curHero.length > 3) {
           console.log(`[sync-schema] = home ${locale}: texto propio detectado, sin tocar`)
           continue
         }
+        const navWithIds = (STATIC_HOME[locale]?.navSections ?? []).map((item, i) => ({
+          ...item,
+          ...(navItemsES[i]?.id ? { id: navItemsES[i].id } : {}),
+        }))
         await payload.updateGlobal({
           slug: 'home-page',
           locale,
           data: {
             ...scalarsOnly(STATIC_HOME[locale] ?? {}),
-            navSections: STATIC_HOME[locale]?.navSections ?? [],
+            navSections: navWithIds,
           },
         })
-        console.log(`[sync-schema] home: ${locale} restaurado (scalars + navSections)`)
+        console.log(`[sync-schema] home: ${locale} restaurado (scalars + navSections con IDs ES)`)
       } catch (err) {
         console.warn(`[sync-schema] ✗ seed home (${locale}):`, err?.message || err)
       }
