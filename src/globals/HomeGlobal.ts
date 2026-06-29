@@ -271,12 +271,26 @@ export const HomeGlobal: GlobalConfig = {
         },
         {
           label: 'Nav sections',
-          description: 'Las anclas del menú flotante de la home se generan automáticamente desde el código (no editables aquí). Esta pestaña queda informativa.',
+          description: 'Anclas del menú flotante de la home. Compartidas entre los 4 idiomas (los labels visibles los traduce el frontend automáticamente).',
           fields: [
-            // El campo navSections se ha eliminado del Global porque tenía
-            // datos malformados en BD que bloqueaban la validación de
-            // updates en ca/en/zh. El componente HomeSectionNav usa un
-            // fallback fijo en el frontend.
+            {
+              name: 'navSections',
+              type: 'array',
+              label: 'Secciones',
+              labels: { singular: 'Sección', plural: 'Secciones' },
+              admin: {
+                description: 'No editar habitualmente. El menú flotante usa el fallback estático del código si este campo está vacío.',
+              },
+              fields: [
+                {
+                  type: 'row',
+                  fields: [
+                    { name: 'anchor', type: 'text', label: 'ID (ancla DOM)', admin: { width: '40%' } },
+                    { name: 'label', type: 'text', label: 'Etiqueta visible', admin: { width: '60%' } },
+                  ],
+                },
+              ],
+            },
           ],
         },
       ],
