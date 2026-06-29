@@ -126,10 +126,18 @@ button.btn--style-primary {
 /* ============================================================
    Dashboard shell — ancho máximo + padding
    ============================================================ */
-.template-default__wrap,
-.template-default__wrap > .template-default,
-.dashboard,
-.dashboard__wrap {
+/* Fondo del dashboard: solo en LIGHT mode forzamos el gris claro. En
+   DARK mode dejamos que Payload aplique su propio fondo oscuro — si
+   lo forzáramos a #f7f7f8 los textos blancos del dark theme quedarían
+   invisibles. */
+[data-theme='light'] .template-default__wrap,
+[data-theme='light'] .template-default__wrap > .template-default,
+[data-theme='light'] .dashboard,
+[data-theme='light'] .dashboard__wrap,
+.payload-default-theme .template-default__wrap,
+.payload-default-theme .template-default__wrap > .template-default,
+.payload-default-theme .dashboard,
+.payload-default-theme .dashboard__wrap {
   background: var(--mf-bg) !important;
 }
 .mf-dashboard-shell {
