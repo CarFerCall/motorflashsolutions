@@ -1377,35 +1377,41 @@ try {
     try {
       homeESWithIds = await payload.findGlobal({ slug: 'home-page', locale: 'es', depth: 0 })
     } catch {}
-    // 3) Sembrar ca/en/zh. Cada item del array localized lleva un id
-    // auto-generado por Payload. Si pasamos items SIN id en ca/en/zh,
-    // updateGlobal falla con 'id is invalid'. Reaprovechamos los IDs
-    // del ES (que es el doc de referencia) mapeando por posición.
-    const navItemsES = homeESWithIds?.navSections ?? []
+    // 3) DEBUG: probar primero con UN solo campo para ver el error real.
     for (const locale of ['ca', 'en', 'zh']) {
       try {
-        const cur = await payload.findGlobal({ slug: 'home-page', locale, depth: 0 })
-        const esVal = homeESWithIds?.heroTitle1 ?? ''
-        const curHero = cur?.heroTitle1 ?? ''
-        if (curHero && curHero !== esVal && curHero.length > 3) {
-          console.log(`[sync-schema] = home ${locale}: texto propio detectado, sin tocar`)
-          continue
-        }
-        const navWithIds = (STATIC_HOME[locale]?.navSections ?? []).map((item, i) => ({
-          ...item,
-          ...(navItemsES[i]?.id ? { id: navItemsES[i].id } : {}),
-        }))
         await payload.updateGlobal({
           slug: 'home-page',
           locale,
-          data: {
-            ...scalarsOnly(STATIC_HOME[locale] ?? {}),
-            navSections: navWithIds,
-          },
+          data: { heroTitle1: STATIC_HOME[locale]?.heroTitle1 ?? '' },
         })
-        console.log(`[sync-schema] home: ${locale} restaurado (scalars + navSections con IDs ES)`)
+        console.log(`[sync-schema] home: ${locale} heroTitle1 sembrado ✓`)
       } catch (err) {
         console.warn(`[sync-schema] ✗ seed home (${locale}):`, err?.message || err)
+        if (err?.data) {
+          console.warn(`[sync-schema]   err.data:`, JSON.stringify(err.data).slice(0, 500))
+        }
+        if (err?.errors) {
+          console.warn(`[sync-schema]   err.errors:`, JSON.stringify(err.errors).slice(0, 500))
+        }
+        if (err?.stack) {
+          console.warn(`[sync-schema]   stack:`, err.stack.slice(0, 800))
+        }
+      }
+    }
+    // Sembrar el resto de scalars solo si el heroTitle1 funcionó.
+    for (const locale of ['ca', 'en', 'zh']) {
+      try {
+        const cur = await payload.findGlobal({ slug: 'home-page', locale, depth: 0 })
+        if (!cur?.heroTitle1) continue // si el primer paso falló, no insistir
+        await payload.updateGlobal({
+          slug: 'home-page',
+          locale,
+          data: scalarsOnly(STATIC_HOME[locale] ?? {}),
+        })
+        console.log(`[sync-schema] home: ${locale} resto de scalars sembrados ✓`)
+      } catch (err) {
+        console.warn(`[sync-schema] ✗ scalars home (${locale}):`, err?.message || err)
       }
     }
   } catch (err) {
