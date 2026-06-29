@@ -49,21 +49,29 @@ try {
     )
     if (usesPostgres && payload.db?.drizzle) {
       const { sql } = await import('drizzle-orm')
-      // DIAGNÓSTICO: inspeccionar home_page y home_page_locales para
-      // entender por qué updateGlobal en ca/en/zh dispara
-      // "Value must be unique" en el id.
+      // Listar TODAS las tablas que pertenezcan al home_page y limpiar
+      // las filas de ca/en/zh — alguna tiene IDs legacy malformados que
+      // bloquean la validación.
       try {
-        const mainRows = await payload.db.drizzle.execute(
-          sql.raw(`SELECT id FROM home_page`),
+        const tables = await payload.db.drizzle.execute(
+          sql.raw(`SELECT table_name FROM information_schema.tables WHERE table_schema='public' AND table_name LIKE 'home_page%'`),
         )
-        console.log('[diag] home_page rows:', JSON.stringify(mainRows?.rows ?? mainRows))
-
-        const localesRows = await payload.db.drizzle.execute(
-          sql.raw(`SELECT id, _locale, _parent_id FROM home_page_locales`),
-        )
-        console.log('[diag] home_page_locales rows:', JSON.stringify(localesRows?.rows ?? localesRows))
+        const rows = tables?.rows ?? tables ?? []
+        for (const row of rows) {
+          const tableName = row.table_name || row[0]
+          if (!tableName || tableName === 'home_page') continue // no borrar la principal
+          try {
+            const res = await payload.db.drizzle.execute(
+              sql.raw(`DELETE FROM "${tableName}" WHERE "_locale" IN ('ca','en','zh')`),
+            )
+            console.log(`[sync-schema] cleanup: ${tableName} → ${res?.rowCount ?? '?'} filas borradas`)
+          } catch (err) {
+            // Tabla sin columna _locale: ignorar.
+            console.log(`[sync-schema] cleanup skip ${tableName}: ${err?.message?.slice(0, 60) || err}`)
+          }
+        }
       } catch (err) {
-        console.warn('[diag] inspect home_page:', err?.message || err)
+        console.warn('[sync-schema] cleanup error:', err?.message || err)
       }
     }
   } catch (err) {
