@@ -7,7 +7,6 @@ const productSlugs = [
   'contact-center',
   'spyne',
   'motorflash-message',
-  'motorflash-mobile-tracking',
   'ia',
   'soluciones-web',
   'marketing-digital',

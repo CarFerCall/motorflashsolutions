@@ -340,56 +340,6 @@ export const productContent: Record<string, ProductContent> = {
       },
     ],
   },
-  'motorflash-mobile-tracking': {
-    subtitle: '短信的进化版本,转化率较传统消息高出 300%',
-    sections: [
-      {
-        type: 'features',
-        title: '汽车行业的 AI 增强图片 + RCS 有何用?',
-        lead: '超越基础短信:将 AI 增强图片与 RCS 消息(多媒体、安全、可验证)结合,创造客户打开、阅读并转化的沟通体验。',
-        items: [
-          { title: 'RCS 多媒体消息', description: '将图片、视频、轮播与操作按钮直接发到客户手机。像短信一样,却拥有原生应用般的体验。', icon: 'chat' },
-          { title: 'AI 增强图片', description: '自动改善每张照片:背景、光线、阴影、去除反光。您的车辆呈现杂志级质感。', icon: 'auto_awesome' },
-          { title: '发送方验证', description: '您的品牌在客户手机上以已验证身份显示。更高信任、更高打开率、更低钓鱼风险。', icon: 'verified' },
-          { title: '按客户个性化', description: '每条消息根据客户、关注的车辆和购车周期定制。在规模上仍是独一无二的消息。', icon: 'group' },
-          { title: '完整报告', description: '按活动统计送达率、打开率、点击率与转化率。用真实数据持续优化。', icon: 'analytics' },
-          { title: 'CRM 集成', description: '每次发送与回复都记录到 CRM4YOU。对话全程可追溯。', icon: 'sync_alt' },
-        ],
-      },
-      {
-        type: 'highlights',
-        title: '从展厅到交付的全程掌控',
-        lead: 'AI 增强图片 + RCS 解决经销商最常见的沟通问题:短信打开率低、缺乏吸引力的照片无法转化、批量发送缺少个性化。',
-        highlights: [
-          { title: '相比短信 +300% 转化', description: '纯文本与多媒体之间的差距' },
-          { title: 'AI 优化每张照片', description: '自动达到专业品质' },
-          { title: '品牌验证', description: '客户手机上看到您的 Logo' },
-          { title: '动态模板', description: '按车辆与客户量身定制' },
-        ],
-        bullets: [
-          '促销:针对在售车辆使用增强图片的获客活动。',
-          '维修预约:带预约卡和经销店地图的可视化提醒。',
-          '上市:新车型展示,含视频和互动画廊。',
-          '车辆备妥通知,附带车辆已备好的实拍照片。',
-          '交付后的多媒体满意度调查。',
-        ],
-      },
-      {
-        type: 'process',
-        title: 'AI 增强图片 + RCS 如何运作?',
-        steps: [
-          { title: '服务配置', description: '我们为您在 RCS 中注册已验证品牌,并按您的视觉规范配置消息模板。' },
-          { title: 'AI 图像增强', description: '对接您的 DMS,自动处理库存照片。AI 在发送前优化每一张图片。' },
-          { title: '发送与衡量', description: '通过面板或由 CRM 自动化发起活动。我们衡量每次发送、打开与点击。' },
-        ],
-      },
-      {
-        type: 'cta',
-        title: '想立刻知道车队每辆车的状态吗?',
-        lead: '申请资料,我们说明 AI 增强图片 + RCS 如何从第 1 天就提升库存掌控与安全。',
-      },
-    ],
-  },
   'ia': {
     subtitle: 'WhatsApp、网页聊天与语音上的 AI — 24/7 可用',
     sections: [

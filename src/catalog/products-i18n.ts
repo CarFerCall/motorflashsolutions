@@ -57,13 +57,6 @@ export const productI18n: Record<ProductLocale, Record<string, ProductTranslatio
       heroTitle: 'Converses intel·ligents, atenció immediata',
       intro: 'Els teus clients ja són a WhatsApp, i tu pots ser-hi disponible en qualsevol moment. Amb la IA de Message gestiones converses reals, concertes cites i fas seguiment sense dependre d\'horaris. Segur, connectat amb el teu CRM i 100% adaptat a la normativa RGPD.',
     },
-    'motorflash-mobile-tracking': {
-      name: 'Imatge avançada + RCS',
-      menuLabel: 'Imatge avançada + RCS',
-      tagline: 'Fotografia IA i missatgeria RCS per als teus vehicles.',
-      heroTitle: 'Fotografia IA i missatgeria evolucionada per presentar millor els teus vehicles',
-      intro: 'Fotografia, vídeo i millores automàtiques amb IA per presentar cada vehicle de manera més atractiva. Complementat amb RCS: missatgeria visual, segura i multimèdia que converteix fins a un 300% més que un SMS tradicional.',
-    },
     ia: {
       name: 'Motorflash IA',
       menuLabel: 'Motorflash IA',
@@ -164,13 +157,6 @@ export const productI18n: Record<ProductLocale, Record<string, ProductTranslatio
       heroTitle: 'Smart conversations, immediate service',
       intro: 'Your customers are already on WhatsApp, and you can be available anytime. With Message AI you handle real conversations, book appointments and follow up regardless of opening hours. Secure, connected to your CRM and fully GDPR-compliant.',
     },
-    'motorflash-mobile-tracking': {
-      name: 'Advanced Image + RCS',
-      menuLabel: 'Advanced Image + RCS',
-      tagline: 'AI photography and RCS messaging for your vehicles.',
-      heroTitle: 'AI photography and next-gen messaging to showcase your vehicles',
-      intro: 'AI-powered photo, video and automatic enhancement to showcase every vehicle. Combined with RCS: visual, secure, multimedia messaging that converts up to 300% more than a traditional SMS.',
-    },
     ia: {
       name: 'Motorflash AI',
       menuLabel: 'Motorflash AI',
@@ -270,13 +256,6 @@ export const productI18n: Record<ProductLocale, Record<string, ProductTranslatio
       tagline: '在 WhatsApp 上由 AI 驱动的智能对话。',
       heroTitle: '智能对话,即时响应',
       intro: '客户已经在用 WhatsApp,您也可以随时在线。借助 Message AI 处理真实对话、预约并跟进,无需依赖工作时间。安全、与您的 CRM 互联,并 100% 符合 GDPR。',
-    },
-    'motorflash-mobile-tracking': {
-      name: '高级图像 + RCS',
-      menuLabel: '高级图像 + RCS',
-      tagline: '为您的车辆而生的 AI 摄影与 RCS 消息。',
-      heroTitle: 'AI 摄影与进化的消息,更好地展示您的车辆',
-      intro: 'AI 摄影、视频与自动优化,以更具吸引力的方式呈现每辆车。叠加 RCS:可视、安全、多媒体的消息,转化率比传统短信高出 300%。',
     },
     ia: {
       name: 'Motorflash 人工智能',

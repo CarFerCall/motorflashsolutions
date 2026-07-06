@@ -342,56 +342,6 @@ export const productContent: Record<string, ProductContent> = {
       },
     ],
   },
-  'motorflash-mobile-tracking': {
-    subtitle: 'La evolución del SMS con hasta un 300 % más de conversión que un mensaje tradicional',
-    sections: [
-      {
-        type: 'features',
-        title: '¿Para qué sirve Imagen avanzada + RCS en automoción?',
-        lead: 'Más allá del SMS básico: combina imagen avanzada con IA y mensajería RCS (multimedia, segura, verificada) para crear comunicaciones que el cliente abre, lee y convierte.',
-        items: [
-          { title: 'Mensajería multimedia RCS', description: 'Envía imágenes, vídeos, carruseles y botones de acción directos al móvil del cliente. Como un SMS pero con experiencia de app nativa.', icon: 'chat' },
-          { title: 'Imagen avanzada con IA', description: 'Mejoras automáticas de cada foto: fondos, iluminación, sombras, eliminación de reflejos. Tu vehículo se ve como en una revista.', icon: 'auto_awesome' },
-          { title: 'Verificación de remitente', description: 'Tu marca aparece verificada en el móvil del cliente. Más confianza, más tasa de apertura, menos riesgo de phishing.', icon: 'verified' },
-          { title: 'Personalización por cliente', description: 'Cada mensaje se adapta al cliente, al vehículo de interés y al momento del ciclo de compra. Mensajes únicos a escala.', icon: 'group' },
-          { title: 'Reporting completo', description: 'Tasa de entrega, apertura, clics y conversión por campaña. Métricas reales para optimizar.', icon: 'analytics' },
-          { title: 'Integración con CRM', description: 'Cada envío y respuesta se registra en CRM4YOU. Trazabilidad total de la conversación.', icon: 'sync_alt' },
-        ],
-      },
-      {
-        type: 'highlights',
-        title: 'Control total desde la campa hasta la entrega',
-        lead: 'Imagen avanzada + RCS resuelve los problemas de comunicación más habituales en concesionarios: tasa de apertura baja en SMS, fotos poco atractivas que no convierten, falta de personalización en envíos masivos.',
-        highlights: [
-          { title: '+300% conversión vs SMS', description: 'La diferencia entre texto plano y multimedia' },
-          { title: 'IA mejorando cada foto', description: 'Calidad profesional automática' },
-          { title: 'Verificación de marca', description: 'Tu logo aparece en el móvil del cliente' },
-          { title: 'Plantillas dinámicas', description: 'Adaptadas a cada vehículo y cliente' },
-        ],
-        bullets: [
-          'Promociones: campañas de captación con imágenes mejoradas de vehículos en oferta.',
-          'Citas de taller: recordatorios visuales con tarjeta de cita y mapa al concesionario.',
-          'Lanzamientos: presentación de nuevos modelos con vídeo y galería interactiva.',
-          'Notificaciones de vehículo listo con foto del coche ya preparado',
-          'Encuestas de satisfacción multimedia tras la entrega',
-        ],
-      },
-      {
-        type: 'process',
-        title: '¿Cómo funciona Imagen avanzada + RCS?',
-        steps: [
-          { title: 'Configuración del servicio', description: 'Damos de alta tu marca verificada en RCS y configuramos las plantillas de mensaje con tu identidad visual.' },
-          { title: 'Mejora de imágenes con IA', description: 'Conectamos con tu DMS para procesar automáticamente las fotos de tu stock. La IA mejora cada imagen antes del envío.' },
-          { title: 'Envío y medición', description: 'Lanzamos las campañas desde el panel o automatizadas desde el CRM. Medimos cada envío, apertura y clic.' },
-        ],
-      },
-      {
-        type: 'cta',
-        title: '¿Quieres saber dónde está cada vehículo de tu flota ahora mismo?',
-        lead: 'Solicita información y te explicamos cómo Imagen avanzada + RCS puede mejorar el control y la seguridad de tu stock desde el primer día.',
-      },
-    ],
-  },
   'ia': {
     subtitle: 'IA en WhatsApp, Chat web y Voz — disponibles 24/7',
     sections: [

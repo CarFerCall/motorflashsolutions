@@ -86,17 +86,6 @@ export const products: Product[] = [
     icon: 'chat',
   },
   {
-    slug: 'motorflash-mobile-tracking',
-    name: 'Imagen avanzada + RCS',
-    menuLabel: 'Imagen avanzada + RCS',
-    menuOrder: 70,
-    tagline: 'Fotografía IA y mensajería RCS para tus vehículos.',
-    heroTitle: 'Fotografía IA y mensajería evolucionada para presentar mejor tus vehículos',
-    intro:
-      'Fotografía, vídeo y mejoras automáticas con IA para presentar cada vehículo de forma más atractiva. Complementado con RCS: mensajería visual, segura y multimedia que convierte hasta un 300 % más que un SMS tradicional.',
-    icon: 'photo_library',
-  },
-  {
     slug: 'ia',
     name: 'Motorflash IA',
     menuLabel: 'Motorflash IA',

@@ -30,7 +30,6 @@ const PRODUCT_OPTIONS = [
   { value: 'contact-center', label: 'Contact Center' },
   { value: 'spyne', label: 'Photocall IA' },
   { value: 'motorflash-message', label: 'WhatsApp Business' },
-  { value: 'motorflash-mobile-tracking', label: 'Imagen avanzada + RCS' },
   { value: 'ia', label: 'Motorflash IA' },
   { value: 'soluciones-web', label: 'Web / Marketplace' },
   { value: 'marketing-digital', label: 'Marketing Digital' },

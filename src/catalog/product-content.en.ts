@@ -341,56 +341,6 @@ export const productContent: Record<string, ProductContent> = {
       },
     ],
   },
-  'motorflash-mobile-tracking': {
-    subtitle: 'The evolution of SMS, with up to 300% more conversion than a traditional message',
-    sections: [
-      {
-        type: 'features',
-        title: 'What are Advanced Image + RCS for in automotive?',
-        lead: 'Beyond basic SMS: combines AI-enhanced images with RCS messaging (multimedia, secure, verified) to create communications that the customer opens, reads and converts.',
-        items: [
-          { title: 'RCS multimedia messaging', description: "Send images, videos, carousels and action buttons straight to the customer's phone. Like SMS, but with a native-app experience.", icon: 'chat' },
-          { title: 'AI-enhanced images', description: 'Automatic improvements to every photo: backgrounds, lighting, shadows, reflection removal. Your vehicle looks magazine-grade.', icon: 'auto_awesome' },
-          { title: 'Sender verification', description: "Your brand appears verified on the customer's phone. More trust, more opens, less phishing risk.", icon: 'verified' },
-          { title: 'Per-customer personalisation', description: 'Every message adapts to the customer, the vehicle of interest and their buying-cycle moment. Unique messages at scale.', icon: 'group' },
-          { title: 'Full reporting', description: 'Delivery, open, click and conversion rate per campaign. Real metrics to optimise.', icon: 'analytics' },
-          { title: 'CRM integration', description: 'Every send and reply logs in CRM4YOU. Complete conversation traceability.', icon: 'sync_alt' },
-        ],
-      },
-      {
-        type: 'highlights',
-        title: 'Full control from the lot to delivery',
-        lead: 'Advanced Image + RCS solves the most common communication issues at dealerships: low SMS open rates, unappealing photos that don\'t convert, lack of personalisation in mass sends.',
-        highlights: [
-          { title: '+300% conversion vs SMS', description: 'The difference between plain text and multimedia' },
-          { title: 'AI improving every photo', description: 'Automatic professional quality' },
-          { title: 'Brand verification', description: "Your logo appears on the customer's phone" },
-          { title: 'Dynamic templates', description: 'Tailored to each vehicle and customer' },
-        ],
-        bullets: [
-          'Promos: lead-capture campaigns with enhanced photos of vehicles on offer.',
-          'Service appointments: visual reminders with appointment card and map to the dealership.',
-          'Launches: new model presentation with video and interactive gallery.',
-          'Vehicle-ready notifications with a photo of the car already prepared.',
-          'Post-delivery multimedia satisfaction surveys.',
-        ],
-      },
-      {
-        type: 'process',
-        title: 'How do Advanced Image + RCS work?',
-        steps: [
-          { title: 'Service setup', description: 'We register your verified brand in RCS and configure message templates with your visual identity.' },
-          { title: 'AI image enhancement', description: 'We connect to your DMS to process stock photos automatically. AI enhances every image before sending.' },
-          { title: 'Send and measure', description: 'Launch campaigns from the panel or automate them from the CRM. We measure every send, open and click.' },
-        ],
-      },
-      {
-        type: 'cta',
-        title: 'Want to know where every vehicle in your fleet is right now?',
-        lead: "Request info and we'll explain how Advanced Image + RCS can improve control and stock security from day one.",
-      },
-    ],
-  },
   'ia': {
     subtitle: 'AI on WhatsApp, web chat and voice — available 24/7',
     sections: [

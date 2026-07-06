@@ -889,7 +889,6 @@ try {
       'Photocall IA': { ca: 'Photocall IA', en: 'Photocall AI', zh: 'AI 摄影棚(Spyne)' },
       'Photocall IA (Spyne)': { ca: 'Photocall IA (Spyne)', en: 'Photocall AI (Spyne)', zh: 'AI 摄影棚(Spyne)' },
       'WhatsApp Business': { ca: 'WhatsApp Business', en: 'WhatsApp Business', zh: 'WhatsApp 企业版' },
-      'Imagen avanzada + RCS': { ca: 'Imatge avançada + RCS', en: 'Advanced Image + RCS', zh: '高级图像 + RCS' },
       'Motorflash IA': { ca: 'Motorflash IA', en: 'Motorflash AI', zh: 'Motorflash 人工智能' },
       'Servicios Web': { ca: 'Serveis Web', en: 'Web Services', zh: '网站服务' },
       'Marketing Digital (SEO/SEA)': { ca: 'Marketing Digital (SEO/SEA)', en: 'Digital Marketing (SEO/SEA)', zh: '数字营销(SEO/SEA)' },
@@ -1157,6 +1156,56 @@ try {
     }
   } catch (err) {
     console.warn('[sync-schema] ✗ migración Fleet Manager:', err?.message || err)
+  }
+
+  // -------------------------------------------------------------------
+  // Borrar producto 'motorflash-mobile-tracking' (Imagen avanzada + RCS).
+  // Idempotente: si ya no está en BD, no hace nada.
+  // -------------------------------------------------------------------
+  try {
+    const isPg = /^postgres(ql)?:\/\//i.test(
+      process.env.POSTGRES_URL || process.env.DATABASE_URL || process.env.PRISMA_DATABASE_URL || '',
+    )
+    if (isPg && payload.db?.drizzle) {
+      const { sql } = await import('drizzle-orm')
+      try {
+        const r1 = await payload.db.drizzle.execute(sql.raw(`
+          DELETE FROM product_content
+          WHERE product_id IN (SELECT id FROM products WHERE slug = 'motorflash-mobile-tracking')
+        `))
+        if ((r1?.rowCount ?? 0) > 0) console.log(`[sync-schema] eliminar mobile-tracking (product_content): ${r1.rowCount}`)
+      } catch (err) {
+        console.warn('[sync-schema] product_content:', err?.message || err)
+      }
+      try {
+        const r2 = await payload.db.drizzle.execute(sql.raw(`
+          DELETE FROM products WHERE slug = 'motorflash-mobile-tracking'
+        `))
+        if ((r2?.rowCount ?? 0) > 0) console.log(`[sync-schema] eliminar mobile-tracking (products): ${r2.rowCount}`)
+      } catch (err) {
+        console.warn('[sync-schema] products:', err?.message || err)
+      }
+      for (const t of ['main_menu_items_children', 'main_menu_items']) {
+        try {
+          const r3 = await payload.db.drizzle.execute(sql.raw(`
+            DELETE FROM "${t}"
+            WHERE url = '/servicios/motorflash-mobile-tracking'
+               OR label IN ('Imagen avanzada + RCS', 'Imatge avançada + RCS', 'Advanced Image + RCS', '高级图像 + RCS')
+          `))
+          if ((r3?.rowCount ?? 0) > 0) {
+            console.log(`[sync-schema] eliminar mobile-tracking (${t}): ${r3.rowCount} filas`)
+          }
+        } catch {}
+      }
+      try {
+        const r4 = await payload.db.drizzle.execute(sql.raw(`
+          DELETE FROM pricing_plans WHERE product_slug = 'motorflash-mobile-tracking'
+        `))
+        if ((r4?.rowCount ?? 0) > 0) console.log(`[sync-schema] eliminar mobile-tracking (pricing_plans): ${r4.rowCount}`)
+      } catch {}
+    }
+  } catch (err) {
+    console.warn('[sync-schema] ✗ eliminar mobile-tracking:', err?.message || err)
   }
 
   // -------------------------------------------------------------------

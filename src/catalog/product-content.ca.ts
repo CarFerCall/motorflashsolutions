@@ -341,56 +341,6 @@ export const productContent: Record<string, ProductContent> = {
       },
     ],
   },
-  'motorflash-mobile-tracking': {
-    subtitle: "L'evolució de l'SMS amb fins a un 300 % més de conversió que un missatge tradicional",
-    sections: [
-      {
-        type: 'features',
-        title: 'Per a què serveix Imatge avançada + RCS en automoció?',
-        lead: "Més enllà de l'SMS bàsic: combina imatge avançada amb IA i missatgeria RCS (multimèdia, segura, verificada) per crear comunicacions que el client obre, llegeix i converteix.",
-        items: [
-          { title: 'Missatgeria multimèdia RCS', description: "Envia imatges, vídeos, carrusels i botons d'acció directes al mòbil del client. Com un SMS però amb experiència d'app nativa.", icon: 'chat' },
-          { title: 'Imatge avançada amb IA', description: 'Millores automàtiques de cada foto: fons, il·luminació, ombres, eliminació de reflexos. El teu vehicle es veu com en una revista.', icon: 'auto_awesome' },
-          { title: 'Verificació de remitent', description: 'La teva marca apareix verificada al mòbil del client. Més confiança, més taxa d\'obertura, menys risc de phishing.', icon: 'verified' },
-          { title: 'Personalització per client', description: "Cada missatge s'adapta al client, al vehicle d'interès i al moment del cicle de compra. Missatges únics a escala.", icon: 'group' },
-          { title: 'Reporting complet', description: "Taxa d'entrega, obertura, clics i conversió per campanya. Mètriques reals per optimitzar.", icon: 'analytics' },
-          { title: 'Integració amb CRM', description: 'Cada enviament i resposta es registra a CRM4YOU. Traçabilitat total de la conversa.', icon: 'sync_alt' },
-        ],
-      },
-      {
-        type: 'highlights',
-        title: 'Control total des de la campa fins a l\'entrega',
-        lead: "Imatge avançada + RCS resol els problemes de comunicació més habituals en concessionaris: taxa d'obertura baixa en SMS, fotos poc atractives que no converteixen, manca de personalització en enviaments massius.",
-        highlights: [
-          { title: '+300% conversió vs SMS', description: 'La diferència entre text pla i multimèdia' },
-          { title: 'IA millorant cada foto', description: 'Qualitat professional automàtica' },
-          { title: 'Verificació de marca', description: 'El teu logo apareix al mòbil del client' },
-          { title: 'Plantilles dinàmiques', description: 'Adaptades a cada vehicle i client' },
-        ],
-        bullets: [
-          'Promocions: campanyes de captació amb imatges millorades de vehicles en oferta.',
-          'Cites de taller: recordatoris visuals amb targeta de cita i mapa al concessionari.',
-          'Llançaments: presentació de nous models amb vídeo i galeria interactiva.',
-          'Notificacions de vehicle a punt amb foto del cotxe ja preparat',
-          "Enquestes de satisfacció multimèdia després de l'entrega",
-        ],
-      },
-      {
-        type: 'process',
-        title: 'Com funciona Imatge avançada + RCS?',
-        steps: [
-          { title: 'Configuració del servei', description: 'Donem d\'alta la teva marca verificada a RCS i configurem les plantilles de missatge amb la teva identitat visual.' },
-          { title: "Millora d'imatges amb IA", description: 'Connectem amb el teu DMS per processar automàticament les fotos del teu estoc. La IA millora cada imatge abans de l\'enviament.' },
-          { title: 'Enviament i mesurament', description: 'Llancem les campanyes des del panell o automatitzades des del CRM. Mesurem cada enviament, obertura i clic.' },
-        ],
-      },
-      {
-        type: 'cta',
-        title: 'Vols saber on és cada vehicle de la teva flota ara mateix?',
-        lead: "Sol·licita informació i t'expliquem com Imatge avançada + RCS pot millorar el control i la seguretat del teu estoc des del primer dia.",
-      },
-    ],
-  },
   'ia': {
     subtitle: 'IA a WhatsApp, Xat web i Veu — disponibles 24/7',
     sections: [
