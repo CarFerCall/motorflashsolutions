@@ -5,13 +5,13 @@ import { getLocale } from 'next-intl/server'
 import { getProductUiCopy, type ProductUiLocale } from '@/lib/product-ui-content'
 
 const PORTALS = [
-  { id: 'cochesnet', label: 'Coches.net', icon: 'directions_car' },
-  { id: 'autoscout24', label: 'AutoScout24', icon: 'search' },
-  { id: 'sumauto', label: 'Sumauto', icon: 'sell' },
-  { id: 'wallapop', label: 'Wallapop', icon: 'storefront' },
-  { id: 'autocasion', label: 'Autocasión', icon: 'two_wheeler' },
-  { id: 'cochescom', label: 'Coches.com', icon: 'time_to_leave' },
-  { id: 'motorflash', label: 'Motorflash.com', icon: 'bolt' },
+  { id: 'cochesnet', label: 'Coches.net', logo: '/images/portals/cochesnet.jpeg' },
+  { id: 'autoscout24', label: 'AutoScout24', logo: '/images/portals/autoscout24.jpg' },
+  { id: 'sumauto', label: 'Sumauto', logo: '/images/portals/sumauto.png' },
+  { id: 'wallapop', label: 'Wallapop', logo: '/images/portals/wallapop.webp' },
+  { id: 'autocasion', label: 'Autocasión', logo: '/images/portals/autocasion.png' },
+  { id: 'cochescom', label: 'Coches.com', logo: '/images/portals/cochescom.webp' },
+  { id: 'motorflash', label: 'Motorflash.com', logo: '/images/portals/motorflash.png' },
 ]
 
 export async function MultipublicadorAnimation() {
@@ -60,25 +60,16 @@ export async function MultipublicadorAnimation() {
             {PORTALS.map((p) => (
               <div
                 key={p.id}
-                className="bg-white border border-outline-variant rounded-xl px-3 py-3 md:px-3 md:py-4 flex items-center gap-2 min-w-0 shadow-sm hover:shadow-md hover:border-primary/40 transition-all"
+                title={p.label}
+                className="bg-white border border-outline-variant rounded-xl p-3 md:p-4 flex items-center justify-center h-16 md:h-20 min-w-0 shadow-sm hover:shadow-md hover:border-primary/40 transition-all overflow-hidden"
               >
-                <span
-                  className="flex items-center justify-center rounded-lg shrink-0"
-                  style={{ width: 32, height: 32, background: 'rgba(255,128,0,0.10)' }}
-                >
-                  <span className="material-symbols-outlined text-primary" style={{ fontSize: 18 }}>
-                    {p.icon}
-                  </span>
-                </span>
-                <span className="text-xs md:text-[13px] font-semibold text-on-surface leading-tight min-w-0 break-words">
-                  {p.id === 'motorflash' ? (
-                    <>
-                      Motorflash<wbr />.com
-                    </>
-                  ) : (
-                    p.label
-                  )}
-                </span>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={p.logo}
+                  alt={p.label}
+                  loading="lazy"
+                  className="max-h-full max-w-full w-auto h-auto object-contain"
+                />
               </div>
             ))}
           </div>
