@@ -647,9 +647,8 @@ export async function SolucionesWeb() {
             {t.title1}<span className="text-primary">{t.titleAccent}</span>{t.title3}
           </h1>
           <p className="text-lg text-on-surface-variant max-w-2xl mx-auto mb-10">{t.heroLead}</p>
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+          <div className="flex items-center justify-center">
             <Link href={`/contacto?servicio=${productSlug}`} className="inline-block bg-primary text-white px-8 py-4 rounded-xl font-bold hover:scale-105 transition-transform">{t.ctaDemo}</Link>
-            <Link href={`/precios/${productSlug}`} className="inline-block border border-outline text-on-surface px-8 py-4 rounded-xl font-bold hover:bg-surface-container-high transition-colors">{t.ctaPrices}</Link>
           </div>
         </div>
       </section>
@@ -718,15 +717,6 @@ export async function SolucionesWeb() {
                 </div>
               </div>
             ))}
-          </div>
-          <div className="text-center mt-10">
-            <Link
-              href={`/precios/${productSlug}`}
-              className="inline-flex items-center gap-2 text-sm font-semibold text-primary hover:gap-3 transition-all"
-            >
-              {t.viewPricesLabel}
-              <span className="material-symbols-outlined" style={{ fontSize: 18 }}>arrow_forward</span>
-            </Link>
           </div>
         </div>
       </section>
