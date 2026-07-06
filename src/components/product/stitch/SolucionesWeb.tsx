@@ -666,11 +666,14 @@ export async function SolucionesWeb() {
             {t.tiers.map((tier) => (
               <div
                 key={tier.key}
-                className={`group relative rounded-3xl border bg-white p-8 flex flex-col overflow-hidden transition-all duration-300 hover:-translate-y-1 ${tier.highlight ? 'border-primary shadow-xl shadow-primary/10 hover:shadow-2xl hover:shadow-primary/20' : 'border-outline-variant hover:border-primary/40 hover:shadow-xl'}`}
+                className="group relative transition-transform duration-300 hover:-translate-y-1"
               >
                 {tier.highlight && (
-                  <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-primary text-white text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full shadow-md">{t.recommendedLabel}</span>
+                  <span className="absolute -top-3 left-1/2 -translate-x-1/2 z-10 bg-primary text-white text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full shadow-md">{t.recommendedLabel}</span>
                 )}
+                <div
+                  className={`relative h-full rounded-3xl border bg-white p-8 flex flex-col overflow-hidden transition-shadow duration-300 ${tier.highlight ? 'border-primary shadow-xl shadow-primary/10 group-hover:shadow-2xl group-hover:shadow-primary/20' : 'border-outline-variant group-hover:border-primary/40 group-hover:shadow-xl'}`}
+                >
                 <div
                   aria-hidden
                   className="absolute -top-20 -right-20 w-44 h-44 rounded-full opacity-[0.07] group-hover:opacity-20 transition-opacity duration-500"
@@ -712,6 +715,7 @@ export async function SolucionesWeb() {
                   {t.pickTier} {tier.name}
                   <span className="material-symbols-outlined transition-transform group-hover:translate-x-0.5" style={{ fontSize: 18 }}>arrow_forward</span>
                 </Link>
+                </div>
               </div>
             ))}
           </div>
