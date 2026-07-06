@@ -86,6 +86,17 @@ export const products: Product[] = [
     icon: 'chat',
   },
   {
+    slug: 'motorchat',
+    name: 'Motor-Chat',
+    menuLabel: 'Motor-Chat',
+    menuOrder: 75,
+    tagline: 'IA que atiende tus chats de Coches.net y Wallapop al instante.',
+    heroTitle: 'Cada chat sin responder es un cliente perdido',
+    intro:
+      'Motor-Chat es la IA de Motorflash que atiende tus chats de Coches.net, Wallapop y Milanuncios al instante, cualifica al cliente, genera el lead y lo envía directamente a tu CRM. Automático, 24/7 y sin dejar ni un mensaje sin contestar.',
+    icon: 'smart_toy',
+  },
+  {
     slug: 'ia',
     name: 'Motorflash IA',
     menuLabel: 'Motorflash IA',

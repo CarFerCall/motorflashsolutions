@@ -5,6 +5,61 @@
 import type { ProductContent } from './product-content'
 
 export const productContent: Record<string, ProductContent> = {
+  motorchat: {
+    subtitle: 'Motorflash 的 AI,即时应答您在 Coches.net、Wallapop 与 Milanuncios 上的对话',
+    sections: [
+      {
+        type: 'highlights',
+        title: '正在让您流失订单的问题',
+        lead: '您为在头部门户上曝光而付费……但回报却在过程中流失。Motor-Chat 将每条消息转化为真实商机。',
+        highlights: [
+          { title: '24/7', description: '不间断服务 · 也覆盖非营业时间' },
+          { title: '0', description: '零未回复消息 · 不让任何客户被忽视' },
+          { title: '即时', description: '在客户下笔的瞬间即刻回复' },
+          { title: 'CRM', description: '潜客直接进入您的工具,可立即销售' },
+        ],
+        bullets: [
+          '您在门户上投入,但潜客却没能到达:您在 Coches.net 与 Wallapop 上为曝光付费,消息却堆积如山,未能转化为真正的商机。',
+          '一个人手动运营所有账户:您团队中的某个人开着所有账户一整天,一条条回复。时间流失、回复来得太晚。',
+          '结果:更少的潜客、更慢的响应,以及您的团队被门户运营困住,而非专注于销售。',
+        ],
+      },
+      {
+        type: 'features',
+        title: 'Motor-Chat 为您即时应答',
+        lead: '一个连接 Coches.net、Wallapop 与 Milanuncios 的 AI 代理,负责回复、合格化并将潜客发送至您的 CRM。',
+        items: [
+          { title: '即时回复', description: '通过实时对话即刻回复,任何时段,无需班次或作息。', icon: 'bolt' },
+          { title: '收集资料、生成潜客', description: '在自然对话中合格化客户,收集关键信息(意向车辆、意愿、联系方式)。', icon: 'contact_page' },
+          { title: '发送到您的 CRM', description: '潜客直接进入您的销售工具,可立即成交。无需人工转录或重复录入。', icon: 'sync_alt' },
+          { title: 'Coches.net · Wallapop · Milanuncios', description: '连接到行业主要门户。一个代理并行处理您的所有账户。', icon: 'hub' },
+          { title: '真实管理面板', description: '仪表盘显示每条对话状态、按门户区分的潜客生成情况与绩效指标。', icon: 'analytics' },
+          { title: '零学习曲线', description: 'Motor-Chat 直接接入您现有的门户账户与 CRM。无需人工配置。', icon: 'settings' },
+        ],
+      },
+      {
+        type: 'highlights',
+        title: '为您的业务带来的改变',
+        lead: '更多潜客、更短响应、更少手动管理。Motor-Chat 把您今天花在门户上的时间还给您。',
+        highlights: [
+          { title: '+ 更多潜客', description: '已获取并合格化 · 因不再遗漏对话而提升' },
+          { title: '− 更短时间', description: '客户响应时间 · 客户下笔即被回复' },
+          { title: '− 更少运营', description: '门户手动管理 · 团队不再追逐消息,专注销售' },
+          { title: '× 0 遗失对话', description: '不再有未回复的客户 · 全天候保障响应' },
+        ],
+        bullets: [
+          'Motor-Chat 全天 24 小时、每周 7 天不间断工作,无休假。',
+          '每次对话均可在面板中记录、合格化并审计。',
+          '通过标准集成兼容市面上任何 CRM。',
+        ],
+      },
+      {
+        type: 'cta',
+        title: '让 Motor-Chat 为您运营',
+        lead: '申请演示,我们将向您展示 Motor-Chat 如何回复您的对话,并从第一天起把潜客源源不断地送入您的 CRM。',
+      },
+    ],
+  },
   'contact-center': {
     subtitle: '在与 CRM 互联的统一平台上,管理电话、聊天与消息',
     sections: [

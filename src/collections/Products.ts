@@ -24,6 +24,8 @@ const PRODUCT_SLUGS = [
   'contact-center',
   'spyne',
   'motorflash-message',
+  'motorchat',
+
   'ia',
   'soluciones-web',
   'marketing-digital',

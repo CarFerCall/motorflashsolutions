@@ -6,6 +6,61 @@
 import type { ProductContent } from './product-content'
 
 export const productContent: Record<string, ProductContent> = {
+  motorchat: {
+    subtitle: "La IA de Motorflash que atén els teus xats de Coches.net, Wallapop i Milanuncios a l'instant",
+    sections: [
+      {
+        type: 'highlights',
+        title: 'El problema que t\'està costant vendes',
+        lead: 'Pagues per ser als portals líders… però el retorn es perd pel camí. Motor-Chat converteix cada missatge en una oportunitat real.',
+        highlights: [
+          { title: '24/7', description: "Atenció sense descans — també fora d'horari comercial" },
+          { title: '0', description: 'Xats sense resposta · cap client es queda sense contestar' },
+          { title: 'Immediata', description: "Contesta al mateix moment en què t'escriuen" },
+          { title: 'CRM', description: 'El lead entra directe a la teva eina, llest per vendre' },
+        ],
+        bullets: [
+          'Inverteixes als portals, però els leads no arriben: pagues per visibilitat a Coches.net i Wallapop i els missatges s\'acumulen sense convertir-se en oportunitats reals.',
+          'Una persona atenent tots els comptes, a mà: algú del teu equip amb tots els comptes oberts tot el dia, responent un a un. Hores perdudes i respostes que arriben tard.',
+          'Resultat: menys leads, atenció lenta i el teu equip atrapat gestionant portals en comptes de vendre.',
+        ],
+      },
+      {
+        type: 'features',
+        title: 'Motor-Chat atén per tu, a l\'instant',
+        lead: 'Un agent d\'IA connectat a Coches.net, Wallapop i Milanuncios que respon, qualifica i entrega el lead al teu CRM.',
+        items: [
+          { title: 'Respon a l\'instant', description: "Resposta immediata mitjançant conversa en temps real, a qualsevol hora. Sense torns ni horaris.", icon: 'bolt' },
+          { title: 'Demana les dades i genera el lead', description: "Qualifica el client i recull la informació clau (vehicle d'interès, intenció, contacte) en una conversa natural.", icon: 'contact_page' },
+          { title: "L'envia al teu CRM", description: 'El lead entra directe a la teva eina comercial llest per vendre. Sense transvasaments manuals ni doble entrada de dades.', icon: 'sync_alt' },
+          { title: 'Coches.net · Wallapop · Milanuncios', description: 'Connectat als principals portals del sector. Un sol agent que atén tots els teus comptes en paral·lel.', icon: 'hub' },
+          { title: 'Panell real de gestió', description: "Dashboard amb l'estat de cada conversa, leads generats per portal i mètriques de rendiment.", icon: 'analytics' },
+          { title: "Sense corba d'aprenentatge", description: 'Motor-Chat es connecta als teus comptes existents de portals i al teu CRM actual. Zero configuració manual.', icon: 'settings' },
+        ],
+      },
+      {
+        type: 'highlights',
+        title: 'El que canvia al teu negoci',
+        lead: 'Més leads captats, menys temps de resposta i menys gestió manual. Motor-Chat et retorna les hores que avui perds als portals.',
+        highlights: [
+          { title: '+ Més leads', description: 'Captats i qualificats · el volum puja perquè cap xat es queda sense resposta' },
+          { title: '− Menys temps', description: 'De resposta al client · contesta al segon, al mateix moment en què escriu' },
+          { title: '− Menys gestió', description: 'Manual dels portals · el teu equip deixa de perseguir missatges i se centra en vendre' },
+          { title: '× 0 Xats perduts', description: "Cap client sense resposta · atenció garantida 24/7" },
+        ],
+        bullets: [
+          'Motor-Chat treballa 24 hores, 7 dies a la setmana, sense descans ni vacances.',
+          'Cada conversa queda registrada, qualificada i auditable des del panell.',
+          'Compatible amb qualsevol CRM del mercat mitjançant integració estàndard.',
+        ],
+      },
+      {
+        type: 'cta',
+        title: 'Deixa que Motor-Chat gestioni per tu',
+        lead: 'Sol·licita la teva demo i t\'ensenyem com Motor-Chat respon els teus xats i omple el teu CRM de leads des del primer dia.',
+      },
+    ],
+  },
   'contact-center': {
     subtitle: 'Gestiona trucades, xats i missatges des d\'una sola plataforma connectada amb el teu CRM',
     sections: [

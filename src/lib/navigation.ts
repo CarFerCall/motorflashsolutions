@@ -89,6 +89,7 @@ const MENU_LABEL_DICT: Record<string, { ca: string; en: string; zh: string }> = 
   'Photocall IA (Spyne)': { ca: 'Photocall IA (Spyne)', en: 'Photocall AI (Spyne)', zh: 'AI 摄影棚(Spyne)' },
   'WhatsApp Business': { ca: 'WhatsApp Business', en: 'WhatsApp Business', zh: 'WhatsApp 企业版' },
   'Motorflash IA': { ca: 'Motorflash IA', en: 'Motorflash AI', zh: 'Motorflash 人工智能' },
+  'Motor-Chat': { ca: 'Motor-Chat', en: 'Motor-Chat', zh: 'Motor-Chat' },
   'Servicios Web': { ca: 'Serveis Web', en: 'Web Services', zh: '网站服务' },
   'Marketing Digital (SEO/SEA)': { ca: 'Marketing Digital (SEO/SEA)', en: 'Digital Marketing (SEO/SEA)', zh: '数字营销(SEO/SEA)' },
   'Marketing Digital': { ca: 'Marketing Digital', en: 'Digital Marketing', zh: '数字营销' },

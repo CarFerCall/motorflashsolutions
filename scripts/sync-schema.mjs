@@ -204,6 +204,21 @@ try {
       ],
     },
     {
+      productSlug: 'motorchat',
+      productName: 'Motor-Chat',
+      basePriceCents: 0,
+      items: [
+        { itemKey: 'tier_stock', label: 'Tramo de stock publicado', helpText: 'Precio por vehículo publicado. Cuanto más stock, menor coste por unidad. La cuota mensual = coste por vehículo × número de vehículos publicados.', type: 'select', unitPriceCents: 0, required: true, selectOptions: [
+          { value: 'tier_1_50', label: '1 – 50 vehículos · 0,50 €/vehículo', priceCents: 50, setupCents: 0, isDefault: true },
+          { value: 'tier_51_100', label: '51 – 100 vehículos · 0,40 €/vehículo', priceCents: 40, setupCents: 0, isDefault: false },
+          { value: 'tier_101_500', label: '101 – 500 vehículos · 0,35 €/vehículo', priceCents: 35, setupCents: 0, isDefault: false },
+          { value: 'tier_501_1000', label: '501 – 1000 vehículos · 0,25 €/vehículo', priceCents: 25, setupCents: 0, isDefault: false },
+          { value: 'tier_plus_1001', label: '+ de 1001 vehículos · 0,15 €/vehículo', priceCents: 15, setupCents: 0, isDefault: false },
+        ] },
+        { itemKey: 'descuento_multipublicador', label: '50 % descuento en Multipublicador (primer año)', helpText: 'Ventaja: aplicable si tienes el stock publicado en Motorflash. El descuento se aplica sobre el Multipublicador de Motorflash el primer año.', type: 'checkbox', unitPriceCents: 0, required: false, checkboxDefault: false },
+      ],
+    },
+    {
       productSlug: 'dealer',
       productName: 'Dealer / Stock',
       basePriceCents: 12900,
@@ -799,9 +814,10 @@ try {
                 { label: 'Contact Center', url: '/servicios/contact-center', icon: 'support_agent' },
                 { label: 'Photocall IA', url: '/servicios/spyne', icon: 'photo_camera' },
                 { label: 'WhatsApp Business', url: '/servicios/motorflash-message', icon: 'chat' },
+                { label: 'Motor-Chat', url: '/servicios/motorchat', icon: 'smart_toy' },
                 { label: 'Motorflash IA', url: '/servicios/ia', icon: 'psychology' },
                 { label: 'Fleet Manager', url: '/servicios/motorflash-connect', icon: 'autorenew' },
-                { label: 'Lead Exclusive', url: '/servicios/lead-factory', icon: 'star' },
+                { label: 'Lead Motorflash.com', url: '/servicios/lead-factory', icon: 'star' },
                 { label: 'Ver catálogo completo', url: '/servicios', icon: 'arrow_forward' },
               ],
             },
@@ -938,6 +954,7 @@ try {
       'Photocall IA (Spyne)': { ca: 'Photocall IA (Spyne)', en: 'Photocall AI (Spyne)', zh: 'AI 摄影棚(Spyne)' },
       'WhatsApp Business': { ca: 'WhatsApp Business', en: 'WhatsApp Business', zh: 'WhatsApp 企业版' },
       'Motorflash IA': { ca: 'Motorflash IA', en: 'Motorflash AI', zh: 'Motorflash 人工智能' },
+      'Motor-Chat': { ca: 'Motor-Chat', en: 'Motor-Chat', zh: 'Motor-Chat' },
       'Servicios Web': { ca: 'Serveis Web', en: 'Web Services', zh: '网站服务' },
       'Marketing Digital (SEO/SEA)': { ca: 'Marketing Digital (SEO/SEA)', en: 'Digital Marketing (SEO/SEA)', zh: '数字营销(SEO/SEA)' },
       'Marketing Digital': { ca: 'Marketing Digital', en: 'Digital Marketing', zh: '数字营销' },
@@ -1325,6 +1342,37 @@ try {
     }
   } catch (err) {
     console.warn('[sync-schema] ✗ unificación Lead Motorflash.com:', err?.message || err)
+  }
+
+  // -------------------------------------------------------------------
+  // Insertar Motor-Chat en el menú Servicios si aún no está en BD.
+  // Idempotente.
+  // -------------------------------------------------------------------
+  try {
+    const menu = await payload.findGlobal({ slug: 'main-menu' }).catch(() => null)
+    const items = menu?.items ?? []
+    const serviciosIdx = items.findIndex((it) => it?.label === 'Servicios')
+    if (serviciosIdx >= 0) {
+      const children = items[serviciosIdx].children ?? []
+      const hasMotorchat = children.some((c) => c?.url === '/servicios/motorchat')
+      if (!hasMotorchat) {
+        // Insertar tras WhatsApp Business.
+        const waIdx = children.findIndex((c) => c?.url === '/servicios/motorflash-message')
+        const insertAt = waIdx >= 0 ? waIdx + 1 : children.length
+        children.splice(insertAt, 0, {
+          label: 'Motor-Chat', url: '/servicios/motorchat', icon: 'smart_toy',
+        })
+        items[serviciosIdx].children = children
+        try {
+          await payload.updateGlobal({ slug: 'main-menu', data: { items } })
+          console.log('[sync-schema] Motor-Chat añadido al menú Servicios')
+        } catch (err) {
+          console.warn('[sync-schema] ✗ añadir Motor-Chat al menú:', err?.message || err)
+        }
+      }
+    }
+  } catch (err) {
+    console.warn('[sync-schema] ✗ menú Motor-Chat:', err?.message || err)
   }
 
   // -------------------------------------------------------------------

@@ -6,6 +6,61 @@
 import type { ProductContent } from './product-content'
 
 export const productContent: Record<string, ProductContent> = {
+  motorchat: {
+    subtitle: 'The Motorflash AI that answers your Coches.net, Wallapop and Milanuncios chats instantly',
+    sections: [
+      {
+        type: 'highlights',
+        title: 'The problem that\'s costing you sales',
+        lead: 'You pay to be on the leading portals… but the return leaks on the way. Motor-Chat turns every message into a real opportunity.',
+        highlights: [
+          { title: '24/7', description: 'Round-the-clock attention — including outside business hours' },
+          { title: '0', description: 'Unanswered chats · not a single customer goes unattended' },
+          { title: 'Instant', description: 'Replies the moment they write to you' },
+          { title: 'CRM', description: 'The lead lands directly in your tool, ready to sell' },
+        ],
+        bullets: [
+          'You invest in the portals, but leads never arrive: you pay for visibility on Coches.net and Wallapop and messages pile up without turning into real opportunities.',
+          'One person handling every account by hand: someone from your team with all accounts open all day, replying one by one. Hours lost and late responses.',
+          'Result: fewer leads, slow response times and your team stuck managing portals instead of selling.',
+        ],
+      },
+      {
+        type: 'features',
+        title: 'Motor-Chat answers for you, instantly',
+        lead: 'An AI agent connected to Coches.net, Wallapop and Milanuncios that replies, qualifies and delivers the lead to your CRM.',
+        items: [
+          { title: 'Replies instantly', description: 'Immediate response via real-time conversation, at any hour. No shifts, no timetables.', icon: 'bolt' },
+          { title: 'Asks for the data and generates the lead', description: 'Qualifies the customer and collects the key information (vehicle of interest, intent, contact) in a natural conversation.', icon: 'contact_page' },
+          { title: 'Sends it to your CRM', description: 'The lead lands straight in your sales tool ready to close. No manual handovers or duplicate data entry.', icon: 'sync_alt' },
+          { title: 'Coches.net · Wallapop · Milanuncios', description: 'Connected to the leading portals in the market. One single agent handling all your accounts in parallel.', icon: 'hub' },
+          { title: 'Real management panel', description: 'Dashboard with the status of every conversation, leads generated per portal and performance metrics.', icon: 'analytics' },
+          { title: 'No learning curve', description: 'Motor-Chat plugs into your existing portal accounts and current CRM. Zero manual configuration.', icon: 'settings' },
+        ],
+      },
+      {
+        type: 'highlights',
+        title: 'What changes in your business',
+        lead: 'More leads captured, less response time and less manual management. Motor-Chat gives you back the hours you lose today on the portals.',
+        highlights: [
+          { title: '+ More leads', description: 'Captured and qualified · volume goes up because no chat is left unanswered' },
+          { title: '− Less time', description: 'To respond to the customer · answered in the very moment they write' },
+          { title: '− Less management', description: 'Manual portal handling · your team stops chasing messages and focuses on selling' },
+          { title: '× 0 lost chats', description: 'Not one customer without a reply · 24/7 attention guaranteed' },
+        ],
+        bullets: [
+          'Motor-Chat works 24 hours a day, 7 days a week — no breaks, no holidays.',
+          'Every conversation is recorded, qualified and auditable from the panel.',
+          'Compatible with any CRM on the market via standard integration.',
+        ],
+      },
+      {
+        type: 'cta',
+        title: 'Let Motor-Chat handle it for you',
+        lead: "Book your demo and we'll show you how Motor-Chat answers your chats and fills your CRM with leads from day one.",
+      },
+    ],
+  },
   'contact-center': {
     subtitle: 'Handle calls, chats and messages from a single platform connected to your CRM',
     sections: [

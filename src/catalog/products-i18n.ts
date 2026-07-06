@@ -57,6 +57,13 @@ export const productI18n: Record<ProductLocale, Record<string, ProductTranslatio
       heroTitle: 'Converses intel·ligents, atenció immediata',
       intro: 'Els teus clients ja són a WhatsApp, i tu pots ser-hi disponible en qualsevol moment. Amb la IA de Message gestiones converses reals, concertes cites i fas seguiment sense dependre d\'horaris. Segur, connectat amb el teu CRM i 100% adaptat a la normativa RGPD.',
     },
+    motorchat: {
+      name: 'Motor-Chat',
+      menuLabel: 'Motor-Chat',
+      tagline: 'IA que atén els teus xats de Coches.net i Wallapop a l\'instant.',
+      heroTitle: 'Cada xat sense resposta és un client perdut',
+      intro: "Motor-Chat és la IA de Motorflash que atén els teus xats de Coches.net, Wallapop i Milanuncios a l'instant, qualifica el client, genera el lead i l'envia directament al teu CRM. Automàtic, 24/7 i sense deixar cap missatge sense contestar.",
+    },
     ia: {
       name: 'Motorflash IA',
       menuLabel: 'Motorflash IA',
@@ -150,6 +157,13 @@ export const productI18n: Record<ProductLocale, Record<string, ProductTranslatio
       heroTitle: 'Smart conversations, immediate service',
       intro: 'Your customers are already on WhatsApp, and you can be available anytime. With Message AI you handle real conversations, book appointments and follow up regardless of opening hours. Secure, connected to your CRM and fully GDPR-compliant.',
     },
+    motorchat: {
+      name: 'Motor-Chat',
+      menuLabel: 'Motor-Chat',
+      tagline: 'AI that answers your Coches.net and Wallapop chats instantly.',
+      heroTitle: 'Every unanswered chat is a lost customer',
+      intro: 'Motor-Chat is the Motorflash AI that answers your Coches.net, Wallapop and Milanuncios chats instantly, qualifies the customer, generates the lead and sends it straight to your CRM. Automatic, 24/7 and never leaves a message unanswered.',
+    },
     ia: {
       name: 'Motorflash AI',
       menuLabel: 'Motorflash AI',
@@ -242,6 +256,13 @@ export const productI18n: Record<ProductLocale, Record<string, ProductTranslatio
       tagline: '在 WhatsApp 上由 AI 驱动的智能对话。',
       heroTitle: '智能对话,即时响应',
       intro: '客户已经在用 WhatsApp,您也可以随时在线。借助 Message AI 处理真实对话、预约并跟进,无需依赖工作时间。安全、与您的 CRM 互联,并 100% 符合 GDPR。',
+    },
+    motorchat: {
+      name: 'Motor-Chat',
+      menuLabel: 'Motor-Chat',
+      tagline: '即时回应您在 Coches.net 与 Wallapop 上的对话的 AI。',
+      heroTitle: '每一条未回复的消息,都是一位流失的客户',
+      intro: 'Motor-Chat 是 Motorflash 的 AI,可即时应答您在 Coches.net、Wallapop 与 Milanuncios 的对话,合格化客户、生成潜客并直接发送到您的 CRM。自动、7×24 不间断,不遗漏任何一条消息。',
     },
     ia: {
       name: 'Motorflash 人工智能',

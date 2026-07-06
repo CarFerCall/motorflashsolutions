@@ -7,6 +7,61 @@
 import type { ProductContent } from './product-content'
 
 export const productContent: Record<string, ProductContent> = {
+  motorchat: {
+    subtitle: 'La IA de Motorflash que atiende tus chats de Coches.net, Wallapop y Milanuncios al instante',
+    sections: [
+      {
+        type: 'highlights',
+        title: 'El problema que te está costando ventas',
+        lead: 'Pagas por estar en los portales líderes… pero el retorno se pierde por el camino. Motor-Chat convierte cada mensaje en una oportunidad real.',
+        highlights: [
+          { title: '24/7', description: 'Atención sin descanso — también fuera de horario comercial' },
+          { title: '0', description: 'Chats sin responder · ni un solo cliente se queda sin contestar' },
+          { title: 'Inmediata', description: 'Contesta en el mismo momento en que te escriben' },
+          { title: 'CRM', description: 'El lead entra directo en tu herramienta, listo para vender' },
+        ],
+        bullets: [
+          'Inviertes en los portales, pero los leads no llegan: pagas por visibilidad en Coches.net y Wallapop y los mensajes se acumulan sin convertirse en oportunidades reales.',
+          'Una persona atendiendo todas las cuentas, a mano: alguien de tu equipo con todas las cuentas abiertas todo el día, respondiendo una a una. Horas perdidas y respuestas que llegan tarde.',
+          'Resultado: menos leads, atención lenta y tu equipo atrapado gestionando portales en vez de vender.',
+        ],
+      },
+      {
+        type: 'features',
+        title: 'Motor-Chat atiende por ti, al instante',
+        lead: 'Un agente de IA conectado a Coches.net, Wallapop y Milanuncios que responde, cualifica y entrega el lead a tu CRM.',
+        items: [
+          { title: 'Responde al instante', description: 'Respuesta inmediata mediante conversación en tiempo real, a cualquier hora. Sin turnos ni horarios.', icon: 'bolt' },
+          { title: 'Pide los datos y genera el lead', description: 'Cualifica al cliente y recoge la información clave (vehículo de interés, intención, contacto) en una conversación natural.', icon: 'contact_page' },
+          { title: 'Lo envía a tu CRM', description: 'El lead entra directo en tu herramienta comercial listo para vender. Sin trasvases manuales ni doble entrada de datos.', icon: 'sync_alt' },
+          { title: 'Coches.net · Wallapop · Milanuncios', description: 'Conectado a los principales portales del sector. Un solo agente que atiende todas tus cuentas en paralelo.', icon: 'hub' },
+          { title: 'Panel real de gestión', description: 'Dashboard con el estado de cada conversación, leads generados por portal y métricas de rendimiento.', icon: 'analytics' },
+          { title: 'Sin curva de aprendizaje', description: 'Motor-Chat se conecta a tus cuentas existentes de portales y a tu CRM actual. Cero configuración manual.', icon: 'settings' },
+        ],
+      },
+      {
+        type: 'highlights',
+        title: 'Lo que cambia en tu negocio',
+        lead: 'Más leads captados, menos tiempo de respuesta y menos gestión manual. Motor-Chat te devuelve las horas que hoy pierdes en los portales.',
+        highlights: [
+          { title: '+ Más leads', description: 'Captados y cualificados · el volumen sube porque ningún chat queda sin contestar' },
+          { title: '− Menos tiempo', description: 'De respuesta al cliente · contesta al segundo, en el mismo momento en que escribe' },
+          { title: '− Menos gestión', description: 'Manual de los portales · tu equipo deja de perseguir mensajes y se centra en vender' },
+          { title: '× 0 Chats perdidos', description: 'Ni un cliente sin respuesta · atención garantizada 24/7' },
+        ],
+        bullets: [
+          'Motor-Chat trabaja 24 horas, 7 días a la semana, sin descanso ni vacaciones.',
+          'Cada conversación queda registrada, cualificada y auditable desde el panel.',
+          'Compatible con cualquier CRM del mercado a través de integración estándar.',
+        ],
+      },
+      {
+        type: 'cta',
+        title: 'Deja que Motor-Chat gestione por ti',
+        lead: 'Solicita tu demo y te enseñamos cómo Motor-Chat responde tus chats y llena tu CRM de leads desde el primer día.',
+      },
+    ],
+  },
   'contact-center': {
     subtitle: 'Gestiona llamadas, chats y mensajes desde una sola plataforma conectada con tu CRM',
     sections: [
