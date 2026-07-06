@@ -216,6 +216,60 @@ export async function GenericProductPage({ product }: { product: Product }) {
             </section>
           )
         }
+        if (section.type === 'spotlight') {
+          return (
+            <section key={idx} className={`py-24 ${soft ? 'bg-surface-container' : ''}`}>
+              <div className="mf-container">
+                <div
+                  className="relative overflow-hidden rounded-[2.5rem] shadow-2xl p-10 md:p-16 text-white"
+                  style={{
+                    background: 'linear-gradient(135deg, #ff8c1a 0%, #ff7000 55%, #d96f00 100%)',
+                    boxShadow: '0 24px 60px rgba(255,128,0,0.35), 0 0 0 1px rgba(255,255,255,0.08) inset',
+                  }}
+                >
+                  <div aria-hidden className="absolute inset-0 pointer-events-none opacity-20" style={{ background: 'radial-gradient(circle at 15% 20%, rgba(255,255,255,0.6), transparent 55%)' }} />
+                  <div className="relative grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+                    <div className="lg:col-span-8">
+                      <span
+                        className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-[11px] font-bold uppercase tracking-widest"
+                        style={{ background: 'rgba(255,255,255,0.18)', backdropFilter: 'blur(6px)' }}
+                      >
+                        <span className="material-symbols-outlined" style={{ fontSize: 16 }}>
+                          {section.badgeIcon ?? 'workspace_premium'}
+                        </span>
+                        {section.badge}
+                      </span>
+                      <h2 className="mt-5 text-3xl md:text-4xl lg:text-5xl font-semibold leading-tight">{section.title}</h2>
+                      <p className="mt-5 text-base md:text-lg leading-relaxed opacity-95 max-w-2xl">{section.lead}</p>
+                      {section.bullets && section.bullets.length > 0 && (
+                        <ul className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-3">
+                          {section.bullets.map((b, i) => (
+                            <li key={i} className="flex gap-2 items-start">
+                              <span className="material-symbols-outlined flex-shrink-0 mt-0.5" style={{ fontSize: 20 }}>
+                                check_circle
+                              </span>
+                              <span className="text-sm md:text-[15px] leading-relaxed opacity-95">{b}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      )}
+                    </div>
+                    <div className="lg:col-span-4 flex justify-center lg:justify-end" aria-hidden>
+                      <div
+                        className="rounded-full flex items-center justify-center"
+                        style={{ width: 200, height: 200, background: 'rgba(255,255,255,0.16)', boxShadow: '0 0 0 12px rgba(255,255,255,0.06)' }}
+                      >
+                        <span className="material-symbols-outlined text-white" style={{ fontSize: 112 }}>
+                          {section.icon ?? 'verified'}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+          )
+        }
         if (section.type === 'cta') {
           return (
             <section key={idx} className="py-24">

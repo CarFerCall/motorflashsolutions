@@ -42,7 +42,22 @@ export type CtaSection = {
   lead: string
 }
 
-export type ProductContentSection = FeaturesSection | HighlightsSection | ProcessSection | CtaSection
+export type SpotlightSection = {
+  type: 'spotlight'
+  badge: string
+  title: string
+  lead: string
+  bullets?: string[]
+  icon?: string
+  badgeIcon?: string
+}
+
+export type ProductContentSection =
+  | FeaturesSection
+  | HighlightsSection
+  | ProcessSection
+  | CtaSection
+  | SpotlightSection
 
 export interface ProductContent {
   subtitle: string
