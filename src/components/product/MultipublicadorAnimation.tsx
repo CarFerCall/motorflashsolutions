@@ -60,7 +60,7 @@ export async function MultipublicadorAnimation() {
             {PORTALS.map((p) => (
               <div
                 key={p.id}
-                className="bg-white border border-outline-variant rounded-xl px-3 py-3 md:px-3 md:py-4 flex items-center gap-2 shadow-sm hover:shadow-md hover:border-primary/40 transition-all"
+                className="bg-white border border-outline-variant rounded-xl px-3 py-3 md:px-3 md:py-4 flex items-center gap-2 min-w-0 shadow-sm hover:shadow-md hover:border-primary/40 transition-all"
               >
                 <span
                   className="flex items-center justify-center rounded-lg shrink-0"
@@ -70,8 +70,14 @@ export async function MultipublicadorAnimation() {
                     {p.icon}
                   </span>
                 </span>
-                <span className="text-xs md:text-[13px] font-semibold text-on-surface leading-tight">
-                  {p.label}
+                <span className="text-xs md:text-[13px] font-semibold text-on-surface leading-tight min-w-0 break-words">
+                  {p.id === 'motorflash' ? (
+                    <>
+                      Motorflash<wbr />.com
+                    </>
+                  ) : (
+                    p.label
+                  )}
                 </span>
               </div>
             ))}
