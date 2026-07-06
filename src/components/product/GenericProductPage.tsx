@@ -9,8 +9,18 @@ import { MultipublicadorAnimation } from './MultipublicadorAnimation'
 
 // Productos que muestran una imagen real en el hero en lugar del
 // icono de Material Symbols con el tile naranja.
-const HERO_IMAGE_BY_SLUG: Record<string, { src: string; alt: string }> = {
+const HERO_IMAGE_BY_SLUG: Record<
+  string,
+  { src: string; alt: string; width?: number; height?: number; glow?: string }
+> = {
   'motorflash-message': { src: '/images/products/whatsapp.webp', alt: 'WhatsApp Business' },
+  apex: {
+    src: '/images/products/apex-logo.png',
+    alt: 'Apex by Motorflash',
+    width: 480,
+    height: 222,
+    glow: 'rgba(37, 63, 138, 0.28)',
+  },
 }
 
 // Componentes custom que se inyectan justo debajo del hero por
@@ -68,26 +78,28 @@ export async function GenericProductPage({ product }: { product: Product }) {
                 <div
                   className="relative flex items-center justify-center"
                   style={{
-                    width: 280,
-                    height: 280,
+                    width: Math.max(heroImage.width ?? 240, 280),
+                    height: Math.max(heroImage.height ?? 240, 280),
                   }}
                 >
                   <div
                     aria-hidden
                     className="absolute inset-0 rounded-full"
                     style={{
-                      background: 'radial-gradient(circle, rgba(37, 211, 102, 0.18), transparent 65%)',
+                      background: `radial-gradient(circle, ${heroImage.glow ?? 'rgba(37, 211, 102, 0.18)'}, transparent 65%)`,
                     }}
                   />
                   <Image
                     src={heroImage.src}
                     alt={heroImage.alt}
-                    width={240}
-                    height={240}
+                    width={heroImage.width ?? 240}
+                    height={heroImage.height ?? 240}
                     priority
                     className="relative drop-shadow-2xl"
                     style={{
-                      filter: 'drop-shadow(0 24px 48px rgba(37, 211, 102, 0.35))',
+                      filter: `drop-shadow(0 24px 48px ${heroImage.glow ?? 'rgba(37, 211, 102, 0.35)'})`,
+                      maxWidth: '100%',
+                      height: 'auto',
                     }}
                   />
                 </div>
