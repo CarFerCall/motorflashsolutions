@@ -8,11 +8,8 @@ interface Tier {
   key: string
   name: string
   subtitle: string
-  setupEur: string
-  monthlyEur: string
-  permanenceMonths: number
-  cashEur: string
-  cashDiscount: string
+  idealFor: string
+  icon: string
   highlight: boolean
   bullets: string[]
 }
@@ -34,15 +31,10 @@ interface SwCopy {
   tiersEyebrow: string
   tiersTitle: string
   tiersLead: string
-  monthlyLabel: string
-  setupLabel: string
-  permanenceLabel: string
-  permanenceUnit: string
-  cashLabel: string
-  cashDiscountLabel: string
+  idealForLabel: string
+  viewPricesLabel: string
   pickTier: string
   recommendedLabel: string
-  tiersFootnote: string
   integrationsEyebrow: string
   integrationsTitle: string
   integrationsLead: string
@@ -82,19 +74,14 @@ const COPY: Record<LocaleKey, SwCopy> = {
     title3: ', en 30 días, con todo Motorflash integrado.',
     heroLead: '3 niveles según tu negocio. SEO, analítica, CMS, pasarela de pago, calculadora financiera, CRM y Contact Center integrados de fábrica. Infraestructura 99,9 %, SSL, WAF y anti-DDoS incluidos.',
     ctaDemo: 'Solicitar Demo',
-    ctaPrices: 'Ver tarifas',
+    ctaPrices: 'Ver precios',
     tiersEyebrow: '3 PRODUCTOS',
     tiersTitle: 'Elige el proyecto web que encaja contigo',
-    tiersLead: 'Mismo equipo, misma infraestructura, mismas integraciones. Distintos alcances y permanencias para que entres por donde te conviene y crezcas cuando quieras.',
-    monthlyLabel: '/mes',
-    setupLabel: 'Set up',
-    permanenceLabel: 'Permanencia',
-    permanenceUnit: 'meses',
-    cashLabel: 'Pago al contado',
-    cashDiscountLabel: 'dto.',
+    tiersLead: 'Mismo equipo, misma infraestructura, mismas integraciones. Distintos alcances para que entres por donde te conviene y crezcas cuando quieras.',
+    idealForLabel: 'Ideal para',
+    viewPricesLabel: 'Ver precios y tarifas detalladas',
     pickTier: 'Pedir',
     recommendedLabel: 'Recomendado',
-    tiersFootnote: 'Los precios son por mundo/marca. Tras los 24/12 meses se renueva con IPC. La cuota mensual incluye alojamiento, mantenimiento, actualizaciones y medidas de seguridad.',
     integrationsEyebrow: 'INTEGRADO CON TODO EL ECOSISTEMA',
     integrationsTitle: 'Tu web no funciona sola. Va enchufada a Motorflash.',
     integrationsLead: 'Los leads llegan al CRM. Las llamadas al Contact Center. Los chats a MF Message. Sin integradores, sin proyectos a medida.',
@@ -187,9 +174,9 @@ const COPY: Record<LocaleKey, SwCopy> = {
     ctaLead: 'En la demo te enseñamos un caso real de un concesionario del mismo tamaño que el tuyo, qué tier encaja mejor y cuánto tarda en estar arriba.',
     ctaButton: 'Solicitar Demo Personalizada',
     tiers: [
-      { key: 'platinum', name: 'Platinum', subtitle: 'Web de concesionario completa', setupEur: '800 €', monthlyEur: '420 €', permanenceMonths: 24, cashEur: '9.200 €', cashDiscount: '15,4 %', highlight: true, bullets: [
+      { key: 'platinum', name: 'Platinum', subtitle: 'Web de concesionario completa', idealFor: 'Grupos y concesionarios oficiales con VO, VN, renting y postventa que quieren su web insignia sobre la infraestructura de Motorflash.', icon: 'workspace_premium', highlight: true, bullets: [
         'Todos los departamentos: VO, VN, renting, postventa, contenidos corporativos, tasador de vehículos',
-        'Multi-marca/multi-mundo (Audi, VW, …)',
+        'Multi-marca / multi-mundo (Audi, VW…)',
         'Publicación de stock VO y VN (DMS, Dealer, Feed XML)',
         'Fichas premium con vídeos, pasarelas de pago y calculadora financiera',
         'CMS autogestionable (landings, banners, formularios)',
@@ -197,7 +184,7 @@ const COPY: Record<LocaleKey, SwCopy> = {
         'Dashboard KPIs en tiempo real',
         'SEO inicial, GA4, formación CMS (3 h), mantenimiento y alojamiento incluidos',
       ] },
-      { key: 'silver', name: 'Silver', subtitle: 'Integra tu stock en cualquier web', setupEur: '300 €', monthlyEur: '100 €', permanenceMonths: 24, cashEur: '2.300 €', cashDiscount: '14,8 %', highlight: false, bullets: [
+      { key: 'silver', name: 'Silver', subtitle: 'Integra tu stock en cualquier web', idealFor: 'Concesionarios con web propia que quieren un buscador de stock potente y con conversión, embebido sin rehacer nada.', icon: 'extension', highlight: false, bullets: [
         'URL con listado de stock para integrar en tu web actual',
         'Buscador, comparativa y favoritos',
         'Fichas con fotos, vídeos, características y CTAs',
@@ -205,9 +192,9 @@ const COPY: Record<LocaleKey, SwCopy> = {
         'Calculadora financiera (precio financiado y cuota)',
         'Integraciones Motorflash: CRM4YOU, MF Message, Gestor de Leads',
         'Adaptable a tipografía y estilos de la web del cliente',
-        'Posibilidad de upgrade a Platinum por 500 €',
+        'Upgrade a Platinum disponible cuando quieras',
       ] },
-      { key: 'unica', name: 'Única', subtitle: 'Web práctica para empezar', setupEur: '—', monthlyEur: '60 €', permanenceMonths: 12, cashEur: '600 €', cashDiscount: '16,7 %', highlight: false, bullets: [
+      { key: 'unica', name: 'Única', subtitle: 'Web práctica para empezar', idealFor: 'Concesionarios que necesitan estar online rápido, con lo esencial para captar leads sin complicarse.', icon: 'rocket_launch', highlight: false, bullets: [
         'Home + listados + fichas estándar',
         'Cita taller y tasación de vehículos',
         'Ubicaciones y horarios, Quiénes somos',
@@ -215,7 +202,7 @@ const COPY: Record<LocaleKey, SwCopy> = {
         'Conversión: contacto general, lead desde ficha, cita taller, tasación',
         'Vinculable a CRM4YOU o CRM externo (email / JSONLEAD)',
         'Sin pasarela de pago, alerta de búsqueda ni renting',
-        'Mínima permanencia, ideal para arrancar',
+        'Permanencia corta, ideal para arrancar',
       ] },
     ],
   },
@@ -226,19 +213,14 @@ const COPY: Record<LocaleKey, SwCopy> = {
     title3: ', en 30 dies, amb tot Motorflash integrat.',
     heroLead: 'Tres nivells segons el teu negoci. SEO, analítica, CMS, passarel·la de pagament, calculadora financera, CRM i Contact Center integrats de fàbrica. Infraestructura 99,9%, SSL, WAF i antiDDoS inclosos.',
     ctaDemo: 'Sol·licita Demo',
-    ctaPrices: 'Veure tarifes',
+    ctaPrices: 'Veure preus',
     tiersEyebrow: '3 PRODUCTES',
     tiersTitle: "Tria el projecte web que encaixa amb tu",
-    tiersLead: "Mateix equip, mateixa infraestructura, mateixes integracions. Diferents abast i permanències perquè entris per on et convingui i creixis quan vulguis.",
-    monthlyLabel: '/mes',
-    setupLabel: 'Set up',
-    permanenceLabel: 'Permanència',
-    permanenceUnit: 'mesos',
-    cashLabel: 'Pagament al comptat',
-    cashDiscountLabel: 'dte.',
+    tiersLead: "Mateix equip, mateixa infraestructura, mateixes integracions. Diferents abast perquè entris per on et convingui i creixis quan vulguis.",
+    idealForLabel: 'Ideal per a',
+    viewPricesLabel: 'Veure preus i tarifes detallades',
     pickTier: 'Demanar',
     recommendedLabel: 'Recomanat',
-    tiersFootnote: 'Els preus són per món/marca. Després dels 24/12 mesos es renova amb IPC. La quota mensual inclou allotjament, manteniment, actualitzacions i mesures de seguretat.',
     integrationsEyebrow: "INTEGRAT AMB TOT L'ECOSISTEMA",
     integrationsTitle: 'La teva web no funciona sola. Va connectada a Motorflash.',
     integrationsLead: "Els leads arriben al CRM. Les trucades al Contact Center. Els xats a MF Message. Sense integradors, sense projectes a mida.",
@@ -331,9 +313,9 @@ const COPY: Record<LocaleKey, SwCopy> = {
     ctaLead: "A la demo t'ensenyem un cas real d'un concessionari de la mateixa mida que el teu, quin tier encaixa millor i quant triga a estar amunt.",
     ctaButton: 'Sol·licitar Demo Personalitzada',
     tiers: [
-      { key: 'platinum', name: 'Platinum', subtitle: 'Web de concessionari completa', setupEur: '800 €', monthlyEur: '420 €', permanenceMonths: 24, cashEur: '9.200 €', cashDiscount: '15,4 %', highlight: true, bullets: [
+      { key: 'platinum', name: 'Platinum', subtitle: 'Web de concessionari completa', idealFor: 'Grups i concessionaris oficials amb VO, VN, rènting i postvenda que volen la seva web insígnia sobre la infraestructura de Motorflash.', icon: 'workspace_premium', highlight: true, bullets: [
         'Tots els departaments: VO, VN, rènting, postvenda, continguts corporatius, taxador de vehicles',
-        'Multi-marca/multi-món (Audi, VW, …)',
+        'Multi-marca / multi-món (Audi, VW…)',
         "Publicació d'estoc VO i VN (DMS, Dealer, Feed XML)",
         'Fitxes premium amb vídeos, passarel·les de pagament i calculadora financera',
         'CMS autogestionable (landings, banners, formularis)',
@@ -341,7 +323,7 @@ const COPY: Record<LocaleKey, SwCopy> = {
         'Dashboard KPIs en temps real',
         'SEO inicial, GA4, formació CMS (3 h), manteniment i allotjament inclosos',
       ] },
-      { key: 'silver', name: 'Silver', subtitle: "Integra el teu estoc a qualsevol web", setupEur: '300 €', monthlyEur: '100 €', permanenceMonths: 24, cashEur: '2.300 €', cashDiscount: '14,8 %', highlight: false, bullets: [
+      { key: 'silver', name: 'Silver', subtitle: "Integra el teu estoc a qualsevol web", idealFor: 'Concessionaris amb web pròpia que volen un cercador de vehicles potent i amb conversió, integrat sense refer res.', icon: 'extension', highlight: false, bullets: [
         "URL amb llistat d'estoc per integrar a la teva web actual",
         'Cercador, comparativa i preferits',
         'Fitxes amb fotos, vídeos, característiques i CTAs',
@@ -349,9 +331,9 @@ const COPY: Record<LocaleKey, SwCopy> = {
         'Calculadora financera (preu finançat i quota)',
         'Integracions Motorflash: CRM4YOU, MF Message, Gestor de Leads',
         'Adaptable a tipografia i estils de la web del client',
-        "Possibilitat d'upgrade a Platinum per 500 €",
+        "Upgrade a Platinum disponible quan vulguis",
       ] },
-      { key: 'unica', name: 'Única', subtitle: 'Web pràctica per començar', setupEur: '—', monthlyEur: '60 €', permanenceMonths: 12, cashEur: '600 €', cashDiscount: '16,7 %', highlight: false, bullets: [
+      { key: 'unica', name: 'Única', subtitle: 'Web pràctica per començar', idealFor: 'Concessionaris que necessiten estar en línia ràpidament, amb l\'essencial per captar leads sense complicar-se.', icon: 'rocket_launch', highlight: false, bullets: [
         'Home + llistats + fitxes estàndard',
         'Cita taller i taxació de vehicles',
         'Ubicacions i horaris, Qui som',
@@ -359,7 +341,7 @@ const COPY: Record<LocaleKey, SwCopy> = {
         'Conversió: contacte general, lead des de fitxa, cita taller, taxació',
         'Vinculable a CRM4YOU o CRM extern (correu / JSONLEAD)',
         'Sense passarel·la de pagament, alerta de cerca ni rènting',
-        'Mínima permanència, ideal per arrencar',
+        'Permanència curta, ideal per arrencar',
       ] },
     ],
   },
@@ -373,16 +355,11 @@ const COPY: Record<LocaleKey, SwCopy> = {
     ctaPrices: 'See pricing',
     tiersEyebrow: '3 PRODUCTS',
     tiersTitle: 'Pick the web project that fits you',
-    tiersLead: "Same team, same infrastructure, same integrations. Different scopes and commitments so you start where it suits you and grow when you want.",
-    monthlyLabel: '/month',
-    setupLabel: 'Set-up',
-    permanenceLabel: 'Commitment',
-    permanenceUnit: 'months',
-    cashLabel: 'Cash payment',
-    cashDiscountLabel: 'discount',
+    tiersLead: "Same team, same infrastructure, same integrations. Different scopes so you start where it suits you and grow when you want.",
+    idealForLabel: 'Ideal for',
+    viewPricesLabel: 'See detailed pricing',
     pickTier: 'Pick',
     recommendedLabel: 'Recommended',
-    tiersFootnote: 'Prices are per world/brand. After 24/12 months they renew with CPI. The monthly fee includes hosting, maintenance, updates and security measures.',
     integrationsEyebrow: 'INTEGRATED WITH THE WHOLE ECOSYSTEM',
     integrationsTitle: "Your website doesn't run alone. It's plugged into Motorflash.",
     integrationsLead: 'Leads land in CRM. Calls in Contact Center. Chats in MF Message. No integrators, no bespoke projects.',
@@ -475,9 +452,9 @@ const COPY: Record<LocaleKey, SwCopy> = {
     ctaLead: "In the demo we'll show a real case from a dealership your size, which tier fits best and how long it takes to be live.",
     ctaButton: 'Request a personalised demo',
     tiers: [
-      { key: 'platinum', name: 'Platinum', subtitle: 'Full dealership website', setupEur: '€800', monthlyEur: '€420', permanenceMonths: 24, cashEur: '€9,200', cashDiscount: '15.4%', highlight: true, bullets: [
+      { key: 'platinum', name: 'Platinum', subtitle: 'Full dealership website', idealFor: 'Groups and official dealers with UV, NV, leasing and after-sales who want their flagship website on top of the Motorflash stack.', icon: 'workspace_premium', highlight: true, bullets: [
         'Every department: UV, NV, leasing, after-sales, corporate content, vehicle appraiser',
-        'Multi-brand/multi-world (Audi, VW, …)',
+        'Multi-brand / multi-world (Audi, VW…)',
         'UV and NV stock publishing (DMS, Dealer, XML feed)',
         'Premium listings with videos, payment gateways and finance calculator',
         'Self-managed CMS (landings, banners, forms)',
@@ -485,7 +462,7 @@ const COPY: Record<LocaleKey, SwCopy> = {
         'Live KPI dashboard',
         'Initial SEO, GA4, CMS training (3h), maintenance and hosting included',
       ] },
-      { key: 'silver', name: 'Silver', subtitle: 'Embed your stock in any website', setupEur: '€300', monthlyEur: '€100', permanenceMonths: 24, cashEur: '€2,300', cashDiscount: '14.8%', highlight: false, bullets: [
+      { key: 'silver', name: 'Silver', subtitle: 'Embed your stock in any website', idealFor: 'Dealers who already have a website and want a powerful stock finder with real conversion — embedded without rebuilding anything.', icon: 'extension', highlight: false, bullets: [
         'URL with the stock listing to embed in your current website',
         'Search, comparison and favourites',
         'Listings with photos, videos, features and CTAs',
@@ -493,9 +470,9 @@ const COPY: Record<LocaleKey, SwCopy> = {
         'Finance calculator (financed price and instalment)',
         'Motorflash integrations: CRM4YOU, MF Message, Lead Manager',
         'Adapts to the typography and styles of the customer website',
-        'Upgrade to Platinum available for €500',
+        'Upgrade to Platinum available whenever you want',
       ] },
-      { key: 'unica', name: 'Única', subtitle: 'Practical starter website', setupEur: '—', monthlyEur: '€60', permanenceMonths: 12, cashEur: '€600', cashDiscount: '16.7%', highlight: false, bullets: [
+      { key: 'unica', name: 'Única', subtitle: 'Practical starter website', idealFor: 'Dealers who need to be online fast, with just what it takes to capture leads without extra complexity.', icon: 'rocket_launch', highlight: false, bullets: [
         'Home + listings + standard listing pages',
         'Workshop appointment and vehicle valuation',
         'Locations and opening hours, About us',
@@ -503,7 +480,7 @@ const COPY: Record<LocaleKey, SwCopy> = {
         'Conversion: general contact, lead from listing, workshop appointment, valuation',
         'Linkable to CRM4YOU or external CRM (email / JSONLEAD)',
         'No payment gateway, search alert or leasing',
-        'Minimum commitment, ideal to start',
+        'Short commitment, ideal to start',
       ] },
     ],
   },
@@ -517,16 +494,11 @@ const COPY: Record<LocaleKey, SwCopy> = {
     ctaPrices: '查看价格',
     tiersEyebrow: '3 种产品',
     tiersTitle: '选择最契合您的网站项目',
-    tiersLead: '相同的团队、相同的基础设施、相同的集成。不同的范围与承诺,让您按需起步并按节奏成长。',
-    monthlyLabel: '/月',
-    setupLabel: '建置',
-    permanenceLabel: '承诺期',
-    permanenceUnit: '个月',
-    cashLabel: '一次性付款',
-    cashDiscountLabel: '折扣',
+    tiersLead: '相同的团队、相同的基础设施、相同的集成。不同的范围,让您按需起步并按节奏成长。',
+    idealForLabel: '适合',
+    viewPricesLabel: '查看详细价格与费率',
     pickTier: '选择',
     recommendedLabel: '推荐',
-    tiersFootnote: '价格按品牌/世界计算。24/12 个月后按 CPI 续约。月费含托管、维护、更新与安全措施。',
     integrationsEyebrow: '与整个生态集成',
     integrationsTitle: '您的网站不孤立运行。它接入 Motorflash。',
     integrationsLead: '潜客进入 CRM。通话进入 Contact Center。聊天进入 MF Message。无需第三方集成、无需定制项目。',
@@ -619,9 +591,9 @@ const COPY: Record<LocaleKey, SwCopy> = {
     ctaLead: '演示中,我们以与您规模相当的经销商真实案例展示哪个档位最契合、上线所需时间。',
     ctaButton: '申请定制演示',
     tiers: [
-      { key: 'platinum', name: 'Platinum', subtitle: '完整经销商网站', setupEur: '800 €', monthlyEur: '420 €', permanenceMonths: 24, cashEur: '9,200 €', cashDiscount: '15.4 %', highlight: true, bullets: [
+      { key: 'platinum', name: 'Platinum', subtitle: '完整经销商网站', idealFor: '集团与官方经销商:涵盖二手、新车、租赁与售后,希望在 Motorflash 基础设施上打造旗舰网站。', icon: 'workspace_premium', highlight: true, bullets: [
         '涵盖所有板块:二手、新车、租赁、售后、企业内容、车辆估值',
-        '多品牌/多体系(Audi、VW……)',
+        '多品牌 / 多体系(Audi、VW……)',
         '二手与新车库存发布(DMS、Dealer、XML feed)',
         '含视频、支付网关与融资计算器的高级详情页',
         '自管 CMS(落地页、横幅、表单)',
@@ -629,7 +601,7 @@ const COPY: Record<LocaleKey, SwCopy> = {
         '实时 KPI 仪表板',
         '初始 SEO、GA4、CMS 培训(3 小时)、维护与托管全包',
       ] },
-      { key: 'silver', name: 'Silver', subtitle: '将您的库存嵌入任意网站', setupEur: '300 €', monthlyEur: '100 €', permanenceMonths: 24, cashEur: '2,300 €', cashDiscount: '14.8 %', highlight: false, bullets: [
+      { key: 'silver', name: 'Silver', subtitle: '将您的库存嵌入任意网站', idealFor: '已有自有网站的经销商:希望嵌入一个强大且高转化的车辆搜索器,无需重做现有站点。', icon: 'extension', highlight: false, bullets: [
         '提供库存列表 URL,可嵌入您的现有网站',
         '搜索、对比与收藏',
         '含照片、视频、参数与 CTA 的详情页',
@@ -637,9 +609,9 @@ const COPY: Record<LocaleKey, SwCopy> = {
         '融资计算器(融资价格与月供)',
         'Motorflash 集成:CRM4YOU、MF Message、潜客管理',
         '适配客户网站的字体与样式',
-        '可加 500 € 升级至 Platinum',
+        '随时可升级至 Platinum',
       ] },
-      { key: 'unica', name: 'Única', subtitle: '入门级的实用网站', setupEur: '—', monthlyEur: '60 €', permanenceMonths: 12, cashEur: '600 €', cashDiscount: '16.7 %', highlight: false, bullets: [
+      { key: 'unica', name: 'Única', subtitle: '入门级的实用网站', idealFor: '需要快速上线的经销商:提供获取潜客所需的最基本功能,不增加复杂度。', icon: 'rocket_launch', highlight: false, bullets: [
         '首页 + 列表 + 标准详情页',
         '维修预约与车辆估值',
         '门店与营业时间、关于我们',
@@ -677,13 +649,13 @@ export async function SolucionesWeb() {
           <p className="text-lg text-on-surface-variant max-w-2xl mx-auto mb-10">{t.heroLead}</p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link href={`/contacto?servicio=${productSlug}`} className="inline-block bg-primary text-white px-8 py-4 rounded-xl font-bold hover:scale-105 transition-transform">{t.ctaDemo}</Link>
-            <a href="#tarifas" className="inline-block border border-outline text-on-surface px-8 py-4 rounded-xl font-bold hover:bg-surface-container-high transition-colors">{t.ctaPrices}</a>
+            <Link href={`/precios/${productSlug}`} className="inline-block border border-outline text-on-surface px-8 py-4 rounded-xl font-bold hover:bg-surface-container-high transition-colors">{t.ctaPrices}</Link>
           </div>
         </div>
       </section>
 
       {/* Tiers */}
-      <section id="tarifas" className="py-24 bg-surface-container-low border-y border-outline-variant">
+      <section id="soluciones" className="py-24 bg-surface-container-low border-y border-outline-variant">
         <div className="mf-container">
           <div className="text-center mb-14 max-w-3xl mx-auto">
             <span className="text-xs font-bold uppercase tracking-widest text-primary block mb-3">{t.tiersEyebrow}</span>
@@ -692,39 +664,66 @@ export async function SolucionesWeb() {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {t.tiers.map((tier) => (
-              <div key={tier.key} className={`relative rounded-3xl border bg-white p-7 flex flex-col ${tier.highlight ? 'border-primary shadow-xl shadow-primary/10' : 'border-outline-variant'}`}>
+              <div
+                key={tier.key}
+                className={`group relative rounded-3xl border bg-white p-8 flex flex-col overflow-hidden transition-all duration-300 hover:-translate-y-1 ${tier.highlight ? 'border-primary shadow-xl shadow-primary/10 hover:shadow-2xl hover:shadow-primary/20' : 'border-outline-variant hover:border-primary/40 hover:shadow-xl'}`}
+              >
                 {tier.highlight && (
-                  <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-primary text-white text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full">{t.recommendedLabel}</span>
+                  <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-primary text-white text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full shadow-md">{t.recommendedLabel}</span>
                 )}
-                <div className="mb-5">
-                  <h3 className="text-2xl font-bold">{tier.name}</h3>
-                  <p className="text-sm text-on-surface-variant">{tier.subtitle}</p>
-                </div>
-                <div className="mb-5 pb-5 border-b border-outline-variant">
-                  <div className="flex items-baseline gap-2">
-                    <span className="text-4xl font-bold">{tier.monthlyEur}</span>
-                    <span className="text-sm text-on-surface-variant">{t.monthlyLabel}</span>
+                <div
+                  aria-hidden
+                  className="absolute -top-20 -right-20 w-44 h-44 rounded-full opacity-[0.07] group-hover:opacity-20 transition-opacity duration-500"
+                  style={{ background: 'radial-gradient(circle, #ff8000, transparent 70%)' }}
+                />
+                <div className="relative mb-6 flex items-start gap-4">
+                  <div
+                    className="w-14 h-14 rounded-2xl flex items-center justify-center flex-shrink-0 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3"
+                    style={{ background: tier.highlight ? 'linear-gradient(135deg, #ff8c1a, #ff7000)' : 'rgba(255,128,0,0.1)' }}
+                  >
+                    <span
+                      className={`material-symbols-outlined ${tier.highlight ? 'text-white' : 'text-primary'}`}
+                      style={{ fontSize: 28 }}
+                    >
+                      {tier.icon}
+                    </span>
                   </div>
-                  <p className="text-xs text-on-surface-variant mt-1">
-                    {t.setupLabel} <strong>{tier.setupEur}</strong> · {t.permanenceLabel} <strong>{tier.permanenceMonths} {t.permanenceUnit}</strong>
-                  </p>
-                  <p className="text-xs text-primary font-bold mt-2">{t.cashLabel}: {tier.cashEur} ({tier.cashDiscount} {t.cashDiscountLabel})</p>
+                  <div className="min-w-0">
+                    <h3 className="text-2xl font-bold leading-tight">{tier.name}</h3>
+                    <p className="text-sm text-on-surface-variant leading-snug">{tier.subtitle}</p>
+                  </div>
                 </div>
-                <ul className="space-y-2.5 mb-6 flex-1">
+                <div className="relative mb-5 pb-5 border-b border-outline-variant">
+                  <p className="text-[10px] uppercase tracking-widest text-primary font-bold mb-1.5">{t.idealForLabel}</p>
+                  <p className="text-sm leading-relaxed text-on-surface">{tier.idealFor}</p>
+                </div>
+                <ul className="relative space-y-2.5 mb-6 flex-1">
                   {tier.bullets.map((b) => (
                     <li key={b} className="flex gap-2 text-sm">
-                      <span className="material-symbols-outlined text-primary shrink-0" style={{ fontSize: 18 }}>check</span>
+                      <span className="material-symbols-outlined text-primary shrink-0 mt-0.5" style={{ fontSize: 18 }}>check</span>
                       <span>{b}</span>
                     </li>
                   ))}
                 </ul>
-                <Link href={`/contacto?servicio=${productSlug}&tier=${tier.key}`} className={`inline-block w-full text-center px-6 py-3 rounded-xl text-sm font-bold transition-colors ${tier.highlight ? 'bg-primary text-white hover:opacity-90' : 'border border-outline text-on-surface hover:bg-surface-container'}`}>
+                <Link
+                  href={`/contacto?servicio=${productSlug}&tier=${tier.key}`}
+                  className={`relative inline-flex items-center justify-center gap-1.5 w-full text-center px-6 py-3 rounded-xl text-sm font-bold transition-all ${tier.highlight ? 'bg-primary text-white hover:opacity-90 hover:gap-3' : 'border border-outline text-on-surface hover:bg-primary hover:text-white hover:border-primary hover:gap-3'}`}
+                >
                   {t.pickTier} {tier.name}
+                  <span className="material-symbols-outlined transition-transform group-hover:translate-x-0.5" style={{ fontSize: 18 }}>arrow_forward</span>
                 </Link>
               </div>
             ))}
           </div>
-          <p className="text-xs text-on-surface-variant text-center mt-6 opacity-70">{t.tiersFootnote}</p>
+          <div className="text-center mt-10">
+            <Link
+              href={`/precios/${productSlug}`}
+              className="inline-flex items-center gap-2 text-sm font-semibold text-primary hover:gap-3 transition-all"
+            >
+              {t.viewPricesLabel}
+              <span className="material-symbols-outlined" style={{ fontSize: 18 }}>arrow_forward</span>
+            </Link>
+          </div>
         </div>
       </section>
 
