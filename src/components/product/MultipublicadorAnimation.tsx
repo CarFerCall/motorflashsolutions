@@ -11,6 +11,7 @@ const PORTALS = [
   { id: 'wallapop', label: 'Wallapop', logo: '/images/portals/wallapop.webp' },
   { id: 'autocasion', label: 'Autocasión', logo: '/images/portals/autocasion.png' },
   { id: 'cochescom', label: 'Coches.com', logo: '/images/portals/cochescom.webp' },
+  { id: 'googleads', label: 'Google Ads / Merchant', logo: '/images/portals/googleads.png' },
   { id: 'motorflash', label: 'Motorflash.com', logo: '/images/portals/motorflash.png' },
 ]
 
@@ -56,7 +57,7 @@ export async function MultipublicadorAnimation() {
             </div>
           </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-7 gap-2.5 md:gap-3">
+          <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-2.5 md:gap-3">
             {PORTALS.map((p) => (
               <div
                 key={p.id}
