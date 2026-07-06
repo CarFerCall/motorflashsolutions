@@ -48,10 +48,11 @@ export default function middleware(request: NextRequest) {
     return NextResponse.next()
   }
 
-  // Deploy público: bloquear /admin y /api con un 404 silencioso. No
-  // damos hint de que existen.
+  // Deploy público: /admin y /api pasan al handler nativo (sin
+  // bloqueo). El bloqueo se reactivará cuando el proyecto admin
+  // separado esté listo y verificado.
   if (isAdminOrApi(pathname)) {
-    return new NextResponse('Not Found', { status: 404 })
+    return NextResponse.next()
   }
 
   // Chino oculto temporalmente: /zh y /zh/* redirigen al español.
