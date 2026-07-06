@@ -105,7 +105,7 @@ export function LanguageSwitcher({ fullWidth = false }: Props) {
             fullWidth ? 'left-0 right-0' : 'right-0'
           }`}
         >
-          {routing.locales.map((code) => {
+          {routing.locales.filter((code) => code !== 'zh').map((code) => {
             const meta = LOCALE_META[code]
             const active = code === locale
             return (

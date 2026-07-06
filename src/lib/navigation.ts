@@ -35,12 +35,27 @@ export interface MainMenuData {
 
 export type MenuLocale = 'es' | 'ca' | 'en' | 'zh'
 
+// URLs que ocultamos temporalmente del menú público (siguen accesibles
+// por URL directa para revisión interna). Cuando la sección esté lista
+// para publicar, se quita de este set.
+const HIDDEN_URLS = new Set<string>(['/precios'])
+
+function filterHiddenItems(items: MenuItem[]): MenuItem[] {
+  return items
+    .filter((it) => !(it.url && HIDDEN_URLS.has(it.url)))
+    .map((it) => ({
+      ...it,
+      children: it.children?.filter((c) => !HIDDEN_URLS.has(c.url)),
+    }))
+}
+
 export const getMainMenu = cache(async (): Promise<MainMenuData> => {
   try {
     const payload = await getPayloadClient()
     const data = (await payload.findGlobal({ slug: 'main-menu' as any })) as any
+    const rawItems = Array.isArray(data?.items) ? data.items : []
     return {
-      items: Array.isArray(data?.items) ? data.items : [],
+      items: filterHiddenItems(rawItems),
       cta: data?.cta ?? null,
     }
   } catch {

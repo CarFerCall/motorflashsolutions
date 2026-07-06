@@ -46,7 +46,7 @@ export async function Footer() {
             <ul className="space-y-3 text-sm text-on-surface-variant">
               <li><Link href="/compania" className="hover:text-primary transition-colors">{t.aboutUs}</Link></li>
               <li><Link href="/historias-de-exito" className="hover:text-primary transition-colors">{t.successStories}</Link></li>
-              <li><Link href="/precios" className="hover:text-primary transition-colors">{t.pricing}</Link></li>
+              {/* Enlace a /precios oculto temporalmente — la página sigue accesible por URL directa. */}
               <li><Link href="/contacto" className="hover:text-primary transition-colors">{t.contact}</Link></li>
             </ul>
           </div>
