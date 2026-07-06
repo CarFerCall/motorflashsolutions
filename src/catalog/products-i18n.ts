@@ -107,11 +107,11 @@ export const productI18n: Record<ProductLocale, Record<string, ProductTranslatio
       intro: 'Plataforma integral pensada per a fabricants que necessiten coordinar la seva xarxa de concessionaris, unificar la qualitat de publicació i obtenir mètriques consolidades a nivell de marca.',
     },
     'motorflash-connect': {
-      name: 'MotorFlash Connect',
-      menuLabel: 'MotorFlash Connect',
+      name: 'Fleet Manager',
+      menuLabel: 'Fleet Manager',
       tagline: 'Vídeos IA personalitzats per retenir clients de rènting.',
       heroTitle: 'Converteix cada final de contracte de rènting en una nova venda',
-      intro: 'MotorFlash Connect genera i envia vídeos comercials personalitzats amb IA a cada client el rènting del qual està a punt de finalitzar. El client rep una peça única amb el seu nom, el seu cotxe actual i fins a 5 propostes reals per renovar, canviar o quedar-se el vehicle. El teu equip tanca vendes amb zero treball manual.',
+      intro: 'Fleet Manager genera i envia vídeos comercials personalitzats amb IA a cada client el rènting del qual està a punt de finalitzar. El client rep una peça única amb el seu nom, el seu cotxe actual i fins a 5 propostes reals per renovar, canviar o quedar-se el vehicle. El teu equip tanca vendes amb zero treball manual.',
     },
     apex: {
       name: 'Apex by Motorflash Solutions',
@@ -214,11 +214,11 @@ export const productI18n: Record<ProductLocale, Record<string, ProductTranslatio
       intro: 'End-to-end platform built for manufacturers that need to coordinate their dealer network, standardise listing quality and obtain consolidated brand-level metrics.',
     },
     'motorflash-connect': {
-      name: 'MotorFlash Connect',
-      menuLabel: 'MotorFlash Connect',
+      name: 'Fleet Manager',
+      menuLabel: 'Fleet Manager',
       tagline: 'Personalised AI videos to retain leasing customers.',
       heroTitle: 'Turn every end of leasing contract into a new sale',
-      intro: 'MotorFlash Connect generates and sends personalised AI sales videos to every customer whose leasing is about to end. The customer receives a unique piece with their name, current car and up to 5 real proposals to renew, switch or keep the vehicle. Your team closes sales with zero manual work.',
+      intro: 'Fleet Manager generates and sends personalised AI sales videos to every customer whose leasing is about to end. The customer receives a unique piece with their name, current car and up to 5 real proposals to renew, switch or keep the vehicle. Your team closes sales with zero manual work.',
     },
     apex: {
       name: 'Apex by Motorflash Solutions',
@@ -321,11 +321,11 @@ export const productI18n: Record<ProductLocale, Record<string, ProductTranslatio
       intro: '为需要协调经销网络、统一发布质量、获取品牌层面整合指标的主机厂而生的完整平台。',
     },
     'motorflash-connect': {
-      name: 'MotorFlash 互联',
-      menuLabel: 'MotorFlash 互联',
+      name: 'Fleet Manager',
+      menuLabel: 'Fleet Manager',
       tagline: '留住租赁客户的个性化 AI 视频。',
       heroTitle: '把每一次租赁合同到期转化为新一笔成交',
-      intro: 'MotorFlash Connect 为每位即将合同到期的租赁客户生成并发送个性化 AI 销售视频。客户收到含其姓名、当前车辆与最多 5 个真实方案(续约、换车或买断)的独一无二的作品。您的团队零手工即可成交。',
+      intro: 'Fleet Manager 为每位即将合同到期的租赁客户生成并发送个性化 AI 销售视频。客户收到含其姓名、当前车辆与最多 5 个真实方案(续约、换车或买断)的独一无二的作品。您的团队零手工即可成交。',
     },
     apex: {
       name: 'Apex 一体化套件',

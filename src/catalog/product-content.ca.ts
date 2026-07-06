@@ -724,7 +724,7 @@ export const productContent: Record<string, ProductContent> = {
       {
         type: 'highlights',
         title: 'Quan acaba el rènting, perds el client. I la competència ja l\'està trucant.',
-        lead: "Cada any, milers de clients acaben el seu contracte sense renovar perquè no han rebut una proposta personalitzada a temps. El teu equip no arriba a tots. Els teus correus massius s'ignoren. MotorFlash Connect converteix aquest final de contracte en una nova venda, automàticament, amb un vídeo únic per client.",
+        lead: "Cada any, milers de clients acaben el seu contracte sense renovar perquè no han rebut una proposta personalitzada a temps. El teu equip no arriba a tots. Els teus correus massius s'ignoren. Fleet Manager converteix aquest final de contracte en una nova venda, automàticament, amb un vídeo únic per client.",
         highlights: [
           { title: '100%', description: 'De la teva cartera contactada amb vídeo personalitzat' },
           { title: '×5', description: 'Taxa de resposta vs. correu comercial tradicional' },
@@ -763,7 +763,7 @@ export const productContent: Record<string, ProductContent> = {
       {
         type: 'features',
         title: 'Més enllà del final de rènting: motor de campanyes tot l\'any',
-        lead: "A més del flux de final de contracte, MotorFlash Connect inclou un motor per enviar vídeos personalitzats en qualsevol moment de l'any. Dissenyes la campanya un cop i la plataforma la dispara automàticament, personalitzada per a cada client.",
+        lead: "A més del flux de final de contracte, Fleet Manager inclou un motor per enviar vídeos personalitzats en qualsevol moment de l'any. Dissenyes la campanya un cop i la plataforma la dispara automàticament, personalitzada per a cada client.",
         items: [
           { title: 'Campanyes estacionals', description: "Pneumàtics d'hivern, revisió ITV, canvi d'oli, assegurança a renovar. Vídeos automàtics a la data justa per a cada client.", icon: 'event_repeat' },
           { title: 'Campanyes de data fixa', description: 'Black Friday, llançament d\'un model nou, final d\'any fiscal. Defineixes data i audiència, la plataforma envia a tothom amb el seu nom i dades.', icon: 'calendar_month' },

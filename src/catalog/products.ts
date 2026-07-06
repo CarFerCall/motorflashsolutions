@@ -165,13 +165,13 @@ export const products: Product[] = [
   },
   {
     slug: 'motorflash-connect',
-    name: 'MotorFlash Connect',
-    menuLabel: 'MotorFlash Connect',
+    name: 'Fleet Manager',
+    menuLabel: 'Fleet Manager',
     menuOrder: 135,
     tagline: 'Vídeos IA personalizados para retener clientes de renting.',
     heroTitle: 'Convierte cada fin de contrato de renting en una nueva venta',
     intro:
-      'MotorFlash Connect genera y envía vídeos comerciales personalizados con IA a cada cliente cuyo renting está a punto de finalizar. El cliente recibe una pieza única con su nombre, su coche actual y hasta 5 propuestas reales para renovar, cambiar o quedarse el vehículo. Tu equipo cierra ventas con cero trabajo manual.',
+      'Fleet Manager genera y envía vídeos comerciales personalizados con IA a cada cliente cuyo renting está a punto de finalizar. El cliente recibe una pieza única con su nombre, su coche actual y hasta 5 propuestas reales para renovar, cambiar o quedarse el vehículo. Tu equipo cierra ventas con cero trabajo manual.',
     icon: 'autorenew',
   },
   {

@@ -724,7 +724,7 @@ export const productContent: Record<string, ProductContent> = {
       {
         type: 'highlights',
         title: "When the leasing ends, you lose the customer. And the competition is already calling them.",
-        lead: "Every year, thousands of customers end their contract without renewing because they didn't receive a personalised proposal in time. Your team can't reach everyone. Mass emails get ignored. MotorFlash Connect turns that contract end into a new sale, automatically, with a unique video per customer.",
+        lead: "Every year, thousands of customers end their contract without renewing because they didn't receive a personalised proposal in time. Your team can't reach everyone. Mass emails get ignored. Fleet Manager turns that contract end into a new sale, automatically, with a unique video per customer.",
         highlights: [
           { title: '100%', description: 'Of your portfolio contacted with a personalised video' },
           { title: '×5', description: 'Response rate vs traditional sales email' },
@@ -763,7 +763,7 @@ export const productContent: Record<string, ProductContent> = {
       {
         type: 'features',
         title: 'Beyond leasing end: a campaign engine all year round',
-        lead: 'On top of the contract-end flow, MotorFlash Connect includes an engine to send personalised videos at any point in the year. You design the campaign once and the platform fires it automatically, personalised for each customer.',
+        lead: 'On top of the contract-end flow, Fleet Manager includes an engine to send personalised videos at any point in the year. You design the campaign once and the platform fires it automatically, personalised for each customer.',
         items: [
           { title: 'Seasonal campaigns', description: 'Winter tyres, MOT/ITV inspection, oil change, insurance renewal. Automatic videos on the right date for each customer.', icon: 'event_repeat' },
           { title: 'Fixed-date campaigns', description: 'Black Friday, new model launch, fiscal year end. You set the date and audience, the platform sends with each customer\'s name and data.', icon: 'calendar_month' },

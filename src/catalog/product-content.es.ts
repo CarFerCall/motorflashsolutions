@@ -725,7 +725,7 @@ export const productContent: Record<string, ProductContent> = {
       {
         type: 'highlights',
         title: 'Cuando termina el renting, pierdes al cliente. Y la competencia ya le está llamando.',
-        lead: 'Cada año, miles de clientes terminan su contrato sin renovar porque no han recibido una propuesta personalizada a tiempo. Tu equipo no llega a todos. Tus emails masivos se ignoran. MotorFlash Connect convierte ese final de contrato en una nueva venta, automáticamente, con un vídeo único por cliente.',
+        lead: 'Cada año, miles de clientes terminan su contrato sin renovar porque no han recibido una propuesta personalizada a tiempo. Tu equipo no llega a todos. Tus emails masivos se ignoran. Fleet Manager convierte ese final de contrato en una nueva venta, automáticamente, con un vídeo único por cliente.',
         highlights: [
           { title: '100%', description: 'De tu cartera contactada con vídeo personalizado' },
           { title: '×5', description: 'Tasa de respuesta vs. email comercial tradicional' },
@@ -764,7 +764,7 @@ export const productContent: Record<string, ProductContent> = {
       {
         type: 'features',
         title: 'Más allá del fin de renting: motor de campañas todo el año',
-        lead: 'Además del flujo de fin de contrato, MotorFlash Connect incluye un motor para enviar vídeos personalizados en cualquier momento del año. Diseñas la campaña una vez y la plataforma la dispara automáticamente, personalizada para cada cliente.',
+        lead: 'Además del flujo de fin de contrato, Fleet Manager incluye un motor para enviar vídeos personalizados en cualquier momento del año. Diseñas la campaña una vez y la plataforma la dispara automáticamente, personalizada para cada cliente.',
         items: [
           { title: 'Campañas estacionales', description: 'Neumáticos de invierno, revisión ITV, cambio de aceite, seguro a renovar. Vídeos automáticos en la fecha justa para cada cliente.', icon: 'event_repeat' },
           { title: 'Campañas de fecha fija', description: 'Black Friday, lanzamiento de un modelo nuevo, fin de año fiscal. Defines fecha y audiencia, la plataforma envía a todos con su nombre y datos.', icon: 'calendar_month' },

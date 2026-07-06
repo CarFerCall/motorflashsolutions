@@ -723,7 +723,7 @@ export const productContent: Record<string, ProductContent> = {
       {
         type: 'highlights',
         title: '租赁结束时,您失去了客户。竞争对手已经在打他们的电话。',
-        lead: '每年都有数千名客户在合同到期时未续约,只因没能及时收到个性化方案。您的团队覆盖不到所有人;群发邮件被忽略。MotorFlash Connect 自动将合同终点转化为新一笔成交,且每位客户都收到唯一的视频。',
+        lead: '每年都有数千名客户在合同到期时未续约,只因没能及时收到个性化方案。您的团队覆盖不到所有人;群发邮件被忽略。Fleet Manager 自动将合同终点转化为新一笔成交,且每位客户都收到唯一的视频。',
         highlights: [
           { title: '100%', description: '您的客户群均通过个性化视频触达' },
           { title: '×5', description: '相较传统销售邮件的回复率' },
@@ -762,7 +762,7 @@ export const productContent: Record<string, ProductContent> = {
       {
         type: 'features',
         title: '不仅是租赁结束:全年通用的活动引擎',
-        lead: '除合同结束流程外,MotorFlash Connect 还提供随时发送个性化视频的引擎。您一次设计活动,平台自动按每位客户个性化触发。',
+        lead: '除合同结束流程外,Fleet Manager 还提供随时发送个性化视频的引擎。您一次设计活动,平台自动按每位客户个性化触发。',
         items: [
           { title: '季节性活动', description: '冬季轮胎、ITV/年检、机油更换、保险续保。AI 在合适日期为每位客户自动发送视频。', icon: 'event_repeat' },
           { title: '固定日期活动', description: '黑五、新车上市、财年末。定义日期与受众,平台为每位客户附上其姓名与数据进行发送。', icon: 'calendar_month' },

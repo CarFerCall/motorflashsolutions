@@ -200,7 +200,7 @@ try {
     },
     {
       productSlug: 'motorflash-connect',
-      productName: 'MotorFlash Connect',
+      productName: 'Fleet Manager',
       basePriceCents: 49900,
       items: [
         { itemKey: 'contratos_mes', label: 'Vídeos generados al mes', helpText: 'Cantidad de vídeos personalizados que envías mensualmente.', type: 'number', unitPriceCents: 200, required: true, numberMin: 100, numberMax: 5000, numberDefault: 250, numberUnit: 'vídeo' },
@@ -646,7 +646,7 @@ try {
     if (existingPlan) {
       // Si el nombre comercial en BD no coincide con el seed, lo
       // sincronizamos sin tocar precio ni items. Sirve para rebrandings
-      // (p. ej. "MotorFlash Renting" → "MotorFlash Connect").
+      // (p. ej. "MotorFlash Renting" → "Fleet Manager").
       if (existingPlan.productName !== plan.productName) {
         try {
           await payload.update({
@@ -752,7 +752,7 @@ try {
                 { label: 'Photocall IA', url: '/servicios/spyne', icon: 'photo_camera' },
                 { label: 'WhatsApp Business', url: '/servicios/motorflash-message', icon: 'chat' },
                 { label: 'Motorflash IA', url: '/servicios/ia', icon: 'psychology' },
-                { label: 'MotorFlash Connect', url: '/servicios/motorflash-connect', icon: 'autorenew' },
+                { label: 'Fleet Manager', url: '/servicios/motorflash-connect', icon: 'autorenew' },
                 { label: 'Lead Exclusive', url: '/servicios/lead-factory', icon: 'star' },
                 { label: 'Ver catálogo completo', url: '/servicios', icon: 'arrow_forward' },
               ],
@@ -770,7 +770,7 @@ try {
       // Migración idempotente:
       //  1. Si algún sub-link aún apunta a la URL vieja
       //     /servicios/motorflash-renting, lo actualizamos a la nueva.
-      //  2. Si no existe MotorFlash Connect en el dropdown de Servicios,
+      //  2. Si no existe Fleet Manager en el dropdown de Servicios,
       //     lo añadimos justo antes de Lead Exclusive.
       //  3. Si no existe el item "Ecosistema técnico" en el nivel raíz,
       //     lo añadimos justo antes de "Precios".
@@ -796,7 +796,7 @@ try {
         for (const c of item.children) {
           if (c.url === '/servicios/motorflash-renting') {
             c.url = '/servicios/motorflash-connect'
-            c.label = 'MotorFlash Connect'
+            c.label = 'Fleet Manager'
             c.icon = c.icon || 'autorenew'
             touched = true
             console.log('[sync-schema] ↻ menú: URL motorflash-renting → motorflash-connect')
@@ -809,7 +809,7 @@ try {
         const leadIdx = item.children.findIndex((c) => c.url === '/servicios/lead-factory')
         const insertAt = leadIdx >= 0 ? leadIdx : item.children.length
         item.children.splice(insertAt, 0, {
-          label: 'MotorFlash Connect',
+          label: 'Fleet Manager',
           url: '/servicios/motorflash-connect',
           icon: 'autorenew',
         })
@@ -897,7 +897,7 @@ try {
       'Clasificados (Motorflash.com)': { ca: 'Classificats (Motorflash.com)', en: 'Classifieds (Motorflash.com)', zh: '分类信息(Motorflash.com)' },
       'Lead Exclusive': { ca: 'Lead Exclusive', en: 'Lead Exclusive', zh: '独家潜客(Lead Exclusive)' },
       'Lead Exclusive (5 Estrellas)': { ca: 'Lead Exclusive (5 Estrelles)', en: 'Lead Exclusive (5-Star)', zh: '独家潜客(5 星)' },
-      'MotorFlash Connect': { ca: 'MotorFlash Connect', en: 'MotorFlash Connect', zh: 'MotorFlash 互联' },
+      'Fleet Manager': { ca: 'Fleet Manager', en: 'Fleet Manager', zh: 'Fleet Manager' },
       'Soluciones para Fabricantes': { ca: 'Solucions per a Fabricants', en: 'Manufacturer Solutions', zh: '主机厂解决方案' },
       'Apex (Todo en uno)': { ca: 'Apex (Tot en un)', en: 'Apex (All-in-one)', zh: 'Apex(一体化)' },
       'Ver catálogo completo': { ca: 'Veure el catàleg complet', en: 'View full catalogue', zh: '查看完整目录' },
@@ -1117,6 +1117,32 @@ try {
     console.log(`[sync-schema] catálogo: ${createdProducts} productos creados, ${touchedProducts} traducciones aplicadas`)
   } catch (err) {
     console.warn('[sync-schema] ✗ seed catálogo:', err?.message || err)
+  }
+
+  // -------------------------------------------------------------------
+  // Migración de nombres de producto: "MotorFlash Connect" → "Fleet Manager".
+  // El slug 'motorflash-connect' se mantiene (para no romper URLs);
+  // solo cambia el nombre visible en los 4 locales. Idempotente.
+  // -------------------------------------------------------------------
+  try {
+    const isPg = /^postgres(ql)?:\/\//i.test(
+      process.env.POSTGRES_URL || process.env.DATABASE_URL || process.env.PRISMA_DATABASE_URL || '',
+    )
+    if (isPg && payload.db?.drizzle) {
+      const { sql } = await import('drizzle-orm')
+      const res = await payload.db.drizzle.execute(sql.raw(`
+        UPDATE products_locales
+        SET name = REPLACE(REPLACE(name, 'MotorFlash Connect', 'Fleet Manager'), 'Motorflash Connect', 'Fleet Manager'),
+            menu_label = REPLACE(REPLACE(menu_label, 'MotorFlash Connect', 'Fleet Manager'), 'Motorflash Connect', 'Fleet Manager'),
+            tagline = REPLACE(REPLACE(tagline, 'MotorFlash Connect', 'Fleet Manager'), 'Motorflash Connect', 'Fleet Manager'),
+            hero_title = REPLACE(REPLACE(hero_title, 'MotorFlash Connect', 'Fleet Manager'), 'Motorflash Connect', 'Fleet Manager'),
+            intro = REPLACE(REPLACE(intro, 'MotorFlash Connect', 'Fleet Manager'), 'Motorflash Connect', 'Fleet Manager')
+        WHERE _parent_id IN (SELECT id FROM products WHERE slug = 'motorflash-connect')
+      `))
+      console.log(`[sync-schema] migración Fleet Manager: ${res?.rowCount ?? '?'} filas actualizadas`)
+    }
+  } catch (err) {
+    console.warn('[sync-schema] ✗ migración Fleet Manager:', err?.message || err)
   }
 
   // -------------------------------------------------------------------

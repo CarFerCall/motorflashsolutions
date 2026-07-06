@@ -96,7 +96,7 @@ const MENU_LABEL_DICT: Record<string, { ca: string; en: string; zh: string }> = 
   'Clasificados (Motorflash.com)': { ca: 'Classificats (Motorflash.com)', en: 'Classifieds (Motorflash.com)', zh: '分类信息(Motorflash.com)' },
   'Lead Exclusive': { ca: 'Lead Exclusive', en: 'Lead Exclusive', zh: '独家潜客(Lead Exclusive)' },
   'Lead Exclusive (5 Estrellas)': { ca: 'Lead Exclusive (5 Estrelles)', en: 'Lead Exclusive (5-Star)', zh: '独家潜客(5 星)' },
-  'MotorFlash Connect': { ca: 'MotorFlash Connect', en: 'MotorFlash Connect', zh: 'MotorFlash 互联' },
+  'Fleet Manager': { ca: 'Fleet Manager', en: 'Fleet Manager', zh: 'Fleet Manager' },
   'Soluciones para Fabricantes': { ca: 'Solucions per a Fabricants', en: 'Manufacturer Solutions', zh: '主机厂解决方案' },
   'Apex (Todo en uno)': { ca: 'Apex (Tot en un)', en: 'Apex (All-in-one)', zh: 'Apex(一体化)' },
   'Ver catálogo completo': { ca: 'Veure el catàleg complet', en: 'View full catalogue', zh: '查看完整目录' },
