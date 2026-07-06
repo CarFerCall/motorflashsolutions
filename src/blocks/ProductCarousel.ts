@@ -1,7 +1,7 @@
 import type { Block } from 'payload'
 
 const productSlugs = [
-  'dealer', 'exportaciones', 'crm4you', 'contact-center', 'spyne',
+  'dealer', 'crm4you', 'contact-center', 'spyne',
   'motorflash-message', 'motorchat', 'ia',
   'soluciones-web', 'marketing-digital',
   'lead-factory', 'soluciones-fabricantes', 'motorflash-connect', 'apex',

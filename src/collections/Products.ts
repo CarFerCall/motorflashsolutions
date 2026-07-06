@@ -19,7 +19,6 @@ import type { CollectionConfig } from 'payload'
  */
 const PRODUCT_SLUGS = [
   'dealer',
-  'exportaciones',
   'crm4you',
   'contact-center',
   'spyne',

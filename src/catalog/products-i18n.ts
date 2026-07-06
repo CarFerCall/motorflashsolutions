@@ -16,18 +16,11 @@ export const productI18n: Record<ProductLocale, Record<string, ProductTranslatio
   es: {},
   ca: {
     dealer: {
-      name: 'Dealer',
-      menuLabel: 'Dealer / Estoc',
-      tagline: 'Gestió intel·ligent del VO de principi a fi.',
-      heroTitle: 'El teu estoc sempre sota control, des de la creació fins a la venda',
-      intro: "Dealer és la plataforma de gestió intel·ligent del VO dissenyada per treballar amb grans i petits volums d'estoc. Crea, revisa i publica el teu estoc des d'un únic entorn. Controla la qualitat, analitza preus i millora l'eficiència de tot el procés.",
-    },
-    exportaciones: {
-      name: 'Multipublicador',
-      menuLabel: 'Multipublicador',
-      tagline: 'Publica un cop, apareix a tots els portals.',
-      heroTitle: 'Publica el teu estoc amb un sol clic. Màxima visibilitat.',
-      intro: 'Publica a Coches.net, Autocasión, AutoScout24, Wallapop i més, amb un 99% d\'integració API amb els principals portals. Mantén el teu estoc actualitzat i guanya temps per al que importa: vendre.',
+      name: 'Dealer + Multipublicació',
+      menuLabel: 'Dealer + Multipublicació',
+      tagline: "Gestió intel·ligent del VO i multipublicació a +16 portals.",
+      heroTitle: 'El teu estoc sempre sota control, publicat a tots els portals',
+      intro: "Dealer + Multipublicació unifica la gestió intel·ligent del VO i la publicació multi-portal en una sola plataforma. Crea, revisa i publica el teu estoc des d'un únic entorn amb un 99% d'integració API amb els principals portals: Coches.net, AutoScout24, Wallapop, Autocasión, Motorflash i molts més. Controla la qualitat, analitza preus, exporta a tots els portals amb un clic i guanya temps per al que importa: vendre.",
     },
     crm4you: {
       name: 'CRM4YOU',
@@ -116,18 +109,11 @@ export const productI18n: Record<ProductLocale, Record<string, ProductTranslatio
   },
   en: {
     dealer: {
-      name: 'Dealer',
-      menuLabel: 'Dealer / Stock',
-      tagline: 'End-to-end smart used-vehicle management.',
-      heroTitle: 'Your stock always under control, from creation to sale',
-      intro: "Dealer is the smart used-vehicle management platform built for large and small stock volumes. Create, review and publish your stock from a single environment. Keep quality under control, analyse prices and improve the efficiency of the whole process.",
-    },
-    exportaciones: {
-      name: 'Multipublisher',
-      menuLabel: 'Multipublisher',
-      tagline: 'Publish once, appear on every portal.',
-      heroTitle: 'Publish your stock in one click. Maximum visibility.',
-      intro: 'Publish on Coches.net, Autocasión, AutoScout24, Wallapop and more with 99% API integration with the main portals. Keep your stock up to date and gain time for what matters: selling.',
+      name: 'Dealer + Multi-publishing',
+      menuLabel: 'Dealer + Multi-publishing',
+      tagline: 'Smart used-vehicle management and multi-publishing on 16+ portals.',
+      heroTitle: 'Your stock always under control, published on every portal',
+      intro: "Dealer + Multi-publishing unifies smart used-vehicle management and multi-portal publishing in a single platform. Create, review and publish your stock from one environment with 99% API integration on the leading portals: Coches.net, AutoScout24, Wallapop, Autocasión, Motorflash and many more. Keep quality under control, analyse prices, export to every portal with one click and gain time for what matters: selling.",
     },
     crm4you: {
       name: 'CRM4YOU',
@@ -216,18 +202,11 @@ export const productI18n: Record<ProductLocale, Record<string, ProductTranslatio
   },
   zh: {
     dealer: {
-      name: '经销商库存(Dealer)',
-      menuLabel: '经销商库存(Dealer)',
-      tagline: '端到端的智能二手车管理。',
-      heroTitle: '从入库到成交,库存始终掌控',
-      intro: 'Dealer 是面向大小库存的智能二手车管理平台。在统一环境中创建、审核与发布库存。掌控质量、分析价格,提升整个流程的效率。',
-    },
-    exportaciones: {
-      name: '多平台发布器',
-      menuLabel: '多平台发布器',
-      tagline: '一次发布,全部门户上线。',
-      heroTitle: '一键发布库存。最大化曝光。',
-      intro: '在 Coches.net、Autocasión、AutoScout24、Wallapop 等门户发布,与主流门户达成 99% API 集成。库存始终保持最新,把时间留给真正重要的事情:卖车。',
+      name: 'Dealer + 多平台发布',
+      menuLabel: 'Dealer + 多平台发布',
+      tagline: '智能二手车管理与 16+ 门户多平台发布。',
+      heroTitle: '库存始终掌控,并已发布至所有门户',
+      intro: 'Dealer + 多平台发布 将二手车智能管理与多门户发布集中在一个平台。在统一环境中创建、审核与发布库存,与主要门户达成 99% API 集成:Coches.net、AutoScout24、Wallapop、Autocasión、Motorflash 等。掌控质量、分析价格、一键发布至所有门户,把时间留给真正重要的事:卖车。',
     },
     crm4you: {
       name: 'CRM4YOU',

@@ -20,25 +20,14 @@ export interface Product {
 export const products: Product[] = [
   {
     slug: 'dealer',
-    name: 'Dealer',
-    menuLabel: 'Dealer / Stock',
+    name: 'Dealer + Multipublicación',
+    menuLabel: 'Dealer + Multipublicación',
     menuOrder: 10,
-    tagline: 'Gestión inteligente del VO de principio a fin.',
-    heroTitle: 'Tu stock siempre bajo control, desde la creación hasta la venta',
+    tagline: 'Gestión inteligente del VO y multipublicación en +16 portales.',
+    heroTitle: 'Tu stock siempre bajo control, publicado en todos los portales',
     intro:
-      'Dealer es la plataforma de gestión inteligente del VO diseñada para trabajar con grandes y pequeños volúmenes de stock. Crea, revisa y publica tu stock desde un único entorno. Controla la calidad, analiza precios y mejora la eficiencia de todo el proceso.',
-    icon: 'inventory_2',
-  },
-  {
-    slug: 'exportaciones',
-    name: 'Multipublicador',
-    menuLabel: 'Multipublicador',
-    menuOrder: 20,
-    tagline: 'Publica una vez, aparece en todos los portales.',
-    heroTitle: 'Publica tu stock en un solo clic. Máxima visibilidad.',
-    intro:
-      'Publica en Coches.net, Autocasión, AutoScout24, Wallapop y más, con un 99 % de integración API con los principales portales. Mantén tu stock actualizado y gana tiempo para lo que importa: vender.',
-    icon: 'dynamic_feed',
+      'Dealer + Multipublicación unifica la gestión inteligente del VO y la publicación multi-portal en una sola plataforma. Crea, revisa y publica tu stock desde un único entorno con un 99 % de integración API con los principales portales: Coches.net, AutoScout24, Wallapop, Autocasión, Motorflash y muchos más. Controla la calidad, analiza precios, exporta a todos los portales con un clic y gana tiempo para lo que importa: vender.',
+    icon: 'hub',
   },
   {
     slug: 'crm4you',

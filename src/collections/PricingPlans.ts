@@ -2,7 +2,6 @@ import type { CollectionConfig } from 'payload'
 
 const productSlugs = [
   'dealer',
-  'exportaciones',
   'crm4you',
   'contact-center',
   'spyne',

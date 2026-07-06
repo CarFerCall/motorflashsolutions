@@ -32,7 +32,7 @@ try {
   const url = process.env.POSTGRES_URL || process.env.DATABASE_URL || process.env.PRISMA_DATABASE_URL
   const client = new pg.Client({ connectionString: url, ssl: { rejectUnauthorized: false } })
   await client.connect()
-  const REMOVED_SLUGS = ['motorflash-mobile-tracking', 'portal-publicacion']
+  const REMOVED_SLUGS = ['motorflash-mobile-tracking', 'portal-publicacion', 'exportaciones']
   for (const slug of REMOVED_SLUGS) {
     try {
       // 1. Ids del producto (uno por locale en products_locales, pero
@@ -133,10 +133,15 @@ try {
   // todavía no estén.
   const seed = [
     {
-      productSlug: 'exportaciones',
-      productName: 'Multipublicador',
-      basePriceCents: 0, // Sin cargador independiente: precio total se calcula a partir de los selects de exportación
+      // Plan unificado Dealer + Multipublicación (antes 'exportaciones').
+      // Mantiene las tarifas del Multipublicador (las más complejas) y añade
+      // los items del Dealer original (usuarios adicionales, JATO+EUROTAX).
+      productSlug: 'dealer',
+      productName: 'Dealer + Multipublicación',
+      basePriceCents: 0,
       items: [
+        { itemKey: 'usuarios', label: 'Usuarios adicionales', helpText: 'Usuarios extra sobre los incluidos por defecto.', type: 'number', unitPriceCents: 1500, required: false, numberMin: 0, numberMax: 50, numberDefault: 0, numberUnit: 'usuario' },
+        { itemKey: 'jato_eurotax', label: 'JATO + EUROTAX unificado', helpText: 'Equipamiento unificado en cada vehículo.', type: 'checkbox', unitPriceCents: 4900, required: false, checkboxDefault: true },
         { itemKey: 'exportacion_cochesnet', label: 'Exportación a Coches.net (incluye cargador básico)', helpText: 'Cuentas ilimitadas. El precio ya incluye el cargador básico por tier según el PPT. Para M-XXL la exportación es 0,48 €/coche y se cotiza por consumo aparte.', type: 'select', unitPriceCents: 0, required: true, selectOptions: [
           { value: 'no', label: 'No quiero publicar en Coches.net', priceCents: 0, setupCents: 0, isDefault: false },
           { value: 'xs', label: 'XS · 36 €/mes (15-50 vehículos)', priceCents: 3600, setupCents: 0, isDefault: true },
@@ -219,15 +224,6 @@ try {
       ],
     },
     {
-      productSlug: 'dealer',
-      productName: 'Dealer / Stock',
-      basePriceCents: 12900,
-      items: [
-        { itemKey: 'usuarios', label: 'Usuarios adicionales', type: 'number', unitPriceCents: 1500, required: false, numberMin: 0, numberMax: 50, numberDefault: 0, numberUnit: 'usuario' },
-        { itemKey: 'jato_eurotax', label: 'JATO + EUROTAX unificado', helpText: 'Equipamiento unificado en cada vehículo.', type: 'checkbox', unitPriceCents: 4900, required: false, checkboxDefault: true },
-      ],
-    },
-    {
       productSlug: 'contact-center',
       productName: 'Contact Center',
       basePriceCents: 15000, // 150 €/mes — licencia básica
@@ -287,7 +283,7 @@ try {
   {
     const { docs: mpV5 } = await payload.find({
       collection: 'pricing-plans',
-      where: { productSlug: { equals: 'exportaciones' } },
+      where: { productSlug: { equals: 'dealer' } },
       limit: 1,
     })
     const mpPlanV5 = mpV5[0]
@@ -347,7 +343,7 @@ try {
   {
     const { docs: mpV4 } = await payload.find({
       collection: 'pricing-plans',
-      where: { productSlug: { equals: 'exportaciones' } },
+      where: { productSlug: { equals: 'dealer' } },
       limit: 1,
     })
     const mpPlanV4 = mpV4[0]
@@ -399,7 +395,7 @@ try {
   {
     const { docs: mpFix2 } = await payload.find({
       collection: 'pricing-plans',
-      where: { productSlug: { equals: 'exportaciones' } },
+      where: { productSlug: { equals: 'dealer' } },
       limit: 1,
     })
     const mpPlan2 = mpFix2[0]
@@ -467,7 +463,7 @@ try {
   {
     const { docs: mpFix } = await payload.find({
       collection: 'pricing-plans',
-      where: { productSlug: { equals: 'exportaciones' } },
+      where: { productSlug: { equals: 'dealer' } },
       limit: 1,
     })
     const mpPlan = mpFix[0]
@@ -535,7 +531,7 @@ try {
   {
     const { docs: mp } = await payload.find({
       collection: 'pricing-plans',
-      where: { productSlug: { equals: 'exportaciones' } },
+      where: { productSlug: { equals: 'dealer' } },
       limit: 1,
     })
     const existingMp = mp[0]
@@ -808,8 +804,7 @@ try {
               label: 'Servicios',
               kind: 'dropdown',
               children: [
-                { label: 'Dealer / Stock', url: '/servicios/dealer', icon: 'inventory_2' },
-                { label: 'Multipublicador', url: '/servicios/exportaciones', icon: 'dynamic_feed' },
+                { label: 'Dealer + Multipublicación', url: '/servicios/dealer', icon: 'hub' },
                 { label: 'CRM4YOU', url: '/servicios/crm4you', icon: 'hub' },
                 { label: 'Contact Center', url: '/servicios/contact-center', icon: 'support_agent' },
                 { label: 'Photocall IA', url: '/servicios/spyne', icon: 'photo_camera' },
@@ -947,7 +942,7 @@ try {
       'Productos': { ca: 'Productes', en: 'Products', zh: '产品' },
       'Soluciones': { ca: 'Solucions', en: 'Solutions', zh: '解决方案' },
       'Dealer / Stock': { ca: 'Dealer / Estoc', en: 'Dealer / Stock', zh: '经销商库存(Dealer)' },
-      'Multipublicador': { ca: 'Multipublicador', en: 'Multipublisher', zh: '多平台发布器' },
+      'Dealer + Multipublicación': { ca: 'Dealer + Multipublicació', en: 'Dealer + Multi-publishing', zh: 'Dealer + 多平台发布' },
       'CRM4YOU': { ca: 'CRM4YOU', en: 'CRM4YOU', zh: 'CRM4YOU' },
       'Contact Center': { ca: 'Contact Center', en: 'Contact Center', zh: '客服中心' },
       'Photocall IA': { ca: 'Photocall IA', en: 'Photocall AI', zh: 'AI 摄影棚(Spyne)' },
@@ -1342,6 +1337,77 @@ try {
     }
   } catch (err) {
     console.warn('[sync-schema] ✗ unificación Lead Motorflash.com:', err?.message || err)
+  }
+
+  // -------------------------------------------------------------------
+  // Unificación Dealer + Multipublicador → Dealer + Multipublicación.
+  // El slug 'dealer' se mantiene (URL /servicios/dealer); solo cambia
+  // el nombre visible en products_locales y el label del menú.
+  // Idempotente.
+  // -------------------------------------------------------------------
+  try {
+    const isPg = /^postgres(ql)?:\/\//i.test(
+      process.env.POSTGRES_URL || process.env.DATABASE_URL || process.env.PRISMA_DATABASE_URL || '',
+    )
+    if (isPg && payload.db?.drizzle) {
+      const { sql } = await import('drizzle-orm')
+      // 1. Renombrar el producto Dealer en products_locales.
+      try {
+        const r1 = await payload.db.drizzle.execute(sql.raw(`
+          UPDATE products_locales
+          SET name = 'Dealer + Multipublicación',
+              menu_label = 'Dealer + Multipublicación'
+          WHERE _parent_id IN (SELECT id FROM products WHERE slug = 'dealer')
+            AND name != 'Dealer + Multipublicación'
+        `))
+        if ((r1?.rowCount ?? 0) > 0) {
+          console.log(`[sync-schema] migración Dealer + Multipublicación (productos): ${r1.rowCount} filas`)
+        }
+      } catch (err) {
+        console.warn('[sync-schema] Dealer + Multi (productos):', err?.message || err)
+      }
+      // 2. Renombrar el plan de precios (si aún tuviera product_slug 'exportaciones' en BD).
+      try {
+        const r2 = await payload.db.drizzle.execute(sql.raw(`
+          UPDATE pricing_plans
+          SET product_slug = 'dealer',
+              product_name = 'Dealer + Multipublicación'
+          WHERE product_slug = 'exportaciones'
+        `))
+        if ((r2?.rowCount ?? 0) > 0) {
+          console.log(`[sync-schema] migración plan Dealer + Multi: ${r2.rowCount} filas`)
+        }
+      } catch (err) {
+        console.warn('[sync-schema] Dealer + Multi (plan):', err?.message || err)
+      }
+      // 3. Actualizar labels del menú (renombrar 'Dealer / Stock' y borrar 'Multipublicador').
+      for (const t of ['main_menu_items_children', 'main_menu_items']) {
+        try {
+          // Renombrar el item Dealer.
+          const r3 = await payload.db.drizzle.execute(sql.raw(`
+            UPDATE "${t}"
+            SET label = 'Dealer + Multipublicación',
+                icon = 'hub'
+            WHERE url = '/servicios/dealer'
+              AND label IN ('Dealer / Stock', 'Dealer / Estoc', '经销商库存(Dealer)')
+          `))
+          if ((r3?.rowCount ?? 0) > 0) {
+            console.log(`[sync-schema] migración menú Dealer+Multi (${t}): ${r3.rowCount} filas`)
+          }
+          // Borrar el item Multipublicador (ya no existe como producto aparte).
+          const r4 = await payload.db.drizzle.execute(sql.raw(`
+            DELETE FROM "${t}"
+            WHERE url = '/servicios/exportaciones'
+               OR label IN ('Multipublicador', 'Multipublisher', '多平台发布器')
+          `))
+          if ((r4?.rowCount ?? 0) > 0) {
+            console.log(`[sync-schema] eliminar Multipublicador menú (${t}): ${r4.rowCount} filas`)
+          }
+        } catch {}
+      }
+    }
+  } catch (err) {
+    console.warn('[sync-schema] ✗ unificación Dealer + Multi:', err?.message || err)
   }
 
   // -------------------------------------------------------------------

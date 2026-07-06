@@ -28,7 +28,7 @@ const HERO_IMAGE_BY_SLUG: Record<
 // demos sin tocar el resto del layout. Los componentes pueden ser
 // asíncronos (server components que leen el locale).
 const AFTER_HERO_BY_SLUG: Record<string, React.ComponentType<unknown> | (() => Promise<React.ReactElement>)> = {
-  exportaciones: MultipublicadorAnimation,
+  dealer: MultipublicadorAnimation,
 }
 
 export async function GenericProductPage({ product }: { product: Product }) {

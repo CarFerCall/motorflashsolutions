@@ -79,7 +79,7 @@ export function PricingConfigurator({ products }: Props) {
       // para que el cliente no tenga que elegir el tamaño dos veces.
       // La opción "No publicar" se respeta si el cliente ya la había
       // escogido manualmente.
-      if (productSlug === 'exportaciones' && itemKey === 'exportacion_cochesnet') {
+      if (productSlug === 'dealer' && itemKey === 'exportacion_cochesnet') {
         const TIER_TO_VERTICALES: Record<string, string> = {
           xs: 'xs',
           s: 's',

@@ -446,56 +446,6 @@ export const productContent: Record<string, ProductContent> = {
       },
     ],
   },
-  'dealer': {
-    subtitle: "Gestió completa del vehicle d'ocasió amb IA integrada",
-    sections: [
-      {
-        type: 'features',
-        title: "Gestió intel·ligent per a grans volums d'estoc",
-        lead: "Crea, controla i publica els teus vehicles des d'una plataforma dissenyada per a concessionaris i grups. Organitza el teu inventari, millora la qualitat dels teus anuncis i pren decisions basades en dades reals del mercat.",
-        items: [
-          { title: 'Equipament JATO + EUROTAX unificat', description: 'Cada vehicle es crea creuant les dues bases de dades més fiables del sector — JATO Dynamics i EUROTAX — en una única fitxa consolidada. Versió exacta, equipament sèrie + opcionals detallat, dades sense contradiccions. Adéu a fitxes a mitges o a contradiccions entre proveïdors.', icon: 'merge_type' },
-          { title: "Creació i gestió d'estoc", description: "Crea fitxes completes dels teus vehicles i gestiona tota la informació des d'un sol entorn. Actualitza dades, afegeix fotos i controla l'estat de cada cotxe de manera ràpida i organitzada.", icon: 'inventory_2' },
-          { title: "Control de qualitat d'anuncis", description: "Assegura't que cada vehicle es publica amb la màxima qualitat. Revisa equipament, versions, preus i fotografies abans de llançar l'anunci per a publicacions més atractives i consistents.", icon: 'verified' },
-          { title: 'Anàlisi de preu i competitivitat', description: 'Pren decisions basades en informació real del mercat. Compara el teu estoc amb el de la competència, ajusta preus i identifica oportunitats de rotació per millorar el rendiment.', icon: 'sell' },
-          { title: 'Creació flexible', description: "Crea els teus vehicles per matrícula, bastidor o cerca guiada per JATO, o delega el procés al nostre equip amb Creació Premium.", icon: 'tune' },
-          { title: 'Importació automàtica des de DMS', description: 'Connectat nativament amb els principals DMS del mercat. Sincronització automàtica i bidireccional sense intervenció manual.', icon: 'sync_alt' },
-        ],
-      },
-      {
-        type: 'highlights',
-        title: 'Una gestió de vehicles més ràpida, segura i adaptable',
-        lead: "Crea vehicles de manera manual, automàtica o delegada, i mantén el teu estoc sempre actualitzat gràcies a les nostres connexions amb DMS i plataformes de fotografia. Un procés flexible que s'adapta a l'operativa de cada concessionari.",
-        highlights: [
-          { title: 'JATO + EUROTAX', description: 'Equipament unificat a cada vehicle' },
-          { title: 'Control de qualitat', description: 'Equipament, preus i fotos' },
-          { title: 'Anàlisi de competitivitat', description: 'Dades reals del mercat' },
-          { title: 'Publicacions amb IA', description: 'Textos optimitzats automàticament' },
-        ],
-        bullets: [
-          'JATO + EUROTAX unificats: cada vehicle porta l\'equipament complet i consistent creuant les dues bases de dades referència del sector. Sense buits, sense contradiccions.',
-          'Taxació precisa i ràpida: valoracions fiables amb dades de mercat, informació tècnica i verificacions CARFAX.',
-          'Control de qualitat: revisem equipament, imatges i preus abans de publicar per assegurar anuncis coherents a tots els portals.',
-          "Generació d'ofertes i perxes: activa campanyes, destaca vehicles i mou estoc amb eines dissenyades per potenciar la rotació.",
-          'Integració directa amb el Multipublicador per a publicació immediata a tots els teus portals.',
-        ],
-      },
-      {
-        type: 'process',
-        title: "Com t'ajudem a arribar més lluny",
-        steps: [
-          { title: 'Taxació precisa i ràpida', description: 'Obtén valoracions fiables basades en dades de mercat, informació tècnica i verificacions CARFAX. Agilitza l\'entrada del vehicle al VO amb més seguretat.' },
-          { title: 'Control de qualitat', description: 'Revisem equipament, imatges i preus abans de publicar per assegurar anuncis més complets, coherents i atractius a tots els portals.' },
-          { title: "Generació d'ofertes i perxes", description: 'Crea ofertes i perxes de manera senzilla i centralitzada. Activa campanyes, destaca vehicles i mou estoc amb eines dissenyades per potenciar la rotació.' },
-        ],
-      },
-      {
-        type: 'cta',
-        title: 'Vols vendre el teu estoc més ràpidament i amb més marge?',
-        lead: "Sol·licita una demo i et mostrem com Dealer pot transformar la teva gestió d'estoc des del primer mes d'ús.",
-      },
-    ],
-  },
   'lead-factory': {
     subtitle: "Captació de leads amb intenció de compra real · Qualificats o sense qualificar",
     sections: [
@@ -563,8 +513,8 @@ export const productContent: Record<string, ProductContent> = {
       },
     ],
   },
-  'exportaciones': {
-    subtitle: "Importa el teu estoc, crea'l amb assistència i publica als principals portals · +1.000 clients publiquen cada dia amb nosaltres",
+  dealer: {
+    subtitle: "Gestió intel·ligent del VO + multipublicació a +16 portals · Importa, crea amb assistència i publica des d'una sola plataforma · +1.000 clients publiquen cada dia amb nosaltres",
     sections: [
       {
         type: 'highlights',

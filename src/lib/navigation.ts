@@ -82,7 +82,7 @@ const MENU_LABEL_DICT: Record<string, { ca: string; en: string; zh: string }> = 
   'Productos': { ca: 'Productes', en: 'Products', zh: '产品' },
   'Soluciones': { ca: 'Solucions', en: 'Solutions', zh: '解决方案' },
   'Dealer / Stock': { ca: 'Dealer / Estoc', en: 'Dealer / Stock', zh: '经销商库存(Dealer)' },
-  'Multipublicador': { ca: 'Multipublicador', en: 'Multipublisher', zh: '多平台发布器' },
+  'Dealer + Multipublicación': { ca: 'Dealer + Multipublicació', en: 'Dealer + Multi-publishing', zh: 'Dealer + 多平台发布' },
   'CRM4YOU': { ca: 'CRM4YOU', en: 'CRM4YOU', zh: 'CRM4YOU' },
   'Contact Center': { ca: 'Contact Center', en: 'Contact Center', zh: '客服中心' },
   'Photocall IA': { ca: 'Photocall IA', en: 'Photocall AI', zh: 'AI 摄影棚(Spyne)' },

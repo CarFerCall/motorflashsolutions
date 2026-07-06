@@ -24,8 +24,7 @@ export type LandingData = {
 }
 
 const PRODUCT_OPTIONS = [
-  { value: 'dealer', label: 'Dealer / Stock' },
-  { value: 'exportaciones', label: 'Multipublicador' },
+  { value: 'dealer', label: 'Dealer + Multipublicación' },
   { value: 'crm4you', label: 'CRM4YOU' },
   { value: 'contact-center', label: 'Contact Center' },
   { value: 'spyne', label: 'Photocall IA' },

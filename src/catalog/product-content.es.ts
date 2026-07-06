@@ -447,56 +447,6 @@ export const productContent: Record<string, ProductContent> = {
       },
     ],
   },
-  'dealer': {
-    subtitle: 'Gestión completa del vehículo de ocasión con IA integrada',
-    sections: [
-      {
-        type: 'features',
-        title: 'Gestión inteligente para grandes volúmenes de stock',
-        lead: 'Crea, controla y publica tus vehículos desde una plataforma diseñada para concesionarios y grupos. Organiza tu inventario, mejora la calidad de tus anuncios y toma decisiones basadas en datos reales del mercado.',
-        items: [
-          { title: 'Equipamiento JATO + EUROTAX unificado', description: 'Cada vehículo se crea cruzando las dos bases de datos más fiables del sector — JATO Dynamics y EUROTAX — en una única ficha consolidada. Versión exacta, equipamiento serie + opcionales detallado, datos sin contradicciones. Adiós a fichas a medias o a contradicciones entre proveedores.', icon: 'merge_type' },
-          { title: 'Creación y gestión de stock', description: 'Crea fichas completas de tus vehículos y gestiona toda la información desde un único entorno. Actualiza datos, añade fotos y controla el estado de cada coche de forma rápida y organizada.', icon: 'inventory_2' },
-          { title: 'Control de calidad de anuncios', description: 'Asegura que cada vehículo se publica con la máxima calidad. Revisa equipamiento, versiones, precios y fotografías antes de lanzar el anuncio para publicaciones más atractivas y consistentes.', icon: 'verified' },
-          { title: 'Análisis de precio y competitividad', description: 'Toma decisiones basadas en información real del mercado. Compara tu stock con el de la competencia, ajusta precios e identifica oportunidades de rotación para mejorar el rendimiento.', icon: 'sell' },
-          { title: 'Creación flexible', description: 'Crea tus vehículos por matrícula, bastidor o búsqueda guiada por JATO, o delega el proceso en nuestro equipo con Creación Premium.', icon: 'tune' },
-          { title: 'Importación automática desde DMS', description: 'Conectado nativamente con los principales DMS del mercado. Sincronización automática y bidireccional sin intervención manual.', icon: 'sync_alt' },
-        ],
-      },
-      {
-        type: 'highlights',
-        title: 'Una gestión de vehículos más rápida, segura y adaptable',
-        lead: 'Crea vehículos de forma manual, automática o delegada, y mantén tu stock siempre actualizado gracias a nuestras conexiones con DMS y plataformas de fotografía. Un proceso flexible que se adapta a la operativa de cada concesionario.',
-        highlights: [
-          { title: 'JATO + EUROTAX', description: 'Equipamiento unificado en cada vehículo' },
-          { title: 'Control de calidad', description: 'Equipamiento, precios y fotos' },
-          { title: 'Análisis de competitividad', description: 'Datos reales del mercado' },
-          { title: 'Publicaciones con IA', description: 'Textos optimizados automáticamente' },
-        ],
-        bullets: [
-          'JATO + EUROTAX unificados: cada vehículo lleva el equipamiento completo y consistente cruzando las dos bases de datos referencia del sector. Sin huecos, sin contradicciones.',
-          'Tasación precisa y rápida: valoraciones fiables con datos de mercado, información técnica y verificaciones CARFAX.',
-          'Control de calidad: revisamos equipamiento, imágenes y precios antes de publicar para asegurar anuncios coherentes en todos los portales.',
-          'Generación de ofertas y perchas: activa campañas, destaca vehículos y mueve stock con herramientas diseñadas para potenciar la rotación.',
-          'Integración directa con el Multipublicador para publicación inmediata en todos tus portales.',
-        ],
-      },
-      {
-        type: 'process',
-        title: 'Cómo te ayudamos a llegar más lejos',
-        steps: [
-          { title: 'Tasación precisa y rápida', description: 'Obtén valoraciones fiables basadas en datos de mercado, información técnica y verificaciones CARFAX. Agiliza la entrada del vehículo al VO con mayor seguridad.' },
-          { title: 'Control de calidad', description: 'Revisamos equipamiento, imágenes y precios antes de publicar para asegurar anuncios más completos, coherentes y atractivos en todos los portales.' },
-          { title: 'Generación de ofertas y perchas', description: 'Crea ofertas y perchas de forma sencilla y centralizada. Activa campañas, destaca vehículos y mueve stock con herramientas diseñadas para potenciar la rotación.' },
-        ],
-      },
-      {
-        type: 'cta',
-        title: '¿Quieres vender tu stock más rápido y con más margen?',
-        lead: 'Solicita una demo y te mostramos cómo Dealer puede transformar tu gestión de stock desde el primer mes de uso.',
-      },
-    ],
-  },
   'lead-factory': {
     subtitle: 'Captación de leads con intención de compra real · Cualificados o sin cualificar',
     sections: [
@@ -564,8 +514,8 @@ export const productContent: Record<string, ProductContent> = {
       },
     ],
   },
-  'exportaciones': {
-    subtitle: 'Importa tu stock, créalo con asistencia y publica en los principales portales · +1.000 clientes publican cada día con nosotros',
+  dealer: {
+    subtitle: 'Gestión inteligente del VO + multipublicación en +16 portales · Importa, crea con asistencia y publica desde una sola plataforma · +1.000 clientes publican cada día con nosotros',
     sections: [
       {
         type: 'highlights',

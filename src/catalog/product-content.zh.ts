@@ -445,56 +445,6 @@ export const productContent: Record<string, ProductContent> = {
       },
     ],
   },
-  'dealer': {
-    subtitle: '集成 AI 的二手车整体管理',
-    sections: [
-      {
-        type: 'features',
-        title: '面向大库存量的智能管理',
-        lead: '在专为经销店与集团设计的平台上创建、掌控并发布您的车辆。组织库存、提升广告质量,并基于真实市场数据做出决策。',
-        items: [
-          { title: '统一的 JATO + EUROTAX 配置', description: '每辆车都交叉引用业界最可靠的 JATO Dynamics 与 EUROTAX 两大数据库,形成一份合并后的详细记录。版本精准、标配与选装明细完整、数据无矛盾。告别残缺或不一致的车辆信息。', icon: 'merge_type' },
-          { title: '库存创建与管理', description: '在统一环境中创建完整车辆信息并管理。快速、有序地更新数据、添加照片并掌控每辆车的状态。', icon: 'inventory_2' },
-          { title: '广告质量控制', description: '确保每辆车以最高质量发布。发布前审查配置、版本、价格和照片,呈现更具吸引力、更一致的广告。', icon: 'verified' },
-          { title: '价格与竞争力分析', description: '基于真实市场数据做决策。将库存与竞品对比、调整价格并发现周转机会,以提升业绩。', icon: 'sell' },
-          { title: '灵活创建', description: '可按车牌、车架号或 JATO 引导式搜索创建车辆;也可使用 Premium Creation 交由我们的团队完成。', icon: 'tune' },
-          { title: '从 DMS 自动导入', description: '与主流 DMS 原生对接。自动且双向同步,无需人工干预。', icon: 'sync_alt' },
-        ],
-      },
-      {
-        type: 'highlights',
-        title: '更快、更稳、更灵活的车辆管理',
-        lead: '可手动、自动或委托创建车辆,并通过我们与 DMS 和摄影平台的连接保持库存始终最新。一套灵活的流程,适应每家经销店的运营。',
-        highlights: [
-          { title: 'JATO + EUROTAX', description: '每辆车都有统一配置' },
-          { title: '质量控制', description: '配置、价格与照片' },
-          { title: '竞争力分析', description: '真实市场数据' },
-          { title: '由 AI 优化的广告', description: '自动优化文案' },
-        ],
-        bullets: [
-          'JATO + EUROTAX 统一:每辆车都基于两大行业基准数据库形成完整一致的配置。无空缺、无矛盾。',
-          '精准且快速的估值:依据市场数据、技术资料与 CARFAX 校验的可靠估值。',
-          '质量控制:在发布前审查配置、图片与价格,保证在各门户上的广告一致连贯。',
-          '生成促销与组合方案:启动活动、突出特色车辆,借助为周转设计的工具加速流通。',
-          '与 Multipublicador 直接对接,瞬时发布到所有门户。',
-        ],
-      },
-      {
-        type: 'process',
-        title: '我们如何助您走得更远',
-        steps: [
-          { title: '精准且快速的估值', description: '基于市场数据、技术资料与 CARFAX 校验获得可靠估值。让二手车入库更高效、更安全。' },
-          { title: '质量控制', description: '发布前审查配置、图片与价格,在各门户上输出更完整、连贯且具吸引力的广告。' },
-          { title: '促销与组合', description: '简单且集中地创建促销与组合。启动活动、突出特色车辆,借助为周转设计的工具加速流通。' },
-        ],
-      },
-      {
-        type: 'cta',
-        title: '想以更高利润、更快速度卖出库存吗?',
-        lead: '申请演示,我们展示 Dealer 如何在使用第一个月就改变您的库存管理。',
-      },
-    ],
-  },
   'lead-factory': {
     subtitle: '真实购买意向的潜客获取 · 合格或未合格',
     sections: [
@@ -562,8 +512,8 @@ export const productContent: Record<string, ProductContent> = {
       },
     ],
   },
-  'exportaciones': {
-    subtitle: '导入库存、辅助创建并发布到主流门户 · 每天 +1,000 家客户与我们一同发布',
+  dealer: {
+    subtitle: '智能二手车管理 + 16+ 门户多平台发布 · 从统一平台导入、辅助创建并发布 · 每天 +1,000 家客户与我们一同发布',
     sections: [
       {
         type: 'highlights',

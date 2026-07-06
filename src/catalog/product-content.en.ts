@@ -446,56 +446,6 @@ export const productContent: Record<string, ProductContent> = {
       },
     ],
   },
-  'dealer': {
-    subtitle: 'Complete used-vehicle management with built-in AI',
-    sections: [
-      {
-        type: 'features',
-        title: 'Smart management for large stock volumes',
-        lead: 'Create, control and publish your vehicles from a platform designed for dealerships and groups. Organise your inventory, raise listing quality and make data-driven decisions backed by real market data.',
-        items: [
-          { title: 'Unified JATO + EUROTAX trim data', description: 'Every vehicle is created cross-referencing the two most reliable databases in the sector — JATO Dynamics and EUROTAX — into a single consolidated record. Exact version, detailed standard and optional equipment, no contradictions. Goodbye to half-filled listings or inconsistent supplier data.', icon: 'merge_type' },
-          { title: 'Stock creation and management', description: 'Create full vehicle listings and manage all the information from a single place. Update data, add photos and monitor the state of each car quickly and in order.', icon: 'inventory_2' },
-          { title: 'Listing quality control', description: 'Make sure every vehicle is published at top quality. Review trim, versions, prices and photos before launching the ad — more attractive, more consistent listings.', icon: 'verified' },
-          { title: 'Price and competitiveness analysis', description: 'Make decisions backed by real market data. Compare your stock with the competition, adjust prices and find rotation opportunities to improve performance.', icon: 'sell' },
-          { title: 'Flexible creation', description: 'Create vehicles by plate, VIN or JATO-guided search, or delegate the process to our team with Premium Creation.', icon: 'tune' },
-          { title: 'Automatic import from your DMS', description: 'Plugs natively into the main DMS in the market. Automatic, two-way sync with no manual intervention.', icon: 'sync_alt' },
-        ],
-      },
-      {
-        type: 'highlights',
-        title: 'Faster, safer and more adaptable vehicle management',
-        lead: 'Create vehicles manually, automatically or delegated, and keep stock always up to date thanks to our DMS and photography platform connections. A flexible process that adapts to every dealership.',
-        highlights: [
-          { title: 'JATO + EUROTAX', description: 'Unified trim on every vehicle' },
-          { title: 'Quality control', description: 'Trim, prices and photos' },
-          { title: 'Competitiveness analysis', description: 'Real market data' },
-          { title: 'AI-powered listings', description: 'Automatically optimised copy' },
-        ],
-        bullets: [
-          'JATO + EUROTAX unified: each vehicle carries the full, consistent trim by cross-referencing the two sector reference databases. No gaps, no contradictions.',
-          'Accurate, fast valuation: reliable appraisals with market data, technical info and CARFAX verification.',
-          'Quality control: we review trim, images and prices before publishing to ensure coherent listings across portals.',
-          'Offers and bundles generation: launch campaigns, feature vehicles and move stock with tools built to drive rotation.',
-          'Direct integration with the Multipublisher for immediate publication across every portal.',
-        ],
-      },
-      {
-        type: 'process',
-        title: 'How we help you go further',
-        steps: [
-          { title: 'Accurate, fast valuation', description: 'Get reliable appraisals based on market data, technical info and CARFAX verifications. Speed up the used-vehicle intake safely.' },
-          { title: 'Quality control', description: 'We review trim, images and prices before publishing to deliver more complete, coherent and attractive ads across portals.' },
-          { title: 'Offers and bundles', description: 'Create offers and bundles easily and centrally. Launch campaigns, feature vehicles and move stock with tools built for rotation.' },
-        ],
-      },
-      {
-        type: 'cta',
-        title: 'Want to sell your stock faster, with better margins?',
-        lead: "Request a demo and we'll show how Dealer can transform your stock management from the first month.",
-      },
-    ],
-  },
   'lead-factory': {
     subtitle: 'Lead generation with real purchase intent · Qualified or unqualified',
     sections: [
@@ -563,8 +513,8 @@ export const productContent: Record<string, ProductContent> = {
       },
     ],
   },
-  'exportaciones': {
-    subtitle: 'Import your stock, create it with assistance and publish on the leading portals · +1,000 clients publish daily with us',
+  dealer: {
+    subtitle: 'Smart used-vehicle management + multi-publishing on 16+ portals · Import, create with assistance and publish from a single platform · 1,000+ clients publish daily with us',
     sections: [
       {
         type: 'highlights',
