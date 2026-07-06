@@ -35,13 +35,24 @@ export interface EcosystemCopy {
 
 const HUBS_BASE: EcosystemHubCopy[] = [
   { key: 'dms', name: 'Motorflash DMS Hub', shortLabel: 'DMS Hub', icon: 'inventory_2', integrations: ['Keyloop', 'Autoline', 'Aswin', 'Incadea', 'Pymecar', 'Nextlane', 'Quiter', 'Bee2link', 'Inventario.pro'] },
-  { key: 'sites', name: 'Motorflash Sites Hub', shortLabel: 'Sites Hub', icon: 'language', integrations: ['Coches.net', 'Autoscout24', 'Autocasion', 'Wallapop', 'NSC Website', 'Dealer Website'] },
+  { key: 'sites', name: 'Motorflash Sites Hub', shortLabel: 'Sites Hub', icon: 'language', integrations: ['Motorflash.com', 'Coches.net', 'Autoscout24', 'Autocasion', 'Wallapop', 'NSC Website', 'Dealer Website'] },
   { key: 'crm', name: 'Motorflash CRM & Aftersales Hub', shortLabel: 'CRM Hub', icon: 'hub', integrations: ['CRM4YOU', 'Salesforce', 'HubSpot'] },
   { key: 'nsc', name: 'Motorflash NSC Hub', shortLabel: 'NSC Hub', icon: 'factory', integrations: ['VIN Info', 'Images', 'Campaigns'] },
   { key: 'logistics', name: 'Motorflash Logistics Hub', shortLabel: 'Logistics Hub', icon: 'local_shipping', integrations: ['Customs', 'Vehicle Homologation', 'Logistics', 'Storage', 'Transport', 'ITV', 'Registration Tax'] },
   { key: 'finance', name: 'Motorflash Finance Hub', shortLabel: 'Finance Hub', icon: 'account_balance', integrations: ['Santander Consumer', 'CaixaBank', 'BBVA', 'NCS Financial Services', 'Sofinco'] },
   { key: 'admin', name: 'Motorflash Admin & Legal Hub', shortLabel: 'Admin & Legal', icon: 'gavel', integrations: ['Dealer Billing', 'Documentation', 'Mandate'] },
   { key: 'data', name: 'Motorflash Databases Hub', shortLabel: 'Databases Hub', icon: 'database', integrations: ['JATO', 'Autovista', 'OEM Database (Motorflash)', 'Carfax', 'Autoinfo', 'Transit Authority (DGT)'] },
+]
+
+const HUBS_ES: EcosystemHubCopy[] = [
+  { key: 'dms', name: 'Hub DMS de Motorflash', shortLabel: 'Hub DMS', icon: 'inventory_2', integrations: ['Keyloop', 'Autoline', 'Aswin', 'Incadea', 'Pymecar', 'Nextlane', 'Quiter', 'Bee2link', 'Inventario.pro'] },
+  { key: 'sites', name: 'Hub de Portales de Motorflash', shortLabel: 'Hub de Portales', icon: 'language', integrations: ['Motorflash.com', 'Coches.net', 'Autoscout24', 'Autocasion', 'Wallapop', 'Web del fabricante (NSC)', 'Web del concesionario'] },
+  { key: 'crm', name: 'Hub CRM y Postventa de Motorflash', shortLabel: 'Hub CRM', icon: 'hub', integrations: ['CRM4YOU', 'Salesforce', 'HubSpot'] },
+  { key: 'nsc', name: 'Hub NSC de Motorflash', shortLabel: 'Hub NSC', icon: 'factory', integrations: ['Info VIN', 'Imágenes', 'Campañas'] },
+  { key: 'logistics', name: 'Hub de Logística de Motorflash', shortLabel: 'Hub de Logística', icon: 'local_shipping', integrations: ['Aduanas', 'Homologación de vehículos', 'Logística', 'Almacenaje', 'Transporte', 'ITV', 'Impuesto de matriculación'] },
+  { key: 'finance', name: 'Hub de Financiación de Motorflash', shortLabel: 'Hub de Financiación', icon: 'account_balance', integrations: ['Santander Consumer', 'CaixaBank', 'BBVA', 'NCS Financial Services', 'Sofinco'] },
+  { key: 'admin', name: 'Hub Administrativo y Legal de Motorflash', shortLabel: 'Admin y Legal', icon: 'gavel', integrations: ['Facturación del concesionario', 'Documentación', 'Mandato'] },
+  { key: 'data', name: 'Hub de Bases de Datos de Motorflash', shortLabel: 'Hub de Bases de Datos', icon: 'database', integrations: ['JATO', 'Autovista', 'Base de datos OEM (Motorflash)', 'Carfax', 'Autoinfo', 'DGT (Dirección General de Tráfico)'] },
 ]
 
 export const STATIC_ECOSYSTEM: Record<EcosystemLocale, EcosystemCopy> = {
@@ -71,7 +82,7 @@ export const STATIC_ECOSYSTEM: Record<EcosystemLocale, EcosystemCopy> = {
     ctaLead:
       'Tenemos un equipo de integraciones dedicado. Si trabajas con un DMS, CRM o portal que no esté aquí, lo añadimos al HUB y empieza a funcionar para ti.',
     ctaButton: 'Hablar con el equipo técnico',
-    hubs: HUBS_BASE,
+    hubs: HUBS_ES,
   },
   ca: {
     metaTitle: 'Ecosistema tècnic',
