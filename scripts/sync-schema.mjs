@@ -66,6 +66,28 @@ try {
       console.warn(`[pre-push] slug='${slug}':`, err?.message || err)
     }
   }
+  // Renombrar pricing_plans.product_slug 'exportaciones' → 'dealer'
+  // ANTES del push, porque drizzle también recrea el enum
+  // enum_pricing_plans_product_slug y falla si hay filas con el slug
+  // eliminado. Antes borramos el plan dealer legacy (más pobre, solo
+  // usuarios+JATO) para evitar duplicados con el que renombramos.
+  try {
+    // 1) Borrar el plan 'dealer' preexistente (era el dealer/stock original,
+    //    ahora sustituido por el plan Multipublicador que renombraremos).
+    const rDel = await client.query(`DELETE FROM pricing_plans WHERE product_slug = 'dealer'`)
+    if (rDel.rowCount > 0) {
+      console.log(`[pre-push] pricing_plans: borrado plan dealer legacy (${rDel.rowCount} filas)`)
+    }
+    // 2) Renombrar el plan de exportaciones a dealer.
+    const rUpd = await client.query(
+      `UPDATE pricing_plans SET product_slug = 'dealer' WHERE product_slug = 'exportaciones'`,
+    )
+    if (rUpd.rowCount > 0) {
+      console.log(`[pre-push] pricing_plans: 'exportaciones' → 'dealer' (${rUpd.rowCount} filas)`)
+    }
+  } catch (err) {
+    console.warn(`[pre-push] rename pricing_plans:`, err?.message || err)
+  }
   await client.end()
 } catch (err) {
   console.warn('[pre-push] cleanup fallido:', err?.message || err)
