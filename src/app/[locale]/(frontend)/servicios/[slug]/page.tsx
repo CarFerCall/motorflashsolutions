@@ -9,6 +9,7 @@ import { Spyne } from '@/components/product/stitch/Spyne'
 import { ContactCenter } from '@/components/product/stitch/ContactCenter'
 import { Ia } from '@/components/product/stitch/Ia'
 import { SolucionesWeb } from '@/components/product/stitch/SolucionesWeb'
+import { MotorChat } from '@/components/product/stitch/MotorChat'
 import { breadcrumbSchema, jsonLdScript, serviceSchema } from '@/lib/seo/schema'
 
 const stitchPages: Record<string, React.ComponentType> = {
@@ -17,6 +18,7 @@ const stitchPages: Record<string, React.ComponentType> = {
   'contact-center': ContactCenter,
   ia: Ia,
   'soluciones-web': SolucionesWeb,
+  motorchat: MotorChat,
 }
 
 const NOT_FOUND_TITLE: Record<string, string> = {
