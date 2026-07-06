@@ -465,8 +465,8 @@ export const productContent: Record<string, ProductContent> = {
         title: 'Dues modalitats, una promesa',
         lead: "Tria el nivell de qualificació que millor encaixi amb el teu equip comercial. Només pagues pels leads entregats — sense cost d'inversió publicitària.",
         items: [
-          { title: 'Qualificat — 45 € per lead', description: "Filtrat pel nostre sistema d'scoring: només entreguem leads que superen el llindar mínim de qualificació. Set up 750 €. Preu a valorar segons estoc.", icon: 'verified' },
-          { title: 'Prospect (sense qualificar) — 25 € per lead', description: "Mateix origen de trànsit, sense filtre d'scoring. Major volum, qualificació a càrrec del teu equip comercial. Sense duplicats ni repetits. Set up 750 €.", icon: 'inventory' },
+          { title: 'Qualificat', description: "Filtrat pel nostre sistema d'scoring: només entreguem leads que superen el llindar mínim de qualificació. Màxima qualitat per al teu equip comercial.", icon: 'verified' },
+          { title: 'Prospect (sense qualificar)', description: "Mateix origen de trànsit, sense filtre d'scoring. Major volum, qualificació a càrrec del teu equip comercial. Sense duplicats ni repetits.", icon: 'inventory' },
           { title: 'Sense inversió publicitària', description: 'No pagues per clics ni per campanyes: només pagues pel que reps. Model escalable segons la capacitat de gestió del teu equip.', icon: 'savings' },
           { title: 'Entregable complet', description: 'Cada prospect arriba amb nom, telèfon, email, vehicle d\'interès (marca i model), intenció de compra (termini i urgència) i ubicació (província i ciutat).', icon: 'contact_page' },
           { title: 'Filtre de qualitat', description: 'Només el 70 % dels leads generats passa el filtre inicial. Només t\'entreguem els que són prospect vàlids.', icon: 'filter_alt' },

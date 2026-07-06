@@ -466,8 +466,8 @@ export const productContent: Record<string, ProductContent> = {
         title: 'Dos modalidades, una promesa',
         lead: 'Elige el nivel de cualificación que mejor encaje con tu equipo comercial. Solo pagas por leads entregados — sin coste de inversión publicitaria.',
         items: [
-          { title: 'Cualificado — 45 € por lead', description: 'Filtrado por nuestro sistema de scoring: solo entregamos leads que superan el umbral mínimo de cualificación. Set up 750 €. Precio a valorar según stock.', icon: 'verified' },
-          { title: 'Prospect (sin cualificar) — 25 € por lead', description: 'Mismo origen de tráfico, sin filtro de scoring. Mayor volumen, cualificación a cargo de tu equipo comercial. Sin duplicados ni repetidos. Set up 750 €.', icon: 'inventory' },
+          { title: 'Cualificado', description: 'Filtrado por nuestro sistema de scoring: solo entregamos leads que superan el umbral mínimo de cualificación. Máxima calidad para tu equipo comercial.', icon: 'verified' },
+          { title: 'Prospect (sin cualificar)', description: 'Mismo origen de tráfico, sin filtro de scoring. Mayor volumen, cualificación a cargo de tu equipo comercial. Sin duplicados ni repetidos.', icon: 'inventory' },
           { title: 'Sin inversión publicitaria', description: 'No pagas por clicks ni por campañas: solo pagas por lo que recibes. Modelo escalable según la capacidad de gestión de tu equipo.', icon: 'savings' },
           { title: 'Entregable completo', description: 'Cada prospect llega con nombre, teléfono, email, vehículo de interés (marca y modelo), intención de compra (plazo y urgencia) y ubicación (provincia y ciudad).', icon: 'contact_page' },
           { title: 'Filtro de calidad', description: 'Solo el 70 % de los leads generados pasa el filtro inicial. Solo te entregamos los que son prospect válidos.', icon: 'filter_alt' },

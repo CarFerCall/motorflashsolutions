@@ -465,8 +465,8 @@ export const productContent: Record<string, ProductContent> = {
         title: 'Two modes, one promise',
         lead: 'Choose the qualification level that best fits your sales team. You only pay for delivered leads — no advertising investment.',
         items: [
-          { title: 'Qualified — €45 per lead', description: 'Filtered by our scoring system: we only deliver leads above the minimum qualification threshold. €750 set up. Price to be adjusted based on stock.', icon: 'verified' },
-          { title: 'Prospect (unqualified) — €25 per lead', description: 'Same traffic origin, no scoring filter. Higher volume, qualification handled by your sales team. No duplicates or repeats. €750 set up.', icon: 'inventory' },
+          { title: 'Qualified', description: 'Filtered by our scoring system: we only deliver leads above the minimum qualification threshold. Maximum quality for your sales team.', icon: 'verified' },
+          { title: 'Prospect (unqualified)', description: 'Same traffic origin, no scoring filter. Higher volume, qualification handled by your sales team. No duplicates or repeats.', icon: 'inventory' },
           { title: 'No advertising investment', description: 'You do not pay per click or per campaign: you only pay for what you receive. Scalable model based on your team\'s management capacity.', icon: 'savings' },
           { title: 'Full deliverable', description: 'Every prospect arrives with name, phone, email, vehicle of interest (make and model), purchase intent (timeframe and urgency) and location (province and city).', icon: 'contact_page' },
           { title: 'Quality filter', description: 'Only 70% of the leads generated pass the initial filter. We only deliver those that are valid prospects.', icon: 'filter_alt' },

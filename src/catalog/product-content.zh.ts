@@ -464,8 +464,8 @@ export const productContent: Record<string, ProductContent> = {
         title: '两种模式,一个承诺',
         lead: '选择最适合您销售团队的合格化级别。只为交付付费——无广告投入。',
         items: [
-          { title: '合格潜客 — 每条 45 €', description: '经我们的评分系统筛选:仅交付超过最低合格阈值的潜客。启动费 750 €。价格根据库存评估。', icon: 'verified' },
-          { title: 'Prospect (未合格) — 每条 25 €', description: '同一流量来源,不经评分筛选。更大体量,由您的销售团队负责合格化。去重、无重复。启动费 750 €。', icon: 'inventory' },
+          { title: '合格潜客', description: '经我们的评分系统筛选:仅交付超过最低合格阈值的潜客。为您的销售团队提供最高质量。', icon: 'verified' },
+          { title: 'Prospect (未合格)', description: '同一流量来源,不经评分筛选。更大体量,由您的销售团队负责合格化。去重、无重复。', icon: 'inventory' },
           { title: '无广告投入', description: '不为点击或投放付费:只为您所接收的付费。可根据团队管理能力灵活扩展。', icon: 'savings' },
           { title: '完整交付', description: '每个 prospect 附带:姓名、电话、邮箱、意向车辆(品牌与车型)、购买意向(时限与紧迫度)与地理位置(省与市)。', icon: 'contact_page' },
           { title: '质量过滤', description: '生成的潜客中仅 70% 通过初次过滤。我们仅交付真正有效的 prospect。', icon: 'filter_alt' },
