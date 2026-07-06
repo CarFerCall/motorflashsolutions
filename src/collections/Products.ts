@@ -27,7 +27,6 @@ const PRODUCT_SLUGS = [
   'ia',
   'soluciones-web',
   'marketing-digital',
-  'portal-publicacion',
   'lead-factory',
   'soluciones-fabricantes',
   'motorflash-connect',

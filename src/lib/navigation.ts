@@ -92,7 +92,6 @@ const MENU_LABEL_DICT: Record<string, { ca: string; en: string; zh: string }> = 
   'Servicios Web': { ca: 'Serveis Web', en: 'Web Services', zh: '网站服务' },
   'Marketing Digital (SEO/SEA)': { ca: 'Marketing Digital (SEO/SEA)', en: 'Digital Marketing (SEO/SEA)', zh: '数字营销(SEO/SEA)' },
   'Marketing Digital': { ca: 'Marketing Digital', en: 'Digital Marketing', zh: '数字营销' },
-  'Clasificados (Motorflash.com)': { ca: 'Classificats (Motorflash.com)', en: 'Classifieds (Motorflash.com)', zh: '分类信息(Motorflash.com)' },
   'Lead Exclusive': { ca: 'Lead Exclusive', en: 'Lead Exclusive', zh: '独家潜客(Lead Exclusive)' },
   'Lead Exclusive (5 Estrellas)': { ca: 'Lead Exclusive (5 Estrelles)', en: 'Lead Exclusive (5-Star)', zh: '独家潜客(5 星)' },
   'Fleet Manager': { ca: 'Fleet Manager', en: 'Fleet Manager', zh: 'Fleet Manager' },

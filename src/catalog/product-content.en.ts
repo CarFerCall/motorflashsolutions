@@ -6,106 +6,6 @@
 import type { ProductContent } from './product-content'
 
 export const productContent: Record<string, ProductContent> = {
-  'portal-publicacion': {
-    subtitle: "Motorflash Group's own used vehicle portal",
-    sections: [
-      {
-        type: 'features',
-        title: 'Publish once, appear on every portal',
-        lead: "Forget uploading vehicles portal by portal. With Classifieds, you publish once and your stock appears on every portal automatically.",
-        items: [
-          { title: 'Automatic multi-portal publishing', description: 'One click publishes your vehicle on Coches.net, Milanuncios, Wallapop, AutoScout24 and other leading portals. Stock always in sync.', icon: 'rocket_launch' },
-          { title: 'Optimised vehicle listings', description: 'Listings with full trim data (JATO/Eurotax), photos, price, financing and automatically generated copy to maximise conversion.', icon: 'description' },
-          { title: 'Smart price management', description: 'Real-time market price comparison. Alerts when your price is above or below market so you can act fast.', icon: 'sell' },
-          { title: 'Portal analytics', description: 'Visits, leads and conversion rate per vehicle and per portal. See which channels bring more buyers and optimise your ad spend.', icon: 'analytics' },
-          { title: 'Centralised leads', description: 'Every portal lead lands in the same place, synced with your CRM. No information lost.', icon: 'inbox' },
-          { title: 'Native web + CRM integration', description: 'Plugs natively into CRM4YOU and your Motorflash website. A closed ecosystem with no duplicate data entry.', icon: 'sync_alt' },
-        ],
-      },
-      {
-        type: 'highlights',
-        title: 'More visibility, less work and greater control',
-        lead: 'Publishing manually across portals eats 2 to 4 hours a day. With Classifieds, that becomes minutes — and listing quality goes up.',
-        highlights: [
-          { title: 'Automatic publishing', description: 'Once, across every portal' },
-          { title: 'Price intelligence', description: 'Real-time market comparison' },
-          { title: '40,000 vehicles/month', description: 'The largest automotive volume' },
-          { title: 'Centralised leads', description: 'Every portal in one inbox' },
-        ],
-        bullets: [
-          'Integrated portals: Coches.net, Milanuncios, Wallapop, AutoScout24, Autocasion and more.',
-          'Enhanced photos: built-in editor to remove backgrounds and boost the visual appeal of each vehicle.',
-          'Negotiated discounts on the main portals based on your publication volume.',
-          'Alerts on vehicles priced outside the market so you can act fast.',
-          'Automatic rotation of featured ads to maximise visibility.',
-        ],
-      },
-      {
-        type: 'process',
-        title: 'How does Classifieds work?',
-        steps: [
-          { title: 'Stock connection', description: 'We connect your DMS, ERP or CRM to import your stock automatically. We set up publishing rules and the target portals.' },
-          { title: 'Automatic publishing', description: 'Your vehicles publish on every selected portal with optimised listings. Removals and edits sync in real time.' },
-          { title: 'Lead management and reporting', description: 'Every lead lands in one place. Weekly report with portal performance, per-vehicle results and market pricing comparison.' },
-        ],
-      },
-      {
-        type: 'cta',
-        title: 'Want to publish your stock on every portal effortlessly?',
-        lead: "Book a demo and we'll show how Classifieds can save you hours every week and grow your online reach.",
-      },
-    ],
-  },
-  'crm4you': {
-    subtitle: 'Run your sales operation smoothly, with full context and no unnecessary steps',
-    sections: [
-      {
-        type: 'features',
-        title: 'The CRM for dealership groups',
-        lead: 'The only CRM in the sector built to centrally manage multiple locations, brands and dealerships. Optimise the sales process at group level with built-in AI working alongside you.',
-        items: [
-          { title: 'Centralised lead management', description: "Every lead from your website, portals, social ads and phone calls lands in one place. Never lose a lead to an unmonitored channel.", icon: 'inbox' },
-          { title: 'Visual sales pipeline', description: 'Kanban board tailored to the sales process: New → Contacted → Visit → Test drive → Offer → Delivery. Metrics at every stage.', icon: 'view_kanban' },
-          { title: 'Automatic follow-up', description: 'Automated email and SMS sequences for every stage. The CRM follows up for you when the sales rep is busy.', icon: 'autorenew' },
-          { title: 'Built-in calendar', description: 'Sales meetings and test drives managed inside the CRM. Google Calendar sync and automatic customer notifications.', icon: 'calendar_month' },
-          { title: 'Management dashboards', description: "Live dashboard with each rep's performance, conversion by channel, average time to close and monthly sales forecast.", icon: 'analytics' },
-          { title: 'Native integrations', description: 'Plugs into your Motorflash Web, Classifieds, Contact Center, WhatsApp Business and the main vehicle portals. A closed ecosystem with no data leaks.', icon: 'sync_alt' },
-        ],
-      },
-      {
-        type: 'highlights',
-        title: 'A CRM that works for the rep and for management',
-        lead: 'CRM4YOU has two sides: operational (for the sales rep) and analytical (for the commercial director or dealership manager).',
-        highlights: [
-          { title: 'Kanban sales pipeline', description: 'Visual, tailored to automotive' },
-          { title: 'Automated follow-up', description: 'Stage-based email and SMS' },
-          { title: 'Per-rep tracking', description: 'Individual performance measurable' },
-          { title: 'Integrated ecosystem', description: 'Web, portals, WhatsApp and Contact Center' },
-        ],
-        bullets: [
-          "Rep view: pending tasks, automatic reminders, full lead history and communication templates.",
-          "Management view: individual rep performance, conversion by lead source, average time to close and sales forecast.",
-          'Mobile app for managing leads anywhere, on any device.',
-          'Import data from your DMS or previous CRM without losing history.',
-          'Roles and permissions configurable by dealership or group.',
-        ],
-      },
-      {
-        type: 'process',
-        title: 'How do we roll out CRM4YOU?',
-        steps: [
-          { title: 'Custom setup', description: 'We tailor the pipeline, fields and automation flows to your specific sales process. You don\'t adapt to the CRM — the CRM adapts to you.' },
-          { title: 'Migration and integration', description: 'We import your current data and connect every lead source: web, portals, social ads and Contact Center in 5-7 business days.' },
-          { title: 'Training and go-live', description: 'On-site or remote training for the whole team. Dedicated support for the first 30 days to ensure adoption.' },
-        ],
-      },
-      {
-        type: 'cta',
-        title: 'Want to see CRM4YOU running on your own data?',
-        lead: "Request a personalised demo and we'll show how CRM4YOU looks tailored to your dealership in under 30 minutes.",
-      },
-    ],
-  },
   'contact-center': {
     subtitle: 'Handle calls, chats and messages from a single platform connected to your CRM',
     sections: [
@@ -542,52 +442,69 @@ export const productContent: Record<string, ProductContent> = {
     ],
   },
   'lead-factory': {
-    subtitle: 'Save time and focus on closing sales',
+    subtitle: 'Lead generation with real purchase intent · Qualified or unqualified',
     sections: [
       {
-        type: 'features',
-        title: 'Why is 5-Star Lead different?',
-        lead: "We don't sell databases. We capture active prospects in the middle of buying and selling their vehicle.",
-        items: [
-          { title: 'Double lead in one contact', description: "The seller of a car is, more often than not, also a buyer. We capture that transition moment to give you the most valuable lead in the market.", icon: 'star' },
-          { title: 'Geographic segmentation', description: 'Spain divided into 7 exclusive zones. Every dealership receives leads from its influence area, with no competition within its territory.', icon: 'map' },
-          { title: 'Real-time delivery', description: 'The lead arrives at your CRM or email the moment the individual submits the form. Zero delay, maximum reactivity.', icon: 'schedule' },
-          { title: 'Qualified leads', description: 'Verification process filters out fake or low-quality contacts. You only receive real leads with verified contact data.', icon: 'verified' },
-          { title: 'Detailed reporting', description: 'Dashboard with every lead source, visit conversion and final conversion to sale. Real metrics to optimise.', icon: 'analytics' },
-          { title: 'CRM integration', description: 'Leads land directly in CRM4YOU or whichever CRM you use. No duplicate data entry.', icon: 'sync_alt' },
+        type: 'highlights',
+        title: 'Where do the leads come from?',
+        lead: 'Two complementary traffic sources fueling the channel: organic SEO traffic and the largest stock and inventory base in the market.',
+        highlights: [
+          { title: '70,000+', description: 'Vehicles published on Motorflash.com' },
+          { title: '17,000+', description: 'Dealerships working with Motorflash.com' },
+          { title: '120,000', description: 'Monthly organic visits to the portal' },
+          { title: 'SEO', description: 'Ranking by brand, model and purchase intent' },
+        ],
+        bullets: [
+          'Qualified organic SEO: brand and model ranking (Audi A4, Q3, Q5…) and purchase-intent searches ("used Citroen Madrid").',
+          'Motorflash portal: the largest stock and inventory base in the market, with organic traffic specialised in automotive.',
+          'High-quality lead: the user arrives looking to buy, not browsing out of curiosity.',
         ],
       },
       {
-        type: 'highlights',
-        title: 'From capture to sale in 3 steps',
-        lead: 'Our multi-channel capture system delivers a steady flow of high-quality leads to your dealership, every day of the year.',
-        highlights: [
-          { title: 'Private seller', description: 'Wants to sell their car and buy another' },
-          { title: 'Exclusive geographic zone', description: '7 non-overlapping zones in Spain' },
-          { title: 'Immediate contact', description: 'Real-time lead with verified data' },
-          { title: 'Double opportunity', description: 'Used-vehicle appraisal + new-vehicle sale in one lead' },
-        ],
-        bullets: [
-          'Multi-channel capture: SEO, SEM, Social Ads and specialised portals to reach the seller at the decision moment.',
-          'Automatic qualification: the system verifies data and filters fake contacts before delivering the lead.',
-          'Immediate delivery: the lead arrives at your email, CRM or WhatsApp in real time with all vehicle and contact data.',
-          'Exclusive zones to avoid internal competition between dealerships.',
-          'Pay-per-lead with no minimum monthly subscription or commitment.',
+        type: 'features',
+        title: 'Two modes, one promise',
+        lead: 'Choose the qualification level that best fits your sales team. You only pay for delivered leads — no advertising investment.',
+        items: [
+          { title: 'Qualified — €45 per lead', description: 'Filtered by our scoring system: we only deliver leads above the minimum qualification threshold. €750 set up. Price to be adjusted based on stock.', icon: 'verified' },
+          { title: 'Prospect (unqualified) — €25 per lead', description: 'Same traffic origin, no scoring filter. Higher volume, qualification handled by your sales team. No duplicates or repeats. €750 set up.', icon: 'inventory' },
+          { title: 'No advertising investment', description: 'You do not pay per click or per campaign: you only pay for what you receive. Scalable model based on your team\'s management capacity.', icon: 'savings' },
+          { title: 'Full deliverable', description: 'Every prospect arrives with name, phone, email, vehicle of interest (make and model), purchase intent (timeframe and urgency) and location (province and city).', icon: 'contact_page' },
+          { title: 'Quality filter', description: 'Only 70% of the leads generated pass the initial filter. We only deliver those that are valid prospects.', icon: 'filter_alt' },
+          { title: 'Hot contact', description: 'Immediacy is key: hot contact multiplies conversion. We send the lead the moment it comes in so you can act with maximum information.', icon: 'schedule' },
         ],
       },
       {
         type: 'process',
-        title: 'How does 5-Star Lead work?',
+        title: 'Scoring system · 6 variables',
         steps: [
-          { title: 'Multi-channel capture', description: 'We capture private sellers via SEO, SEM, Social Ads and specialised portals at the moment they decide to sell their vehicle.' },
-          { title: 'Qualification and verification', description: 'The system verifies contact data and filters low-quality leads. Only real, qualified leads reach your dealership.' },
-          { title: 'Delivery and follow-up', description: 'The lead arrives in real time at your CRM, email or WhatsApp. Lead-status tracking with monthly conversion reporting.' },
+          { title: 'Purchase intent', description: 'Less than 1 month · 1-3 months · 3+ months. The expected purchase timeframe directly impacts the score.' },
+          { title: 'Vehicle fit', description: 'Scale from 1 to 5 on the searched model. The better the fit with your stock, the higher the score.' },
+          { title: 'Location confirmation', description: 'Dealership province and city. Confirms the buyer can travel to your point of sale.' },
+          { title: 'Interest in visiting', description: 'Real availability to come to the dealership. Filters out those who are only exploring.' },
+          { title: 'Trade-in vehicle', description: 'Possible part of the payment via their current car. Double opportunity: used-vehicle appraisal + new-vehicle sale.', },
+          { title: 'Payment method', description: 'Financed · Cash · To be defined. Adds context on closing capacity and speed.' },
+        ],
+      },
+      {
+        type: 'highlights',
+        title: 'Real client case',
+        lead: 'Real results from a dealership after implementing the Exclusive channel. Average score obtained: 55/100.',
+        highlights: [
+          { title: '230', description: 'Cars published · active inventory on the portal' },
+          { title: '92', description: 'Prospects generated through the Exclusive channel' },
+          { title: '22', description: 'Qualified leads above the scoring threshold' },
+          { title: '9%', description: 'Lead-to-sale conversion rate · 2 sales closed' },
+        ],
+        bullets: [
+          '2 operations converted into real revenue out of 22 qualified leads.',
+          'Average lead score: 55/100 across the 6 scoring variables.',
+          'Scalable model: the more volume published, the more leads generated.',
         ],
       },
       {
         type: 'cta',
-        title: 'Want leads from car buyers in your area?',
-        lead: 'Check the availability of your exclusive zone and start receiving qualified leads from day one.',
+        title: "Let's talk about your leads",
+        lead: 'We help you define the traffic generation model that best fits your dealership. Speak to our sales team about the right mode and volume for your operation.',
       },
     ],
   },

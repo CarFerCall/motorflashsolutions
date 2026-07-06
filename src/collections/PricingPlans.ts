@@ -10,7 +10,6 @@ const productSlugs = [
   'ia',
   'soluciones-web',
   'marketing-digital',
-  'portal-publicacion',
   'lead-factory',
   'soluciones-fabricantes',
   'motorflash-renting', // legado: planes antiguos en BD

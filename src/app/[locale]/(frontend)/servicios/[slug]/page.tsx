@@ -7,7 +7,6 @@ import { GenericProductPage } from '@/components/product/GenericProductPage'
 import { Crm4you } from '@/components/product/stitch/Crm4you'
 import { Spyne } from '@/components/product/stitch/Spyne'
 import { ContactCenter } from '@/components/product/stitch/ContactCenter'
-import { PortalPublicacion } from '@/components/product/stitch/PortalPublicacion'
 import { Ia } from '@/components/product/stitch/Ia'
 import { SolucionesWeb } from '@/components/product/stitch/SolucionesWeb'
 import { breadcrumbSchema, jsonLdScript, serviceSchema } from '@/lib/seo/schema'
@@ -16,7 +15,6 @@ const stitchPages: Record<string, React.ComponentType> = {
   crm4you: Crm4you,
   spyne: Spyne,
   'contact-center': ContactCenter,
-  'portal-publicacion': PortalPublicacion,
   ia: Ia,
   'soluciones-web': SolucionesWeb,
 }

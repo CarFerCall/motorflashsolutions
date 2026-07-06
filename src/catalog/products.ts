@@ -119,25 +119,14 @@ export const products: Product[] = [
     icon: 'trending_up',
   },
   {
-    slug: 'portal-publicacion',
-    name: 'Clasificados (Motorflash.com)',
-    menuLabel: 'Clasificados (Motorflash.com)',
-    menuOrder: 110,
-    tagline: 'Visibilidad extra en el portal de Motorflash.com.',
-    heroTitle: 'Visibilidad extra para tus vehículos en Motorflash.com',
-    intro:
-      'En Motorflash.com encontrarás la visibilidad extra para tus vehículos. Aprovecha el tráfico cualificado de nuestro portal especializado en automoción para impulsar la venta de tu stock.',
-    icon: 'directions_car',
-  },
-  {
     slug: 'lead-factory',
-    name: 'Lead Exclusive',
-    menuLabel: 'Lead Exclusive (5 Estrellas)',
-    menuOrder: 120,
-    tagline: 'Leads verificados, filtrados y listos para convertir.',
-    heroTitle: 'Leads verificados, filtrados y listos para convertirse en clientes',
+    name: 'Lead Motorflash.com',
+    menuLabel: 'Lead Motorflash.com',
+    menuOrder: 110,
+    tagline: 'Captación de leads con intención de compra real.',
+    heroTitle: 'Leads Motorflash.com: dos modalidades, una promesa',
     intro:
-      'Recibe solo compradores con intención real de compra. Cada lead pasa por un proceso de verificación y cualificación con scoring de 0 a 100 antes de llegar a tu equipo de ventas. Más tiempo cerrando ventas, menos gestionando contactos que no convierten.',
+      'Captación de leads con intención de compra real, a partir del tráfico orgánico de Motorflash.com y de la mayor base de stock e inventario del mercado. Elige entre leads cualificados por sistema de scoring o prospects sin cualificar para cualificación interna. Sin coste de inversión publicitaria: solo pagas por lo que recibes.',
     icon: 'star',
   },
   {

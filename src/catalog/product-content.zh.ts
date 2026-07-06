@@ -5,106 +5,6 @@
 import type { ProductContent } from './product-content'
 
 export const productContent: Record<string, ProductContent> = {
-  'portal-publicacion': {
-    subtitle: 'Motorflash 集团自有的二手车发布门户',
-    sections: [
-      {
-        type: 'features',
-        title: '一次发布,同步上线全部门户',
-        lead: '告别逐个门户上传车辆。使用 Clasificados,发布一次,您的库存就会自动出现在所有门户网站上。',
-        items: [
-          { title: '自动多门户发布', description: '一键将车辆发布到 Coches.net、Milanuncios、Wallapop、AutoScout24 等主流门户。库存始终同步。', icon: 'rocket_launch' },
-          { title: '优化的车辆详情页', description: '完整配置(JATO/Eurotax)、照片、价格、融资和自动生成的描述,最大化转化率。', icon: 'description' },
-          { title: '智能价格管理', description: '实时市场价格对比。当价格高于或低于市场时立即提醒,帮助您快速决策。', icon: 'sell' },
-          { title: '门户数据分析', description: '按车辆和门户分析访问量、潜在客户和转化率。识别表现最佳的渠道,优化广告投入。', icon: 'analytics' },
-          { title: '潜在客户集中管理', description: '来自所有门户的潜在客户都汇集到同一处,并与 CRM 同步。零信息丢失。', icon: 'inbox' },
-          { title: '网站与 CRM 原生集成', description: '与 CRM4YOU 和您的 Motorflash 网站原生连接。封闭生态,无需重复录入数据。', icon: 'sync_alt' },
-        ],
-      },
-      {
-        type: 'highlights',
-        title: '更高曝光、更少工作量、更强掌控',
-        lead: '门户的手工发布每天消耗 2 到 4 小时。使用 Clasificados,这段时间缩短为几分钟,同时车辆详情质量大幅提升。',
-        highlights: [
-          { title: '自动发布', description: '一次发布,同步全部门户' },
-          { title: '价格智能分析', description: '实时市场对比' },
-          { title: '每月 40,000 辆', description: '汽车行业最大体量' },
-          { title: '潜在客户集中', description: '所有门户共用一个收件箱' },
-        ],
-        bullets: [
-          '已集成门户:Coches.net、Milanuncios、Wallapop、AutoScout24、Autocasion 等。',
-          '增强的照片:内置编辑工具,去除背景并提升车辆视觉吸引力。',
-          '凭借发布量,与主流门户洽谈了批量折扣。',
-          '价格偏离市场的车辆提醒,助您快速反应。',
-          '自动轮换精选展示,最大化曝光。',
-        ],
-      },
-      {
-        type: 'process',
-        title: 'Clasificados 如何运作?',
-        steps: [
-          { title: '连接您的库存', description: '我们对接您的 DMS、ERP 或 CRM,自动导入库存。设置发布规则和目标门户。' },
-          { title: '自动发布', description: '车辆以优化后的详情页发布到所选门户。下架和修改实时同步。' },
-          { title: '潜在客户管理与报告', description: '所有潜在客户汇集到同一处。每周报告涵盖各门户表现、按车辆数据和市场价格对比。' },
-        ],
-      },
-      {
-        type: 'cta',
-        title: '想轻松将库存发布到所有门户吗?',
-        lead: '申请演示,我们向您展示 Clasificados 如何每周为您节省数小时工作并提升在线曝光。',
-      },
-    ],
-  },
-  'crm4you': {
-    subtitle: '流畅地管理销售活动,信息完整、流程精简',
-    sections: [
-      {
-        type: 'features',
-        title: '为经销商集团而生的 CRM',
-        lead: '业界唯一专为集中管理多个门店、品牌和经销商而设计的 CRM。借助内置 AI,在集团层面优化销售流程。',
-        items: [
-          { title: '潜在客户集中管理', description: '来自网站、门户、社交广告和电话的所有潜在客户汇集到一处。绝不再因渠道失监而漏掉任何客户。', icon: 'inbox' },
-          { title: '可视化销售管道', description: '为销售流程量身打造的看板:新客户 → 已联系 → 到店 → 试驾 → 报价 → 交付。每个阶段都有指标。', icon: 'view_kanban' },
-          { title: '自动跟进', description: '每个阶段都有自动化邮件和短信序列。当顾问忙碌时,CRM 替您跟进。', icon: 'autorenew' },
-          { title: '集成日程', description: '销售约见和试驾日程在 CRM 内统一管理。同步 Google 日历并自动通知客户。', icon: 'calendar_month' },
-          { title: '管理层报告', description: '管理仪表板呈现每位顾问的业绩、按渠道的转化率、平均成交时间和当月销售预测。', icon: 'analytics' },
-          { title: '原生集成', description: '与您的 Web、Clasificados、Contact Center、WhatsApp Business 以及主流车辆门户原生互通。封闭生态,数据零泄漏。', icon: 'sync_alt' },
-        ],
-      },
-      {
-        type: 'highlights',
-        title: '兼顾顾问与管理层的 CRM',
-        lead: 'CRM4YOU 有两面:面向销售顾问的操作面和面向商务总监或店总的分析面。',
-        highlights: [
-          { title: '看板销售管道', description: '可视化、专为汽车行业打造' },
-          { title: '自动化跟进', description: '按阶段自动发送邮件和短信' },
-          { title: '按顾问管理', description: '个人业绩可衡量' },
-          { title: '一体化生态', description: 'Web、门户、WhatsApp 与 Contact Center' },
-        ],
-        bullets: [
-          '顾问视图:待办任务、自动提醒、每个潜在客户的完整历史和通讯模板。',
-          '管理层视图:每位顾问的业绩、按潜在客户来源的转化率、平均成交时间和销售预测。',
-          '随时随地、跨设备管理的移动应用。',
-          '从您原有的 DMS 或 CRM 导入数据,不丢失历史记录。',
-          '可按经销店或集团配置角色与权限。',
-        ],
-      },
-      {
-        type: 'process',
-        title: '我们如何启用 CRM4YOU?',
-        steps: [
-          { title: '定制化配置', description: '我们根据您具体的销售流程定制管道、字段和自动化流程。不是您去适应 CRM,而是 CRM 适应您。' },
-          { title: '迁移与集成', description: '5–7 个工作日内导入您的现有数据并连接所有潜在客户来源:网站、门户、社交广告和 Contact Center。' },
-          { title: '培训与启用', description: '为全员提供线下或远程培训。前 30 天专属支持,确保系统正确落地。' },
-        ],
-      },
-      {
-        type: 'cta',
-        title: '想用您的真实数据体验 CRM4YOU 吗?',
-        lead: '申请定制演示,我们在 30 分钟内向您展示量身定制的 CRM4YOU。',
-      },
-    ],
-  },
   'contact-center': {
     subtitle: '在与 CRM 互联的统一平台上,管理电话、聊天与消息',
     sections: [
@@ -541,52 +441,69 @@ export const productContent: Record<string, ProductContent> = {
     ],
   },
   'lead-factory': {
-    subtitle: '节省时间,专注成交',
+    subtitle: '真实购买意向的潜客获取 · 合格或未合格',
     sections: [
       {
-        type: 'features',
-        title: 'Lead 5 Estrellas 有何不同?',
-        lead: '我们不卖数据库。我们捕获正在出售自己车辆并准备购车的活跃潜客。',
-        items: [
-          { title: '一次接触,双重潜客', description: '一辆车的卖家,几乎总是潜在买家。我们捕获这一过渡时刻,为您提供市场上最有价值的潜客。', icon: 'star' },
-          { title: '按地域细分', description: '将西班牙划分为 7 个独占区域。每家经销店仅在自己影响范围内接收潜客,区域内零内部竞争。', icon: 'map' },
-          { title: '实时交付', description: '在客户提交表单的同一时刻,潜客进入您的 CRM 或邮箱。零延迟,最大反应力。', icon: 'schedule' },
-          { title: '已筛选的潜客', description: '通过验证流程过滤虚假或低质量联系人。您只收到真实且联系信息可核验的潜客。', icon: 'verified' },
-          { title: '详尽的报告', description: '面板显示每个潜客的来源、到店转化与最终成交转化。用真实数据持续优化。', icon: 'analytics' },
-          { title: '与 CRM 集成', description: '潜客直接进入 CRM4YOU 或您所用的 CRM。无需重复录入。', icon: 'sync_alt' },
+        type: 'highlights',
+        title: '潜客来自哪里?',
+        lead: '两条互补的流量来源共同支撑该渠道:自然 SEO 流量,以及市场上最大的库存与车源基础。',
+        highlights: [
+          { title: '70,000+', description: '在 Motorflash.com 门户发布的车辆数' },
+          { title: '17,000+', description: '与 Motorflash.com 合作的经销店' },
+          { title: '120,000', description: '门户每月自然访问量' },
+          { title: 'SEO', description: '按品牌、车型与购买意向进行排名' },
+        ],
+        bullets: [
+          '自然 SEO 精准流量:按品牌与车型排名 (Audi A4、Q3、Q5……),以及以购买意向为核心的搜索("马德里 二手 Citroen")。',
+          'Motorflash 门户:市场上最大的库存与车源基础,面向汽车行业的专业自然流量。',
+          '高质量潜客:用户带着购买目的到达,而非漫无目的浏览。',
         ],
       },
       {
-        type: 'highlights',
-        title: '3 步走完从获客到成交',
-        lead: '我们的多渠道获客系统每天为您的经销店提供高质量潜客的稳定流量。',
-        highlights: [
-          { title: '个人卖家', description: '想卖掉自己的车,再买一辆' },
-          { title: '独占地域', description: '西班牙 7 区无重叠' },
-          { title: '即时联系', description: '实时潜客,数据已核验' },
-          { title: '双重机会', description: '一次潜客同时含二手车估值与新车销售' },
-        ],
-        bullets: [
-          '多渠道获客:SEO、SEM、Social Ads 与专业门户,在决策时刻捕获个人卖家。',
-          '自动筛选:系统在交付前验证数据并过滤虚假联系人。',
-          '即时交付:潜客实时进入您的邮箱、CRM 或 WhatsApp,附带车辆与联系信息。',
-          '通过独占区域避免经销店间的内部竞争。',
-          '按潜客计价,无最低月订阅、无绑定。',
+        type: 'features',
+        title: '两种模式,一个承诺',
+        lead: '选择最适合您销售团队的合格化级别。只为交付付费——无广告投入。',
+        items: [
+          { title: '合格潜客 — 每条 45 €', description: '经我们的评分系统筛选:仅交付超过最低合格阈值的潜客。启动费 750 €。价格根据库存评估。', icon: 'verified' },
+          { title: 'Prospect (未合格) — 每条 25 €', description: '同一流量来源,不经评分筛选。更大体量,由您的销售团队负责合格化。去重、无重复。启动费 750 €。', icon: 'inventory' },
+          { title: '无广告投入', description: '不为点击或投放付费:只为您所接收的付费。可根据团队管理能力灵活扩展。', icon: 'savings' },
+          { title: '完整交付', description: '每个 prospect 附带:姓名、电话、邮箱、意向车辆(品牌与车型)、购买意向(时限与紧迫度)与地理位置(省与市)。', icon: 'contact_page' },
+          { title: '质量过滤', description: '生成的潜客中仅 70% 通过初次过滤。我们仅交付真正有效的 prospect。', icon: 'filter_alt' },
+          { title: '热触达', description: '即时性是关键:热触达可大幅提升转化。我们即时发送潜客,让您带着充分信息立刻跟进。', icon: 'schedule' },
         ],
       },
       {
         type: 'process',
-        title: 'Lead 5 Estrellas 如何运作?',
+        title: '评分系统 · 6 个变量',
         steps: [
-          { title: '多渠道获客', description: '通过 SEO、SEM、Social Ads 与专业门户,在个人卖家决定出售车辆的瞬间触达。' },
-          { title: '筛选与验证', description: '系统验证联系数据并过滤低质量潜客。只有真实且已筛选的潜客进入您的经销店。' },
-          { title: '交付与跟进', description: '潜客实时到达您的 CRM、邮箱或 WhatsApp。月度跟踪与转化报告。' },
+          { title: '购买意向', description: '不足 1 个月 · 1-3 个月 · 3+ 个月。预计购买时限直接影响评分。' },
+          { title: '车辆匹配度', description: '对目标车型的 1-5 分刻度。与您的库存匹配度越高,得分越高。' },
+          { title: '位置确认', description: '经销点所在省与市。确认买家能够前往您的门店。' },
+          { title: '到店意愿', description: '真正到店的可用性。过滤那些仅处于探索阶段的用户。' },
+          { title: '换购车辆', description: '以其现有车辆作为部分支付的可能。双重机会:二手车估值 + 新车销售。' },
+          { title: '支付方式', description: '融资 · 现金 · 待定。为成交能力与速度提供背景。' },
+        ],
+      },
+      {
+        type: 'highlights',
+        title: '真实客户案例',
+        lead: '一家经销店导入 Exclusive 渠道后的真实数据。平均得分:55/100。',
+        highlights: [
+          { title: '230', description: '发布车辆数 · 门户上的活跃库存' },
+          { title: '92', description: 'Exclusive 渠道生成的 prospect' },
+          { title: '22', description: '超过评分阈值的合格潜客' },
+          { title: '9 %', description: '潜客到成交的转化率 · 成交 2 单' },
+        ],
+        bullets: [
+          '22 个合格潜客中最终转为真实营收的 2 单。',
+          '潜客平均得分:6 个评分变量下的 55/100。',
+          '模式可扩展:发布的车辆越多,生成的潜客越多。',
         ],
       },
       {
         type: 'cta',
-        title: '想要您所在区域的购车潜客吗?',
-        lead: '查询您所在独占区域的可用性,从第一天起即开始接收筛选后的潜客。',
+        title: '聊聊您的潜客',
+        lead: '我们帮您定义最适合您经销店的流量生成模式。请与我们的商务团队讨论适合您的模式与体量。',
       },
     ],
   },

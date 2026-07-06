@@ -6,106 +6,6 @@
 import type { ProductContent } from './product-content'
 
 export const productContent: Record<string, ProductContent> = {
-  'portal-publicacion': {
-    subtitle: 'El portal propi de VO del grup Motorflash',
-    sections: [
-      {
-        type: 'features',
-        title: 'Publica un cop, apareix a tots els portals',
-        lead: "Oblida't de pujar els vehicles portal a portal. Amb Classificats, publiques un cop i el teu estoc apareix a tots els portals de manera automàtica.",
-        items: [
-          { title: 'Publicació automàtica multiportal', description: 'Un sol clic publica el teu vehicle a Coches.net, Milanuncios, Wallapop, AutoScout24 i altres portals líders. Estoc sempre sincronitzat.', icon: 'rocket_launch' },
-          { title: 'Fitxes de vehicle optimitzades', description: 'Fitxes amb equipament complet (JATO/Eurotax), fotografies, preu, finançament i descripció generada automàticament per maximitzar conversió.', icon: 'description' },
-          { title: 'Gestió de preus intel·ligent', description: 'Comparativa de preus de mercat en temps real. Alertes quan el teu preu està per sobre o per sota del mercat per prendre decisions ràpides.', icon: 'sell' },
-          { title: 'Analítica de portals', description: 'Visites, leads i ràtio de conversió per vehicle i per portal. Identifica quins canals porten més clients i optimitza la teva inversió publicitària.', icon: 'analytics' },
-          { title: 'Centralització de leads', description: "Tots els leads dels teus portals arriben al mateix lloc, sincronitzats amb el teu CRM. Sense pèrdua d'informació.", icon: 'inbox' },
-          { title: 'Integració amb web i CRM', description: 'Connectat nativament amb CRM4YOU i la teva web Motorflash. Ecosistema tancat sense doble entrada de dades.', icon: 'sync_alt' },
-        ],
-      },
-      {
-        type: 'highlights',
-        title: 'Més visibilitat, menys feina i més control',
-        lead: 'La publicació manual als portals consumeix entre 2 i 4 hores diàries de feina. Amb Classificats, aquest temps es redueix a minuts i la qualitat de les fitxes millora.',
-        highlights: [
-          { title: 'Publicació automàtica', description: 'Un cop a tots els portals' },
-          { title: 'Intel·ligència de preus', description: 'Comparativa de mercat en temps real' },
-          { title: '40.000 vehicles/mes', description: "El major volum d'automoció" },
-          { title: 'Leads centralitzats', description: 'Tots els portals en una bústia' },
-        ],
-        bullets: [
-          'Portals integrats: Coches.net, Milanuncios, Wallapop, AutoScout24, Autocasion i més.',
-          "Fotografies millorades: eina d'edició de fotos integrada per eliminar fons i millorar l'atractiu visual del vehicle.",
-          'Descomptes negociats amb els principals portals per volum de publicacions',
-          'Alertes de vehicles amb preu fora de mercat per actuar ràpidament',
-          'Rotació automàtica de destacats per maximitzar la visibilitat',
-        ],
-      },
-      {
-        type: 'process',
-        title: 'Com funciona Classificats?',
-        steps: [
-          { title: "Connexió del teu estoc", description: "Connectem el teu DMS, ERP o CRM per importar el teu estoc automàticament. Configurem les regles de publicació i els portals objectiu." },
-          { title: 'Publicació automàtica', description: "Els teus vehicles es publiquen a tots els portals seleccionats amb fitxes optimitzades. Les baixes i modificacions es sincronitzen en temps real." },
-          { title: 'Gestió de leads i reporting', description: 'Tots els leads arriben a un sol lloc. Informe setmanal amb rendiment per portal, per vehicle i comparativa de mercat de preus.' },
-        ],
-      },
-      {
-        type: 'cta',
-        title: 'Vols publicar el teu estoc a tots els portals sense esforç?',
-        lead: "Sol·licita una demo i et mostrem com Classificats pot estalviar-te hores de feina cada setmana i augmentar la teva visibilitat online.",
-      },
-    ],
-  },
-  'crm4you': {
-    subtitle: "Gestiona la teva activitat comercial de manera fluida, amb informació completa i sense passos innecessaris",
-    sections: [
-      {
-        type: 'features',
-        title: 'El CRM per a grups de concessionaris',
-        lead: "L'únic CRM del sector dissenyat per gestionar de manera centralitzada múltiples ubicacions, marques i concessionaris. Optimitza el procés comercial a nivell grupal amb IA integrada que treballa amb tu.",
-        items: [
-          { title: 'Gestió centralitzada de leads', description: 'Tots els leads de la teva web, portals, Social Ads i trucades telefòniques entren en un sol punt. No perdis mai un lead per canal no monitoritzat.', icon: 'inbox' },
-          { title: 'Pipeline visual de vendes', description: 'Tauler Kanban adaptat al procés de venda: Nou → Contactat → Visita → Prova de ruta → Oferta → Entrega. Cada etapa amb les seves mètriques.', icon: 'view_kanban' },
-          { title: 'Seguiment automàtic', description: "Seqüències de correu i SMS automàtiques per a cada etapa del procés. El CRM fa el seguiment per tu quan l'assessor està ocupat.", icon: 'autorenew' },
-          { title: 'Agenda integrada', description: "Gestió de cites de venda i proves de ruta integrada al CRM. Sincronització amb Google Calendar i notificacions automàtiques al client.", icon: 'calendar_month' },
-          { title: 'Informes de direcció', description: "Dashboard de gestió amb el rendiment de cada assessor, taxa de conversió per canal, temps mitjà de tancament i previsió de vendes mensual.", icon: 'analytics' },
-          { title: 'Integracions natives', description: "Connectat amb els teus Serveis Web, Classificats, Contact Center, WhatsApp Business i els principals portals de vehicles. Ecosistema tancat i sense fuites de dades.", icon: 'sync_alt' },
-        ],
-      },
-      {
-        type: 'highlights',
-        title: "Un CRM que treballa tant per a l'assessor com per a la direcció",
-        lead: "CRM4YOU té dues cares: l'operativa (per a l'assessor de vendes) i l'analítica (per al director comercial o gerent del concessionari).",
-        highlights: [
-          { title: 'Pipeline Kanban de vendes', description: "Visual, adaptat a automoció" },
-          { title: 'Automatització de seguiment', description: 'Correu i SMS automàtics per etapa' },
-          { title: 'Gestió per assessor', description: 'Rendiment individual mesurable' },
-          { title: 'Ecosistema integrat', description: 'Web, portals, WhatsApp i Contact Center' },
-        ],
-        bullets: [
-          "Per a l'assessor: vista de tasques pendents, recordatoris automàtics, historial complet de cada lead i plantilles de comunicació.",
-          "Per a la direcció: rendiment individual de cada assessor, conversió per font de lead, temps mitjà de tancament i forecast de vendes.",
-          'App mòbil per a gestió a qualsevol lloc i dispositiu',
-          "Importació de dades des del teu DMS o CRM anterior sense pèrdua d'historial",
-          'Rols i permisos configurables per concessionari o grup',
-        ],
-      },
-      {
-        type: 'process',
-        title: 'Com posem en marxa CRM4YOU?',
-        steps: [
-          { title: 'Configuració personalitzada', description: "Adaptem el pipeline, els camps i els fluxos d'automatització al teu procés de venda concret. No t'adaptes al CRM, el CRM s'adapta a tu." },
-          { title: 'Migració i integració', description: 'Importem les teves dades actuals i connectem totes les teves fonts de leads: web, portals, Social Ads i Contact Center en 5-7 dies laborables.' },
-          { title: 'Formació i activació', description: 'Formació presencial o remota per a tot l\'equip. Suport dedicat els primers 30 dies per assegurar l\'adopció correcta del sistema.' },
-        ],
-      },
-      {
-        type: 'cta',
-        title: 'Vols veure CRM4YOU funcionant amb les teves dades?',
-        lead: 'Sol·licita una demo personalitzada i et mostrem com es veuria CRM4YOU adaptat al teu concessionari en menys de 30 minuts.',
-      },
-    ],
-  },
   'contact-center': {
     subtitle: 'Gestiona trucades, xats i missatges des d\'una sola plataforma connectada amb el teu CRM',
     sections: [
@@ -542,52 +442,69 @@ export const productContent: Record<string, ProductContent> = {
     ],
   },
   'lead-factory': {
-    subtitle: 'Estalvia temps i centra\'t en les vendes',
+    subtitle: "Captació de leads amb intenció de compra real · Qualificats o sense qualificar",
     sections: [
       {
-        type: 'features',
-        title: 'Per què Lead 5 Estrelles és diferent?',
-        lead: "No venem bases de dades. Captem prospectes actius que estan en el procés de compravenda del seu vehicle.",
-        items: [
-          { title: 'Doble lead en un contacte', description: "El venedor d'un cotxe és, gairebé sempre, també un comprador. Captem aquest moment de transició per oferir-te el lead més valuós del mercat.", icon: 'star' },
-          { title: 'Segmentació geogràfica', description: "Espanya dividida en 7 zones d'exclusivitat. Cada concessionari rep els leads de la seva àrea d'influència, sense competència dins del seu territori.", icon: 'map' },
-          { title: 'Entrega en temps real', description: 'El lead arriba al teu CRM o correu en el mateix moment en què el particular completa el formulari. Zero demora, màxima capacitat de reacció.', icon: 'schedule' },
-          { title: 'Leads qualificats', description: 'Procés de verificació que filtra els contactes falsos o de baixa qualitat. Només reps leads reals amb dades de contacte verificades.', icon: 'verified' },
-          { title: 'Reporting detallat', description: 'Dashboard amb la font de cada lead, la conversió a visita i la conversió final a venda. Mètriques reals per optimitzar.', icon: 'analytics' },
-          { title: 'Integració amb el teu CRM', description: 'Els leads arriben directament a CRM4YOU o al CRM que facis servir. Sense doble entrada de dades.', icon: 'sync_alt' },
+        type: 'highlights',
+        title: "D'on vénen els leads?",
+        lead: "Dues fonts de trànsit complementàries que alimenten el canal: trànsit orgànic SEO i la major base d'estoc i inventari del mercat.",
+        highlights: [
+          { title: '70.000+', description: 'Vehicles publicats al portal Motorflash.com' },
+          { title: '17.000+', description: 'Concessionaris treballant amb Motorflash.com' },
+          { title: '120.000', description: 'Visites orgàniques mensuals al portal' },
+          { title: 'SEO', description: "Posicionament per marca, model i intenció de compra" },
+        ],
+        bullets: [
+          "SEO orgànic qualificat: posicionament per marca i model (Audi A4, Q3, Q5…) i per cerques amb intenció de compra (\"Citroen ocasió Barcelona\").",
+          "Portal Motorflash: la major base d'estoc i inventari del mercat, amb trànsit orgànic especialitzat en automoció.",
+          "Lead d'alta qualitat: l'usuari arriba buscant comprar, no navegant per curiositat.",
         ],
       },
       {
-        type: 'highlights',
-        title: 'De la captació a la venda en 3 passos',
-        lead: 'El nostre sistema de captació multicanal garanteix un flux constant de leads d\'alta qualitat per al teu concessionari, tots els dies de l\'any.',
-        highlights: [
-          { title: 'Particular venedor', description: 'Vol vendre el seu cotxe i comprar-ne un altre' },
-          { title: 'Zona geogràfica exclusiva', description: '7 zones a Espanya sense solapament' },
-          { title: 'Contacte immediat', description: 'Lead en temps real amb dades verificades' },
-          { title: 'Doble oportunitat', description: 'Taxació VO + venda VN en un sol lead' },
-        ],
-        bullets: [
-          'Captació multicanal: SEO, SEM, Social Ads i portals especialitzats per captar el particular en el moment de decisió.',
-          "Qualificació automàtica: el sistema verifica les dades i filtra els contactes falsos abans d'enviar el lead.",
-          'Entrega immediata: el lead arriba al teu correu, CRM o WhatsApp en temps real amb totes les dades del vehicle i el contacte.',
-          "Zones d'exclusivitat per evitar la competència interna entre concessionaris",
-          'Preu per lead, sense subscripció mensual mínima ni permanència',
+        type: 'features',
+        title: 'Dues modalitats, una promesa',
+        lead: "Tria el nivell de qualificació que millor encaixi amb el teu equip comercial. Només pagues pels leads entregats — sense cost d'inversió publicitària.",
+        items: [
+          { title: 'Qualificat — 45 € per lead', description: "Filtrat pel nostre sistema d'scoring: només entreguem leads que superen el llindar mínim de qualificació. Set up 750 €. Preu a valorar segons estoc.", icon: 'verified' },
+          { title: 'Prospect (sense qualificar) — 25 € per lead', description: "Mateix origen de trànsit, sense filtre d'scoring. Major volum, qualificació a càrrec del teu equip comercial. Sense duplicats ni repetits. Set up 750 €.", icon: 'inventory' },
+          { title: 'Sense inversió publicitària', description: 'No pagues per clics ni per campanyes: només pagues pel que reps. Model escalable segons la capacitat de gestió del teu equip.', icon: 'savings' },
+          { title: 'Entregable complet', description: 'Cada prospect arriba amb nom, telèfon, email, vehicle d\'interès (marca i model), intenció de compra (termini i urgència) i ubicació (província i ciutat).', icon: 'contact_page' },
+          { title: 'Filtre de qualitat', description: 'Només el 70 % dels leads generats passa el filtre inicial. Només t\'entreguem els que són prospect vàlids.', icon: 'filter_alt' },
+          { title: 'Contacte calent', description: 'La immediatesa és clau: contactar en calent multiplica la conversió. Enviem el lead al moment perquè actuïs amb la màxima informació.', icon: 'schedule' },
         ],
       },
       {
         type: 'process',
-        title: 'Com funciona Lead 5 Estrelles?',
+        title: "Sistema d'scoring · 6 variables",
         steps: [
-          { title: 'Captació multicanal', description: 'Captem particulars a través de SEO, SEM, Social Ads i portals especialitzats al moment en què decideixen vendre el seu vehicle.' },
-          { title: 'Qualificació i verificació', description: 'El sistema verifica les dades de contacte i filtra els leads de baixa qualitat. Només leads reals i qualificats arriben al teu concessionari.' },
-          { title: 'Entrega i seguiment', description: 'El lead arriba en temps real al teu CRM, correu o WhatsApp. Seguiment de l\'estat de cada lead amb reporting mensual de conversió.' },
+          { title: 'Intenció de compra', description: "Menys d'1 mes · 1-3 mesos · 3+ mesos. El termini previst de compra impacta directament en l'scoring." },
+          { title: 'Encaix del vehicle', description: 'Escala d\'1 a 5 sobre el model buscat. Com millor encaixi amb el teu estoc, més alt el score.' },
+          { title: "Confirmació d'ubicació", description: "Província i ciutat de la concessió. Confirma que el comprador es pot desplaçar al teu punt de venda." },
+          { title: 'Interès a visitar', description: 'Disponibilitat real per acudir al concessionari. Filtra els que només són en fase d\'exploració.' },
+          { title: 'Vehicle a canvi', description: 'Possible part del pagament amb el seu cotxe actual. Doble oportunitat: taxació VO + venda VN.' },
+          { title: 'Forma de pagament', description: 'Finançat · Al comptat · Per definir. Aporta context sobre la capacitat i velocitat de tancament.' },
+        ],
+      },
+      {
+        type: 'highlights',
+        title: 'Cas client real',
+        lead: "Resultats reals d'un concessionari després de la implementació del canal Exclusive. Puntuació mitjana obtinguda: 55/100.",
+        highlights: [
+          { title: '230', description: 'Cotxes publicats · inventari actiu al portal' },
+          { title: '92', description: 'Prospectes generats pel canal Exclusive' },
+          { title: '22', description: "Leads qualificats que superen el llindar d'scoring" },
+          { title: '9 %', description: 'Ràtio de conversió de lead a venda · 2 vendes tancades' },
+        ],
+        bullets: [
+          "2 operacions convertides en facturació real sobre un total de 22 leads qualificats.",
+          "Puntuació mitjana dels leads: 55/100 sobre les 6 variables de l'scoring.",
+          "Model escalable: a més volum publicat, més generació de leads.",
         ],
       },
       {
         type: 'cta',
-        title: 'Vols leads de compradors de cotxes a la teva zona?',
-        lead: 'Consulta la disponibilitat de la teva zona exclusiva i comença a rebre leads qualificats des del primer dia.',
+        title: 'Parlem dels teus leads',
+        lead: "T'ajudem a definir el model de generació de trànsit que millor s'adapta al teu concessionari. Consulta amb el nostre equip comercial la modalitat i el volum adequats per a la teva operació.",
       },
     ],
   },

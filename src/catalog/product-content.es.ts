@@ -7,106 +7,6 @@
 import type { ProductContent } from './product-content'
 
 export const productContent: Record<string, ProductContent> = {
-  'portal-publicacion': {
-    subtitle: 'El portal propio de VO del grupo Motorflash',
-    sections: [
-      {
-        type: 'features',
-        title: 'Publica una vez, aparece en todos los portales',
-        lead: 'Olvídate de subir los vehículos portal a portal. Con Clasificados, publicas una vez y tu stock aparece en todos los portales de forma automática.',
-        items: [
-          { title: 'Publicación automática multiportal', description: 'Un solo clic publica tu vehículo en Coches.net, Milanuncios, Wallapop, AutoScout24 y otros portales líderes. Stock siempre sincronizado.', icon: 'rocket_launch' },
-          { title: 'Fichas de vehículo optimizadas', description: 'Fichas con equipamiento completo (JATO/Eurotax), fotografías, precio, financiación y descripción generada automáticamente para maximizar conversión.', icon: 'description' },
-          { title: 'Gestión de precios inteligente', description: 'Comparativa de precios de mercado en tiempo real. Alertas cuando tu precio está por encima o por debajo del mercado para tomar decisiones rápidas.', icon: 'sell' },
-          { title: 'Analítica de portales', description: 'Visitas, leads y ratio de conversión por vehículo y por portal. Identifica qué canales te traen más clientes y optimiza tu inversión publicitaria.', icon: 'analytics' },
-          { title: 'Centralización de leads', description: 'Todos los leads de tus portales llegan al mismo lugar, sincronizados con tu CRM. Sin pérdida de información.', icon: 'inbox' },
-          { title: 'Integración con web y CRM', description: 'Conectado nativamente con CRM4YOU y tu web Motorflash. Ecosistema cerrado sin doble entrada de datos.', icon: 'sync_alt' },
-        ],
-      },
-      {
-        type: 'highlights',
-        title: 'Más visibilidad, menos trabajo y mayor control',
-        lead: 'La publicación manual en portales consume entre 2 y 4 horas diarias de trabajo. Con Clasificados, ese tiempo se reduce a minutos y la calidad de las fichas mejora.',
-        highlights: [
-          { title: 'Publicación automática', description: 'Una vez en todos los portales' },
-          { title: 'Inteligencia de precios', description: 'Comparativa de mercado en tiempo real' },
-          { title: '40.000 vehículos/mes', description: 'El mayor volumen de automoción' },
-          { title: 'Leads centralizados', description: 'Todos los portales en un buzón' },
-        ],
-        bullets: [
-          'Portales integrados: Coches.net, Milanuncios, Wallapop, AutoScout24, Autocasion y más.',
-          'Fotografías mejoradas: herramienta de edición de fotos integrada para eliminar fondos y mejorar el atractivo visual del vehículo.',
-          'Descuentos negociados con los principales portales por volumen de publicaciones',
-          'Alertas de vehículos con precio fuera de mercado para actuar rápido',
-          'Rotación automática de destacados para maximizar la visibilidad',
-        ],
-      },
-      {
-        type: 'process',
-        title: '¿Cómo funciona Clasificados?',
-        steps: [
-          { title: 'Conexión de tu stock', description: 'Conectamos tu DMS, ERP o CRM para importar tu stock automáticamente. Configuramos las reglas de publicación y los portales objetivo.' },
-          { title: 'Publicación automática', description: 'Tus vehículos se publican en todos los portales seleccionados con fichas optimizadas. Las bajas y modificaciones se sincronizan en tiempo real.' },
-          { title: 'Gestión de leads y reporting', description: 'Todos los leads llegan a un único lugar. Informe semanal con rendimiento por portal, por vehículo y comparativa de mercado de precios.' },
-        ],
-      },
-      {
-        type: 'cta',
-        title: '¿Quieres publicar tu stock en todos los portales sin esfuerzo?',
-        lead: 'Solicita una demo y te mostramos cómo Clasificados puede ahorrarte horas de trabajo cada semana y aumentar tu visibilidad online.',
-      },
-    ],
-  },
-  'crm4you': {
-    subtitle: 'Gestiona tu actividad comercial de forma fluida, con información completa y sin pasos innecesarios',
-    sections: [
-      {
-        type: 'features',
-        title: 'El CRM para grupos de concesionarios',
-        lead: 'El único CRM del sector diseñado para gestionar de forma centralizada múltiples ubicaciones, marcas y concesionarios. Optimiza el proceso comercial a nivel grupal con IA integrada que trabaja contigo.',
-        items: [
-          { title: 'Gestión centralizada de leads', description: 'Todos los leads de tu web, portales, Social Ads y llamadas telefónicas entran en un único punto. Nunca pierdas un lead por canal no monitorizado.', icon: 'inbox' },
-          { title: 'Pipeline visual de ventas', description: 'Tablero Kanban adaptado al proceso de venta: Nuevo → Contactado → Visita → Prueba ruta → Oferta → Entrega. Cada etapa con sus métricas.', icon: 'view_kanban' },
-          { title: 'Seguimiento automático', description: 'Secuencias de email y SMS automáticas para cada etapa del proceso. El CRM hace el seguimiento por ti cuando el asesor está ocupado.', icon: 'autorenew' },
-          { title: 'Agenda integrada', description: 'Gestión de citas de venta y pruebas de ruta integrada en el CRM. Sincronización con Google Calendar y notificaciones automáticas al cliente.', icon: 'calendar_month' },
-          { title: 'Informes de dirección', description: 'Dashboard de gestión con el rendimiento de cada asesor, tasa de conversión por canal, tiempo medio de cierre y previsión de ventas mensual.', icon: 'analytics' },
-          { title: 'Integraciones nativas', description: 'Conectado con tus Servicios Web, Clasificados, Contact Center, WhatsApp Business y los principales portales de vehículos. Ecosistema cerrado y sin fugas de datos.', icon: 'sync_alt' },
-        ],
-      },
-      {
-        type: 'highlights',
-        title: 'Un CRM que trabaja tanto para el asesor como para la dirección',
-        lead: 'CRM4YOU tiene dos caras: la operativa (para el asesor de ventas) y la analítica (para el director comercial o gerente del concesionario).',
-        highlights: [
-          { title: 'Pipeline Kanban de ventas', description: 'Visual, adaptado a automoción' },
-          { title: 'Automatización de seguimiento', description: 'Email y SMS automáticos por etapa' },
-          { title: 'Gestión por asesor', description: 'Rendimiento individual medible' },
-          { title: 'Ecosistema integrado', description: 'Web, portales, WhatsApp y Contact Center' },
-        ],
-        bullets: [
-          'Para el asesor: vista de tareas pendientes, recordatorios automáticos, historial completo de cada lead y plantillas de comunicación.',
-          'Para la dirección: rendimiento individual de cada asesor, conversión por fuente de lead, tiempo medio de cierre y forecast de ventas.',
-          'App móvil para gestión en cualquier lugar y dispositivo',
-          'Importación de datos desde tu DMS o CRM anterior sin pérdida de historial',
-          'Roles y permisos configurables por concesionario o grupo',
-        ],
-      },
-      {
-        type: 'process',
-        title: '¿Cómo ponemos en marcha CRM4YOU?',
-        steps: [
-          { title: 'Configuración personalizada', description: 'Adaptamos el pipeline, los campos y los flujos de automatización a tu proceso de venta concreto. No te adaptas al CRM, el CRM se adapta a ti.' },
-          { title: 'Migración e integración', description: 'Importamos tus datos actuales y conectamos todas tus fuentes de leads: web, portales, Social Ads y Contact Center en 5-7 días laborables.' },
-          { title: 'Formación y activación', description: 'Formación presencial o remota para todo el equipo. Soporte dedicado los primeros 30 días para asegurar la adopción correcta del sistema.' },
-        ],
-      },
-      {
-        type: 'cta',
-        title: '¿Quieres ver CRM4YOU funcionando con tus datos?',
-        lead: 'Solicita una demo personalizada y te mostramos cómo se vería CRM4YOU adaptado a tu concesionario en menos de 30 minutos.',
-      },
-    ],
-  },
   'contact-center': {
     subtitle: 'Gestiona llamadas, chats y mensajes desde una sola plataforma conectada con tu CRM',
     sections: [
@@ -543,52 +443,69 @@ export const productContent: Record<string, ProductContent> = {
     ],
   },
   'lead-factory': {
-    subtitle: 'Ahorra tiempo y céntrate en las ventas',
+    subtitle: 'Captación de leads con intención de compra real · Cualificados o sin cualificar',
     sections: [
       {
-        type: 'features',
-        title: '¿Por qué Lead 5 Estrellas es diferente?',
-        lead: 'No vendemos bases de datos. Captamos prospectos activos que están en el proceso de compra-venta de su vehículo.',
-        items: [
-          { title: 'Doble lead en un contacto', description: 'El vendedor de un coche es, casi siempre, también un comprador. Captamos ese momento de transición para ofrecerte el lead más valioso del mercado.', icon: 'star' },
-          { title: 'Segmentación geográfica', description: 'España dividida en 7 zonas de exclusividad. Cada concesionario recibe los leads de su área de influencia, sin competencia dentro de su territorio.', icon: 'map' },
-          { title: 'Entrega en tiempo real', description: 'El lead llega a tu CRM o email en el mismo momento en que el particular completa el formulario. Cero demora, máxima capacidad de reacción.', icon: 'schedule' },
-          { title: 'Leads cualificados', description: 'Proceso de verificación que filtra los contactos falsos o de baja calidad. Solo recibes leads reales con datos de contacto verificados.', icon: 'verified' },
-          { title: 'Reporting detallado', description: 'Dashboard con la fuente de cada lead, la conversión a visita y la conversión final a venta. Métricas reales para optimizar.', icon: 'analytics' },
-          { title: 'Integración con tu CRM', description: 'Los leads llegan directamente a CRM4YOU o al CRM que utilices. Sin doble entrada de datos.', icon: 'sync_alt' },
+        type: 'highlights',
+        title: '¿De dónde vienen los leads?',
+        lead: 'Dos fuentes de tráfico complementarias que alimentan el canal: tráfico orgánico SEO y la mayor base de stock e inventario del mercado.',
+        highlights: [
+          { title: '70.000+', description: 'Vehículos publicados en el portal Motorflash.com' },
+          { title: '17.000+', description: 'Concesionarios trabajando con Motorflash.com' },
+          { title: '120.000', description: 'Visitas orgánicas mensuales al portal' },
+          { title: 'SEO', description: 'Posicionamiento por marca, modelo e intención de compra' },
+        ],
+        bullets: [
+          'SEO orgánico cualificado: posicionamiento por marca y modelo (Audi A4, Q3, Q5…) y por búsquedas con intención de compra ("Citroen ocasión Madrid").',
+          'Portal Motorflash: la mayor base de stock e inventario del mercado, con tráfico orgánico especializado en automoción.',
+          'Lead de alta calidad: el usuario llega buscando comprar, no navegando por curiosidad.',
         ],
       },
       {
-        type: 'highlights',
-        title: 'De la captación a la venta en 3 pasos',
-        lead: 'Nuestro sistema de captación multicanal garantiza un flujo constante de leads de alta calidad para tu concesionario, todos los días del año.',
-        highlights: [
-          { title: 'Particular vendedor', description: 'Quiere vender su coche y comprar otro' },
-          { title: 'Zona geográfica exclusiva', description: '7 zonas en España sin solapamiento' },
-          { title: 'Contacto inmediato', description: 'Lead en tiempo real con datos verificados' },
-          { title: 'Doble oportunidad', description: 'Tasación VO + venta VN en un solo lead' },
-        ],
-        bullets: [
-          'Captación multicanal: SEO, SEM, Social Ads y portales especializados para captar al particular en el momento de decisión.',
-          'Cualificación automática: el sistema verifica los datos y filtra los contactos falsos antes de enviar el lead.',
-          'Entrega inmediata: el lead llega a tu email, CRM o WhatsApp en tiempo real con todos los datos del vehículo y el contacto.',
-          'Zonas de exclusividad para evitar la competencia interna entre concesionarios',
-          'Precio por lead, sin suscripción mensual mínima ni permanencia',
+        type: 'features',
+        title: 'Dos modalidades, una promesa',
+        lead: 'Elige el nivel de cualificación que mejor encaje con tu equipo comercial. Solo pagas por leads entregados — sin coste de inversión publicitaria.',
+        items: [
+          { title: 'Cualificado — 45 € por lead', description: 'Filtrado por nuestro sistema de scoring: solo entregamos leads que superan el umbral mínimo de cualificación. Set up 750 €. Precio a valorar según stock.', icon: 'verified' },
+          { title: 'Prospect (sin cualificar) — 25 € por lead', description: 'Mismo origen de tráfico, sin filtro de scoring. Mayor volumen, cualificación a cargo de tu equipo comercial. Sin duplicados ni repetidos. Set up 750 €.', icon: 'inventory' },
+          { title: 'Sin inversión publicitaria', description: 'No pagas por clicks ni por campañas: solo pagas por lo que recibes. Modelo escalable según la capacidad de gestión de tu equipo.', icon: 'savings' },
+          { title: 'Entregable completo', description: 'Cada prospect llega con nombre, teléfono, email, vehículo de interés (marca y modelo), intención de compra (plazo y urgencia) y ubicación (provincia y ciudad).', icon: 'contact_page' },
+          { title: 'Filtro de calidad', description: 'Solo el 70 % de los leads generados pasa el filtro inicial. Solo te entregamos los que son prospect válidos.', icon: 'filter_alt' },
+          { title: 'Contacto caliente', description: 'La inmediatez es clave: contactar caliente multiplica la conversión. Te enviamos el lead al momento para que actúes con la máxima información.', icon: 'schedule' },
         ],
       },
       {
         type: 'process',
-        title: '¿Cómo funciona Lead 5 Estrellas?',
+        title: 'Sistema de Scoring · 6 variables',
         steps: [
-          { title: 'Captación multicanal', description: 'Captamos particulares a través de SEO, SEM, Social Ads y portales especializados en el momento en que deciden vender su vehículo.' },
-          { title: 'Cualificación y verificación', description: 'El sistema verifica los datos de contacto y filtra los leads de baja calidad. Solo leads reales y cualificados llegan a tu concesionario.' },
-          { title: 'Entrega y seguimiento', description: 'El lead llega en tiempo real a tu CRM, email o WhatsApp. Seguimiento del estado de cada lead con reporting mensual de conversión.' },
+          { title: 'Intención de compra', description: 'Menos de 1 mes · 1-3 meses · 3+ meses. El plazo previsto de compra impacta directamente en el scoring.' },
+          { title: 'Encaje del vehículo', description: 'Escala de 1 a 5 sobre el modelo buscado. Cuanto mejor encaje con tu stock, más alto el score.' },
+          { title: 'Confirmación de ubicación', description: 'Provincia y ciudad de la concesión. Confirma que el comprador puede desplazarse a tu punto de venta.' },
+          { title: 'Interés en visitar', description: 'Disponibilidad real para acudir al concesionario. Filtra a los que solo están en fase de exploración.' },
+          { title: 'Vehículo a cambio', description: 'Posible parte del pago en su coche actual. Doble oportunidad: tasación VO + venta VN.' },
+          { title: 'Forma de pago', description: 'Financiado · Contado · Por definir. Aporta contexto sobre la capacidad y velocidad de cierre.' },
+        ],
+      },
+      {
+        type: 'highlights',
+        title: 'Caso cliente real',
+        lead: 'Resultados reales de un concesionario tras la implementación del canal Exclusive. Puntuación media obtenida: 55/100.',
+        highlights: [
+          { title: '230', description: 'Coches publicados · inventario activo en el portal' },
+          { title: '92', description: 'Prospectos generados por el canal Exclusive' },
+          { title: '22', description: 'Leads cualificados que superan el umbral de scoring' },
+          { title: '9 %', description: 'Ratio de conversión de lead a venta · 2 ventas cerradas' },
+        ],
+        bullets: [
+          '2 operaciones convertidas en facturación real sobre un total de 22 leads cualificados.',
+          'Puntuación media de los leads: 55/100 sobre las 6 variables del scoring.',
+          'Modelo escalable: a más volumen publicado, mayor generación de leads.',
         ],
       },
       {
         type: 'cta',
-        title: '¿Quieres leads de compradores de coches en tu zona?',
-        lead: 'Consulta la disponibilidad de tu zona exclusiva y empieza a recibir leads cualificados desde el primer día.',
+        title: 'Hablemos de tus leads',
+        lead: 'Te ayudamos a definir el modelo de generación de tráfico que mejor se adapta a tu concesionario. Consulta con nuestro equipo comercial la modalidad y el volumen adecuados para tu operación.',
       },
     ],
   },

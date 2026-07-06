@@ -33,7 +33,6 @@ const PRODUCT_OPTIONS = [
   { value: 'ia', label: 'Motorflash IA' },
   { value: 'soluciones-web', label: 'Web / Marketplace' },
   { value: 'marketing-digital', label: 'Marketing Digital' },
-  { value: 'portal-publicacion', label: 'Clasificados' },
   { value: 'lead-factory', label: 'Lead Exclusive' },
   { value: 'soluciones-fabricantes', label: 'Fabricantes' },
   { value: 'motorflash-connect', label: 'Fleet Manager' },

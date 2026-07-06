@@ -32,7 +32,7 @@ try {
   const url = process.env.POSTGRES_URL || process.env.DATABASE_URL || process.env.PRISMA_DATABASE_URL
   const client = new pg.Client({ connectionString: url, ssl: { rejectUnauthorized: false } })
   await client.connect()
-  const REMOVED_SLUGS = ['motorflash-mobile-tracking']
+  const REMOVED_SLUGS = ['motorflash-mobile-tracking', 'portal-publicacion']
   for (const slug of REMOVED_SLUGS) {
     try {
       // 1. Ids del producto (uno por locale en products_locales, pero
@@ -941,7 +941,6 @@ try {
       'Servicios Web': { ca: 'Serveis Web', en: 'Web Services', zh: '网站服务' },
       'Marketing Digital (SEO/SEA)': { ca: 'Marketing Digital (SEO/SEA)', en: 'Digital Marketing (SEO/SEA)', zh: '数字营销(SEO/SEA)' },
       'Marketing Digital': { ca: 'Marketing Digital', en: 'Digital Marketing', zh: '数字营销' },
-      'Clasificados (Motorflash.com)': { ca: 'Classificats (Motorflash.com)', en: 'Classifieds (Motorflash.com)', zh: '分类信息(Motorflash.com)' },
       'Lead Exclusive': { ca: 'Lead Exclusive', en: 'Lead Exclusive', zh: '独家潜客(Lead Exclusive)' },
       'Lead Exclusive (5 Estrellas)': { ca: 'Lead Exclusive (5 Estrelles)', en: 'Lead Exclusive (5-Star)', zh: '独家潜客(5 星)' },
       'Fleet Manager': { ca: 'Fleet Manager', en: 'Fleet Manager', zh: 'Fleet Manager' },
@@ -1254,6 +1253,78 @@ try {
     }
   } catch (err) {
     console.warn('[sync-schema] ✗ eliminar mobile-tracking:', err?.message || err)
+  }
+
+  // -------------------------------------------------------------------
+  // Unificación Clasificados + Lead Exclusive → Lead Motorflash.com.
+  // El slug 'lead-factory' se mantiene (URL), solo se renombra el
+  // nombre visible y el label del menú. Idempotente.
+  // -------------------------------------------------------------------
+  try {
+    const isPg = /^postgres(ql)?:\/\//i.test(
+      process.env.POSTGRES_URL || process.env.DATABASE_URL || process.env.PRISMA_DATABASE_URL || '',
+    )
+    if (isPg && payload.db?.drizzle) {
+      const { sql } = await import('drizzle-orm')
+      // 1. Renombrar en products_locales todo lo relativo a lead-factory.
+      try {
+        const r1 = await payload.db.drizzle.execute(sql.raw(`
+          UPDATE products_locales
+          SET name = 'Lead Motorflash.com',
+              menu_label = 'Lead Motorflash.com'
+          WHERE _parent_id IN (SELECT id FROM products WHERE slug = 'lead-factory')
+            AND name != 'Lead Motorflash.com'
+        `))
+        if ((r1?.rowCount ?? 0) > 0) {
+          console.log(`[sync-schema] migración Lead Motorflash.com (productos): ${r1.rowCount} filas`)
+        }
+      } catch (err) {
+        console.warn('[sync-schema] Lead Motorflash (productos):', err?.message || err)
+      }
+      // 2. Renombrar label del item del menú.
+      for (const t of ['main_menu_items_children', 'main_menu_items']) {
+        try {
+          const r2 = await payload.db.drizzle.execute(sql.raw(`
+            UPDATE "${t}"
+            SET label = 'Lead Motorflash.com'
+            WHERE label IN (
+              'Lead Exclusive', 'Lead Exclusive (5 Estrellas)', 'Lead Exclusive (5 Estrelles)',
+              'Lead Exclusive (5-Star)', '独家潜客(Lead Exclusive)', '独家潜客(5 星)'
+            )
+          `))
+          if ((r2?.rowCount ?? 0) > 0) {
+            console.log(`[sync-schema] migración Lead Motorflash.com (${t}): ${r2.rowCount} filas`)
+          }
+        } catch {}
+      }
+      // 3. Borrar el item "Clasificados" del menú (era producto aparte).
+      for (const t of ['main_menu_items_children', 'main_menu_items']) {
+        try {
+          const r3 = await payload.db.drizzle.execute(sql.raw(`
+            DELETE FROM "${t}"
+            WHERE url = '/servicios/portal-publicacion'
+               OR label IN (
+                 'Clasificados (Motorflash.com)', 'Classificats (Motorflash.com)',
+                 'Classifieds (Motorflash.com)', '分类信息(Motorflash.com)'
+               )
+          `))
+          if ((r3?.rowCount ?? 0) > 0) {
+            console.log(`[sync-schema] eliminar portal-publicacion menu (${t}): ${r3.rowCount} filas`)
+          }
+        } catch {}
+      }
+      // 4. Borrar plan de precios si existe.
+      try {
+        const r4 = await payload.db.drizzle.execute(sql.raw(`
+          DELETE FROM pricing_plans WHERE product_slug = 'portal-publicacion'
+        `))
+        if ((r4?.rowCount ?? 0) > 0) {
+          console.log(`[sync-schema] eliminar portal-publicacion (pricing_plans): ${r4.rowCount}`)
+        }
+      } catch {}
+    }
+  } catch (err) {
+    console.warn('[sync-schema] ✗ unificación Lead Motorflash.com:', err?.message || err)
   }
 
   // -------------------------------------------------------------------
