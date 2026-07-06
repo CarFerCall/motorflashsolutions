@@ -404,8 +404,9 @@ export const productContent: Record<string, ProductContent> = {
         lead: 'Motorflash 数字营销团队结合经验与技术,打造可衡量的定制化活动。为汽车行业量身定制的策略,旨在产生影响并提升销量。',
         items: [
           { title: '聚焦汽车行业', description: '我们熟悉汽车市场的需求与特性,为每家经销店或二手车企业打造合适的数字策略。', icon: 'verified' },
-          { title: '专注 SEO、SEA 与 Social 的团队', description: '我们设有 SEO 团队、专注 SEA 的团队,以及聚焦 Social Ads 的第三支团队,合力推动您的业务。', icon: 'group' },
-          { title: '整体策略与持续优化', description: '我们设计并分析 SEO、SEA 与社交活动,优化每一项动作以最大化业绩并创造更多销售机会。', icon: 'autorenew' },
+          { title: '专注 SEO、SEA、Social 与 GEO 的团队', description: '我们设有 SEO 团队、专注 SEA 的团队、聚焦 Social Ads 的第三支团队,以及专注 GEO(生成式引擎优化)的第四支团队,让您的品牌也出现在 AI 的回答中。', icon: 'group' },
+          { title: '整体策略与持续优化', description: '我们设计并分析 SEO、SEA、社交与 GEO 活动,优化每一项动作以最大化业绩并创造更多销售机会。', icon: 'autorenew' },
+          { title: 'GEO · 在 AI 搜索中亮相', description: '我们为 Google AI Overviews、ChatGPT、Perplexity、Gemini 等生成式引擎优化您的呈现。当买家向 AI 询问经销店或车型时,您的品牌出现在答案里 — 而不是在 Google 第 3 页。', icon: 'auto_awesome' },
           { title: '可衡量的业绩', description: '通过清晰的可视化面板查看活动核心数据。评估每一项动作并基于真实数据决策。', icon: 'analytics' },
           { title: '与您并肩工作的团队', description: '我们不只是另一家代理。我们紧贴您的销售团队,根据经销店实际漏斗调整活动。', icon: 'support_agent' },
           { title: '定制化活动', description: '每个动作都贴合您的品牌、库存与销售目标。拒绝通用,只做量身定制。', icon: 'tune' },
@@ -424,6 +425,7 @@ export const productContent: Record<string, ProductContent> = {
         bullets: [
           'SEO/SEM:正在搜索您品牌或车辆的客户。即时转化。',
           'Social Ads:尚不了解您的潜客。以更低成本中期转化。',
+          'GEO / AI 搜索:当用户向 ChatGPT、Perplexity 和 Google AI Overviews 询问经销店或车型时,您出现在答案中。',
           '完整漏斗追踪:访问 → 潜客 → 通话 → 成交。',
           '每月报告聚焦真实业务指标,而非虚荣数据。',
           '基于数据而非猜测的持续优化。',

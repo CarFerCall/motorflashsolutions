@@ -405,8 +405,9 @@ export const productContent: Record<string, ProductContent> = {
         lead: "L'equip de Marketing Digital de Motorflash combina experiència i tecnologia per dissenyar campanyes personalitzades i mesurables. Estratègies adaptades al sector de l'automoció, pensades per generar impacte i augmentar les teves vendes.",
         items: [
           { title: 'Especialització en automoció', description: 'Coneixem les necessitats i particularitats del mercat del motor, cosa que ens permet dissenyar estratègies digitals adaptades a cada concessionari o empresa de compravenda.', icon: 'verified' },
-          { title: 'Equips especialitzats en SEO, SEA i Social', description: 'Comptem amb un equip expert en SEO, un altre dedicat exclusivament a SEA i un tercer centrat en Social Ads per potenciar el teu negoci.', icon: 'group' },
-          { title: 'Estratègia integral i optimització contínua', description: 'Desenvolupem i analitzem campanyes en SEO, SEA i xarxes socials, optimitzant cada acció per maximitzar el rendiment i generar més oportunitats de venda.', icon: 'autorenew' },
+          { title: 'Equips especialitzats en SEO, SEA, Social i GEO', description: "Un equip expert en SEO, un altre dedicat exclusivament a SEA, un tercer centrat en Social Ads i un quart en GEO (Generative Engine Optimization) perquè la teva marca també aparegui en les respostes de la IA.", icon: 'group' },
+          { title: 'Estratègia integral i optimització contínua', description: 'Desenvolupem i analitzem campanyes en SEO, SEA, xarxes socials i GEO, optimitzant cada acció per maximitzar el rendiment i generar més oportunitats de venda.', icon: 'autorenew' },
+          { title: 'GEO · visibilitat en cercadors IA', description: "Optimitzem la teva presència a Google AI Overviews, ChatGPT, Perplexity, Gemini i altres motors generatius. Quan un comprador pregunta a la IA per concessionaris o models, la teva marca apareix a la resposta — no a la pàgina 3 de Google.", icon: 'auto_awesome' },
           { title: 'Rendiment mesurable', description: "Visualitza les dades més importants de les teves campanyes des d'un panell clar i visual. Avalua l'impacte de cada acció i pren decisions basades en resultats reals.", icon: 'analytics' },
           { title: 'Un equip que treballa amb tu', description: "No som una agència més. Treballem enganxats al teu equip comercial, ajustant les campanyes segons el funnel real del teu concessionari.", icon: 'support_agent' },
           { title: 'Campanyes personalitzades', description: "Cada acció s'adapta a la teva marca, el teu estoc i el teu objectiu de venda. Res genèric: tot a mida.", icon: 'tune' },
@@ -425,6 +426,7 @@ export const productContent: Record<string, ProductContent> = {
         bullets: [
           'SEO/SEM: clients que busquen la teva marca o els teus vehicles. Conversió immediata.',
           'Social Ads: prospectes que encara no et coneixen. Conversió a mitjà termini a menor cost.',
+          'GEO / AI Search: apareix a les respostes de ChatGPT, Perplexity i Google AI Overviews quan un usuari pregunta per concessionaris o models.',
           'Seguiment del funnel complet: visita → lead → trucada → venda',
           'Reporting mensual amb mètriques reals de negoci, no de vanitat',
           'Optimització contínua basada en dades, no en suposicions',

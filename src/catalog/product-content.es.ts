@@ -406,8 +406,9 @@ export const productContent: Record<string, ProductContent> = {
         lead: 'El equipo de Marketing Digital de Motorflash combina experiencia y tecnología para diseñar campañas personalizadas y medibles. Estrategias adaptadas al sector de la automoción, pensadas para generar impacto y aumentar tus ventas.',
         items: [
           { title: 'Especialización en automoción', description: 'Conocemos las necesidades y particularidades del mercado del motor, lo que nos permite diseñar estrategias digitales adaptadas a cada concesionario o empresa de compraventa.', icon: 'verified' },
-          { title: 'Equipos especializados en SEO, SEA y Social', description: 'Contamos con un equipo experto en SEO, otro dedicado exclusivamente a SEA y un tercero centrado en Social Ads para potenciar tu negocio.', icon: 'group' },
-          { title: 'Estrategia integral y optimización continua', description: 'Desarrollamos y analizamos campañas en SEO, SEA y redes sociales, optimizando cada acción para maximizar el rendimiento y generar más oportunidades de venta.', icon: 'autorenew' },
+          { title: 'Equipos especializados en SEO, SEA, Social y GEO', description: 'Un equipo experto en SEO, otro dedicado exclusivamente a SEA, un tercero centrado en Social Ads y un cuarto en GEO (Generative Engine Optimization) para que tu marca también aparezca en las respuestas de la IA.', icon: 'group' },
+          { title: 'Estrategia integral y optimización continua', description: 'Desarrollamos y analizamos campañas en SEO, SEA, redes sociales y GEO, optimizando cada acción para maximizar el rendimiento y generar más oportunidades de venta.', icon: 'autorenew' },
+          { title: 'GEO · visibilidad en buscadores IA', description: 'Optimizamos tu presencia en Google AI Overviews, ChatGPT, Perplexity, Gemini y otros motores generativos. Cuando un comprador pregunta a la IA por concesionarios o modelos, tu marca aparece en la respuesta — no en la página 3 de Google.', icon: 'auto_awesome' },
           { title: 'Rendimiento medible', description: 'Visualiza los datos más importantes de tus campañas desde un panel claro y visual. Evalúa el impacto de cada acción y toma decisiones basadas en resultados reales.', icon: 'analytics' },
           { title: 'Un equipo que trabaja contigo', description: 'No somos una agencia más. Trabajamos pegados a tu equipo comercial, ajustando las campañas según el funnel real de tu concesionario.', icon: 'support_agent' },
           { title: 'Campañas personalizadas', description: 'Cada acción se adapta a tu marca, tu stock y tu objetivo de venta. Nada genérico: todo a medida.', icon: 'tune' },
@@ -426,6 +427,7 @@ export const productContent: Record<string, ProductContent> = {
         bullets: [
           'SEO/SEM: clientes que buscan tu marca o tus vehículos. Conversión inmediata.',
           'Social Ads: prospectos que aún no te conocen. Conversión a medio plazo a menor coste.',
+          'GEO / AI Search: aparece en las respuestas de ChatGPT, Perplexity y Google AI Overviews cuando un usuario pregunta por concesionarios o modelos.',
           'Seguimiento del funnel completo: visita → lead → llamada → venta',
           'Reporting mensual con métricas reales de negocio, no de vanidad',
           'Optimización continua basada en datos, no en suposiciones',

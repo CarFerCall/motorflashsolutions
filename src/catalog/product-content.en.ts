@@ -405,8 +405,9 @@ export const productContent: Record<string, ProductContent> = {
         lead: 'The Motorflash Digital Marketing team combines experience and technology to design custom, measurable campaigns. Strategies tailored to the automotive sector, built to make an impact and grow your sales.',
         items: [
           { title: 'Automotive specialisation', description: 'We understand the needs and quirks of the automotive market, which lets us design digital strategies tailored to every dealership or used-vehicle business.', icon: 'verified' },
-          { title: 'Dedicated SEO, SEA and Social teams', description: 'We have an SEO team, an SEA-only team and a third team focused on Social Ads to grow your business.', icon: 'group' },
-          { title: 'Holistic strategy and continuous optimisation', description: 'We build and analyse SEO, SEA and social campaigns, optimising every action to maximise performance and generate more sales opportunities.', icon: 'autorenew' },
+          { title: 'Dedicated SEO, SEA, Social and GEO teams', description: 'We have an SEO team, an SEA-only team, a third team focused on Social Ads and a fourth team on GEO (Generative Engine Optimization) so your brand also shows up in AI answers.', icon: 'group' },
+          { title: 'Holistic strategy and continuous optimisation', description: 'We build and analyse SEO, SEA, social and GEO campaigns, optimising every action to maximise performance and generate more sales opportunities.', icon: 'autorenew' },
+          { title: 'GEO · visibility in AI search', description: "We optimise your presence for Google AI Overviews, ChatGPT, Perplexity, Gemini and other generative engines. When a buyer asks the AI about dealerships or models, your brand appears in the answer — not on page 3 of Google.", icon: 'auto_awesome' },
           { title: 'Measurable performance', description: 'See the key data of your campaigns from a clean, visual panel. Assess every action and make decisions based on real results.', icon: 'analytics' },
           { title: 'A team that works alongside you', description: 'We are not another agency. We work shoulder to shoulder with your sales team, adjusting campaigns to your dealership\'s actual funnel.', icon: 'support_agent' },
           { title: 'Custom campaigns', description: 'Every action is tailored to your brand, your stock and your sales target. Nothing generic — everything bespoke.', icon: 'tune' },
@@ -425,6 +426,7 @@ export const productContent: Record<string, ProductContent> = {
         bullets: [
           'SEO/SEM: customers searching for your brand or your vehicles. Immediate conversion.',
           'Social Ads: prospects who don\'t know you yet. Mid-term conversion at lower cost.',
+          'GEO / AI Search: appear in answers from ChatGPT, Perplexity and Google AI Overviews when users ask about dealerships or models.',
           'Full-funnel tracking: visit → lead → call → sale.',
           'Monthly reporting with real business metrics, no vanity numbers.',
           'Continuous optimisation based on data, not guesswork.',
