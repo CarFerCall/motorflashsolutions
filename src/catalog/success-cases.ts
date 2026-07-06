@@ -334,6 +334,24 @@ const fetchCmsChrome = cache(async (locale: SuccessCaseLocale): Promise<Partial<
  * casos (colección `success-cases`) y cayendo al catálogo estático
  * en caso contrario.
  */
+/**
+ * Orden fijo de los casos destacados. Los slugs listados aquí aparecen
+ * primero en el orden indicado; cualquier otro caso conserva su orden
+ * relativo original (CMS o estático) detrás. Sirve como pin cuando el
+ * CMS no está aún reordenado.
+ */
+const FEATURED_SLUG_ORDER = ['ocasionplus', 'flexicar', 'jarmauto']
+
+function pinFeatured(cases: SuccessCase[]): SuccessCase[] {
+  const bySlug = new Map(cases.map((c) => [c.slug, c]))
+  const featured = FEATURED_SLUG_ORDER.map((s) => bySlug.get(s)).filter(
+    (c): c is SuccessCase => Boolean(c),
+  )
+  const featuredSet = new Set(featured.map((c) => c.slug))
+  const rest = cases.filter((c) => !featuredSet.has(c.slug))
+  return [...featured, ...rest]
+}
+
 export async function getSuccessCasesPage(locale: SuccessCaseLocale = 'es'): Promise<SuccessCasesPage> {
   const baseAll = STATIC_COPY[locale] ?? STATIC_COPY.es
   const { cases: baseCases, ...baseChrome } = baseAll
@@ -342,7 +360,7 @@ export async function getSuccessCasesPage(locale: SuccessCaseLocale = 'es'): Pro
     fetchCmsChrome(locale),
   ])
   const chrome = mergeChrome(fromCmsChrome, baseChrome)
-  const cases = fromCmsCases && fromCmsCases.length > 0 ? fromCmsCases : baseCases
+  const cases = pinFeatured(fromCmsCases && fromCmsCases.length > 0 ? fromCmsCases : baseCases)
   return { ...chrome, cases }
 }
 
