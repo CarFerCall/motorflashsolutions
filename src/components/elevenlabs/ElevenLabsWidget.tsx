@@ -22,6 +22,22 @@ const VALID_SLUGS = new Set([
   'apex',
 ])
 
+const urlToService: Record<string, string> = {
+  dealer: 'DEALER',
+  crm4you: 'CRM4YOU',
+  'contact-center': 'CUSTOMER MANAGER',
+  spyne: 'SPYNE',
+  'motorflash-message': 'MESSAGE',
+  motorchat: 'MOTORCHAT',
+  ia: 'IA',
+  'soluciones-web': 'PLATINUM',
+  'marketing-digital': 'AGENCIA DIGITAL',
+  'lead-factory': 'LEAD FACTORY',
+  'soluciones-fabricantes': 'SOLUCIONES FABRICANTES',
+  'motorflash-connect': 'FLEET MANAGER',
+  apex: 'APEX',
+}
+
 const serviceToURL: Record<string, string> = {
   DEALER: 'dealer',
   EXPORTACIONES: 'dealer',
@@ -69,7 +85,16 @@ const serviceToURL: Record<string, string> = {
 type ConvaiCallDetail = {
   config: {
     clientTools?: Record<string, (params: unknown) => unknown>
+    dynamicVariables?: Record<string, string>
   }
+}
+
+function detectServiceFromPath(pathname: string): string {
+  const lower = pathname.toLowerCase()
+  for (const [urlPart, serviceName] of Object.entries(urlToService)) {
+    if (lower.includes(urlPart)) return serviceName
+  }
+  return ''
 }
 
 export function ElevenLabsWidget() {
@@ -89,6 +114,18 @@ export function ElevenLabsWidget() {
     const onCall = (event: Event) => {
       const detail = (event as CustomEvent<ConvaiCallDetail>).detail
       if (!detail?.config) return
+
+      detail.config.dynamicVariables = {
+        current_page: pathnameRef.current || '/',
+        servicio_interes: detectServiceFromPath(pathnameRef.current || ''),
+        user_name: '',
+        email: '',
+        tel: '',
+        empresa: '',
+        timing: '',
+        session_id: '',
+        first_conversation_id: '',
+      }
 
       detail.config.clientTools = {
         MF_SaveData: (params) => {
