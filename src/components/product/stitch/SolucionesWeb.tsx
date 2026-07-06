@@ -655,7 +655,7 @@ export async function SolucionesWeb() {
       </section>
 
       {/* Tiers */}
-      <section id="soluciones" className="py-24 bg-white border-y border-outline-variant">
+      <section id="soluciones" className="py-24 bg-surface-container-low border-y border-outline-variant">
         <div className="mf-container">
           <div className="text-center mb-14 max-w-3xl mx-auto">
             <span className="text-xs font-bold uppercase tracking-widest text-primary block mb-3">{t.tiersEyebrow}</span>
@@ -754,7 +754,7 @@ export async function SolucionesWeb() {
       </section>
 
       {/* Tabla */}
-      <section className="py-24 bg-white border-y border-outline-variant">
+      <section className="py-24 bg-surface-container-low border-y border-outline-variant">
         <div className="mf-container">
           <div className="text-center mb-12 max-w-3xl mx-auto">
             <span className="text-xs font-bold uppercase tracking-widest text-primary block mb-3">{t.tableEyebrow}</span>
@@ -818,7 +818,7 @@ export async function SolucionesWeb() {
       </section>
 
       {/* Infraestructura */}
-      <section className="py-24 bg-white border-y border-outline-variant">
+      <section className="py-24 bg-surface-container-low border-y border-outline-variant">
         <div className="mf-container">
           <div className="text-center mb-12 max-w-3xl mx-auto">
             <span className="text-xs font-bold uppercase tracking-widest text-primary block mb-3">{t.infraEyebrow}</span>
@@ -863,7 +863,7 @@ export async function SolucionesWeb() {
       </section>
 
       {/* Stats */}
-      <section className="py-20 border-y border-outline-variant bg-white">
+      <section className="py-20 border-y border-outline-variant bg-surface-container-low">
         <div className="mf-container grid grid-cols-2 md:grid-cols-3 gap-6 text-center">
           {t.stats.map((s) => (
             <div key={s.l}>

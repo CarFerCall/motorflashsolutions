@@ -23,7 +23,6 @@ interface Feature { icon: string; title: string; desc: string }
 interface TimelineStep { title: string; desc: string }
 
 interface McCopy {
-  // Hero
   badge: string
   title1: string
   titleAccent: string
@@ -35,7 +34,6 @@ interface McCopy {
   connectedLabel: string
   portals: Portal[]
 
-  // Mockup section
   mockEyebrow: string
   mockTitle1: string
   mockTitle2: string
@@ -64,24 +62,20 @@ interface McCopy {
   mockAiUse: string
   mockInputPlaceholder: string
 
-  // Features
   featuresEyebrow: string
   featuresTitle1: string
   featuresTitle2: string
   featuresLead: string
   features: Feature[]
 
-  // Timeline
   timelineEyebrow: string
   timelineTitle1: string
   timelineTitle2: string
   timelineLead: string
   timelineSteps: TimelineStep[]
 
-  // Stats
   statsBig: StatPill[]
 
-  // CTA
   ctaTitle1: string
   ctaTitle2: string
   ctaLead: string
@@ -258,9 +252,9 @@ const COPY: Record<LocaleKey, McCopy> = {
     featuresEyebrow: 'QUÈ FA PER TU',
     featuresTitle1: 'Un sol agent.',
     featuresTitle2: 'Tots els portals, tot el dia.',
-    featuresLead: 'Motor-Chat unifica els canals, contesta a l\'instant, qualifica el lead i el lliura al teu CRM. El teu equip deixa de perseguir missatges i se centra a tancar.',
+    featuresLead: "Motor-Chat unifica els canals, contesta a l'instant, qualifica el lead i el lliura al teu CRM. El teu equip deixa de perseguir missatges i se centra a tancar.",
     features: [
-      { icon: 'bolt', title: 'Respon en segons', desc: 'Contesta al moment que el client escriu. Sense obrir un portal darrere l\'altre i sense torns ni horaris.' },
+      { icon: 'bolt', title: 'Respon en segons', desc: "Contesta al moment que el client escriu. Sense obrir un portal darrere l'altre i sense torns ni horaris." },
       { icon: 'inbox', title: 'Safata unificada', desc: 'Missatges i trucades de Coches.net, Wallapop i Milanuncios en una sola pantalla. Zero pestanyes creuades.' },
       { icon: 'auto_awesome', title: 'IA que suggereix la resposta', desc: 'La IA opcional llegeix el fil i et proposa la resposta preparada. Tu revises, envies o deixes que respongui per tu.' },
       { icon: 'contact_page', title: 'Qualifica i crea el lead', desc: 'Demana les dades clau (vehicle, intenció, contacte) en una conversa natural i genera el lead complet.' },
@@ -271,9 +265,9 @@ const COPY: Record<LocaleKey, McCopy> = {
     timelineEyebrow: 'DE ZERO A CONTESTAR AQUESTA SETMANA',
     timelineTitle1: 'Sense migracions eternes',
     timelineTitle2: 'ni setmanes de formació.',
-    timelineLead: 'Connectem els teus comptes de portals i el teu CRM en unes hores. T\'acompanyem a cada pas.',
+    timelineLead: "Connectem els teus comptes de portals i el teu CRM en unes hores. T'acompanyem a cada pas.",
     timelineSteps: [
-      { title: 'Contacta\'ns', desc: 'Explica\'ns amb quins portals treballes i quin CRM utilitzes. Donem d\'alta el teu compte en 24 h.' },
+      { title: "Contacta'ns", desc: "Explica'ns amb quins portals treballes i quin CRM utilitzes. Donem d'alta el teu compte en 24 h." },
       { title: 'Connecta portals', desc: 'Enllacem els teus comptes de Coches.net, Wallapop i Milanuncios amb Motor-Chat de manera segura.' },
       { title: 'Configura la IA', desc: 'Ajustem el to, les respostes base i les dades que vols capturar de cada lead.' },
       { title: 'Ven', desc: 'Els leads qualificats entren al teu CRM i el teu equip es dedica a tancar, no a perseguir missatges.' },
@@ -287,7 +281,7 @@ const COPY: Record<LocaleKey, McCopy> = {
 
     ctaTitle1: 'Deixa que Motor-Chat',
     ctaTitle2: 'contesti per tu.',
-    ctaLead: 'Sol·licita una demo i t\'ensenyem com Motor-Chat respon els teus xats de portals i omple el teu CRM de leads des del primer dia.',
+    ctaLead: "Sol·licita una demo i t'ensenyem com Motor-Chat respon els teus xats de portals i omple el teu CRM de leads des del primer dia.",
     ctaButton: 'Sol·licita demo',
   },
   en: {
@@ -330,7 +324,7 @@ const COPY: Record<LocaleKey, McCopy> = {
     mockTabNotes: 'Notes',
     mockChatDayLabel: 'Today',
     mockBubbles: [
-      { from: 'user', text: "Hi, I saw the BMW 3-Series on Coches.net. Is it still available?" },
+      { from: 'user', text: 'Hi, I saw the BMW 3-Series on Coches.net. Is it still available?' },
       { from: 'agent', text: 'Hi Carlos! Yes, still available. Would this week work for you to see it?' },
       { from: 'user', text: 'Do you accept a trade-in? I have a 2018 Golf.' },
     ],
@@ -371,7 +365,7 @@ const COPY: Record<LocaleKey, McCopy> = {
 
     ctaTitle1: 'Let Motor-Chat',
     ctaTitle2: 'reply for you.',
-    ctaLead: 'Request a demo and we\'ll show you how Motor-Chat handles your portal chats and fills your CRM with leads from day one.',
+    ctaLead: "Request a demo and we'll show you how Motor-Chat handles your portal chats and fills your CRM with leads from day one.",
     ctaButton: 'Request a demo',
   },
   zh: {
@@ -460,16 +454,22 @@ const COPY: Record<LocaleKey, McCopy> = {
   },
 }
 
-const STATUS_TONES = {
+const STATUS_DOT_CLASS = {
   hot: 'bg-red-500',
   warm: 'bg-amber-500',
   cold: 'bg-blue-500',
 } as const
 
-const URGENCY_TONES = {
-  red: 'text-red-500',
-  orange: 'text-amber-500',
-  muted: 'text-neutral-500',
+const STATUS_TEXT_CLASS = {
+  hot: 'text-red-600',
+  warm: 'text-amber-600',
+  cold: 'text-blue-600',
+} as const
+
+const URGENCY_TEXT_CLASS = {
+  red: 'text-red-600',
+  orange: 'text-amber-600',
+  muted: 'text-on-surface-variant',
 } as const
 
 export async function MotorChat() {
@@ -478,11 +478,11 @@ export async function MotorChat() {
   const t = COPY[locale] ?? COPY.es
 
   return (
-    <div className="font-display bg-black text-white">
+    <div className="font-display text-on-surface">
       {/* Hero */}
-      <section className="relative overflow-hidden py-24 md:py-32">
-        <div aria-hidden className="absolute inset-0 -z-10" style={{ background: 'radial-gradient(ellipse at 50% 30%, rgba(255,128,0,0.18), transparent 55%)' }} />
-        <div aria-hidden className="absolute inset-0 -z-10 opacity-40" style={{ background: 'radial-gradient(ellipse at 80% 80%, rgba(255,128,0,0.10), transparent 60%)' }} />
+      <section className="relative overflow-hidden py-24 md:py-32 bg-white">
+        <div aria-hidden className="absolute inset-0 -z-10" style={{ background: 'radial-gradient(ellipse at 50% 30%, rgba(255,128,0,0.10), transparent 55%)' }} />
+        <div aria-hidden className="absolute inset-0 -z-10 opacity-40" style={{ background: 'radial-gradient(ellipse at 80% 80%, rgba(255,128,0,0.06), transparent 60%)' }} />
         <div className="mf-container text-center">
           <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-primary block mb-5">{t.badge}</span>
           <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold leading-tight max-w-4xl mx-auto">
@@ -490,7 +490,7 @@ export async function MotorChat() {
             <span className="block text-primary">{t.titleAccent}</span>
             {t.title3 && <span className="block">{t.title3}</span>}
           </h1>
-          <p className="mt-6 text-lg md:text-xl text-neutral-300 max-w-2xl mx-auto leading-relaxed">{t.heroLead}</p>
+          <p className="mt-6 text-lg md:text-xl text-on-surface-variant max-w-2xl mx-auto leading-relaxed">{t.heroLead}</p>
           <div className="mt-9 flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link
               href={`/contacto?servicio=${productSlug}`}
@@ -501,16 +501,16 @@ export async function MotorChat() {
             </Link>
             <a
               href="#como-funciona"
-              className="inline-flex items-center gap-2 px-8 py-4 rounded-full font-bold border border-white/20 text-white hover:bg-white/5 transition-colors"
+              className="inline-flex items-center gap-2 px-8 py-4 rounded-full font-bold border border-outline text-on-surface hover:bg-surface-container transition-colors"
             >
               {t.ctaHow}
             </a>
           </div>
           <div className="mt-12 grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
             {t.heroStats.map((s) => (
-              <div key={s.l} className="rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur px-4 py-4 text-center">
+              <div key={s.l} className="rounded-2xl border border-outline-variant bg-white px-4 py-4 text-center shadow-sm">
                 <div className="text-2xl md:text-3xl font-bold text-primary leading-none mb-1">{s.v}</div>
-                <div className="text-[11px] font-semibold uppercase tracking-widest text-neutral-400 leading-tight">{s.l}</div>
+                <div className="text-[11px] font-semibold uppercase tracking-widest text-on-surface-variant leading-tight">{s.l}</div>
               </div>
             ))}
           </div>
@@ -518,21 +518,21 @@ export async function MotorChat() {
       </section>
 
       {/* Chat Center mockup */}
-      <section id="como-funciona" className="relative py-20 md:py-24 border-t border-white/5">
+      <section id="como-funciona" className="relative py-20 md:py-24 bg-white border-y border-outline-variant">
         <div className="mf-container">
           <div className="text-center mb-12 max-w-3xl mx-auto">
             <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-primary block mb-3">{t.mockEyebrow}</span>
             <h2 className="text-3xl md:text-5xl font-bold leading-tight">
               {t.mockTitle1} <span className="text-primary">{t.mockTitle2}</span>
             </h2>
-            <p className="mt-5 text-neutral-300 leading-relaxed">{t.mockLead}</p>
-            <div className="mt-6 inline-flex items-center gap-3 text-[11px] font-bold uppercase tracking-widest text-neutral-400">
+            <p className="mt-5 text-on-surface-variant leading-relaxed">{t.mockLead}</p>
+            <div className="mt-6 inline-flex flex-wrap items-center gap-3 text-[11px] font-bold uppercase tracking-widest text-on-surface-variant">
               <span>{t.connectedLabel}</span>
               <div className="flex items-center gap-2">
                 {t.portals.map((p) => (
                   <span
                     key={p.key}
-                    className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-white text-[11px]"
+                    className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px]"
                     style={{ background: p.bg, color: p.text }}
                   >
                     <span className="w-4 h-4 rounded-full bg-white/20 flex items-center justify-center text-[9px] font-bold">
@@ -547,19 +547,19 @@ export async function MotorChat() {
 
           {/* Mockup */}
           <div className="relative">
-            <div aria-hidden className="absolute -inset-4 rounded-[2rem] opacity-30 blur-2xl" style={{ background: 'radial-gradient(circle at 30% 40%, rgba(255,128,0,0.4), transparent 60%)' }} />
-            <div className="relative grid grid-cols-1 lg:grid-cols-2 gap-4 rounded-[2rem] border border-white/10 bg-neutral-950 p-4 md:p-6 shadow-2xl">
+            <div aria-hidden className="absolute -inset-4 rounded-[2rem] opacity-30 blur-2xl" style={{ background: 'radial-gradient(circle at 30% 40%, rgba(255,128,0,0.35), transparent 60%)' }} />
+            <div className="relative grid grid-cols-1 lg:grid-cols-2 gap-4 rounded-[2rem] border border-outline-variant bg-white p-4 md:p-6 shadow-2xl">
               {/* Leads panel */}
-              <div className="bg-neutral-900 rounded-2xl p-5 min-w-0">
+              <div className="bg-surface-container-low rounded-2xl p-5 min-w-0">
                 <div className="flex items-baseline justify-between mb-1">
                   <h3 className="text-lg font-bold">{t.mockLeadsTitle}</h3>
                 </div>
-                <p className="text-xs text-neutral-400 mb-4">{t.mockLeadsCount}</p>
+                <p className="text-xs text-on-surface-variant mb-4">{t.mockLeadsCount}</p>
                 <div className="flex flex-wrap items-center gap-2 mb-5">
                   <span className="text-[11px] font-semibold px-3 py-1.5 rounded-full bg-primary text-white">{t.mockFilterAll}</span>
-                  <span className="text-[11px] font-semibold px-3 py-1.5 rounded-full border border-white/10 text-neutral-300">{t.mockFilterPending}</span>
-                  <span className="text-[11px] font-semibold px-3 py-1.5 rounded-full border border-white/10 text-neutral-300">{t.mockFilterHot}</span>
-                  <span className="ml-auto text-[11px] font-semibold px-3 py-1.5 rounded-full border border-white/10 text-neutral-400 inline-flex items-center gap-1">
+                  <span className="text-[11px] font-semibold px-3 py-1.5 rounded-full border border-outline-variant text-on-surface bg-white">{t.mockFilterPending}</span>
+                  <span className="text-[11px] font-semibold px-3 py-1.5 rounded-full border border-outline-variant text-on-surface bg-white">{t.mockFilterHot}</span>
+                  <span className="ml-auto text-[11px] font-semibold px-3 py-1.5 rounded-full border border-outline-variant text-on-surface-variant bg-white inline-flex items-center gap-1">
                     <span className="material-symbols-outlined" style={{ fontSize: 14 }}>search</span>
                     {t.mockFilterSearch}
                   </span>
@@ -568,7 +568,7 @@ export async function MotorChat() {
                   {t.sampleLeads.map((l, i) => (
                     <div
                       key={i}
-                      className={`rounded-xl border ${i === 0 ? 'border-primary/60 bg-primary/[0.08]' : 'border-white/10 bg-white/[0.02]'} p-3.5 min-w-0`}
+                      className={`rounded-xl border p-3.5 min-w-0 shadow-sm ${i === 0 ? 'border-primary/60 bg-primary/[0.06]' : 'border-outline-variant bg-white'}`}
                     >
                       <div className="flex items-start justify-between gap-2 mb-2">
                         <div className="flex items-center gap-2 min-w-0">
@@ -580,24 +580,24 @@ export async function MotorChat() {
                           </span>
                           <span className="text-sm font-semibold truncate">{l.name}</span>
                         </div>
-                        <span className="text-[10px] text-neutral-400 flex-shrink-0">{l.ts}</span>
+                        <span className="text-[10px] text-on-surface-variant flex-shrink-0">{l.ts}</span>
                       </div>
-                      <div className={`text-[10px] font-semibold mb-2 ${URGENCY_TONES[l.urgencyTone]}`}>
+                      <div className={`text-[10px] font-semibold mb-2 ${URGENCY_TEXT_CLASS[l.urgencyTone]}`}>
                         <span className="material-symbols-outlined align-text-bottom mr-1" style={{ fontSize: 12 }}>
                           {l.urgencyTone === 'red' ? 'schedule' : 'event'}
                         </span>
                         {l.urgencyLabel}
                       </div>
                       <div className="flex items-baseline justify-between gap-2 mb-2">
-                        <span className="text-xs text-neutral-300 truncate">{l.vehicle}</span>
+                        <span className="text-xs text-on-surface truncate">{l.vehicle}</span>
                         <span className="text-xs font-bold whitespace-nowrap">{l.price}</span>
                       </div>
                       <div className="flex items-center justify-between text-[10px]">
-                        <span className={`inline-flex items-center gap-1 font-semibold ${l.statusTone === 'hot' ? 'text-red-400' : l.statusTone === 'warm' ? 'text-amber-400' : 'text-blue-300'}`}>
-                          <span className={`w-1.5 h-1.5 rounded-full ${STATUS_TONES[l.statusTone]}`} />
+                        <span className={`inline-flex items-center gap-1 font-semibold ${STATUS_TEXT_CLASS[l.statusTone]}`}>
+                          <span className={`w-1.5 h-1.5 rounded-full ${STATUS_DOT_CLASS[l.statusTone]}`} />
                           {l.statusLabel}
                         </span>
-                        <span className="text-neutral-400">{l.source}</span>
+                        <span className="text-on-surface-variant">{l.source}</span>
                       </div>
                     </div>
                   ))}
@@ -605,51 +605,51 @@ export async function MotorChat() {
               </div>
 
               {/* Chat panel */}
-              <div className="bg-neutral-900 rounded-2xl overflow-hidden flex flex-col min-w-0">
-                <div className="bg-red-950/60 border-b border-red-900/40 p-4 flex items-start justify-between gap-3">
+              <div className="bg-surface-container-low rounded-2xl overflow-hidden flex flex-col min-w-0 border border-outline-variant/60">
+                <div className="bg-red-50 border-b border-red-200 p-4 flex items-start justify-between gap-3">
                   <div className="min-w-0">
                     <p className="font-semibold text-sm truncate">{t.sampleLeads[0].name}</p>
-                    <p className="text-[11px] text-neutral-400 flex items-center gap-1">
+                    <p className="text-[11px] text-on-surface-variant flex items-center gap-1">
                       <span className="material-symbols-outlined" style={{ fontSize: 12 }}>call</span>
                       {t.mockPhone}
                     </p>
                   </div>
-                  <span className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-widest text-red-400">
+                  <span className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-widest text-red-600">
                     <span className="w-1.5 h-1.5 rounded-full bg-red-500" />
                     {t.mockChatCaliente}
                   </span>
                 </div>
-                <div className="p-4 border-b border-white/5 flex items-center gap-3">
-                  <div className="w-14 h-10 rounded-md bg-neutral-800 flex items-center justify-center flex-shrink-0">
-                    <span className="material-symbols-outlined text-neutral-500" style={{ fontSize: 22 }}>directions_car</span>
+                <div className="p-4 border-b border-outline-variant bg-white flex items-center gap-3">
+                  <div className="w-14 h-10 rounded-md bg-surface-container flex items-center justify-center flex-shrink-0">
+                    <span className="material-symbols-outlined text-on-surface-variant" style={{ fontSize: 22 }}>directions_car</span>
                   </div>
                   <div className="min-w-0 flex-1">
                     <p className="text-sm font-semibold truncate">{t.mockVehicleName}</p>
                     <p className="text-xs">
                       <span className="text-primary font-bold">{t.mockVehiclePrice}</span>
-                      <span className="text-emerald-400 ml-2 text-[11px]">▼ {t.mockVehicleDelta}</span>
+                      <span className="text-emerald-600 ml-2 text-[11px]">▼ {t.mockVehicleDelta}</span>
                     </p>
-                    <p className="text-[11px] text-neutral-400 truncate">{t.mockViewOn} ↗</p>
+                    <p className="text-[11px] text-on-surface-variant truncate">{t.mockViewOn} ↗</p>
                   </div>
                 </div>
-                <div className="px-4 border-b border-white/5 flex gap-5 text-[11px] font-semibold uppercase tracking-widest">
+                <div className="px-4 border-b border-outline-variant bg-white flex gap-5 text-[11px] font-semibold uppercase tracking-widest">
                   <span className="py-3 border-b-2 border-primary text-primary">{t.mockTabChat}</span>
-                  <span className="py-3 text-neutral-500">{t.mockTabCall}</span>
-                  <span className="py-3 text-neutral-500">{t.mockTabWA}</span>
-                  <span className="py-3 text-neutral-500">{t.mockTabNotes}</span>
+                  <span className="py-3 text-on-surface-variant">{t.mockTabCall}</span>
+                  <span className="py-3 text-on-surface-variant">{t.mockTabWA}</span>
+                  <span className="py-3 text-on-surface-variant">{t.mockTabNotes}</span>
                 </div>
-                <div className="p-4 space-y-3 flex-1 min-h-[260px]">
-                  <p className="text-center text-[10px] font-bold uppercase tracking-widest text-neutral-500">{t.mockChatDayLabel}</p>
+                <div className="p-4 space-y-3 flex-1 min-h-[260px] bg-white">
+                  <p className="text-center text-[10px] font-bold uppercase tracking-widest text-on-surface-variant">{t.mockChatDayLabel}</p>
                   {t.mockBubbles.map((b, i) => (
                     <div key={i} className={`flex ${b.from === 'agent' ? 'justify-end' : 'justify-start'}`}>
                       <div
-                        className={`max-w-[80%] rounded-2xl px-3.5 py-2 text-xs leading-relaxed ${b.from === 'agent' ? 'bg-primary text-white rounded-br-sm' : 'bg-neutral-800 text-neutral-100 rounded-bl-sm'}`}
+                        className={`max-w-[80%] rounded-2xl px-3.5 py-2 text-xs leading-relaxed ${b.from === 'agent' ? 'bg-primary text-white rounded-br-sm' : 'bg-surface-container-low text-on-surface rounded-bl-sm'}`}
                       >
                         {b.text}
                       </div>
                     </div>
                   ))}
-                  <div className="rounded-xl border border-primary/40 bg-primary/[0.08] p-3 flex items-start gap-2">
+                  <div className="rounded-xl border border-primary/40 bg-primary/[0.06] p-3 flex items-start gap-2">
                     <span className="material-symbols-outlined text-primary mt-0.5" style={{ fontSize: 16 }}>auto_awesome</span>
                     <div className="flex-1 min-w-0">
                       <p className="text-[10px] font-bold uppercase tracking-widest text-primary mb-1">{t.mockAiPrefix}</p>
@@ -663,11 +663,11 @@ export async function MotorChat() {
                     </button>
                   </div>
                 </div>
-                <div className="border-t border-white/5 p-3 flex items-center gap-2">
+                <div className="border-t border-outline-variant p-3 flex items-center gap-2 bg-white">
                   <input
                     type="text"
                     placeholder={t.mockInputPlaceholder}
-                    className="flex-1 bg-transparent text-xs text-neutral-300 placeholder-neutral-500 border-none outline-none"
+                    className="flex-1 bg-transparent text-xs text-on-surface placeholder-on-surface-variant border-none outline-none"
                     disabled
                   />
                   <button
@@ -685,26 +685,26 @@ export async function MotorChat() {
       </section>
 
       {/* Features grid */}
-      <section className="py-20 md:py-24 border-t border-white/5">
+      <section className="py-20 md:py-24 bg-white">
         <div className="mf-container">
           <div className="text-center mb-12 max-w-3xl mx-auto">
             <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-primary block mb-3">{t.featuresEyebrow}</span>
             <h2 className="text-3xl md:text-5xl font-bold leading-tight">
               {t.featuresTitle1} <span className="text-primary">{t.featuresTitle2}</span>
             </h2>
-            <p className="mt-5 text-neutral-300 leading-relaxed">{t.featuresLead}</p>
+            <p className="mt-5 text-on-surface-variant leading-relaxed">{t.featuresLead}</p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {t.features.map((f) => (
               <div
                 key={f.title}
-                className="group relative rounded-2xl border border-white/10 bg-white/[0.03] p-6 hover:border-primary/40 hover:bg-white/[0.05] transition-colors"
+                className="group relative rounded-2xl border border-outline-variant bg-white p-6 hover:border-primary/40 hover:shadow-md transition-all"
               >
-                <div className="w-11 h-11 rounded-xl bg-primary/15 flex items-center justify-center mb-4 group-hover:bg-primary/25 transition-colors">
+                <div className="w-11 h-11 rounded-xl bg-primary/10 flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
                   <span className="material-symbols-outlined text-primary" style={{ fontSize: 22 }}>{f.icon}</span>
                 </div>
                 <h3 className="text-lg font-semibold mb-2">{f.title}</h3>
-                <p className="text-sm text-neutral-400 leading-relaxed">{f.desc}</p>
+                <p className="text-sm text-on-surface-variant leading-relaxed">{f.desc}</p>
               </div>
             ))}
           </div>
@@ -712,24 +712,24 @@ export async function MotorChat() {
       </section>
 
       {/* Timeline */}
-      <section className="py-20 md:py-24 border-t border-white/5 bg-neutral-950">
+      <section className="py-20 md:py-24 bg-white border-y border-outline-variant">
         <div className="mf-container">
           <div className="text-center mb-14 max-w-3xl mx-auto">
             <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-primary block mb-3">{t.timelineEyebrow}</span>
             <h2 className="text-3xl md:text-5xl font-bold leading-tight">
               {t.timelineTitle1} <span className="text-primary">{t.timelineTitle2}</span>
             </h2>
-            <p className="mt-5 text-neutral-300 leading-relaxed">{t.timelineLead}</p>
+            <p className="mt-5 text-on-surface-variant leading-relaxed">{t.timelineLead}</p>
           </div>
           <div className="relative grid grid-cols-1 md:grid-cols-4 gap-6">
             <div aria-hidden className="hidden md:block absolute top-8 left-[12%] right-[12%] h-0.5 bg-gradient-to-r from-primary via-primary to-primary/20" />
             {t.timelineSteps.map((step, i) => (
               <div key={step.title} className="relative flex flex-col items-center text-center">
-                <div className={`relative w-16 h-16 rounded-full flex items-center justify-center font-bold text-lg mb-5 ${i === t.timelineSteps.length - 1 ? 'bg-white/10 text-neutral-400 border-2 border-white/20' : 'bg-primary text-white shadow-lg shadow-primary/30'}`}>
+                <div className={`relative w-16 h-16 rounded-full flex items-center justify-center font-bold text-lg mb-5 ${i === t.timelineSteps.length - 1 ? 'bg-white text-on-surface-variant border-2 border-outline' : 'bg-primary text-white shadow-lg shadow-primary/30'}`}>
                   {i + 1}
                 </div>
                 <h3 className="text-lg font-semibold mb-2">{step.title}</h3>
-                <p className="text-sm text-neutral-400 leading-relaxed max-w-[220px]">{step.desc}</p>
+                <p className="text-sm text-on-surface-variant leading-relaxed max-w-[220px]">{step.desc}</p>
               </div>
             ))}
           </div>
@@ -737,25 +737,25 @@ export async function MotorChat() {
       </section>
 
       {/* Stats */}
-      <section className="py-16 md:py-20 border-t border-white/5">
+      <section className="py-16 md:py-20 bg-white">
         <div className="mf-container grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
           {t.statsBig.map((s) => (
             <div key={s.l}>
               <div className="text-5xl md:text-6xl font-bold text-primary leading-none mb-3">{s.v}</div>
-              <div className="text-xs font-bold uppercase tracking-widest text-neutral-400">{s.l}</div>
+              <div className="text-xs font-bold uppercase tracking-widest text-on-surface-variant">{s.l}</div>
             </div>
           ))}
         </div>
       </section>
 
       {/* CTA */}
-      <section className="py-20 md:py-28 border-t border-white/5 relative overflow-hidden">
-        <div aria-hidden className="absolute inset-0 -z-10" style={{ background: 'radial-gradient(ellipse at 50% 100%, rgba(255,128,0,0.2), transparent 55%)' }} />
+      <section className="py-20 md:py-28 bg-white border-t border-outline-variant relative overflow-hidden">
+        <div aria-hidden className="absolute inset-0 -z-10" style={{ background: 'radial-gradient(ellipse at 50% 100%, rgba(255,128,0,0.15), transparent 55%)' }} />
         <div className="mf-container text-center">
           <h2 className="text-3xl md:text-5xl font-bold leading-tight max-w-3xl mx-auto">
             {t.ctaTitle1} <span className="text-primary">{t.ctaTitle2}</span>
           </h2>
-          <p className="mt-5 text-neutral-300 max-w-2xl mx-auto leading-relaxed">{t.ctaLead}</p>
+          <p className="mt-5 text-on-surface-variant max-w-2xl mx-auto leading-relaxed">{t.ctaLead}</p>
           <div className="mt-9">
             <Link
               href={`/contacto?servicio=${productSlug}`}
