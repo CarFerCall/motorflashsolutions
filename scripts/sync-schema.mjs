@@ -1139,7 +1139,21 @@ try {
             intro = REPLACE(REPLACE(intro, 'MotorFlash Connect', 'Fleet Manager'), 'Motorflash Connect', 'Fleet Manager')
         WHERE _parent_id IN (SELECT id FROM products WHERE slug = 'motorflash-connect')
       `))
-      console.log(`[sync-schema] migración Fleet Manager: ${res?.rowCount ?? '?'} filas actualizadas`)
+      console.log(`[sync-schema] migración Fleet Manager (productos): ${res?.rowCount ?? '?'} filas actualizadas`)
+      // También en el label del main-menu (dropdown Servicios).
+      const tables = ['main_menu_items_children', 'main_menu_items']
+      for (const t of tables) {
+        try {
+          const r2 = await payload.db.drizzle.execute(sql.raw(`
+            UPDATE "${t}"
+            SET label = 'Fleet Manager'
+            WHERE label IN ('MotorFlash Connect', 'Motorflash Connect')
+          `))
+          if ((r2?.rowCount ?? 0) > 0) {
+            console.log(`[sync-schema] migración Fleet Manager (${t}): ${r2.rowCount} filas`)
+          }
+        } catch {}
+      }
     }
   } catch (err) {
     console.warn('[sync-schema] ✗ migración Fleet Manager:', err?.message || err)
