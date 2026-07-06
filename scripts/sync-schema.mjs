@@ -35,8 +35,33 @@ try {
   const REMOVED_SLUGS = ['motorflash-mobile-tracking']
   for (const slug of REMOVED_SLUGS) {
     try {
+      // 1. Ids del producto (uno por locale en products_locales, pero
+      //    el products principal solo tiene uno). Obtenemos id principal.
+      const idsRes = await client.query(`SELECT id FROM products WHERE slug = $1`, [slug])
+      const productIds = idsRes.rows.map((r) => r.id)
+      if (productIds.length === 0) continue
+      // 2. Borrar product_content asociado (FK a products).
+      try {
+        const r2 = await client.query(
+          `DELETE FROM product_content WHERE product_id = ANY($1::int[])`,
+          [productIds],
+        )
+        if (r2.rowCount > 0) console.log(`[pre-push] product_content borrado: ${r2.rowCount}`)
+      } catch (err) {
+        // Reintentar con text[] si son ids no numéricos.
+        try {
+          const r2b = await client.query(
+            `DELETE FROM product_content WHERE product_id::text = ANY($1::text[])`,
+            [productIds.map(String)],
+          )
+          if (r2b.rowCount > 0) console.log(`[pre-push] product_content borrado (text): ${r2b.rowCount}`)
+        } catch (e2) {
+          console.warn('[pre-push] product_content:', e2?.message || e2)
+        }
+      }
+      // 3. Ahora borrar el producto (cascade se lleva products_locales).
       const r = await client.query(`DELETE FROM products WHERE slug = $1`, [slug])
-      if (r.rowCount > 0) console.log(`[pre-push] borradas ${r.rowCount} filas de products para slug='${slug}'`)
+      if (r.rowCount > 0) console.log(`[pre-push] products borrado: slug='${slug}' → ${r.rowCount} filas`)
     } catch (err) {
       console.warn(`[pre-push] slug='${slug}':`, err?.message || err)
     }
