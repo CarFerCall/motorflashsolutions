@@ -23,6 +23,29 @@ if (!hasPostgres) {
 process.env.NODE_ENV = 'development'
 console.log('[sync-schema] NODE_ENV temporalmente forzado a development para habilitar push')
 
+// PRE-PUSH cleanup: borrar filas de products cuyo slug ya no existe en
+// el enum del schema. Sin esto, drizzle-kit falla al recrear el enum
+// con `invalid input value for enum enum_products_slug`. Se hace con
+// pg directo antes de que Payload inicialice el adapter Postgres.
+try {
+  const { default: pg } = await import('pg')
+  const url = process.env.POSTGRES_URL || process.env.DATABASE_URL || process.env.PRISMA_DATABASE_URL
+  const client = new pg.Client({ connectionString: url, ssl: { rejectUnauthorized: false } })
+  await client.connect()
+  const REMOVED_SLUGS = ['motorflash-mobile-tracking']
+  for (const slug of REMOVED_SLUGS) {
+    try {
+      const r = await client.query(`DELETE FROM products WHERE slug = $1`, [slug])
+      if (r.rowCount > 0) console.log(`[pre-push] borradas ${r.rowCount} filas de products para slug='${slug}'`)
+    } catch (err) {
+      console.warn(`[pre-push] slug='${slug}':`, err?.message || err)
+    }
+  }
+  await client.end()
+} catch (err) {
+  console.warn('[pre-push] cleanup fallido:', err?.message || err)
+}
+
 const { getPayload } = await import('payload')
 const { default: config } = await import('../src/payload.config.ts')
 
