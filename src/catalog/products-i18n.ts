@@ -109,9 +109,9 @@ export const productI18n: Record<ProductLocale, Record<string, ProductTranslatio
     apex: {
       name: 'Apex by Motorflash Solutions',
       menuLabel: 'Apex (Tot en un)',
-      tagline: 'La suite tot en un de Motorflash Solutions.',
-      heroTitle: 'Apex: la suite tot en un de Motorflash Solutions',
-      intro: 'Una sola plataforma que integra publicació, gestió d\'estoc, CRM, IA conversacional, contact center i reporting unificat. Pensada per a concessionaris que volen consolidar tot el seu ecosistema digital en una única eina.',
+      tagline: 'Ven més. Gestiona menys.',
+      heroTitle: 'Ven més. Gestiona menys.',
+      intro: "El CRM per a concessionaris que centralitza inventari, leads i multipublicació en una sola plataforma. Multiposting a +16 portals, del lead al contracte sense sortir de l'eina. Sense permanència. Alta en 24 h.",
     },
   },
   en: {
@@ -209,9 +209,9 @@ export const productI18n: Record<ProductLocale, Record<string, ProductTranslatio
     apex: {
       name: 'Apex by Motorflash Solutions',
       menuLabel: 'Apex (All-in-one)',
-      tagline: 'The all-in-one suite from Motorflash Solutions.',
-      heroTitle: 'Apex: the all-in-one suite from Motorflash Solutions',
-      intro: 'A single platform integrating publishing, stock management, CRM, conversational AI, contact center and unified reporting. Built for dealerships that want to consolidate their entire digital ecosystem in one tool.',
+      tagline: 'Sell more. Manage less.',
+      heroTitle: 'Sell more. Manage less.',
+      intro: 'The CRM for dealerships that centralises inventory, leads and multi-publishing in a single platform. Multi-posting on 16+ portals, from lead to signed contract without leaving the tool. No commitment. Go live in 24 h.',
     },
   },
   zh: {
@@ -309,9 +309,9 @@ export const productI18n: Record<ProductLocale, Record<string, ProductTranslatio
     apex: {
       name: 'Apex 一体化套件',
       menuLabel: 'Apex(一体化)',
-      tagline: 'Motorflash Solutions 的一体化套件。',
-      heroTitle: 'Apex:Motorflash Solutions 的一体化套件',
-      intro: '集发布、库存管理、CRM、对话式 AI、Contact Center 与统一报告于一身的单一平台。为希望将整个数字生态整合到一个工具中的经销商而生。',
+      tagline: '卖得更多。管得更少。',
+      heroTitle: '卖得更多。管得更少。',
+      intro: '专为经销商打造的 CRM,将库存、潜客与多平台发布集中在一个平台。多平台发布覆盖 16+ 门户,从潜客到签约合同全流程无需离开工具。无绑定,24 小时开通。',
     },
   },
 }

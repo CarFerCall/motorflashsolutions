@@ -701,5 +701,72 @@ export const productContent: Record<string, ProductContent> = {
       },
     ],
   },
+  apex: {
+    subtitle: 'El CRM para concesionarios que centraliza inventario, leads y multipublicación en una sola plataforma · Alta en 24 h, sin permanencia',
+    sections: [
+      {
+        type: 'highlights',
+        title: 'Una sola plataforma para todo lo que hace tu concesionario',
+        lead: 'Tres pilares conectados: inventario, comunicación y operación. Sin tecleo doble, sin copiar y pegar entre herramientas.',
+        highlights: [
+          { title: 'Inventario', description: 'Stock vivo, precios, fotos y fichas técnicas' },
+          { title: 'Comunicación', description: 'Todos los leads y mensajes en un solo buzón' },
+          { title: 'Operación', description: 'Del lead al contrato sin salir de la herramienta' },
+          { title: '24 h', description: 'Alta operativa · sin permanencia obligatoria' },
+        ],
+        bullets: [
+          'Alta por matrícula o VIN con ficha técnica autocompletada.',
+          'Multipublicación a +16 portales en un solo click.',
+          'Histórico de ventas y precio de mercado integrados.',
+          'Factura electrónica (Régimen General y REBU) y contrato con firma digital incluidos.',
+        ],
+      },
+      {
+        type: 'process',
+        title: 'De la matrícula al contrato firmado',
+        steps: [
+          { title: '01 · Matrícula', description: 'Tecleas la matrícula o el bastidor. Apex trae ficha técnica, equipamiento de serie y extras automáticamente.' },
+          { title: '02 · Stock vivo', description: 'Subes fotos, ajustas precio. El vehículo queda en inventario, listo para publicar.' },
+          { title: '03 · +16 portales', description: 'Multipublicación en Facilitea, Wallapop, Coches.net, Motorflash, Tikcars y más. Un solo botón.' },
+          { title: '04 · Inbox', description: 'Mensajes, leads y llamadas de todos los portales en una única bandeja. Pipeline Kanban.' },
+          { title: '05 · Cierre', description: 'Cita, contrato firmado digital, factura electrónica. Todo en Apex, sin salir de la herramienta.' },
+        ],
+      },
+      {
+        type: 'features',
+        title: 'Todo lo que necesita tu concesionario, ya integrado',
+        lead: 'Cuatro áreas funcionales, todos los módulos conectados entre sí. Los datos no salen de Apex.',
+        items: [
+          { title: 'Inventario', description: 'Stock, multipublicación a +16 portales, histórico de ventas, tasaciones con valoración automática y alta por matrícula o VIN con ficha técnica autocompletada.', icon: 'inventory_2' },
+          { title: 'Leads y Chat', description: 'Inbox unificado, pipeline Kanban, Chat Center con Wallapop y Coches.net integrados, captación en Wallapop, ofertas comerciales y campañas con seguimiento.', icon: 'forum' },
+          { title: 'Venta', description: 'Clientes (personas físicas y jurídicas), calendario integrado de citas, contratos de compraventa con firma digital, factura electrónica (Régimen General y REBU) y sitio web del concesionario incluido.', icon: 'point_of_sale' },
+          { title: 'Operación', description: 'Multiubicaciones para grupos con varias sedes, multisociedades (multi-CIF), reportes con KPIs fiscal y stock, auditoría (quién hizo qué y cuándo), usuarios con permisos granulares.', icon: 'account_tree' },
+          { title: 'Multipublicación', description: 'Coches.net, Wallapop, AutoScout24, Coches.com, Autocasión, Carwow, Carnovo, Motorflash, Motos.net, km77, Motor.es, Tikcars, Motoreto, Maxterauto, Gremi Motor, Facilitea… Stock sincronizado en tiempo real: vendido en Apex, retirado de todos los portales.', icon: 'share' },
+          { title: 'Chat Center', description: 'Unificas conversaciones de Wallapop y Coches.net con chat integrado. Un solo agente atiende todos los canales en paralelo.', icon: 'chat' },
+        ],
+      },
+      {
+        type: 'highlights',
+        title: 'Pensado para grupos con varias sociedades',
+        lead: 'Cada CIF, cada sede, cada equipo en su sitio. Sin cruces de datos entre sociedades del mismo grupo.',
+        highlights: [
+          { title: 'Multisociedades', description: 'Operación multi-CIF: cada sociedad con su facturación, stock y leads independientes' },
+          { title: 'Permisos granulares', description: 'Un comercial de Madrid solo ve sus propios leads y su stock' },
+          { title: 'Credenciales cifradas', description: 'Cada cuenta de portal con sus propias claves, almacenadas con cifrado' },
+          { title: 'Auditoría completa', description: 'Registro de quién hizo qué, cuándo y sobre qué registro' },
+        ],
+        bullets: [
+          'Ejemplo real: un grupo con Sociedad A (BMW/MINI Madrid), Sociedad B (Audi/VW Valencia) y Sociedad C (Multimarca Sevilla) opera con stock, leads y chats propios e independientes en cada una.',
+          'Reportes consolidados a nivel grupo con KPIs fiscales, de stock y de rendimiento comercial.',
+          'Account manager y SLA dedicados en el plan Enterprise para grupos con +120 vehículos.',
+        ],
+      },
+      {
+        type: 'cta',
+        title: 'Una demo de 30 minutos sobre tu stock real',
+        lead: 'Nos cuentas tu operativa actual y te enseñamos cómo quedaría en Apex con tu propio inventario. Sin compromiso ni instalaciones. contacto@apexcrm.es · apexcrm.es · +34 655 85 25 70',
+      },
+    ],
+  },
 }
 

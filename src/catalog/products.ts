@@ -168,12 +168,11 @@ export const products: Product[] = [
     name: 'Apex by Motorflash Solutions',
     menuLabel: 'Apex (Todo en uno)',
     menuOrder: 140,
-    tagline: 'La suite todo en uno de Motorflash Solutions.',
-    heroTitle: 'Apex: la suite todo en uno de Motorflash Solutions',
+    tagline: 'Vende más. Gestiona menos.',
+    heroTitle: 'Vende más. Gestiona menos.',
     intro:
-      'Una sola plataforma que integra publicación, gestión de stock, CRM, IA conversacional, contact center y reporting unificado. Pensada para concesionarios que quieren consolidar todo su ecosistema digital en una única herramienta.',
+      'El CRM para concesionarios que centraliza inventario, leads y multipublicación en una sola plataforma. Multiposting en +16 portales, del lead al contrato sin salir de la herramienta. Sin permanencia. Alta en 24 h.',
     icon: 'workspaces',
-    placeholder: true,
   },
 ]
 

@@ -700,4 +700,71 @@ export const productContent: Record<string, ProductContent> = {
       },
     ],
   },
+  apex: {
+    subtitle: 'The CRM for dealerships that centralises inventory, leads and multi-publishing in a single platform · Go live in 24 h, no commitment',
+    sections: [
+      {
+        type: 'highlights',
+        title: 'One platform for everything your dealership does',
+        lead: 'Three connected pillars: inventory, communication and operation. No double-typing, no copy-pasting between tools.',
+        highlights: [
+          { title: 'Inventory', description: 'Live stock, prices, photos and tech sheets' },
+          { title: 'Communication', description: 'Every lead and message in a single inbox' },
+          { title: 'Operation', description: 'From lead to contract without leaving the tool' },
+          { title: '24 h', description: 'Go live · no mandatory commitment' },
+        ],
+        bullets: [
+          'Vehicle onboarding by plate or VIN with auto-completed technical sheet.',
+          'Multi-publishing to 16+ portals with one click.',
+          'Integrated sales history and market price.',
+          'Digital-signed contracts and electronic invoicing (General Regime and REBU) included.',
+        ],
+      },
+      {
+        type: 'process',
+        title: 'From plate to signed contract',
+        steps: [
+          { title: '01 · Plate', description: 'You type the plate or the VIN. Apex pulls the technical sheet, standard equipment and extras automatically.' },
+          { title: '02 · Live stock', description: 'Upload photos, adjust the price. The vehicle sits in the inventory ready to publish.' },
+          { title: '03 · 16+ portals', description: 'Multi-publishing on Facilitea, Wallapop, Coches.net, Motorflash, Tikcars and more. One click.' },
+          { title: '04 · Inbox', description: 'Messages, leads and calls from every portal in a single tray. Kanban pipeline.' },
+          { title: '05 · Close', description: 'Appointment, digital-signed contract, electronic invoice. All inside Apex, no other tools needed.' },
+        ],
+      },
+      {
+        type: 'features',
+        title: 'Everything your dealership needs, already integrated',
+        lead: 'Four functional areas, every module connected. Data never leaves Apex.',
+        items: [
+          { title: 'Inventory', description: 'Stock, multi-publishing to 16+ portals, sales history, appraisals with automatic valuation and vehicle onboarding by plate or VIN with auto-completed tech sheet.', icon: 'inventory_2' },
+          { title: 'Leads and Chat', description: 'Unified inbox, Kanban pipeline, Chat Center with Wallapop and Coches.net integrated, capture in Wallapop, commercial offers and campaigns with follow-up.', icon: 'forum' },
+          { title: 'Sales', description: 'Clients (individuals and companies), integrated appointment calendar, sales contracts with digital signature, electronic invoicing (General Regime and REBU) and dealership website included.', icon: 'point_of_sale' },
+          { title: 'Operations', description: 'Multi-location for groups with several sites, multi-company (multi-CIF), reports with fiscal and stock KPIs, audit log (who did what and when), users with granular permissions.', icon: 'account_tree' },
+          { title: 'Multi-publishing', description: 'Coches.net, Wallapop, AutoScout24, Coches.com, Autocasión, Carwow, Carnovo, Motorflash, Motos.net, km77, Motor.es, Tikcars, Motoreto, Maxterauto, Gremi Motor, Facilitea… Stock synced in real time: sold in Apex, removed from every portal.', icon: 'share' },
+          { title: 'Chat Center', description: 'Unify Wallapop and Coches.net conversations with integrated chat. One agent handles every channel in parallel.', icon: 'chat' },
+        ],
+      },
+      {
+        type: 'highlights',
+        title: 'Built for groups with several companies',
+        lead: 'Every tax ID, every site, every team in its place. No data crossovers between companies within the same group.',
+        highlights: [
+          { title: 'Multi-company', description: 'Multi-CIF operation: each company with its own invoicing, stock and leads' },
+          { title: 'Granular permissions', description: 'A Madrid rep only sees their own leads and their own stock' },
+          { title: 'Encrypted credentials', description: 'Each portal account with its own keys, stored encrypted' },
+          { title: 'Full audit', description: 'Log of who did what, when and to which record' },
+        ],
+        bullets: [
+          'Real example: a group with Company A (BMW/MINI Madrid), Company B (Audi/VW Valencia) and Company C (Multi-brand Seville) operates with its own independent stock, leads and chats in each one.',
+          'Consolidated group-level reports with fiscal, stock and commercial performance KPIs.',
+          'Dedicated account manager and SLA in the Enterprise plan for groups with 120+ vehicles.',
+        ],
+      },
+      {
+        type: 'cta',
+        title: 'A 30-minute demo on your real stock',
+        lead: "Tell us how you operate today and we'll show you how it would look in Apex with your own inventory. No commitment, no installations. contacto@apexcrm.es · apexcrm.es · +34 655 85 25 70",
+      },
+    ],
+  },
 }

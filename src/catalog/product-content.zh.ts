@@ -699,4 +699,71 @@ export const productContent: Record<string, ProductContent> = {
       },
     ],
   },
+  apex: {
+    subtitle: '为经销商打造的 CRM,将库存、潜客与多平台发布集中于一个平台 · 24 小时开通,无绑定',
+    sections: [
+      {
+        type: 'highlights',
+        title: '一个平台,承载您经销店的全部业务',
+        lead: '三大互联支柱:库存、沟通与运营。无需重复输入、无需在工具间复制粘贴。',
+        highlights: [
+          { title: '库存', description: '实时库存、价格、图片与技术资料' },
+          { title: '沟通', description: '所有潜客与消息集中到一个收件箱' },
+          { title: '运营', description: '从潜客到合同,全程无需离开工具' },
+          { title: '24 小时', description: '开通上线 · 无强制绑定' },
+        ],
+        bullets: [
+          '通过车牌或 VIN 上架,技术资料自动补全。',
+          '一键多平台发布到 16+ 门户。',
+          '销售历史与市场价格全部集成。',
+          '电子发票(General Regime 与 REBU)与数字签章合同均已包含。',
+        ],
+      },
+      {
+        type: 'process',
+        title: '从车牌到已签合同',
+        steps: [
+          { title: '01 · 车牌', description: '输入车牌或 VIN,Apex 自动带出技术资料、原厂配置与选装。' },
+          { title: '02 · 实时库存', description: '上传图片、调整价格。车辆即进入库存,可随时发布。' },
+          { title: '03 · 16+ 门户', description: '一键多发布:Facilitea、Wallapop、Coches.net、Motorflash、Tikcars 等。' },
+          { title: '04 · 收件箱', description: '来自所有门户的消息、潜客与来电汇聚在同一收件箱。Kanban 销售管道。' },
+          { title: '05 · 成交', description: '预约、数字签章合同、电子发票。全部在 Apex 中完成,无需切换工具。' },
+        ],
+      },
+      {
+        type: 'features',
+        title: '您经销店所需的一切,已集成',
+        lead: '四个功能领域,所有模块互联。数据不离开 Apex。',
+        items: [
+          { title: '库存', description: '库存、多平台发布至 16+ 门户、销售历史、自动估值的评估以及按车牌或 VIN 上架并自动补全技术资料。', icon: 'inventory_2' },
+          { title: '潜客与聊天', description: '统一收件箱、Kanban 销售管道、集成 Wallapop 与 Coches.net 的 Chat Center、Wallapop 抓取、商业报价与带跟进的营销活动。', icon: 'forum' },
+          { title: '销售', description: '客户(个人与企业)、预约日历集成、含数字签章的买卖合同、电子发票(General Regime 与 REBU),以及包含在内的经销店官网。', icon: 'point_of_sale' },
+          { title: '运营', description: '为多点位集团设计的多点运营、多公司(multi-CIF)、含税务与库存 KPI 的报告、审计记录(谁在何时做了什么),以及带精细权限的用户管理。', icon: 'account_tree' },
+          { title: '多平台发布', description: 'Coches.net、Wallapop、AutoScout24、Coches.com、Autocasión、Carwow、Carnovo、Motorflash、Motos.net、km77、Motor.es、Tikcars、Motoreto、Maxterauto、Gremi Motor、Facilitea…… 库存实时同步:在 Apex 中售出,即从所有门户下架。', icon: 'share' },
+          { title: 'Chat Center', description: '在集成聊天中统一 Wallapop 与 Coches.net 的对话。一个客服代理并行处理所有渠道。', icon: 'chat' },
+        ],
+      },
+      {
+        type: 'highlights',
+        title: '面向拥有多家公司的集团',
+        lead: '每个税号、每个门店、每个团队各就其位。同集团公司间数据互不交叉。',
+        highlights: [
+          { title: '多公司', description: 'multi-CIF 运营:每家公司独立开票、独立库存与潜客' },
+          { title: '精细权限', description: '马德里的销售员只能看到自己所属的潜客与库存' },
+          { title: '凭据加密', description: '每个门户账户拥有独立密钥,加密存储' },
+          { title: '完整审计', description: '记录谁在何时对哪条记录做了什么' },
+        ],
+        bullets: [
+          '真实示例:一个集团旗下有公司 A(马德里 BMW/MINI)、公司 B(瓦伦西亚 Audi/VW)与公司 C(塞维利亚多品牌),每家均独立运行自己的库存、潜客与对话。',
+          '集团层面的整合报告,含税务、库存与商业绩效指标。',
+          '面向 120 辆车以上集团的 Enterprise 方案提供专属客户经理与 SLA。',
+        ],
+      },
+      {
+        type: 'cta',
+        title: '基于您真实库存的 30 分钟演示',
+        lead: '您向我们介绍现有运营方式,我们向您展示您的库存在 Apex 中的表现。无需承诺、无需安装。contacto@apexcrm.es · apexcrm.es · +34 655 85 25 70',
+      },
+    ],
+  },
 }

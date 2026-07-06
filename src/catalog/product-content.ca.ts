@@ -700,4 +700,71 @@ export const productContent: Record<string, ProductContent> = {
       },
     ],
   },
+  apex: {
+    subtitle: "El CRM per a concessionaris que centralitza inventari, leads i multipublicació en una sola plataforma · Alta en 24 h, sense permanència",
+    sections: [
+      {
+        type: 'highlights',
+        title: 'Una sola plataforma per a tot el que fa el teu concessionari',
+        lead: 'Tres pilars connectats: inventari, comunicació i operació. Sense tecleig doble, sense copiar i enganxar entre eines.',
+        highlights: [
+          { title: 'Inventari', description: 'Estoc viu, preus, fotos i fitxes tècniques' },
+          { title: 'Comunicació', description: 'Tots els leads i missatges en una sola bústia' },
+          { title: 'Operació', description: "Del lead al contracte sense sortir de l'eina" },
+          { title: '24 h', description: 'Alta operativa · sense permanència obligatòria' },
+        ],
+        bullets: [
+          'Alta per matrícula o VIN amb fitxa tècnica autocompletada.',
+          'Multipublicació a +16 portals en un sol clic.',
+          'Històric de vendes i preu de mercat integrats.',
+          'Factura electrònica (Règim General i REBU) i contracte amb firma digital inclosos.',
+        ],
+      },
+      {
+        type: 'process',
+        title: 'De la matrícula al contracte signat',
+        steps: [
+          { title: '01 · Matrícula', description: 'Teclegues la matrícula o el bastidor. Apex porta fitxa tècnica, equipament de sèrie i extres automàticament.' },
+          { title: '02 · Estoc viu', description: 'Puges fotos, ajustes preu. El vehicle queda a inventari, llest per publicar.' },
+          { title: '03 · +16 portals', description: 'Multipublicació a Facilitea, Wallapop, Coches.net, Motorflash, Tikcars i més. Un sol botó.' },
+          { title: '04 · Inbox', description: 'Missatges, leads i trucades de tots els portals en una única safata. Pipeline Kanban.' },
+          { title: '05 · Tancament', description: "Cita, contracte signat digital, factura electrònica. Tot a Apex, sense sortir de l'eina." },
+        ],
+      },
+      {
+        type: 'features',
+        title: 'Tot el que necessita el teu concessionari, ja integrat',
+        lead: "Quatre àrees funcionals, tots els mòduls connectats entre si. Les dades no surten d'Apex.",
+        items: [
+          { title: 'Inventari', description: 'Estoc, multipublicació a +16 portals, històric de vendes, taxacions amb valoració automàtica i alta per matrícula o VIN amb fitxa tècnica autocompletada.', icon: 'inventory_2' },
+          { title: 'Leads i Xat', description: 'Inbox unificat, pipeline Kanban, Xat Center amb Wallapop i Coches.net integrats, captació a Wallapop, ofertes comercials i campanyes amb seguiment.', icon: 'forum' },
+          { title: 'Venda', description: 'Clients (persones físiques i jurídiques), calendari integrat de cites, contractes de compravenda amb firma digital, factura electrònica (Règim General i REBU) i lloc web del concessionari inclòs.', icon: 'point_of_sale' },
+          { title: 'Operació', description: 'Multiubicacions per a grups amb diverses seus, multisocietats (multi-CIF), reports amb KPIs fiscal i estoc, auditoria (qui va fer què i quan), usuaris amb permisos granulars.', icon: 'account_tree' },
+          { title: 'Multipublicació', description: 'Coches.net, Wallapop, AutoScout24, Coches.com, Autocasión, Carwow, Carnovo, Motorflash, Motos.net, km77, Motor.es, Tikcars, Motoreto, Maxterauto, Gremi Motor, Facilitea… Estoc sincronitzat en temps real: venut a Apex, retirat de tots els portals.', icon: 'share' },
+          { title: 'Xat Center', description: 'Unifiques converses de Wallapop i Coches.net amb xat integrat. Un sol agent atén tots els canals en paral·lel.', icon: 'chat' },
+        ],
+      },
+      {
+        type: 'highlights',
+        title: 'Pensat per a grups amb diverses societats',
+        lead: 'Cada CIF, cada seu, cada equip al seu lloc. Sense encreuaments de dades entre societats del mateix grup.',
+        highlights: [
+          { title: 'Multisocietats', description: 'Operació multi-CIF: cada societat amb la seva facturació, estoc i leads independents' },
+          { title: 'Permisos granulars', description: 'Un comercial de Barcelona només veu els seus propis leads i el seu estoc' },
+          { title: 'Credencials xifrades', description: 'Cada compte de portal amb les seves pròpies claus, emmagatzemades amb xifratge' },
+          { title: 'Auditoria completa', description: 'Registre de qui va fer què, quan i sobre quin registre' },
+        ],
+        bullets: [
+          'Exemple real: un grup amb Societat A (BMW/MINI Madrid), Societat B (Audi/VW València) i Societat C (Multimarca Sevilla) opera amb estoc, leads i xats propis i independents a cadascuna.',
+          "Reports consolidats a nivell de grup amb KPIs fiscals, d'estoc i de rendiment comercial.",
+          'Account manager i SLA dedicats al pla Enterprise per a grups amb +120 vehicles.',
+        ],
+      },
+      {
+        type: 'cta',
+        title: 'Una demo de 30 minuts sobre el teu estoc real',
+        lead: "Ens expliques la teva operativa actual i t'ensenyem com quedaria a Apex amb el teu propi inventari. Sense compromís ni instal·lacions. contacto@apexcrm.es · apexcrm.es · +34 655 85 25 70",
+      },
+    ],
+  },
 }
