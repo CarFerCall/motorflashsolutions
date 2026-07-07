@@ -639,19 +639,6 @@ export const productContent: Record<string, ProductContent> = {
         ],
       },
       {
-        type: 'showcase',
-        eyebrow: 'HOW YOUR CUSTOMER SEES IT',
-        title: 'A video with their name and the options one click away.',
-        lead: "The customer opens the email or WhatsApp and sees a personalised video with their current car. When it ends the real offers you've configured appear — renew, switch model, upgrade, buy the car — and they pick the one that fits in one click. No forms, no cold calls, no friction.",
-        bullets: [
-          'A video where the AI voice greets the customer by name.',
-          'Up to 5 real offers with monthly payment, model and photos.',
-          'One-click reply — lands straight in your rep and CRM.',
-        ],
-        mockId: 'fleet-manager-email',
-        imagePosition: 'right',
-      },
-      {
         type: 'process',
         title: 'From portfolio to closed sale in 4 steps',
         steps: [

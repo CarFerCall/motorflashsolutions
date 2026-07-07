@@ -638,19 +638,6 @@ export const productContent: Record<string, ProductContent> = {
         ],
       },
       {
-        type: 'showcase',
-        eyebrow: '您的客户看到的样子',
-        title: '专属视频与一键选项。',
-        lead: '客户打开邮件或 WhatsApp,看到附有其当前车辆的个性化视频。视频结束后,您预设的真实方案会浮现 — 续约、换车型、升级、买断当前车辆 — 客户一键即可选择。无表单、无冷电、无摩擦。',
-        bullets: [
-          'AI 语音以客户姓名问候的视频。',
-          '最多 5 项含月供、车型与图片的真实方案。',
-          '一键回复 — 直接进入销售与 CRM。',
-        ],
-        mockId: 'fleet-manager-email',
-        imagePosition: 'right',
-      },
-      {
         type: 'process',
         title: '4 步走完从客户群到成交',
         steps: [

@@ -32,6 +32,16 @@ const AFTER_HERO_BY_SLUG: Record<string, React.ComponentType<unknown> | (() => P
   dealer: MultipublicadorAnimation,
 }
 
+// Mocks JSX que sustituyen al icono grande del hero por un preview
+// realista del producto. Se registran por slug; el componente recibe
+// el locale activo por si tiene textos que traducir.
+const HERO_MOCK_BY_SLUG: Record<
+  string,
+  React.ComponentType<{ locale?: ProductContentLocale }>
+> = {
+  'motorflash-connect': FleetManagerEmailMock,
+}
+
 export async function GenericProductPage({ product }: { product: Product }) {
   // Recupera el locale activo del segmento [locale] y selecciona
   // las traducciones del producto. Si el slug aún no tiene EN/ZH
@@ -41,6 +51,7 @@ export async function GenericProductPage({ product }: { product: Product }) {
   const content = productContentBySlug(product.slug, locale)
   const others = orderedProducts(locale).filter((p) => p.slug !== product.slug).slice(0, 8)
   const heroImage = HERO_IMAGE_BY_SLUG[product.slug]
+  const HeroMock = HERO_MOCK_BY_SLUG[product.slug]
   const AfterHero = AFTER_HERO_BY_SLUG[product.slug]
 
   return (
@@ -103,6 +114,13 @@ export async function GenericProductPage({ product }: { product: Product }) {
                       height: 'auto',
                     }}
                   />
+                </div>
+              ) : HeroMock ? (
+                <div className="relative w-full max-w-md">
+                  <div aria-hidden className="absolute -inset-4 rounded-[2.5rem] opacity-30 blur-2xl" style={{ background: 'radial-gradient(circle at 30% 40%, rgba(255,128,0,0.35), transparent 60%)' }} />
+                  <div className="relative">
+                    <HeroMock locale={locale} />
+                  </div>
                 </div>
               ) : (
                 <div className="mf-icon-tile" style={{ width: 240, height: 240, borderRadius: '2.5rem', boxShadow: '0 24px 48px rgba(255, 128, 0, 0.18)' }}>

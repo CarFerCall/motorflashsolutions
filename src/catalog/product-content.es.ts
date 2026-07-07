@@ -640,19 +640,6 @@ export const productContent: Record<string, ProductContent> = {
         ],
       },
       {
-        type: 'showcase',
-        eyebrow: 'ASÍ LO VE TU CLIENTE',
-        title: 'Un vídeo con su nombre y las opciones a un clic.',
-        lead: 'El cliente abre el email o el WhatsApp y ve un vídeo personalizado con su coche actual. Al terminar aparecen las propuestas reales que tú has configurado — renovar, cambiar de modelo, subir de gama, comprar el coche — y elige la que le interesa con un clic. Sin formularios, sin llamadas previas, sin fricción.',
-        bullets: [
-          'Vídeo con voz IA que saluda al cliente por su nombre.',
-          'Hasta 5 propuestas reales con cuota, modelo y fotos.',
-          'Respuesta con un solo clic — llega directa al comercial y al CRM.',
-        ],
-        mockId: 'fleet-manager-email',
-        imagePosition: 'right',
-      },
-      {
         type: 'process',
         title: 'De la cartera a la venta cerrada en 4 pasos',
         steps: [
