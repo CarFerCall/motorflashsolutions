@@ -36,6 +36,12 @@ interface CcCopy {
   derivationStats: { v: string; l: string }[]
   derivationExampleTopline: string
   derivationExample: string
+  semaforoEyebrow: string
+  semaforoTitle1: string
+  semaforoTitleAccent: string
+  semaforoLead: string
+  semaforoPoints: string[]
+  semaforoImageAlt: string
   ctaTitle: string
   ctaLead: string
   ctaButton: string
@@ -120,6 +126,17 @@ const COPY: Record<LocaleKey, CcCopy> = {
     ],
     derivationExampleTopline: 'EJEMPLO REAL DE GESTIÓN',
     derivationExample: '164 leads gestionados en un mes para un grupo de concesionarios, con derivación equitativa entre 5 comerciales.',
+    semaforoEyebrow: 'SUPERVISIÓN EN TIEMPO REAL',
+    semaforoTitle1: 'El semáforo: ',
+    semaforoTitleAccent: 'control real de tu equipo, en directo.',
+    semaforoLead: 'La monitorización de agentes en tiempo real permite a los supervisores visualizar y gestionar la actividad del equipo al momento, tomar decisiones rápidas para cumplir los KPIs y escuchar cualquier llamada en directo para ayudar al agente cuando hace falta. En definitiva: control real de lo que hacen tus agentes en cada momento.',
+    semaforoPoints: [
+      'Estado en tiempo real de cada agente (llamando, en pausa, disponible, after-call…).',
+      'Escucha en directo de cualquier conversación con opción de intervenir sin colgar la llamada.',
+      'Decisiones rápidas para mantener los KPIs de recepción, tiempos y calidad.',
+      'Distribución equitativa y trazable de la carga entre agentes.',
+    ],
+    semaforoImageAlt: 'Panel de semáforo de Motorflash Contact Center con estado de agentes en tiempo real',
     ctaTitle: '¿Listo para externalizar tu atención al cliente?',
     ctaLead: 'Cuéntanos cuántos leads recibes al mes y te enseñamos un dashboard real con un grupo de tu tamaño. En 30 minutos sabes el coste y el ROI estimado.',
     ctaButton: 'Solicitar Demo Personalizada',
@@ -202,6 +219,17 @@ const COPY: Record<LocaleKey, CcCopy> = {
     ],
     derivationExampleTopline: 'EXEMPLE REAL DE GESTIÓ',
     derivationExample: "164 leads gestionats en un mes per a un grup de concessionaris, amb derivació equitativa entre 5 comercials.",
+    semaforoEyebrow: 'SUPERVISIÓ EN TEMPS REAL',
+    semaforoTitle1: 'El semàfor: ',
+    semaforoTitleAccent: 'control real del teu equip, en directe.',
+    semaforoLead: "La monitorització d'agents en temps real permet als supervisors visualitzar i gestionar l'activitat de l'equip al moment, prendre decisions ràpides per complir els KPIs i escoltar qualsevol trucada en directe per ajudar l'agent quan cal. En definitiva: control real del que fan els teus agents en cada moment.",
+    semaforoPoints: [
+      "Estat en temps real de cada agent (trucant, en pausa, disponible, after-call…).",
+      "Escolta en directe de qualsevol conversa amb opció d'intervenir sense penjar la trucada.",
+      "Decisions ràpides per mantenir els KPIs de recepció, temps i qualitat.",
+      "Distribució equitativa i traçable de la càrrega entre agents.",
+    ],
+    semaforoImageAlt: "Panell de semàfor de Motorflash Contact Center amb estat dels agents en temps real",
     ctaTitle: "Llest per externalitzar la teva atenció al client?",
     ctaLead: "Explica'ns quants leads reps al mes i t'ensenyem un dashboard real amb un grup de la teva mida. En 30 minuts saps el cost i el ROI estimat.",
     ctaButton: 'Sol·licitar Demo Personalitzada',
@@ -284,6 +312,17 @@ const COPY: Record<LocaleKey, CcCopy> = {
     ],
     derivationExampleTopline: 'REAL MANAGEMENT EXAMPLE',
     derivationExample: '164 leads managed in a month for a dealership group, fair-dispatched across 5 reps.',
+    semaforoEyebrow: 'REAL-TIME SUPERVISION',
+    semaforoTitle1: 'The traffic-light view: ',
+    semaforoTitleAccent: 'real control of your team, live.',
+    semaforoLead: "Real-time agent monitoring lets supervisors visualise and manage team activity on the fly, make quick decisions to hit KPIs and listen in on any live call to help the agent when needed. In short: real control over what your team is doing at any moment.",
+    semaforoPoints: [
+      "Live status of every agent (on a call, on break, available, after-call…).",
+      "Live listen-in on any conversation, with the option to step in without dropping the call.",
+      "Quick decisions to keep KPIs on inbound response, timing and quality.",
+      "Fair, traceable distribution of workload across agents.",
+    ],
+    semaforoImageAlt: 'Motorflash Contact Center traffic-light board showing real-time agent statuses',
     ctaTitle: 'Ready to outsource your customer service?',
     ctaLead: 'Tell us how many leads you receive per month and we’ll show a real dashboard from a group your size. In 30 minutes you know the cost and estimated ROI.',
     ctaButton: 'Request a personalised demo',
@@ -366,6 +405,17 @@ const COPY: Record<LocaleKey, CcCopy> = {
     ],
     derivationExampleTopline: '真实管理示例',
     derivationExample: '一个月内为一个经销商集团管理 164 条潜客,在 5 位销售之间均衡分派。',
+    semaforoEyebrow: '实时监督',
+    semaforoTitle1: '红绿灯视图:',
+    semaforoTitleAccent: '实时掌控您的团队。',
+    semaforoLead: '实时坐席监控让主管一目了然地查看并管理团队动态,快速决策以达成 KPI,并可实时收听任意来电以在需要时协助坐席。总而言之:实时掌控团队每时每刻的工作状态。',
+    semaforoPoints: [
+      '实时查看每位坐席的状态(通话中、暂停、空闲、通话后…)。',
+      '实时收听任意对话,可在不挂断的情况下介入协助。',
+      '快速决策以维持接听、时长与质量 KPI。',
+      '在坐席之间公平、可追溯地分配负载。',
+    ],
+    semaforoImageAlt: 'Motorflash Contact Center 红绿灯面板,实时显示坐席状态',
     ctaTitle: '准备好将客户服务外包了吗?',
     ctaLead: '告诉我们您每月接收多少潜客,我们以与您规模相当的集团展示真实仪表板。30 分钟内您就能了解成本与预估 ROI。',
     ctaButton: '申请定制演示',
@@ -525,6 +575,39 @@ export async function ContactCenter() {
                 <p className="text-xs uppercase tracking-widest font-bold opacity-90 mb-1">{t.derivationExampleTopline}</p>
                 <p className="text-sm">{t.derivationExample}</p>
               </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Semáforo — supervisión en tiempo real */}
+      <section className="py-24 bg-white border-t border-outline-variant">
+        <div className="mf-container">
+          <div className="grid lg:grid-cols-2 gap-10 lg:gap-14 items-center">
+            <div>
+              <span className="text-xs font-bold uppercase tracking-widest text-primary block mb-3">{t.semaforoEyebrow}</span>
+              <h2 className="text-3xl md:text-headline-lg font-semibold mb-4 leading-tight">
+                {t.semaforoTitle1}<span className="text-primary">{t.semaforoTitleAccent}</span>
+              </h2>
+              <p className="text-on-surface-variant mb-6 leading-relaxed">{t.semaforoLead}</p>
+              <ul className="space-y-3">
+                {t.semaforoPoints.map((p) => (
+                  <li key={p} className="flex gap-3 items-start">
+                    <span className="material-symbols-outlined text-primary flex-shrink-0 mt-0.5" style={{ fontSize: 22 }}>check_circle</span>
+                    <span className="text-on-surface-variant text-sm leading-relaxed">{p}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className="relative">
+              <div aria-hidden className="absolute -inset-6 rounded-[2rem] opacity-30 blur-2xl" style={{ background: 'radial-gradient(circle at 30% 40%, rgba(255,128,0,0.4), transparent 60%)' }} />
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/images/products/contact-center-semaforo.png"
+                alt={t.semaforoImageAlt}
+                loading="lazy"
+                className="relative rounded-2xl border border-outline-variant shadow-2xl w-full h-auto"
+              />
             </div>
           </div>
         </div>
