@@ -638,6 +638,20 @@ export const productContent: Record<string, ProductContent> = {
         ],
       },
       {
+        type: 'showcase',
+        eyebrow: '您的客户看到的样子',
+        title: '专属视频与一键选项。',
+        lead: '客户打开邮件或 WhatsApp,看到附有其当前车辆的个性化视频。视频结束后,您预设的真实方案会浮现 — 续约、换车型、升级、买断当前车辆 — 客户一键即可选择。无表单、无冷电、无摩擦。',
+        bullets: [
+          'AI 语音以客户姓名问候的视频。',
+          '最多 5 项含月供、车型与图片的真实方案。',
+          '一键回复 — 直接进入销售与 CRM。',
+        ],
+        imageSrc: '/images/products/fleet-manager-email.png',
+        imageAlt: '客户收到的邮件视图:附客户姓名的个性化视频与续约、换车、买断三个选项',
+        imagePosition: 'right',
+      },
+      {
         type: 'process',
         title: '4 步走完从客户群到成交',
         steps: [
@@ -657,6 +671,20 @@ export const productContent: Record<string, ProductContent> = {
           { title: '基于受众的活动', description: '定义具体数据库(某品牌、月供或年限客户),向其发送带个性化视频的专属报价。', icon: 'group' },
           { title: '与 CRM/ERP 集成', description: '提供 REST API 与 webhooks,用于同步客户群、由 CRM 触发活动并自动将回复推送至对应潜客。', icon: 'integration_instructions' },
         ],
+      },
+      {
+        type: 'showcase',
+        eyebrow: '您对全局的掌控',
+        title: '实时漏斗指标。',
+        lead: '管理面板按周期展示发送、送达、打开、点击、观看与回复。您看到完整漏斗 — 从发送邮件到客户回复 — 并清楚哪些活动奏效、在哪里需要调优。',
+        bullets: [
+          '按日期区间的 KPI:生成视频、邮件打开、回复、退回。',
+          '转化漏斗:发送 → 送达 → 打开 → 点击 → 观看 → 回复。',
+          '查看所有已生成视频的状态、渠道、客户与车辆。',
+        ],
+        imageSrc: '/images/products/fleet-manager-dashboard.png',
+        imageAlt: 'Fleet Manager 的合同结束 KPI 面板:生成视频、打开、回复与转化漏斗',
+        imagePosition: 'left',
       },
       {
         type: 'cta',

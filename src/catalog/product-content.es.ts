@@ -640,6 +640,20 @@ export const productContent: Record<string, ProductContent> = {
         ],
       },
       {
+        type: 'showcase',
+        eyebrow: 'ASÍ LO VE TU CLIENTE',
+        title: 'Un vídeo con su nombre y las opciones a un clic.',
+        lead: 'El cliente abre el email o el WhatsApp y ve un vídeo personalizado con su coche actual. Al terminar aparecen las propuestas reales que tú has configurado — renovar, cambiar de modelo, subir de gama, comprar el coche — y elige la que le interesa con un clic. Sin formularios, sin llamadas previas, sin fricción.',
+        bullets: [
+          'Vídeo con voz IA que saluda al cliente por su nombre.',
+          'Hasta 5 propuestas reales con cuota, modelo y fotos.',
+          'Respuesta con un solo clic — llega directa al comercial y al CRM.',
+        ],
+        imageSrc: '/images/products/fleet-manager-email.png',
+        imageAlt: 'Vista del email que recibe el cliente: vídeo personalizado con su nombre y 3 opciones para renovar, cambiar o comprar el coche',
+        imagePosition: 'right',
+      },
+      {
         type: 'process',
         title: 'De la cartera a la venta cerrada en 4 pasos',
         steps: [
@@ -659,6 +673,20 @@ export const productContent: Record<string, ProductContent> = {
           { title: 'Campañas por audiencia', description: 'Define una base de datos concreta (clientes de cierta marca, cuota, antigüedad) y mándales una oferta exclusiva con vídeo personalizado.', icon: 'group' },
           { title: 'Integración con tu CRM/ERP', description: 'API REST y webhooks para sincronizar cartera, disparar campañas desde tu CRM y mandar respuestas automáticamente al lead correcto.', icon: 'integration_instructions' },
         ],
+      },
+      {
+        type: 'showcase',
+        eyebrow: 'ASÍ LO CONTROLAS TÚ',
+        title: 'Métricas del embudo en tiempo real.',
+        lead: 'Panel de administración con envíos, entregas, aperturas, clics, visualizaciones y respuestas por período. Ves el embudo completo — desde el email enviado hasta la respuesta del cliente — y sabes exactamente qué campañas están funcionando y dónde afinar.',
+        bullets: [
+          'KPIs por rango de fechas: vídeos generados, emails abiertos, respuestas, rebotes.',
+          'Embudo de conversión: enviado → entregado → abierto → clic → visualizado → respuesta.',
+          'Vista de todos los vídeos generados con estado, canal, cliente y vehículo.',
+        ],
+        imageSrc: '/images/products/fleet-manager-dashboard.png',
+        imageAlt: 'Dashboard de Fleet Manager con KPIs de fin de renting: vídeos generados, aperturas, respuestas y embudo de conversión',
+        imagePosition: 'left',
       },
       {
         type: 'cta',

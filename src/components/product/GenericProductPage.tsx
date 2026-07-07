@@ -216,6 +216,46 @@ export async function GenericProductPage({ product }: { product: Product }) {
             </section>
           )
         }
+        if (section.type === 'showcase') {
+          const imageOnLeft = section.imagePosition === 'left'
+          return (
+            <section key={idx} className={`py-24 ${soft ? 'bg-surface-container' : ''}`}>
+              <div className="mf-container">
+                <div className="grid lg:grid-cols-2 gap-10 lg:gap-14 items-center">
+                  <div className={imageOnLeft ? 'lg:order-2' : ''}>
+                    {section.eyebrow && (
+                      <span className="mf-eyebrow">{section.eyebrow}</span>
+                    )}
+                    <h2 className="text-3xl md:text-headline-lg font-semibold mb-4 leading-tight">{section.title}</h2>
+                    {section.lead && (
+                      <p className="text-on-surface-variant mb-6 leading-relaxed">{section.lead}</p>
+                    )}
+                    {section.bullets && section.bullets.length > 0 && (
+                      <ul className="space-y-3">
+                        {section.bullets.map((b, i) => (
+                          <li key={i} className="flex gap-3 items-start">
+                            <span className="material-symbols-outlined text-primary flex-shrink-0 mt-0.5" style={{ fontSize: 22 }}>check_circle</span>
+                            <span className="text-on-surface-variant text-sm leading-relaxed">{b}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </div>
+                  <div className={`relative ${imageOnLeft ? 'lg:order-1' : ''}`}>
+                    <div aria-hidden className="absolute -inset-6 rounded-[2rem] opacity-30 blur-2xl" style={{ background: 'radial-gradient(circle at 30% 40%, rgba(255,128,0,0.35), transparent 60%)' }} />
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={section.imageSrc}
+                      alt={section.imageAlt}
+                      loading="lazy"
+                      className="relative rounded-2xl border border-outline-variant shadow-2xl w-full h-auto"
+                    />
+                  </div>
+                </div>
+              </div>
+            </section>
+          )
+        }
         if (section.type === 'spotlight') {
           return (
             <section key={idx} className={`py-24 ${soft ? 'bg-surface-container' : ''}`}>

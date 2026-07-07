@@ -639,6 +639,20 @@ export const productContent: Record<string, ProductContent> = {
         ],
       },
       {
+        type: 'showcase',
+        eyebrow: 'HOW YOUR CUSTOMER SEES IT',
+        title: 'A video with their name and the options one click away.',
+        lead: "The customer opens the email or WhatsApp and sees a personalised video with their current car. When it ends the real offers you've configured appear — renew, switch model, upgrade, buy the car — and they pick the one that fits in one click. No forms, no cold calls, no friction.",
+        bullets: [
+          'A video where the AI voice greets the customer by name.',
+          'Up to 5 real offers with monthly payment, model and photos.',
+          'One-click reply — lands straight in your rep and CRM.',
+        ],
+        imageSrc: '/images/products/fleet-manager-email.png',
+        imageAlt: 'The email your customer receives: personalised video with their name and 3 options to renew, switch or buy the car',
+        imagePosition: 'right',
+      },
+      {
         type: 'process',
         title: 'From portfolio to closed sale in 4 steps',
         steps: [
@@ -658,6 +672,20 @@ export const productContent: Record<string, ProductContent> = {
           { title: 'Audience-based campaigns', description: 'Define a specific database (customers of a certain brand, payment range, age) and send them an exclusive offer with personalised video.', icon: 'group' },
           { title: 'CRM/ERP integration', description: 'REST API and webhooks to sync portfolio, trigger campaigns from your CRM and forward replies automatically to the right lead.', icon: 'integration_instructions' },
         ],
+      },
+      {
+        type: 'showcase',
+        eyebrow: 'HOW YOU STAY IN CONTROL',
+        title: 'Real-time funnel metrics.',
+        lead: 'Admin panel with sends, deliveries, opens, clicks, views and replies per period. See the full funnel — from email sent to customer reply — and know exactly which campaigns are working and where to fine-tune.',
+        bullets: [
+          'KPIs per date range: videos generated, emails opened, replies, bounces.',
+          'Conversion funnel: sent → delivered → opened → clicked → viewed → reply.',
+          'View of every generated video with status, channel, customer and vehicle.',
+        ],
+        imageSrc: '/images/products/fleet-manager-dashboard.png',
+        imageAlt: 'Fleet Manager dashboard with end-of-lease KPIs: videos generated, opens, replies and conversion funnel',
+        imagePosition: 'left',
       },
       {
         type: 'cta',

@@ -639,6 +639,20 @@ export const productContent: Record<string, ProductContent> = {
         ],
       },
       {
+        type: 'showcase',
+        eyebrow: 'AIXÍ HO VEU EL TEU CLIENT',
+        title: 'Un vídeo amb el seu nom i les opcions a un clic.',
+        lead: "El client obre el correu o el WhatsApp i veu un vídeo personalitzat amb el seu cotxe actual. En acabar apareixen les propostes reals que has configurat — renovar, canviar de model, pujar de gamma, comprar el cotxe — i tria la que li interessa amb un clic. Sense formularis, sense trucades prèvies, sense fricció.",
+        bullets: [
+          'Vídeo amb veu IA que saluda el client pel seu nom.',
+          'Fins a 5 propostes reals amb quota, model i fotos.',
+          'Resposta amb un sol clic — arriba directa al comercial i al CRM.',
+        ],
+        imageSrc: '/images/products/fleet-manager-email.png',
+        imageAlt: 'Vista del correu que rep el client: vídeo personalitzat amb el seu nom i 3 opcions per renovar, canviar o comprar el cotxe',
+        imagePosition: 'right',
+      },
+      {
         type: 'process',
         title: 'De la cartera a la venda tancada en 4 passos',
         steps: [
@@ -658,6 +672,20 @@ export const productContent: Record<string, ProductContent> = {
           { title: 'Campanyes per audiència', description: "Defineix una base de dades concreta (clients d'una marca, quota, antiguitat) i envia'ls una oferta exclusiva amb vídeo personalitzat.", icon: 'group' },
           { title: 'Integració amb el teu CRM/ERP', description: 'API REST i webhooks per sincronitzar cartera, disparar campanyes des del teu CRM i enviar respostes automàticament al lead correcte.', icon: 'integration_instructions' },
         ],
+      },
+      {
+        type: 'showcase',
+        eyebrow: 'AIXÍ HO CONTROLES TU',
+        title: "Mètriques de l'embut en temps real.",
+        lead: "Panell d'administració amb enviaments, entregues, obertures, clics, visualitzacions i respostes per període. Veus l'embut complet — des del correu enviat fins a la resposta del client — i saps exactament quines campanyes funcionen i on afinar.",
+        bullets: [
+          "KPIs per rang de dates: vídeos generats, correus oberts, respostes, rebots.",
+          "Embut de conversió: enviat → entregat → obert → clic → vist → resposta.",
+          "Vista de tots els vídeos generats amb estat, canal, client i vehicle.",
+        ],
+        imageSrc: '/images/products/fleet-manager-dashboard.png',
+        imageAlt: "Dashboard de Fleet Manager amb KPIs de final de rènting: vídeos generats, obertures, respostes i embut de conversió",
+        imagePosition: 'left',
       },
       {
         type: 'cta',

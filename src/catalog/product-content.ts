@@ -52,12 +52,25 @@ export type SpotlightSection = {
   badgeIcon?: string
 }
 
+export type ShowcaseSection = {
+  type: 'showcase'
+  eyebrow?: string
+  title: string
+  lead?: string
+  bullets?: string[]
+  imageSrc: string
+  imageAlt: string
+  /** default 'right' */
+  imagePosition?: 'left' | 'right'
+}
+
 export type ProductContentSection =
   | FeaturesSection
   | HighlightsSection
   | ProcessSection
   | CtaSection
   | SpotlightSection
+  | ShowcaseSection
 
 export interface ProductContent {
   subtitle: string
