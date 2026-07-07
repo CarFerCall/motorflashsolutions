@@ -647,8 +647,7 @@ export const productContent: Record<string, ProductContent> = {
           '最多 5 项含月供、车型与图片的真实方案。',
           '一键回复 — 直接进入销售与 CRM。',
         ],
-        imageSrc: '/images/products/fleet-manager-email.png',
-        imageAlt: '客户收到的邮件视图:附客户姓名的个性化视频与续约、换车、买断三个选项',
+        mockId: 'fleet-manager-email',
         imagePosition: 'right',
       },
       {

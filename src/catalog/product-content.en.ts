@@ -648,8 +648,7 @@ export const productContent: Record<string, ProductContent> = {
           'Up to 5 real offers with monthly payment, model and photos.',
           'One-click reply — lands straight in your rep and CRM.',
         ],
-        imageSrc: '/images/products/fleet-manager-email.png',
-        imageAlt: 'The email your customer receives: personalised video with their name and 3 options to renew, switch or buy the car',
+        mockId: 'fleet-manager-email',
         imagePosition: 'right',
       },
       {

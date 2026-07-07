@@ -649,8 +649,7 @@ export const productContent: Record<string, ProductContent> = {
           'Hasta 5 propuestas reales con cuota, modelo y fotos.',
           'Respuesta con un solo clic — llega directa al comercial y al CRM.',
         ],
-        imageSrc: '/images/products/fleet-manager-email.png',
-        imageAlt: 'Vista del email que recibe el cliente: vídeo personalizado con su nombre y 3 opciones para renovar, cambiar o comprar el coche',
+        mockId: 'fleet-manager-email',
         imagePosition: 'right',
       },
       {

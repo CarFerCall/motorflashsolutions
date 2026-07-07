@@ -58,10 +58,16 @@ export type ShowcaseSection = {
   title: string
   lead?: string
   bullets?: string[]
-  imageSrc: string
-  imageAlt: string
+  imageSrc?: string
+  imageAlt?: string
   /** default 'right' */
   imagePosition?: 'left' | 'right'
+  /**
+   * Si se define, se renderiza un mock JSX pre-fabricado en lugar de la
+   * imagen. Útil cuando no existe todavía una captura decente. Alt/img
+   * se ignoran cuando hay mockId.
+   */
+  mockId?: 'fleet-manager-email'
 }
 
 export type ProductContentSection =

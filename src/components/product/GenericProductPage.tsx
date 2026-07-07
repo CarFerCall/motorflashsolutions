@@ -6,6 +6,7 @@ import { productContentBySlug, type ProductContentLocale } from '@/catalog/produ
 import { orderedProducts } from '@/catalog/products'
 import { getProductUiCopy } from '@/lib/product-ui-content'
 import { MultipublicadorAnimation } from './MultipublicadorAnimation'
+import { FleetManagerEmailMock } from './mocks/FleetManagerEmailMock'
 
 // Productos que muestran una imagen real en el hero en lugar del
 // icono de Material Symbols con el tile naranja.
@@ -243,13 +244,19 @@ export async function GenericProductPage({ product }: { product: Product }) {
                   </div>
                   <div className={`relative ${imageOnLeft ? 'lg:order-1' : ''}`}>
                     <div aria-hidden className="absolute -inset-6 rounded-[2rem] opacity-30 blur-2xl" style={{ background: 'radial-gradient(circle at 30% 40%, rgba(255,128,0,0.35), transparent 60%)' }} />
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src={section.imageSrc}
-                      alt={section.imageAlt}
-                      loading="lazy"
-                      className="relative rounded-2xl border border-outline-variant shadow-2xl w-full h-auto"
-                    />
+                    {section.mockId === 'fleet-manager-email' ? (
+                      <div className="relative">
+                        <FleetManagerEmailMock locale={locale} />
+                      </div>
+                    ) : section.imageSrc ? (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img
+                        src={section.imageSrc}
+                        alt={section.imageAlt ?? ''}
+                        loading="lazy"
+                        className="relative rounded-2xl border border-outline-variant shadow-2xl w-full h-auto"
+                      />
+                    ) : null}
                   </div>
                 </div>
               </div>
