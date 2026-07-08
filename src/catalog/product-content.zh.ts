@@ -469,6 +469,20 @@ export const productContent: Record<string, ProductContent> = {
         ],
       },
       {
+        type: 'showcase',
+        eyebrow: '潜客的获取方式',
+        title: 'Motorflash.com:为您产生潜客的门户。',
+        lead: 'Exclusive 潜客源自 Motorflash.com 门户的自然流量,门户上我们发布了 +70,000 辆来自 +17,000 家经销店的车辆。用户按"仅 Exclusive"筛选并直接联系您的高端库存 —— 无需与第三方分类广告竞争。',
+        bullets: [
+          '自然精准流量:用户已明确寻求购买。',
+          '"仅 Exclusive"筛选仅面向高级客户 —— 只有您的库存,无竞争。',
+          '直接从车辆详情页联系:WhatsApp、电话与表单。',
+        ],
+        imageSrc: '/images/products/lead-factory-portal.png',
+        imageAlt: 'Motorflash.com 门户,显示已启用"仅 Exclusive"筛选的车辆列表',
+        imagePosition: 'right',
+      },
+      {
         type: 'features',
         title: '两种模式,一个承诺',
         lead: '选择最适合您销售团队的合格化级别。只为交付付费——无广告投入。',
@@ -492,6 +506,20 @@ export const productContent: Record<string, ProductContent> = {
           { title: '换购车辆', description: '以其现有车辆作为部分支付的可能。双重机会:二手车估值 + 新车销售。' },
           { title: '支付方式', description: '融资 · 现金 · 待定。为成交能力与速度提供背景。' },
         ],
+      },
+      {
+        type: 'showcase',
+        eyebrow: '销售团队收到的内容',
+        title: '每个潜客均包含全部数据与评分。',
+        lead: '每个潜客交付包含 3 个完整模块:潜在买家的个人资料、其关注的车辆(含车架号与发布天数)以及包含 6 个加权变量的合格评分。您的销售人员在通话时就已确切知道对方的需求与成交概率。',
+        bullets: [
+          '个人资料:姓名、电话、邮箱、省份与邮编。',
+          '车辆:品牌、车型、车牌、车架号、公里数、价格与发布天数。',
+          '0-100 评分,带速度表与客户对 6 个问题的详细答复。',
+        ],
+        imageSrc: '/images/products/lead-factory-scoring.jpg',
+        imageAlt: '交付潜客的 3 个模块示意图:个人资料、车辆信息与合格评分(得分 75/100)',
+        imagePosition: 'left',
       },
       {
         type: 'highlights',

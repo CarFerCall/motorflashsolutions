@@ -471,6 +471,20 @@ export const productContent: Record<string, ProductContent> = {
         ],
       },
       {
+        type: 'showcase',
+        eyebrow: 'ASÍ CAPTAMOS EL LEAD',
+        title: 'Motorflash.com: el portal desde el que se generan tus leads.',
+        lead: 'Los leads Exclusive nacen del tráfico orgánico del portal Motorflash.com, donde publicamos +70.000 vehículos de +17.000 concesionarios. El usuario filtra por "Solo Exclusive" y contacta directamente con tu inventario premium — sin competir con clasificados de terceros.',
+        bullets: [
+          'Tráfico orgánico cualificado: el usuario ya está buscando comprar.',
+          'Filtro "Solo Exclusive" para clientes premium — solo tu stock, sin competencia.',
+          'Contacto directo desde la ficha: WhatsApp, teléfono y formulario.',
+        ],
+        imageSrc: '/images/products/lead-factory-portal.png',
+        imageAlt: 'Portal Motorflash.com mostrando el listado de vehículos con el filtro "Solo Exclusive" activo',
+        imagePosition: 'right',
+      },
+      {
         type: 'features',
         title: 'Dos modalidades, una promesa',
         lead: 'Elige el nivel de cualificación que mejor encaje con tu equipo comercial. Solo pagas por leads entregados — sin coste de inversión publicitaria.',
@@ -494,6 +508,20 @@ export const productContent: Record<string, ProductContent> = {
           { title: 'Vehículo a cambio', description: 'Posible parte del pago en su coche actual. Doble oportunidad: tasación VO + venta VN.' },
           { title: 'Forma de pago', description: 'Financiado · Contado · Por definir. Aporta contexto sobre la capacidad y velocidad de cierre.' },
         ],
+      },
+      {
+        type: 'showcase',
+        eyebrow: 'QUÉ RECIBE TU EQUIPO COMERCIAL',
+        title: 'Cada lead con todos sus datos y su scoring.',
+        lead: 'El lead te llega con 3 bloques completos: datos personales del comprador potencial, coche por el que se ha interesado (incluidos bastidor y días publicado) y scoring de cualificación con las 6 variables ponderadas. Tu comercial llama sabiendo exactamente qué le interesa y con qué probabilidad de cierre.',
+        bullets: [
+          'Datos personales: nombre, teléfono, email, provincia y código postal.',
+          'Vehículo: marca, modelo, matrícula, bastidor, kilómetros, precio y días publicado.',
+          'Scoring 0-100 con velocímetro y las 6 respuestas del cliente al detalle.',
+        ],
+        imageSrc: '/images/products/lead-factory-scoring.jpg',
+        imageAlt: 'Diagrama con los 3 bloques del lead entregado: datos personales, información del vehículo y scoring de cualificación con puntuación 75/100',
+        imagePosition: 'left',
       },
       {
         type: 'highlights',

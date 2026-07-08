@@ -470,6 +470,20 @@ export const productContent: Record<string, ProductContent> = {
         ],
       },
       {
+        type: 'showcase',
+        eyebrow: 'AIXÍ CAPTEM EL LEAD',
+        title: 'Motorflash.com: el portal des del qual es generen els teus leads.',
+        lead: "Els leads Exclusive neixen del trànsit orgànic del portal Motorflash.com, on publiquem +70.000 vehicles de +17.000 concessionaris. L'usuari filtra per «Només Exclusive» i contacta directament amb el teu inventari premium — sense competir amb classificats de tercers.",
+        bullets: [
+          "Trànsit orgànic qualificat: l'usuari ja està buscant comprar.",
+          "Filtre «Només Exclusive» per a clients premium — només el teu estoc, sense competència.",
+          "Contacte directe des de la fitxa: WhatsApp, telèfon i formulari.",
+        ],
+        imageSrc: '/images/products/lead-factory-portal.png',
+        imageAlt: "Portal Motorflash.com mostrant el llistat de vehicles amb el filtre «Només Exclusive» actiu",
+        imagePosition: 'right',
+      },
+      {
         type: 'features',
         title: 'Dues modalitats, una promesa',
         lead: "Tria el nivell de qualificació que millor encaixi amb el teu equip comercial. Només pagues pels leads entregats — sense cost d'inversió publicitària.",
@@ -493,6 +507,20 @@ export const productContent: Record<string, ProductContent> = {
           { title: 'Vehicle a canvi', description: 'Possible part del pagament amb el seu cotxe actual. Doble oportunitat: taxació VO + venda VN.' },
           { title: 'Forma de pagament', description: 'Finançat · Al comptat · Per definir. Aporta context sobre la capacitat i velocitat de tancament.' },
         ],
+      },
+      {
+        type: 'showcase',
+        eyebrow: 'QUÈ REP EL TEU EQUIP COMERCIAL',
+        title: 'Cada lead amb totes les dades i el seu scoring.',
+        lead: "El lead arriba amb 3 blocs complets: dades personals del comprador potencial, cotxe pel qual s'ha interessat (incloent bastidor i dies publicat) i scoring de qualificació amb les 6 variables ponderades. El teu comercial truca sabent exactament què li interessa i amb quina probabilitat de tancament.",
+        bullets: [
+          "Dades personals: nom, telèfon, correu, província i codi postal.",
+          "Vehicle: marca, model, matrícula, bastidor, quilòmetres, preu i dies publicat.",
+          "Scoring 0-100 amb velocímetre i les 6 respostes del client al detall.",
+        ],
+        imageSrc: '/images/products/lead-factory-scoring.jpg',
+        imageAlt: 'Diagrama amb els 3 blocs del lead entregat: dades personals, informació del vehicle i scoring de qualificació amb puntuació 75/100',
+        imagePosition: 'left',
       },
       {
         type: 'highlights',

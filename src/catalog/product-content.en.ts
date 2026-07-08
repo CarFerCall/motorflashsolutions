@@ -470,6 +470,20 @@ export const productContent: Record<string, ProductContent> = {
         ],
       },
       {
+        type: 'showcase',
+        eyebrow: 'HOW WE CAPTURE THE LEAD',
+        title: 'Motorflash.com: the portal your leads come from.',
+        lead: 'Exclusive leads are born from the organic traffic on the Motorflash.com portal, where we publish 70,000+ vehicles from 17,000+ dealerships. The user filters by "Only Exclusive" and contacts your premium inventory directly — no competing with third-party classifieds.',
+        bullets: [
+          'Qualified organic traffic: the user is already looking to buy.',
+          '"Only Exclusive" filter for premium clients — just your stock, no competition.',
+          'Direct contact from the listing: WhatsApp, phone and form.',
+        ],
+        imageSrc: '/images/products/lead-factory-portal.png',
+        imageAlt: 'Motorflash.com portal showing the vehicle listing with the "Only Exclusive" filter active',
+        imagePosition: 'right',
+      },
+      {
         type: 'features',
         title: 'Two modes, one promise',
         lead: 'Choose the qualification level that best fits your sales team. You only pay for delivered leads — no advertising investment.',
@@ -493,6 +507,20 @@ export const productContent: Record<string, ProductContent> = {
           { title: 'Trade-in vehicle', description: 'Possible part of the payment via their current car. Double opportunity: used-vehicle appraisal + new-vehicle sale.', },
           { title: 'Payment method', description: 'Financed · Cash · To be defined. Adds context on closing capacity and speed.' },
         ],
+      },
+      {
+        type: 'showcase',
+        eyebrow: 'WHAT YOUR SALES TEAM RECEIVES',
+        title: 'Every lead with all the data and its scoring.',
+        lead: "The lead lands with 3 complete blocks: personal data of the potential buyer, the car they were interested in (including VIN and days listed) and qualification scoring with the 6 weighted variables. Your rep calls knowing exactly what they want and how likely a close is.",
+        bullets: [
+          'Personal data: name, phone, email, province and postcode.',
+          'Vehicle: make, model, plate, VIN, kilometres, price and days listed.',
+          'Scoring 0-100 with speedometer and the customer\'s 6 answers in detail.',
+        ],
+        imageSrc: '/images/products/lead-factory-scoring.jpg',
+        imageAlt: 'Diagram with the 3 blocks of the delivered lead: personal data, vehicle information and qualification scoring with a 75/100 score',
+        imagePosition: 'left',
       },
       {
         type: 'highlights',
