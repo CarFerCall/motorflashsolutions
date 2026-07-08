@@ -262,7 +262,16 @@ export async function GenericProductPage({ product }: { product: Product }) {
                   </div>
                   <div className={`relative ${imageOnLeft ? 'lg:order-1' : ''}`}>
                     <div aria-hidden className="absolute -inset-6 rounded-[2rem] opacity-30 blur-2xl" style={{ background: 'radial-gradient(circle at 30% 40%, rgba(255,128,0,0.35), transparent 60%)' }} />
-                    {section.mockId === 'fleet-manager-email' ? (
+                    {section.videoSrc ? (
+                      <video
+                        src={section.videoSrc}
+                        poster={section.videoPoster}
+                        controls
+                        preload="metadata"
+                        playsInline
+                        className="relative rounded-2xl border border-outline-variant shadow-2xl w-full h-auto bg-black"
+                      />
+                    ) : section.mockId === 'fleet-manager-email' ? (
                       <div className="relative">
                         <FleetManagerEmailMock locale={locale} />
                       </div>

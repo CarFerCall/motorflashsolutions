@@ -417,6 +417,14 @@ export const productContent: Record<string, ProductContent> = {
         ],
       },
       {
+        type: 'showcase',
+        eyebrow: 'SEA EN ACCIÓN',
+        title: 'Google Ads para automoción, en directo.',
+        lead: 'Un ejemplo real de lo que puedes hacer hoy con Google Ads: Vehicle Ads, conversiones offline y las novedades que estamos desplegando. Míralo funcionando antes de decidir.',
+        videoSrc: '/videos/marketing-google-ads.mp4',
+        imagePosition: 'right',
+      },
+      {
         type: 'highlights',
         title: 'Tráfico que te busca vs. tráfico que te descubre',
         lead: 'No todo el tráfico tiene el mismo valor ni el mismo momento de compra. Nuestra estrategia combina ambos tipos para maximizar resultados a corto y largo plazo.',

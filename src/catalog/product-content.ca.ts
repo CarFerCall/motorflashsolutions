@@ -416,6 +416,14 @@ export const productContent: Record<string, ProductContent> = {
         ],
       },
       {
+        type: 'showcase',
+        eyebrow: 'SEA EN ACCIÓ',
+        title: 'Google Ads per a automoció, en directe.',
+        lead: "Un exemple real del que pots fer avui amb Google Ads: Vehicle Ads, conversions offline i les novetats que estem desplegant. Mira'l funcionant abans de decidir.",
+        videoSrc: '/videos/marketing-google-ads.mp4',
+        imagePosition: 'right',
+      },
+      {
         type: 'highlights',
         title: 'Trànsit que et busca vs. trànsit que et descobreix',
         lead: 'No tot el trànsit té el mateix valor ni el mateix moment de compra. La nostra estratègia combina ambdós tipus per maximitzar resultats a curt i llarg termini.',

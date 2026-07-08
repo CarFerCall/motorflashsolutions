@@ -68,6 +68,12 @@ export type ShowcaseSection = {
    * se ignoran cuando hay mockId.
    */
   mockId?: 'fleet-manager-email'
+  /**
+   * Vídeo a reproducir en el lado visual del showcase. Tiene prioridad
+   * sobre imageSrc y sobre mockId.
+   */
+  videoSrc?: string
+  videoPoster?: string
 }
 
 export type ProductContentSection =

@@ -416,6 +416,14 @@ export const productContent: Record<string, ProductContent> = {
         ],
       },
       {
+        type: 'showcase',
+        eyebrow: 'SEA IN ACTION',
+        title: 'Google Ads for automotive, live.',
+        lead: "A real example of what you can do today with Google Ads: Vehicle Ads, offline conversions and the new features we're rolling out. See it running before you decide.",
+        videoSrc: '/videos/marketing-google-ads.mp4',
+        imagePosition: 'right',
+      },
+      {
         type: 'highlights',
         title: 'Traffic that searches for you vs traffic that discovers you',
         lead: 'Not all traffic has the same value or the same moment in the buying journey. Our strategy combines both to maximise short- and long-term results.',

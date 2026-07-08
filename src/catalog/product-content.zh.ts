@@ -415,6 +415,14 @@ export const productContent: Record<string, ProductContent> = {
         ],
       },
       {
+        type: 'showcase',
+        eyebrow: 'SEA 实战',
+        title: '面向汽车行业的 Google Ads,现场展示。',
+        lead: '这是您今天就可以用 Google Ads 做到的一个真实示例:Vehicle Ads、线下转化以及我们正在落地的新功能。决定之前先看看它如何运作。',
+        videoSrc: '/videos/marketing-google-ads.mp4',
+        imagePosition: 'right',
+      },
+      {
         type: 'highlights',
         title: '主动搜索 vs. 被动发现',
         lead: '不同流量价值不同,购买时机也各异。我们的策略将两者结合,兼顾短期与长期。',
