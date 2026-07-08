@@ -269,7 +269,7 @@ export async function GenericProductPage({ product }: { product: Product }) {
                         controls
                         preload="metadata"
                         playsInline
-                        className="relative rounded-2xl border border-outline-variant shadow-2xl w-full h-auto bg-black"
+                        className="relative rounded-2xl border border-outline-variant shadow-2xl w-full h-auto max-w-xs mx-auto bg-black"
                       />
                     ) : section.mockId === 'fleet-manager-email' ? (
                       <div className="relative">
