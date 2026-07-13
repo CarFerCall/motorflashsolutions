@@ -2,6 +2,7 @@
 
 import { getPayloadClient } from '@/lib/payload'
 import { normalizeItem, type RawPricingItem } from '@/lib/pricing'
+import { sanitizeHeader } from '@/lib/email-safety'
 
 interface SubmitInput {
   productSlug: string
@@ -101,7 +102,7 @@ export async function submitQuote(input: SubmitInput): Promise<SubmitResult> {
     await payload.sendEmail({
       to: commercialEmail,
       replyTo: input.email,
-      subject: `[Cotización #${created.id}] ${plan.productName} — ${input.contactName}`,
+      subject: sanitizeHeader(`[Cotización #${created.id}] ${plan.productName} — ${input.contactName}`),
       html: internalEmail({ quote: created, lines, tableRows, totalCents, cycleLabel, fmt }),
     })
     await payload.sendEmail({

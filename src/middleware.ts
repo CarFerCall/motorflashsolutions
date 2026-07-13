@@ -25,6 +25,12 @@ import { routing } from './i18n/routing'
  */
 
 const IS_ADMIN_DEPLOY = process.env.IS_ADMIN_DEPLOY === '1'
+// Flag de un solo uso: pon `ALLOW_FIRST_USER_REGISTRATION=1` en la env
+// del deploy justo el rato de crear el primer admin desde el panel, y
+// quítalo inmediatamente después. Cierra el vector de #C2 del review de
+// seguridad (cualquiera podía darse de alta como admin si la BD tenía 0
+// usuarios). Preferible seguir usando `npm run seed` para el primer alta.
+const ALLOW_FIRST_USER_REGISTRATION = process.env.ALLOW_FIRST_USER_REGISTRATION === '1'
 
 const intlMiddleware = createMiddleware(routing)
 
@@ -33,8 +39,26 @@ function isAdminOrApi(pathname: string): boolean {
   return pathname.startsWith('/admin') || pathname === '/api' || pathname.startsWith('/api/')
 }
 
+// Endpoints y páginas de Payload que permiten registrar el primer
+// usuario cuando la colección `users` está vacía. Los bloqueamos por
+// defecto en ambos tipos de deploy.
+function isFirstUserRegistration(pathname: string): boolean {
+  return (
+    pathname === '/admin/create-first-user' ||
+    pathname.startsWith('/admin/create-first-user/') ||
+    pathname === '/api/users/first-register' ||
+    pathname.startsWith('/api/users/first-register/')
+  )
+}
+
 export default function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl
+
+  // Corta el registro del primer admin desde web salvo que se abra
+  // temporalmente con el flag.
+  if (isFirstUserRegistration(pathname) && !ALLOW_FIRST_USER_REGISTRATION) {
+    return new NextResponse('Not found', { status: 404 })
+  }
 
   if (IS_ADMIN_DEPLOY) {
     // Deploy admin: solo /admin y /api son útiles. Cualquier visita al

@@ -3,6 +3,7 @@
 import { getPayloadClient } from '@/lib/payload'
 import { computeProductLine, type SelectionMap } from '@/lib/multiQuotePricing'
 import { normalizeItem, type RawPricingItem } from '@/lib/pricing'
+import { sanitizeHeader } from '@/lib/email-safety'
 
 interface MultiQuoteInput {
   selections: SelectionMap
@@ -151,7 +152,7 @@ export async function submitMultiQuote(input: MultiQuoteInput): Promise<MultiQuo
     await payload.sendEmail({
       to: commercialEmail,
       replyTo: input.email,
-      subject: `[Cotización${createdId ? ` #${createdId}` : ''}] ${input.contactName} · ${productList} · ${fmt(totalCents)}/mes`,
+      subject: sanitizeHeader(`[Cotización${createdId ? ` #${createdId}` : ''}] ${input.contactName} · ${productList} · ${fmt(totalCents)}/mes`),
       html: internalHtml,
     })
     await payload.sendEmail({

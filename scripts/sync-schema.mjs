@@ -112,8 +112,15 @@ try {
   // 'The following field is invalid: id' en cualquier updateGlobal de
   // otros locales y bloqueaban TODO el seed del home. Limpiar la BD a
   // mano vía SQL directo desbloquea la validación.
+  //
+  // ⚠️ POR DEFECTO NO SE EJECUTA — este bloque destruía las traducciones
+  // editadas en el admin cada deploy (revisión de seguridad #C3). Solo
+  // corre si `RUN_HOME_CLEANUP=1` en la env del build. Reactívalo
+  // manualmente si vuelve a haber IDs malformados que bloqueen el seed.
   // -------------------------------------------------------------------
-  try {
+  if (process.env.RUN_HOME_CLEANUP !== '1') {
+    console.log('[sync-schema] home cleanup skip (set RUN_HOME_CLEANUP=1 para forzarlo)')
+  } else try {
     const usesPostgres = /^postgres(ql)?:\/\//i.test(
       process.env.POSTGRES_URL || process.env.DATABASE_URL || process.env.PRISMA_DATABASE_URL || '',
     )
@@ -1716,46 +1723,29 @@ try {
         }
       }
     }
-    // 2) Releer ES para detectar fallback en otros locales.
-    let homeESWithIds
-    try {
-      homeESWithIds = await payload.findGlobal({ slug: 'home-page', locale: 'es', depth: 0 })
-    } catch {}
-    // 3) DEBUG: probar primero con UN solo campo para ver el error real.
-    for (const locale of ['ca', 'en', 'zh']) {
-      try {
-        await payload.updateGlobal({
-          slug: 'home-page',
-          locale,
-          data: { heroTitle1: STATIC_HOME[locale]?.heroTitle1 ?? '' },
-        })
-        console.log(`[sync-schema] home: ${locale} heroTitle1 sembrado ✓`)
-      } catch (err) {
-        console.warn(`[sync-schema] ✗ seed home (${locale}):`, err?.message || err)
-        if (err?.data) {
-          console.warn(`[sync-schema]   err.data:`, JSON.stringify(err.data).slice(0, 500))
-        }
-        if (err?.errors) {
-          console.warn(`[sync-schema]   err.errors:`, JSON.stringify(err.errors).slice(0, 500))
-        }
-        if (err?.stack) {
-          console.warn(`[sync-schema]   stack:`, err.stack.slice(0, 800))
-        }
-      }
-    }
-    // Sembrar el resto de scalars solo si el heroTitle1 funcionó.
-    for (const locale of ['ca', 'en', 'zh']) {
+    // ⚠️ NO sobrescribir ca/en/zh automáticamente. Antes este bloque
+    // reescribía los escalares del home en ca/en/zh en CADA deploy
+    // (revisión de seguridad #C3): cualquier edición del admin se
+    // revertía silenciosamente. Ahora solo siembra si el locale está
+    // vacío (heroTitle1 sin valor) y bajo `RUN_HOME_SEED_OTHER_LOCALES=1`
+    // como salvaguarda extra.
+    if (process.env.RUN_HOME_SEED_OTHER_LOCALES !== '1') {
+      console.log('[sync-schema] home ca/en/zh: skip seed (set RUN_HOME_SEED_OTHER_LOCALES=1 para forzar)')
+    } else for (const locale of ['ca', 'en', 'zh']) {
       try {
         const cur = await payload.findGlobal({ slug: 'home-page', locale, depth: 0 })
-        if (!cur?.heroTitle1) continue // si el primer paso falló, no insistir
+        if (cur?.heroTitle1) {
+          console.log(`[sync-schema] home ${locale}: ya tiene datos → no se toca`)
+          continue
+        }
         await payload.updateGlobal({
           slug: 'home-page',
           locale,
           data: scalarsOnly(STATIC_HOME[locale] ?? {}),
         })
-        console.log(`[sync-schema] home: ${locale} resto de scalars sembrados ✓`)
+        console.log(`[sync-schema] home ${locale}: sembrado inicial (estaba vacío) ✓`)
       } catch (err) {
-        console.warn(`[sync-schema] ✗ scalars home (${locale}):`, err?.message || err)
+        console.warn(`[sync-schema] ✗ seed home (${locale}):`, err?.message || err)
       }
     }
   } catch (err) {

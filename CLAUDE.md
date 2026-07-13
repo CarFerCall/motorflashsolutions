@@ -36,8 +36,12 @@ entero la primera vez. Aquí solo van atajos, reglas operativas y avisos.
 
 ### Seguridad / .env
 
-- **Nunca** subir `.env` al repo ni al CLI de Vercel — `.vercelignore`
-  ya lo bloquea. Si lo tocas, mantén la regla.
+- **Nunca** subir `.env` al repo ni al CLI de Vercel. `.gitignore` cubre
+  `.env`, `.env.*` y deja pasar solo `.env.example`. `.vercelignore` es
+  ortogonal — solo evita que un `.env*` que exista en local llegue al
+  builder de Vercel; NO protege git. Si añades un tipo de fichero de
+  entorno nuevo, mira que caiga bajo el patrón `.env.*` o añade la regla
+  explícita antes de commitear.
 - **Nunca** poner `NODE_ENV=production` arriba de `scripts/sync-schema.mjs`
   ni en su shell — Payload con Postgres y `push: true` **no corre** con
   `NODE_ENV=production`. El sync debe correr en modo dev forzado.

@@ -1,3 +1,4 @@
+import { headers as nextHeaders } from 'next/headers'
 import { notFound } from 'next/navigation'
 import { getPayloadClient } from '@/lib/payload'
 import { PuckRender } from '@/components/PuckRender'
@@ -54,10 +55,25 @@ export async function generateMetadata({ params }: RouteParams) {
   }
 }
 
+// Solo permitir `?livePreview=true` a usuarios autenticados de Payload.
+// Sin este check, cualquiera con la URL podía ver borradores no
+// publicados añadiendo el query param (revisión de seguridad #A2).
+async function isAuthenticatedPayloadUser(): Promise<boolean> {
+  try {
+    const payload = await getPayloadClient()
+    const hdrs = await nextHeaders()
+    const { user } = await payload.auth({ headers: hdrs as unknown as Headers })
+    return Boolean(user)
+  } catch {
+    return false
+  }
+}
+
 export default async function DynamicPage({ params, searchParams }: RouteParams) {
   const { slug } = await params
   const sp = await searchParams
-  const isLivePreview = sp.livePreview === 'true'
+  const requestedLivePreview = sp.livePreview === 'true'
+  const isLivePreview = requestedLivePreview && (await isAuthenticatedPayloadUser())
 
   const page = await findPage(slug, { includeDrafts: isLivePreview })
   if (!page) notFound()

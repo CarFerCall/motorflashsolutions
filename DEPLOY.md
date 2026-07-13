@@ -55,17 +55,39 @@ Antes crea el repo vacío en https://github.com/new (visibilidad **Private**).
 4. **Build Command** y **Output Directory**: dejar por defecto (Next.js los detecta).
 5. **Deploy**.
 
-## Paso 4 — Sembrar el primer admin + plan de CRM4YOU
+## Paso 4 — Crear el primer admin
 
-La primera vez que entres a `https://tu-proyecto.vercel.app/admin` te llevará a crear el usuario admin. Una vez dentro:
+Por defecto la web pública bloquea `/admin/create-first-user` y
+`/api/users/first-register` (revisión de seguridad #C2 — antes cualquiera
+podía darse de alta como admin si la BD estaba vacía). Tienes dos formas
+de crear el primer usuario:
 
-- Manualmente puedes crear el plan de CRM4YOU desde **Comercial → Planes de precios → Create**.
-- O **mejor**, lanzar el seed contra la BD de producción desde local:
+**Opción A — recomendada — desde local contra la BD de producción:**
 
-  ```bash
-  # Conecta tu local a la BD de producción solo para el seed:
-  DATABASE_URI="<la_de_vercel>" npm run seed
-  ```
+```bash
+# 1) Apunta tu local a la BD de producción SOLO durante el seed.
+# 2) Pasa credenciales seguras vía env vars (nunca hardcodeadas):
+DATABASE_URL="<la_de_vercel>" \
+  ADMIN_EMAIL="admin@tudominio.com" \
+  ADMIN_PASSWORD="<contraseña_larga_y_aleatoria>" \
+  npm run seed
+```
+
+Nunca commitees el `ADMIN_PASSWORD`. `seed.ts` es idempotente: si el
+email ya existe no toca nada y NO reimprime la contraseña.
+
+**Opción B — desde el navegador, con flag temporal:**
+
+En Vercel → Settings → Environment Variables añade
+`ALLOW_FIRST_USER_REGISTRATION=1`, redeploy, entra a
+`https://tu-proyecto.vercel.app/admin`, crea el usuario, y **elimina la
+variable** inmediatamente (y redeploy). Deja el vector abierto solo el
+rato justo.
+
+Los **planes de precios** (CRM4YOU, MF Message, etc.) se siembran
+automáticamente desde `scripts/sync-schema.mjs` en el build. No hay que
+tocarlos a mano: si el plan ya existe, ese script respeta los items
+editados en el admin (patrón idempotente con guardas de forma vieja).
 
 ## Paso 5 — Dominio personalizado
 

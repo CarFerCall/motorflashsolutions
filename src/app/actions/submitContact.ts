@@ -2,6 +2,7 @@
 
 import { getPayloadClient } from '@/lib/payload'
 import { productBySlug } from '@/catalog/products'
+import { sanitizeHeader } from '@/lib/email-safety'
 
 interface ContactInput {
   contactName: string
@@ -57,7 +58,7 @@ export async function submitContact(input: ContactInput): Promise<ContactResult>
     await payload.sendEmail({
       to: commercialEmail,
       replyTo: input.email,
-      subject: `[Web] ${input.contactName}${product ? ` · ${product.name}` : ''}`,
+      subject: sanitizeHeader(`[Web] ${input.contactName}${product ? ` · ${product.name}` : ''}`),
       html: internalHtml,
     })
     await payload.sendEmail({

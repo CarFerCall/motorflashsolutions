@@ -38,7 +38,11 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
+# Todos los .env (excepto la plantilla .env.example) — nunca subir
+# credenciales al repo. .vercelignore NO protege git; esta regla sí.
 .env
+.env.*
+!.env.example
 
 /media
 
