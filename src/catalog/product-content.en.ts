@@ -585,6 +585,8 @@ export const productContent: Record<string, ProductContent> = {
         ],
         icon: 'verified',
         badgeIcon: 'workspace_premium',
+        ctaHref: '/publicacion-avanzada',
+        ctaLabel: 'Try the demo with a plate',
       },
       {
         type: 'features',

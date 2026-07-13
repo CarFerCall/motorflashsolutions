@@ -50,6 +50,9 @@ export type SpotlightSection = {
   bullets?: string[]
   icon?: string
   badgeIcon?: string
+  /** Botón opcional al pie de la sección. */
+  ctaHref?: string
+  ctaLabel?: string
 }
 
 export type ShowcaseSection = {

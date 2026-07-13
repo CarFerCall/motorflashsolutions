@@ -327,6 +327,17 @@ export async function GenericProductPage({ product }: { product: Product }) {
                           ))}
                         </ul>
                       )}
+                      {section.ctaHref && section.ctaLabel && (
+                        <div className="mt-7">
+                          <Link
+                            href={section.ctaHref}
+                            className="inline-flex items-center gap-2 bg-white text-primary rounded-full px-6 py-3 text-sm font-bold hover:opacity-90 hover:gap-3 transition-all shadow-lg"
+                          >
+                            {section.ctaLabel}
+                            <span className="material-symbols-outlined" style={{ fontSize: 18 }}>arrow_forward</span>
+                          </Link>
+                        </div>
+                      )}
                     </div>
                     <div className="lg:col-span-4 flex justify-center lg:justify-end" aria-hidden>
                       <div

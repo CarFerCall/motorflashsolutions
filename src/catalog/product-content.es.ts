@@ -586,6 +586,8 @@ export const productContent: Record<string, ProductContent> = {
         ],
         icon: 'verified',
         badgeIcon: 'workspace_premium',
+        ctaHref: '/publicacion-avanzada',
+        ctaLabel: 'Prueba la demo con una matrícula',
       },
       {
         type: 'features',

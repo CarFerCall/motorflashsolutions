@@ -584,6 +584,8 @@ export const productContent: Record<string, ProductContent> = {
         ],
         icon: 'verified',
         badgeIcon: 'workspace_premium',
+        ctaHref: '/publicacion-avanzada',
+        ctaLabel: '用车牌试用演示',
       },
       {
         type: 'features',
