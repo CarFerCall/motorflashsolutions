@@ -406,7 +406,7 @@ export const productContent: Record<string, ProductContent> = {
         items: [
           { title: 'Automotive specialisation', description: 'We understand the needs and quirks of the automotive market, which lets us design digital strategies tailored to every dealership or used-vehicle business.', icon: 'verified' },
           { title: 'Dedicated GEO, SEO and Social teams', description: 'A team of experts in GEO (the new SEO — visibility on Google and in AI search), a dedicated SEO team and a third one focused on Social Ads to grow your business.', icon: 'group' },
-          { title: 'Holistic strategy and continuous optimisation', description: 'We build and analyse GEO, SEA and social campaigns, optimising every action to maximise performance and generate more sales opportunities.', icon: 'autorenew' },
+          { title: 'Holistic strategy and continuous optimisation', description: 'We build and analyse GEO, SEO and social campaigns, optimising every action to maximise performance and generate more sales opportunities.', icon: 'autorenew' },
           { title: 'GEO · the new SEO', description: "SEO evolves: GEO (Generative Engine Optimization) replaces traditional SEO. It includes everything from classic technical SEO — architecture, content, authority — plus optimisation for Google AI Overviews, ChatGPT, Perplexity and Gemini. When a buyer searches you on Google or asks the AI about dealerships, your brand shows up.", icon: 'auto_awesome' },
           { title: 'SEO at the cutting edge of Google Ads', description: "We work with the latest Google Ads features for automotive: Vehicle Ads (vehicle listings on Google Search and Maps), offline conversions to measure real sales at the dealership, Business Agent for leads and every new feature Google rolls out for the sector. We don't wait for it to stabilise: we test and deploy from day 1.", icon: 'bolt' },
           { title: 'Social Ads · Meta and TikTok', description: 'Prospecting on Meta and TikTok with automotive-fit creatives, sector targeting and real conversion tracking down to the sale. Reach buyers who are not actively searching you yet.', icon: 'share' },
@@ -417,7 +417,7 @@ export const productContent: Record<string, ProductContent> = {
       },
       {
         type: 'showcase',
-        eyebrow: 'SEA IN ACTION',
+        eyebrow: 'SEO IN ACTION',
         title: 'Google Ads for automotive, live.',
         lead: "A real example of what you can do today with Google Ads: Vehicle Ads, offline conversions and the new features we're rolling out. See it running before you decide.",
         videoSrc: '/videos/marketing-google-ads.mp4',
@@ -429,14 +429,14 @@ export const productContent: Record<string, ProductContent> = {
         lead: 'Not all traffic has the same value or the same moment in the buying journey. Our strategy combines both to maximise short- and long-term results.',
         highlights: [
           { title: 'Organic GEO traffic', description: 'Google + AI search · no CPC' },
-          { title: 'SEA campaigns (Google Ads)', description: 'Vehicle Ads, offline conversions, Business Agent' },
+          { title: 'SEO campaigns (Google Ads)', description: 'Vehicle Ads, offline conversions, Business Agent' },
           { title: 'Social Ads (Meta / TikTok)', description: 'Prospecting at lower cost' },
           { title: 'Live reporting', description: 'Business metrics, not vanity metrics' },
         ],
         bullets: [
-          'GEO / SEA: customers searching for your brand or your vehicles on Google or asking the AI. Immediate conversion across every search engine.',
+          'GEO / SEO: customers searching for your brand or your vehicles on Google or asking the AI. Immediate conversion across every search engine.',
           'Social Ads: prospects who don\'t know you yet. Mid-term conversion at lower cost.',
-          'SEA at the cutting edge: Vehicle Ads, offline conversions and Business Agent for leads — every Google feature, from day 1.',
+          'SEO at the cutting edge: Vehicle Ads, offline conversions and Business Agent for leads — every Google feature, from day 1.',
           'Full-funnel tracking: visit → lead → call → sale.',
           'Monthly reporting with real business metrics, no vanity numbers.',
           'Continuous optimisation based on data, not guesswork.',

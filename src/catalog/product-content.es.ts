@@ -407,7 +407,7 @@ export const productContent: Record<string, ProductContent> = {
         items: [
           { title: 'Especialización en automoción', description: 'Conocemos las necesidades y particularidades del mercado del motor, lo que nos permite diseñar estrategias digitales adaptadas a cada concesionario o empresa de compraventa.', icon: 'verified' },
           { title: 'Equipos especializados en GEO, SEO y Social', description: 'Un equipo experto en GEO (el nuevo SEO, visibilidad en Google y en los buscadores IA), otro dedicado exclusivamente a SEO y un tercero centrado en Social Ads para potenciar tu negocio.', icon: 'group' },
-          { title: 'Estrategia integral y optimización continua', description: 'Desarrollamos y analizamos campañas en GEO, SEA y redes sociales, optimizando cada acción para maximizar el rendimiento y generar más oportunidades de venta.', icon: 'autorenew' },
+          { title: 'Estrategia integral y optimización continua', description: 'Desarrollamos y analizamos campañas en GEO, SEO y redes sociales, optimizando cada acción para maximizar el rendimiento y generar más oportunidades de venta.', icon: 'autorenew' },
           { title: 'GEO · el nuevo SEO', description: 'El SEO evoluciona: GEO (Generative Engine Optimization) sustituye al SEO tradicional. Incluye todo lo del SEO técnico de siempre — arquitectura, contenido, autoridad — y añade la optimización para Google AI Overviews, ChatGPT, Perplexity y Gemini. Cuando un comprador te busca en Google o le pregunta a la IA por concesionarios, tu marca aparece.', icon: 'auto_awesome' },
           { title: 'SEO a la vanguardia con Google Ads', description: 'Trabajamos con las últimas incorporaciones de Google Ads para automoción: Vehicle Ads (anuncios de vehículos en Google Search y Maps), conversiones offline para medir ventas reales en el concesionario, Business Agent for leads y todas las novedades que Google va lanzando para el sector. No esperamos a que se estabilicen: probamos y desplegamos desde el día 1.', icon: 'bolt' },
           { title: 'Social Ads · Meta y TikTok', description: 'Prospección en Meta y TikTok con creatividades ajustadas al motor, targeting sectorial y medición de conversión real hasta el cierre. Alcance a compradores que aún no te buscan activamente.', icon: 'share' },
@@ -418,7 +418,7 @@ export const productContent: Record<string, ProductContent> = {
       },
       {
         type: 'showcase',
-        eyebrow: 'SEA EN ACCIÓN',
+        eyebrow: 'SEO EN ACCIÓN',
         title: 'Google Ads para automoción, en directo.',
         lead: 'Un ejemplo real de lo que puedes hacer hoy con Google Ads: Vehicle Ads, conversiones offline y las novedades que estamos desplegando. Míralo funcionando antes de decidir.',
         videoSrc: '/videos/marketing-google-ads.mp4',
@@ -430,14 +430,14 @@ export const productContent: Record<string, ProductContent> = {
         lead: 'No todo el tráfico tiene el mismo valor ni el mismo momento de compra. Nuestra estrategia combina ambos tipos para maximizar resultados a corto y largo plazo.',
         highlights: [
           { title: 'Tráfico orgánico GEO', description: 'Google + buscadores IA · sin coste por clic' },
-          { title: 'Campañas SEA con Google Ads', description: 'Vehicle Ads, conversiones offline, Business Agent' },
+          { title: 'Campañas SEO con Google Ads', description: 'Vehicle Ads, conversiones offline, Business Agent' },
           { title: 'Social Ads Meta / TikTok', description: 'Prospección a menor coste' },
           { title: 'Reporting en tiempo real', description: 'Métricas de negocio, no de vanidad' },
         ],
         bullets: [
-          'GEO / SEA: clientes que buscan tu marca o tus vehículos en Google o le preguntan a la IA. Conversión inmediata en cualquier motor de búsqueda.',
+          'GEO / SEO: clientes que buscan tu marca o tus vehículos en Google o le preguntan a la IA. Conversión inmediata en cualquier motor de búsqueda.',
           'Social Ads: prospectos que aún no te conocen. Conversión a medio plazo a menor coste.',
-          'SEA a la vanguardia: Vehicle Ads, conversiones offline y Business Agent for leads — todas las novedades de Google, desde el día 1.',
+          'SEO a la vanguardia: Vehicle Ads, conversiones offline y Business Agent for leads — todas las novedades de Google, desde el día 1.',
           'Seguimiento del funnel completo: visita → lead → llamada → venta',
           'Reporting mensual con métricas reales de negocio, no de vanidad',
           'Optimización continua basada en datos, no en suposiciones',

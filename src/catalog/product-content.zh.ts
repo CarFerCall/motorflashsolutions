@@ -405,7 +405,7 @@ export const productContent: Record<string, ProductContent> = {
         items: [
           { title: '聚焦汽车行业', description: '我们熟悉汽车市场的需求与特性,为每家经销店或二手车企业打造合适的数字策略。', icon: 'verified' },
           { title: '专注 GEO、SEO 与 Social 的团队', description: '一支专注 GEO(新一代 SEO —— 在 Google 与 AI 搜索中的可见度)的专家团队、一支专职 SEO 的团队,以及一支聚焦 Social Ads 的团队,共同推动您的业务。', icon: 'group' },
-          { title: '整体策略与持续优化', description: '我们设计并分析 GEO、SEA 与社交活动,优化每一项动作以最大化业绩并创造更多销售机会。', icon: 'autorenew' },
+          { title: '整体策略与持续优化', description: '我们设计并分析 GEO、SEO 与社交活动,优化每一项动作以最大化业绩并创造更多销售机会。', icon: 'autorenew' },
           { title: 'GEO · 新一代 SEO', description: 'SEO 在进化:GEO(生成式引擎优化)取代了传统 SEO。它涵盖传统 SEO 的一切 — 架构、内容、权威 — 并新增对 Google AI Overviews、ChatGPT、Perplexity 与 Gemini 的优化。买家在 Google 中搜索或向 AI 询问经销店时,您的品牌都会出现。', icon: 'auto_awesome' },
           { title: 'SEO · 走在 Google Ads 前沿', description: '我们采用 Google Ads 面向汽车行业的最新能力:Vehicle Ads(Google 搜索与 Maps 上的车辆广告)、线下转化以衡量经销店的真实成交、Business Agent for leads,以及 Google 为该行业推出的所有新功能。我们不等它们稳定:从第一天起就测试并落地。', icon: 'bolt' },
           { title: 'Social Ads · Meta 与 TikTok', description: '在 Meta 与 TikTok 上进行前期触达,创意贴合汽车行业、行业化定向,并对真实成交进行转化追踪。触达尚未主动搜索您的买家。', icon: 'share' },
@@ -416,7 +416,7 @@ export const productContent: Record<string, ProductContent> = {
       },
       {
         type: 'showcase',
-        eyebrow: 'SEA 实战',
+        eyebrow: 'SEO 实战',
         title: '面向汽车行业的 Google Ads,现场展示。',
         lead: '这是您今天就可以用 Google Ads 做到的一个真实示例:Vehicle Ads、线下转化以及我们正在落地的新功能。决定之前先看看它如何运作。',
         videoSrc: '/videos/marketing-google-ads.mp4',
@@ -428,14 +428,14 @@ export const productContent: Record<string, ProductContent> = {
         lead: '不同流量价值不同,购买时机也各异。我们的策略将两者结合,兼顾短期与长期。',
         highlights: [
           { title: 'GEO 自然流量', description: 'Google + AI 搜索 · 无点击成本' },
-          { title: 'SEA Google Ads', description: 'Vehicle Ads、线下转化、Business Agent' },
+          { title: 'SEO Google Ads', description: 'Vehicle Ads、线下转化、Business Agent' },
           { title: 'Meta / TikTok Social Ads', description: '更低成本的前期触达' },
           { title: '实时报告', description: '业务指标,不是虚荣指标' },
         ],
         bullets: [
-          'GEO / SEA:在 Google 上搜索您品牌或车辆、或向 AI 提问的客户。任何搜索引擎上都能即时转化。',
+          'GEO / SEO:在 Google 上搜索您品牌或车辆、或向 AI 提问的客户。任何搜索引擎上都能即时转化。',
           'Social Ads:尚不了解您的潜客。以更低成本中期转化。',
-          'SEA 处于前沿:Vehicle Ads、线下转化与 Business Agent for leads —— Google 的所有新能力,从第一天起。',
+          'SEO 处于前沿:Vehicle Ads、线下转化与 Business Agent for leads —— Google 的所有新能力,从第一天起。',
           '完整漏斗追踪:访问 → 潜客 → 通话 → 成交。',
           '每月报告聚焦真实业务指标,而非虚荣数据。',
           '基于数据而非猜测的持续优化。',
