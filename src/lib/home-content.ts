@@ -53,6 +53,18 @@ export interface HomeCopy {
   ecoStatInt: string
   ecoStatEntry: string
   ecoCta: string
+  pubAv: {
+    navLabel: string
+    eyebrow: string
+    title1: string
+    titleAccent: string
+    title2: string
+    lead: string
+    checks: string[]
+    cta: string
+    mockExtrasLabel: string
+    mockTotalLabel: string
+  }
   audiencesEyebrow: string
   audiencesTitle: string
   audiences: { title: string; desc: string; icon: string; tag: string }[]
@@ -83,6 +95,7 @@ export const STATIC_HOME: Record<HomeLocale, HomeCopy> = {
       { anchor: 'resultados-reales', label: 'Resultados reales' },
       { anchor: 'catalogo-productos', label: 'Catálogo de productos' },
       { anchor: 'ecosistema-tecnico-teaser', label: 'Ecosistema técnico' },
+      { anchor: 'publicacion-avanzada-teaser', label: 'Publicación avanzada' },
       { anchor: 'para-quien', label: 'Para quién' },
       { anchor: 'testimonios', label: 'Lo que dicen' },
       { anchor: 'nuestra-historia', label: 'Nuestra historia' },
@@ -154,6 +167,22 @@ export const STATIC_HOME: Record<HomeLocale, HomeCopy> = {
     ecoStatInt: 'integraciones',
     ecoStatEntry: 'punto de entrada',
     ecoCta: 'Ver el diagrama completo',
+    pubAv: {
+      navLabel: 'Publicación avanzada',
+      eyebrow: 'Únicos en el mercado',
+      title1: 'Publicación',
+      titleAccent: 'avanzada',
+      title2: 'por matrícula',
+      lead: 'Introduce una matrícula y devolvemos la versión exacta, el equipamiento opcional de fábrica y la etiqueta DGT de esa unidad concreta. Datos verificados del fabricante — ningún otro multipublicador lo hace.',
+      checks: [
+        'Versión, potencia y cilindrada verificadas',
+        'Extras de fábrica desglosados con precio unitario',
+        'Etiqueta medioambiental DGT correcta',
+      ],
+      cta: 'Probar la demo con una matrícula',
+      mockExtrasLabel: 'Extras de fábrica (12)',
+      mockTotalLabel: 'Total verificado',
+    },
     audiencesEyebrow: 'Para quién',
     audiencesTitle: 'Tres modelos de negocio. Tres formas de usar Motorflash.',
     audiences: [
@@ -190,6 +219,7 @@ export const STATIC_HOME: Record<HomeLocale, HomeCopy> = {
       { anchor: 'resultados-reales', label: 'Resultats reals' },
       { anchor: 'catalogo-productos', label: 'Catàleg de productes' },
       { anchor: 'ecosistema-tecnico-teaser', label: 'Ecosistema tècnic' },
+      { anchor: 'publicacion-avanzada-teaser', label: 'Publicació avançada' },
       { anchor: 'para-quien', label: 'Per a qui' },
       { anchor: 'testimonios', label: 'Què en diuen' },
       { anchor: 'nuestra-historia', label: 'La nostra història' },
@@ -261,6 +291,22 @@ export const STATIC_HOME: Record<HomeLocale, HomeCopy> = {
     ecoStatInt: 'integracions',
     ecoStatEntry: "punt d'entrada",
     ecoCta: 'Veure el diagrama complet',
+    pubAv: {
+      navLabel: 'Publicació avançada',
+      eyebrow: 'Únics al mercat',
+      title1: 'Publicació',
+      titleAccent: 'avançada',
+      title2: 'per matrícula',
+      lead: "Introdueix una matrícula i retornem la versió exacta, l'equipament opcional de fàbrica i l'etiqueta DGT d'aquesta unitat concreta. Dades verificades del fabricant — cap altre multipublicador ho fa.",
+      checks: [
+        'Versió, potència i cilindrada verificades',
+        'Extres de fàbrica desglossats amb preu unitari',
+        'Etiqueta mediambiental DGT correcta',
+      ],
+      cta: 'Prova la demo amb una matrícula',
+      mockExtrasLabel: 'Extres de fàbrica (12)',
+      mockTotalLabel: 'Total verificat',
+    },
     audiencesEyebrow: 'Per a qui',
     audiencesTitle: 'Tres models de negoci. Tres maneres de fer servir Motorflash.',
     audiences: [
@@ -297,6 +343,7 @@ export const STATIC_HOME: Record<HomeLocale, HomeCopy> = {
       { anchor: 'resultados-reales', label: 'Real results' },
       { anchor: 'catalogo-productos', label: 'Product catalogue' },
       { anchor: 'ecosistema-tecnico-teaser', label: 'Tech ecosystem' },
+      { anchor: 'publicacion-avanzada-teaser', label: 'Advanced publishing' },
       { anchor: 'para-quien', label: "Who it's for" },
       { anchor: 'testimonios', label: 'What they say' },
       { anchor: 'nuestra-historia', label: 'Our story' },
@@ -368,6 +415,22 @@ export const STATIC_HOME: Record<HomeLocale, HomeCopy> = {
     ecoStatInt: 'integrations',
     ecoStatEntry: 'entry point',
     ecoCta: 'See the full diagram',
+    pubAv: {
+      navLabel: 'Advanced publishing',
+      eyebrow: 'Unique in the market',
+      title1: 'Advanced',
+      titleAccent: 'publishing',
+      title2: 'by plate',
+      lead: "Enter a plate and we return the exact version, the factory-fitted optional equipment and the DGT eco label for that specific unit. Verified manufacturer data — no other multipublisher does this.",
+      checks: [
+        'Version, power and displacement verified',
+        'Factory extras itemised with unit price',
+        'Correct DGT eco label',
+      ],
+      cta: 'Try the demo with a plate',
+      mockExtrasLabel: 'Factory extras (12)',
+      mockTotalLabel: 'Verified total',
+    },
     audiencesEyebrow: "Who it's for",
     audiencesTitle: 'Three business models. Three ways to use Motorflash.',
     audiences: [
@@ -404,6 +467,7 @@ export const STATIC_HOME: Record<HomeLocale, HomeCopy> = {
       { anchor: 'resultados-reales', label: '真实成果' },
       { anchor: 'catalogo-productos', label: '产品目录' },
       { anchor: 'ecosistema-tecnico-teaser', label: '技术生态' },
+      { anchor: 'publicacion-avanzada-teaser', label: '高级发布' },
       { anchor: 'para-quien', label: '适用对象' },
       { anchor: 'testimonios', label: '他们怎么说' },
       { anchor: 'nuestra-historia', label: '我们的故事' },
@@ -475,6 +539,22 @@ export const STATIC_HOME: Record<HomeLocale, HomeCopy> = {
     ecoStatInt: '项集成',
     ecoStatEntry: '个接入点',
     ecoCta: '查看完整图示',
+    pubAv: {
+      navLabel: '高级发布',
+      eyebrow: '市场唯一',
+      title1: '按车牌',
+      titleAccent: '高级发布',
+      title2: '',
+      lead: '输入车牌,即可返回该辆车的精确版本、原厂选装配置和 DGT 环保标签。制造商核实数据 — 目前没有其他多平台工具可以做到。',
+      checks: [
+        '版本、功率与排量均经核实',
+        '原厂选装配置逐项列出并附单价',
+        '准确的 DGT 环保标签',
+      ],
+      cta: '用车牌试用演示',
+      mockExtrasLabel: '原厂选装 (12)',
+      mockTotalLabel: '核实总价',
+    },
     audiencesEyebrow: '适用对象',
     audiencesTitle: '三种业务模式。三种使用 Motorflash 的方式。',
     audiences: [

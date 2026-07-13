@@ -268,6 +268,93 @@ export default async function HomePage() {
         </div>
       </section>
 
+      {/* Publicación avanzada — demo por matrícula */}
+      <section id="publicacion-avanzada-teaser" className="py-24 bg-white">
+        <div className="mf-container">
+          <Reveal>
+            <div className="relative rounded-3xl overflow-hidden border border-outline-variant shadow-xl bg-white">
+              <div aria-hidden className="absolute -top-24 -left-24 w-96 h-96 rounded-full opacity-40" style={{ background: 'radial-gradient(circle, rgba(255,128,0,0.15), transparent 65%)' }} />
+              <div aria-hidden className="absolute -bottom-24 -right-24 w-96 h-96 rounded-full opacity-30" style={{ background: 'radial-gradient(circle, rgba(255,128,0,0.10), transparent 65%)' }} />
+              <div className="relative grid grid-cols-1 lg:grid-cols-2 gap-10 items-center p-10 md:p-14">
+                <div>
+                  <div className="inline-flex items-center gap-2 rounded-full border border-primary/25 bg-primary/10 text-primary px-3 py-1 text-[11px] font-bold uppercase tracking-widest mb-5">
+                    <span className="material-symbols-outlined" style={{ fontSize: 14 }}>workspace_premium</span>
+                    {t.pubAv.eyebrow}
+                  </div>
+                  <h2 className="text-3xl md:text-4xl lg:text-5xl font-semibold leading-tight mb-4">
+                    {t.pubAv.title1} <span className="text-primary">{t.pubAv.titleAccent}</span>
+                    {t.pubAv.title2 ? ` ${t.pubAv.title2}` : ''}
+                  </h2>
+                  <p className="text-base md:text-lg text-on-surface-variant leading-relaxed mb-7 max-w-lg">{t.pubAv.lead}</p>
+                  <ul className="space-y-2.5 mb-8">
+                    {t.pubAv.checks.map((c) => (
+                      <li key={c} className="flex gap-2 items-start text-sm text-on-surface">
+                        <span className="material-symbols-outlined text-primary mt-0.5 flex-shrink-0" style={{ fontSize: 18 }}>check_circle</span>
+                        {c}
+                      </li>
+                    ))}
+                  </ul>
+                  <Link href="/publicacion-avanzada" className="inline-flex items-center gap-2 bg-primary text-white px-6 py-3 rounded-full text-sm font-bold hover:opacity-90 hover:gap-3 transition-all shadow-lg shadow-primary/30">
+                    {t.pubAv.cta}
+                    <span className="material-symbols-outlined" style={{ fontSize: 18 }}>arrow_forward</span>
+                  </Link>
+                </div>
+
+                {/* Mock de resultado */}
+                <div className="hidden lg:block">
+                  <div className="relative rounded-2xl border border-outline-variant bg-white shadow-2xl p-6">
+                    <div className="flex items-center gap-3 mb-5">
+                      <div className="inline-flex items-stretch bg-[#003399] text-white rounded-lg overflow-hidden border-2 border-[#001a6e]">
+                        <div className="flex flex-col items-center justify-center px-2 border-r border-white/30 py-2">
+                          <span className="text-[7px] font-black text-[#FFD700] leading-none">★★★</span>
+                          <span className="text-[8px] font-black text-[#FFD700] mt-1 leading-none">ES</span>
+                        </div>
+                        <span className="text-lg font-black tracking-[3px] px-4 py-2 self-center">6784·KBX</span>
+                      </div>
+                      <span className="rounded-full px-3 py-1.5 text-xs font-black uppercase tracking-widest border" style={{ background: '#d1fae5', color: '#059669', borderColor: '#a7f3d0' }}>CERO</span>
+                    </div>
+                    <p className="text-xl font-bold leading-tight mb-1">Audi A7 Sportback</p>
+                    <p className="text-sm text-on-surface-variant mb-4">55 TFSIe 270 kW quattro S tronic</p>
+                    <div className="grid grid-cols-3 gap-3 border-y border-outline-variant py-4 mb-4">
+                      <div>
+                        <p className="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant mb-1">Comb.</p>
+                        <p className="text-sm font-semibold">Híbrido</p>
+                      </div>
+                      <div>
+                        <p className="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant mb-1">Potencia</p>
+                        <p className="text-sm font-semibold text-primary">270 kW · 367 CV</p>
+                      </div>
+                      <div>
+                        <p className="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant mb-1">Matr.</p>
+                        <p className="text-sm font-semibold">14/03/2021</p>
+                      </div>
+                    </div>
+                    <p className="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant mb-2">{t.pubAv.mockExtrasLabel}</p>
+                    <div className="space-y-1.5">
+                      {[
+                        { code: 'CF6', desc: 'Llantas Audi Sport 9J x 20 titanio mate', precio: '1.939,99 €' },
+                        { code: 'PCC', desc: 'Paquete asistentes Tour', precio: '2.350,50 €' },
+                        { code: '1BL', desc: 'Suspensión regulable damper control', precio: '834,26 €' },
+                      ].map((e) => (
+                        <div key={e.code} className="flex items-center gap-3 text-xs">
+                          <span className="inline-block bg-surface-container-low text-primary font-bold text-[10px] px-1.5 py-0.5 rounded tracking-wider flex-shrink-0">{e.code}</span>
+                          <span className="flex-1 text-on-surface truncate">{e.desc}</span>
+                          <span className="font-bold whitespace-nowrap">{e.precio}</span>
+                        </div>
+                      ))}
+                    </div>
+                    <div className="border-t border-outline-variant mt-4 pt-3 flex justify-between items-baseline">
+                      <span className="text-xs font-bold uppercase tracking-widest text-on-surface-variant">{t.pubAv.mockTotalLabel}</span>
+                      <span className="text-lg font-black text-primary">96.749,66 €</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
       {/* Para quién */}
       <section id="para-quien" className="py-24 bg-surface-container">
         <div className="mf-container">
