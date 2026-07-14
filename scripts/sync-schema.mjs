@@ -1753,6 +1753,51 @@ try {
   }
 
   // -------------------------------------------------------------------
+  // Migración v1 del hero de la home: quitar el enfoque en IA.
+  // Solo aplica si el valor guardado en BD coincide con el copy antiguo
+  // (patrón idempotente estándar del sync-schema). Corre en los 4 locales.
+  // -------------------------------------------------------------------
+  try {
+    const OLD_HERO_CHIP = {
+      es: 'IA Integrada · Automoción',
+      ca: 'IA integrada · Automoció',
+      en: 'AI Integrated · Automotive',
+      zh: 'AI 集成 · 汽车行业',
+    }
+    const NEW_HERO = {
+      es: {
+        heroChip: 'Ecosistema 360 · Automoción',
+        heroLead: 'Publicación de stock, CRM, contact center, marketing digital y datos — todo conectado en una sola plataforma para vender más y coordinar mejor a tu equipo.',
+      },
+      ca: {
+        heroChip: 'Ecosistema 360 · Automoció',
+        heroLead: "Publicació d'estoc, CRM, contact center, màrqueting digital i dades — tot connectat en una sola plataforma per vendre més i coordinar millor el teu equip.",
+      },
+      en: {
+        heroChip: '360 ecosystem · Automotive',
+        heroLead: 'Stock publishing, CRM, contact center, digital marketing and data — all connected in a single platform to sell more and run your team better.',
+      },
+      zh: {
+        heroChip: '360 生态 · 汽车行业',
+        heroLead: '库存发布、CRM、Contact Center、数字营销与数据 —— 全部集中在一个平台,助您卖出更多、更好地协同团队。',
+      },
+    }
+    for (const locale of ['es', 'ca', 'en', 'zh']) {
+      try {
+        const cur = await payload.findGlobal({ slug: 'home-page', locale, depth: 0 })
+        if (cur?.heroChip === OLD_HERO_CHIP[locale]) {
+          await payload.updateGlobal({ slug: 'home-page', locale, data: NEW_HERO[locale] })
+          console.log(`[sync-schema] ↻ home ${locale}: hero migrado (sin foco IA)`)
+        }
+      } catch (err) {
+        console.warn(`[sync-schema] ✗ migración hero home (${locale}):`, err?.message || err)
+      }
+    }
+  } catch (err) {
+    console.warn('[sync-schema] ✗ migración hero home:', err?.message || err)
+  }
+
+  // -------------------------------------------------------------------
   // Seed del global Services Listing en los 4 locales.
   // -------------------------------------------------------------------
   try {
