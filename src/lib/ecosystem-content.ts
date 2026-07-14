@@ -33,137 +33,161 @@ export interface EcosystemCopy {
   hubs: EcosystemHubCopy[]
 }
 
-const HUBS_BASE: EcosystemHubCopy[] = [
-  { key: 'dms', name: 'Motorflash DMS Hub', shortLabel: 'DMS Hub', icon: 'inventory_2', integrations: ['Keyloop', 'Autoline', 'Aswin', 'Incadea', 'Pymecar', 'Nextlane', 'Quiter', 'Bee2link', 'Inventario.pro'] },
-  { key: 'sites', name: 'Motorflash Sites Hub', shortLabel: 'Sites Hub', icon: 'language', integrations: ['Motorflash.com', 'Coches.net', 'Autoscout24', 'Autocasion', 'Wallapop', 'NSC Website', 'Dealer Website'] },
-  { key: 'crm', name: 'Motorflash CRM & Aftersales Hub', shortLabel: 'CRM Hub', icon: 'hub', integrations: ['CRM4YOU', 'Salesforce', 'HubSpot'] },
-  { key: 'nsc', name: 'Motorflash NSC Hub', shortLabel: 'NSC Hub', icon: 'factory', integrations: ['VIN Info', 'Images', 'Campaigns'] },
-  { key: 'logistics', name: 'Motorflash Logistics Hub', shortLabel: 'Logistics Hub', icon: 'local_shipping', integrations: ['Customs', 'Vehicle Homologation', 'Logistics', 'Storage', 'Transport', 'ITV', 'Registration Tax'] },
-  { key: 'finance', name: 'Motorflash Finance Hub', shortLabel: 'Finance Hub', icon: 'account_balance', integrations: ['Santander Consumer', 'CaixaBank', 'BBVA', 'NCS Financial Services', 'Sofinco'] },
-  { key: 'admin', name: 'Motorflash Admin & Legal Hub', shortLabel: 'Admin & Legal', icon: 'gavel', integrations: ['Dealer Billing', 'Documentation', 'Mandate'] },
-  { key: 'data', name: 'Motorflash Databases Hub', shortLabel: 'Databases Hub', icon: 'database', integrations: ['JATO', 'Autovista', 'OEM Database (Motorflash)', 'Carfax', 'Autoinfo', 'Transit Authority (DGT)'] },
-]
+// Las 8 áreas (aka "hubs") ahora tienen nombres pensados para que
+// entienda un no-técnico. Cada locale mantiene su propia lista para
+// traducir tanto los rótulos como las herramientas genéricas (marcas
+// como Coches.net o Keyloop se dejan igual — son nombres propios).
 
 const HUBS_ES: EcosystemHubCopy[] = [
-  { key: 'dms', name: 'Hub DMS de Motorflash', shortLabel: 'Hub DMS', icon: 'inventory_2', integrations: ['Keyloop', 'Autoline', 'Aswin', 'Incadea', 'Pymecar', 'Nextlane', 'Quiter', 'Bee2link', 'Inventario.pro'] },
-  { key: 'sites', name: 'Hub de Portales de Motorflash', shortLabel: 'Hub de Portales', icon: 'language', integrations: ['Motorflash.com', 'Coches.net', 'Autoscout24', 'Autocasion', 'Wallapop', 'Web del fabricante (NSC)', 'Web del concesionario'] },
-  { key: 'crm', name: 'Hub CRM y Postventa de Motorflash', shortLabel: 'Hub CRM', icon: 'hub', integrations: ['CRM4YOU', 'Salesforce', 'HubSpot'] },
-  { key: 'nsc', name: 'Hub NSC de Motorflash', shortLabel: 'Hub NSC', icon: 'factory', integrations: ['Info VIN', 'Imágenes', 'Campañas'] },
-  { key: 'logistics', name: 'Hub de Logística de Motorflash', shortLabel: 'Hub de Logística', icon: 'local_shipping', integrations: ['Aduanas', 'Homologación de vehículos', 'Logística', 'Almacenaje', 'Transporte', 'ITV', 'Impuesto de matriculación'] },
-  { key: 'finance', name: 'Hub de Financiación de Motorflash', shortLabel: 'Hub de Financiación', icon: 'account_balance', integrations: ['Santander Consumer', 'CaixaBank', 'BBVA', 'NCS Financial Services', 'Sofinco'] },
-  { key: 'admin', name: 'Hub Administrativo y Legal de Motorflash', shortLabel: 'Admin y Legal', icon: 'gavel', integrations: ['Facturación del concesionario', 'Documentación', 'Mandato'] },
-  { key: 'data', name: 'Hub de Bases de Datos de Motorflash', shortLabel: 'Hub de Bases de Datos', icon: 'database', integrations: ['JATO', 'Autovista', 'Base de datos OEM (Motorflash)', 'Carfax', 'Autoinfo', 'DGT (Dirección General de Tráfico)'] },
+  { key: 'dms', name: 'Los coches del concesionario', shortLabel: 'Coches en stock', icon: 'inventory_2', integrations: ['Keyloop', 'Autoline', 'Aswin', 'Incadea', 'Pymecar', 'Nextlane', 'Quiter', 'Bee2link', 'Inventario.pro'] },
+  { key: 'sites', name: 'Portales donde se anuncian los coches', shortLabel: 'Portales', icon: 'language', integrations: ['Motorflash.com', 'Coches.net', 'Autoscout24', 'Autocasion', 'Wallapop', 'Web de la marca', 'Web del concesionario'] },
+  { key: 'crm', name: 'Clientes y postventa', shortLabel: 'Clientes', icon: 'hub', integrations: ['CRM4YOU', 'Salesforce', 'HubSpot'] },
+  { key: 'nsc', name: 'Marcas oficiales (Audi, VW…)', shortLabel: 'Marcas', icon: 'factory', integrations: ['Info VIN', 'Imágenes', 'Campañas'] },
+  { key: 'logistics', name: 'Transporte del coche', shortLabel: 'Transporte', icon: 'local_shipping', integrations: ['Aduanas', 'Papeles para poder circular', 'Logística', 'Almacenaje', 'Transporte', 'ITV', 'Impuesto al matricular'] },
+  { key: 'finance', name: 'Bancos y financiación', shortLabel: 'Financiación', icon: 'account_balance', integrations: ['Santander Consumer', 'CaixaBank', 'BBVA', 'NCS Financial Services', 'Sofinco'] },
+  { key: 'admin', name: 'Papeleo y facturas', shortLabel: 'Papeleo', icon: 'gavel', integrations: ['Facturación del concesionario', 'Documentación', 'Mandato'] },
+  { key: 'data', name: 'Datos oficiales del sector', shortLabel: 'Datos', icon: 'database', integrations: ['JATO', 'Autovista', 'Info oficial de las marcas', 'Carfax', 'Autoinfo', 'DGT (Tráfico)'] },
+]
+
+const HUBS_CA: EcosystemHubCopy[] = [
+  { key: 'dms', name: 'Els cotxes del concessionari', shortLabel: 'Cotxes en estoc', icon: 'inventory_2', integrations: ['Keyloop', 'Autoline', 'Aswin', 'Incadea', 'Pymecar', 'Nextlane', 'Quiter', 'Bee2link', 'Inventario.pro'] },
+  { key: 'sites', name: "Portals on s'anuncien els cotxes", shortLabel: 'Portals', icon: 'language', integrations: ['Motorflash.com', 'Coches.net', 'Autoscout24', 'Autocasion', 'Wallapop', 'Web de la marca', 'Web del concessionari'] },
+  { key: 'crm', name: 'Clients i postvenda', shortLabel: 'Clients', icon: 'hub', integrations: ['CRM4YOU', 'Salesforce', 'HubSpot'] },
+  { key: 'nsc', name: 'Marques oficials (Audi, VW…)', shortLabel: 'Marques', icon: 'factory', integrations: ['Info VIN', 'Imatges', 'Campanyes'] },
+  { key: 'logistics', name: 'Transport del cotxe', shortLabel: 'Transport', icon: 'local_shipping', integrations: ['Duanes', 'Papers per poder circular', 'Logística', 'Emmagatzematge', 'Transport', 'ITV', 'Impost en matricular'] },
+  { key: 'finance', name: 'Bancs i finançament', shortLabel: 'Finançament', icon: 'account_balance', integrations: ['Santander Consumer', 'CaixaBank', 'BBVA', 'NCS Financial Services', 'Sofinco'] },
+  { key: 'admin', name: 'Papers i factures', shortLabel: 'Papers', icon: 'gavel', integrations: ['Facturació del concessionari', 'Documentació', 'Mandat'] },
+  { key: 'data', name: 'Dades oficials del sector', shortLabel: 'Dades', icon: 'database', integrations: ['JATO', 'Autovista', 'Info oficial de les marques', 'Carfax', 'Autoinfo', 'DGT (Trànsit)'] },
+]
+
+const HUBS_EN: EcosystemHubCopy[] = [
+  { key: 'dms', name: "The dealership's cars", shortLabel: 'Cars in stock', icon: 'inventory_2', integrations: ['Keyloop', 'Autoline', 'Aswin', 'Incadea', 'Pymecar', 'Nextlane', 'Quiter', 'Bee2link', 'Inventario.pro'] },
+  { key: 'sites', name: 'Portals where cars are listed', shortLabel: 'Portals', icon: 'language', integrations: ['Motorflash.com', 'Coches.net', 'Autoscout24', 'Autocasion', 'Wallapop', 'Brand website', 'Dealer website'] },
+  { key: 'crm', name: 'Customers and after-sales', shortLabel: 'Customers', icon: 'hub', integrations: ['CRM4YOU', 'Salesforce', 'HubSpot'] },
+  { key: 'nsc', name: 'Official brands (Audi, VW…)', shortLabel: 'Brands', icon: 'factory', integrations: ['VIN info', 'Images', 'Campaigns'] },
+  { key: 'logistics', name: 'Car transport', shortLabel: 'Transport', icon: 'local_shipping', integrations: ['Customs', 'Road-ready paperwork', 'Logistics', 'Storage', 'Transport', 'ITV', 'Registration tax'] },
+  { key: 'finance', name: 'Banks and financing', shortLabel: 'Financing', icon: 'account_balance', integrations: ['Santander Consumer', 'CaixaBank', 'BBVA', 'NCS Financial Services', 'Sofinco'] },
+  { key: 'admin', name: 'Paperwork and invoices', shortLabel: 'Paperwork', icon: 'gavel', integrations: ['Dealer billing', 'Documentation', 'Mandate'] },
+  { key: 'data', name: 'Official industry data', shortLabel: 'Data', icon: 'database', integrations: ['JATO', 'Autovista', 'Official brand info', 'Carfax', 'Autoinfo', 'DGT (Traffic authority)'] },
+]
+
+const HUBS_ZH: EcosystemHubCopy[] = [
+  { key: 'dms', name: '经销店的车辆', shortLabel: '在售库存', icon: 'inventory_2', integrations: ['Keyloop', 'Autoline', 'Aswin', 'Incadea', 'Pymecar', 'Nextlane', 'Quiter', 'Bee2link', 'Inventario.pro'] },
+  { key: 'sites', name: '发布车辆的门户网站', shortLabel: '门户', icon: 'language', integrations: ['Motorflash.com', 'Coches.net', 'Autoscout24', 'Autocasion', 'Wallapop', '品牌官网', '经销店官网'] },
+  { key: 'crm', name: '客户与售后', shortLabel: '客户', icon: 'hub', integrations: ['CRM4YOU', 'Salesforce', 'HubSpot'] },
+  { key: 'nsc', name: '官方品牌(Audi、VW…)', shortLabel: '品牌', icon: 'factory', integrations: ['VIN 信息', '图片', '活动'] },
+  { key: 'logistics', name: '车辆运输', shortLabel: '运输', icon: 'local_shipping', integrations: ['海关', '合法上路手续', '物流', '仓储', '运输', 'ITV', '登记税'] },
+  { key: 'finance', name: '银行与融资', shortLabel: '融资', icon: 'account_balance', integrations: ['Santander Consumer', 'CaixaBank', 'BBVA', 'NCS Financial Services', 'Sofinco'] },
+  { key: 'admin', name: '文书与发票', shortLabel: '文书', icon: 'gavel', integrations: ['经销店开票', '文档', '授权'] },
+  { key: 'data', name: '行业官方数据', shortLabel: '数据', icon: 'database', integrations: ['JATO', 'Autovista', '品牌官方信息', 'Carfax', 'Autoinfo', 'DGT(交通局)'] },
 ]
 
 export const STATIC_ECOSYSTEM: Record<EcosystemLocale, EcosystemCopy> = {
   es: {
     metaTitle: 'Ecosistema técnico',
     metaDescription:
-      'Motorflash es el HUB central que conecta DMS, portales, CRM, NSC, logística, finanzas, admin/legal y bases de datos. +50 integraciones reales en producción con un único punto de entrada.',
+      'Un concesionario usa muchas herramientas: el programa donde apunta sus coches, los portales donde los anuncia, los clientes, los bancos, el transporte, la ITV… Motorflash es el punto donde todas se conectan entre sí.',
     metaOg:
-      'Motorflash como HUB de integración: 8 sub-hubs conectan tu DMS, portales, CRM, financieras, logística y bases de datos del sector.',
-    eyebrow: 'Ecosistema técnico',
-    title1: 'Motorflash es el',
-    title2: 'que conecta todo tu stack de automoción',
+      'Motorflash conecta las 8 áreas de un concesionario en un solo sitio: coches, portales, clientes, marcas, transporte, financiación, papeleo y datos del sector.',
+    eyebrow: 'Cómo funcionamos por dentro',
+    title1: 'Motorflash es',
+    title2: 'el punto donde todo se junta para vender coches',
     intro:
-      'Un único punto de integración entre tu DMS, los portales, tu CRM, las financieras, la logística, las bases de datos del sector y los procesos administrativos. Tú te enchufas a Motorflash; nosotros nos encargamos del resto.',
-    kpiHubs: 'Hubs especializados',
-    kpiIntegrations: 'Integraciones reales',
-    kpiEntry: 'Punto de entrada',
-    hubsHint:
-      'Pulsa cualquier sub-hub para ver sus integraciones reales en producción. Se despliegan dentro del propio diagrama.',
-    hubsHintMobile: 'Toca cada hub para ver las integraciones que conecta.',
+      'Un concesionario usa muchas herramientas al día: una para apuntar sus coches, otra para anunciarlos, otra para sus clientes, otra para hablar con los bancos, con el transporte, con la ITV… y ninguna se habla con las demás. Motorflash es como una centralita: te conectas a nosotros una sola vez y todas esas herramientas empiezan a entenderse entre sí.',
+    kpiHubs: 'Áreas conectadas',
+    kpiIntegrations: 'Herramientas ya enchufadas',
+    kpiEntry: 'Una sola conexión',
+    hubsHint: 'Pulsa en cada área para ver con qué herramientas hablamos.',
+    hubsHintMobile: 'Toca cada área para ver sus herramientas.',
     fullListEyebrow: 'Lista completa',
-    fullListTitle: 'Cada integración, su hub correspondiente',
+    fullListTitle: 'Todas las herramientas, agrupadas por área',
     fullListLead:
-      'Las integraciones llevan años funcionando en producción para nuestros clientes. Si la tuya no está, la añadimos.',
-    integrationsLabel: 'integraciones',
-    ctaTitle: '¿Tu sistema no está en esta lista?',
+      'Llevan años funcionando con nuestros clientes. Si tú usas alguna que no ves aquí, la añadimos.',
+    integrationsLabel: 'herramientas',
+    ctaTitle: '¿Tu herramienta no está en la lista?',
     ctaLead:
-      'Tenemos un equipo de integraciones dedicado. Si trabajas con un DMS, CRM o portal que no esté aquí, lo añadimos al HUB y empieza a funcionar para ti.',
-    ctaButton: 'Hablar con el equipo técnico',
+      'Tenemos un equipo dedicado a conectar herramientas nuevas. Si trabajas con un programa que no ves aquí, lo enchufamos a Motorflash y empieza a funcionar contigo.',
+    ctaButton: 'Hablar con el equipo',
     hubs: HUBS_ES,
   },
   ca: {
     metaTitle: 'Ecosistema tècnic',
     metaDescription:
-      "Motorflash és el HUB central que connecta DMS, portals, CRM, NSC, logística, finances, admin/legal i bases de dades. +50 integracions reals en producció amb un únic punt d'entrada.",
+      "Un concessionari fa servir moltes eines: el programa on apunta els cotxes, els portals on els anuncia, els clients, els bancs, el transport, la ITV… Motorflash és el punt on totes es connecten entre si.",
     metaOg:
-      "Motorflash com a HUB d'integració: 8 sub-hubs connecten el teu DMS, portals, CRM, financeres, logística i bases de dades del sector.",
-    eyebrow: 'Ecosistema tècnic',
-    title1: 'Motorflash és el',
-    title2: "que connecta tot el teu stack d'automoció",
+      "Motorflash connecta les 8 àrees d'un concessionari en un sol lloc: cotxes, portals, clients, marques, transport, finançament, paperassa i dades del sector.",
+    eyebrow: 'Com funcionem per dins',
+    title1: 'Motorflash és',
+    title2: 'el punt on tot es connecta per vendre cotxes',
     intro:
-      "Un únic punt d'integració entre el teu DMS, els portals, el teu CRM, les financeres, la logística, les bases de dades del sector i els processos administratius. Tu et connectes a Motorflash; nosaltres ens encarreguem de la resta.",
-    kpiHubs: 'Hubs especialitzats',
-    kpiIntegrations: 'Integracions reals',
-    kpiEntry: "Punt d'entrada",
-    hubsHint:
-      "Prem qualsevol sub-hub per veure'n les integracions reals en producció. Es despleguen dins del propi diagrama.",
-    hubsHintMobile: 'Toca cada hub per veure les integracions que connecta.',
+      "Un concessionari fa servir moltes eines al dia: una per apuntar els cotxes, una altra per anunciar-los, una altra per als clients, una altra per parlar amb els bancs, amb el transport, amb la ITV… i cap parla amb les altres. Motorflash és com una centraleta: et connectes a nosaltres una sola vegada i totes aquestes eines comencen a entendre's entre si.",
+    kpiHubs: 'Àrees connectades',
+    kpiIntegrations: 'Eines ja connectades',
+    kpiEntry: 'Una sola connexió',
+    hubsHint: 'Prem cada àrea per veure amb quines eines parlem.',
+    hubsHintMobile: 'Toca cada àrea per veure les seves eines.',
     fullListEyebrow: 'Llista completa',
-    fullListTitle: 'Cada integració, el seu hub corresponent',
+    fullListTitle: 'Totes les eines, agrupades per àrea',
     fullListLead:
-      "Les integracions porten anys funcionant en producció per als nostres clients. Si la teva no hi és, l'afegim.",
-    integrationsLabel: 'integracions',
-    ctaTitle: 'El teu sistema no és a la llista?',
+      "Porten anys funcionant amb els nostres clients. Si en fas servir alguna que no hi és, l'afegim.",
+    integrationsLabel: 'eines',
+    ctaTitle: 'La teva eina no és a la llista?',
     ctaLead:
-      "Tenim un equip d'integracions dedicat. Si treballes amb un DMS, CRM o portal que no hi sigui, l'afegim al HUB i comença a funcionar per a tu.",
-    ctaButton: "Parlar amb l'equip tècnic",
-    hubs: HUBS_BASE,
+      "Tenim un equip dedicat a connectar eines noves. Si treballes amb un programa que no hi és, l'endollem a Motorflash i comença a funcionar amb tu.",
+    ctaButton: "Parlar amb l'equip",
+    hubs: HUBS_CA,
   },
   en: {
     metaTitle: 'Tech ecosystem',
     metaDescription:
-      'Motorflash is the central HUB connecting DMS, portals, CRM, NSC, logistics, finance, admin/legal and databases. 50+ real integrations live with a single entry point.',
+      'A dealership uses many tools: the program to log their cars, the portals to advertise them, the customers, the banks, the transport, the MOT/ITV… Motorflash is the point where they all connect to each other.',
     metaOg:
-      'Motorflash as an integration HUB: 8 sub-hubs connect your DMS, portals, CRM, lenders, logistics and sector databases.',
-    eyebrow: 'Tech ecosystem',
-    title1: 'Motorflash is the',
-    title2: 'that connects your entire automotive stack',
+      'Motorflash connects the 8 areas of a dealership in one place: cars, portals, customers, brands, transport, financing, paperwork and industry data.',
+    eyebrow: 'How we work under the hood',
+    title1: 'Motorflash is',
+    title2: 'the point where everything connects to sell cars',
     intro:
-      'A single integration point between your DMS, the portals, your CRM, the lenders, logistics, sector databases and admin processes. You plug into Motorflash; we handle the rest.',
-    kpiHubs: 'Specialised hubs',
-    kpiIntegrations: 'Live integrations',
-    kpiEntry: 'Entry point',
-    hubsHint:
-      'Click any sub-hub to see its live integrations. They expand inside the diagram itself.',
-    hubsHintMobile: 'Tap each hub to see the integrations it connects.',
+      "A dealership uses many tools every day: one to log their cars, another to advertise them, another for customers, another to talk to banks, transport, MOT/ITV… and none of them talks to the others. Motorflash is like a switchboard: you connect to us once and all those tools start talking to each other.",
+    kpiHubs: 'Connected areas',
+    kpiIntegrations: 'Tools already plugged in',
+    kpiEntry: 'One single connection',
+    hubsHint: 'Click each area to see which tools we talk to.',
+    hubsHintMobile: 'Tap each area to see its tools.',
     fullListEyebrow: 'Full list',
-    fullListTitle: 'Every integration, in its corresponding hub',
+    fullListTitle: 'Every tool, grouped by area',
     fullListLead:
-      "These integrations have been running in production for our clients for years. If yours isn't here, we add it.",
-    integrationsLabel: 'integrations',
-    ctaTitle: 'Your system not in the list?',
+      "They've been running with our clients for years. If you use one that's not here, we'll add it.",
+    integrationsLabel: 'tools',
+    ctaTitle: 'Your tool not in the list?',
     ctaLead:
-      "We have a dedicated integrations team. If you work with a DMS, CRM or portal that isn't here, we add it to the HUB and get it running for you.",
-    ctaButton: 'Talk to the tech team',
-    hubs: HUBS_BASE,
+      "We have a dedicated team to connect new tools. If you work with a program that's not here, we plug it into Motorflash and it starts working with you.",
+    ctaButton: 'Talk to the team',
+    hubs: HUBS_EN,
   },
   zh: {
     metaTitle: '技术生态',
     metaDescription:
-      'Motorflash 是连接 DMS、门户、CRM、NSC、物流、金融、行政/法务与数据库的中央枢纽。50+ 项已上线集成、统一入口。',
+      '一家经销店每天使用许多工具:登记车辆的程序、发布车辆的门户网站、客户系统、银行、运输、ITV(车辆检验)……Motorflash 是让这些工具彼此连接的枢纽。',
     metaOg:
-      'Motorflash 作为集成枢纽:8 个子枢纽连接您的 DMS、门户、CRM、金融、物流与行业数据库。',
-    eyebrow: '技术生态',
-    title1: 'Motorflash 是连接您整个汽车技术栈的',
-    title2: '',
+      'Motorflash 在一处连接经销店的 8 大领域:车辆、门户、客户、品牌、运输、融资、文书和行业数据。',
+    eyebrow: '我们的内在运作',
+    title1: 'Motorflash 是',
+    title2: '让一切串起来卖车的枢纽',
     intro:
-      '一个集成点,连接您的 DMS、门户、CRM、金融、物流、行业数据库与行政流程。您只需接入 Motorflash,其余我们来负责。',
-    kpiHubs: '专业枢纽',
-    kpiIntegrations: '已上线集成',
-    kpiEntry: '接入点',
-    hubsHint: '点击任一子枢纽即可查看其已上线的真实集成,直接在图示中展开。',
-    hubsHintMobile: '点击每个枢纽查看其连接的集成。',
+      '一家经销店每天使用许多工具:一个用来登记车辆,一个用来发布车辆,一个用来管理客户,还要与银行、运输公司、ITV 沟通……而它们互相不能对话。Motorflash 就像一个总机:您只需接入我们一次,所有这些工具就开始互相理解。',
+    kpiHubs: '连接的领域',
+    kpiIntegrations: '已接入的工具',
+    kpiEntry: '一次连接',
+    hubsHint: '点击每个领域,查看我们与哪些工具对话。',
+    hubsHintMobile: '点击每个领域查看其工具。',
     fullListEyebrow: '完整列表',
-    fullListTitle: '每项集成,归属其对应枢纽',
-    fullListLead: '这些集成已经在我们客户的生产环境中运行多年。如果您所需的不在此列,我们会添加。',
-    integrationsLabel: '项集成',
-    ctaTitle: '您的系统不在列表中?',
-    ctaLead: '我们有专门的集成团队。如果您使用的 DMS、CRM 或门户不在此处,我们会将其加入枢纽并为您运行。',
-    ctaButton: '与技术团队沟通',
-    hubs: HUBS_BASE,
+    fullListTitle: '所有工具,按领域分组',
+    fullListLead: '这些工具在我们的客户那里已经运行多年。如果您有一款不在列表中,我们会添加。',
+    integrationsLabel: '工具',
+    ctaTitle: '您的工具不在列表中?',
+    ctaLead: '我们有专门的团队负责接入新工具。如果您使用的程序不在这里,我们将其接入 Motorflash,它就能与您协同工作。',
+    ctaButton: '与团队沟通',
+    hubs: HUBS_ZH,
   },
 }
 

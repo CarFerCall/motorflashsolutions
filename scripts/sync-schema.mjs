@@ -1895,6 +1895,39 @@ try {
     } else {
       console.log('[sync-schema] = ecosystem ya tiene contenido en ES, sin tocar')
     }
+
+    // Migración v1 del ecosystem-page: los textos técnicos originales
+    // se reescriben a algo entendible por cualquiera ("centralita",
+    // "áreas conectadas", etc.). Idempotente: solo dispara si el
+    // eyebrow guardado coincide con el valor antiguo por locale.
+    const OLD_ECOSYSTEM_EYEBROW = {
+      es: 'Ecosistema técnico',
+      ca: 'Ecosistema tècnic',
+      en: 'Tech ecosystem',
+      zh: '技术生态',
+    }
+    const toPayloadShape = (copy) => ({
+      ...copy,
+      hubs: (copy.hubs || []).map((h) => ({
+        ...h,
+        integrations: (h.integrations || []).map((name) => ({ name })),
+      })),
+    })
+    for (const locale of ['es', 'ca', 'en', 'zh']) {
+      try {
+        const cur = await payload.findGlobal({ slug: 'ecosystem-page', locale, depth: 0 })
+        if (cur?.eyebrow === OLD_ECOSYSTEM_EYEBROW[locale]) {
+          await payload.updateGlobal({
+            slug: 'ecosystem-page',
+            locale,
+            data: toPayloadShape(STATIC_ECOSYSTEM[locale]),
+          })
+          console.log(`[sync-schema] ↻ ecosystem ${locale}: reescrito a copy accesible`)
+        }
+      } catch (err) {
+        console.warn(`[sync-schema] ✗ migración ecosystem (${locale}):`, err?.message || err)
+      }
+    }
   } catch (err) {
     console.warn('[sync-schema] ✗ seed ecosystem:', err?.message || err)
   }
