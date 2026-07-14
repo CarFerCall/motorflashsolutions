@@ -12,9 +12,9 @@ import { getSiteUrl } from '@/lib/seo/site-url'
 import { organizationSchema, websiteSchema, jsonLdScript } from '@/lib/seo/schema'
 
 const SITE_NAME = 'Motorflash'
-const DEFAULT_TITLE = 'Motorflash | Solución 360 e IA para Automoción'
+const DEFAULT_TITLE = 'Motorflash | Solución 360 para Automoción'
 const DEFAULT_DESCRIPTION =
-  'Motorflash Ibérica: solución 360 con IA para marcas y concesionarios del motor. Multipublicador, CRM4YOU, Contact Center, IA en WhatsApp y más.'
+  'Motorflash Ibérica: solución 360 para marcas y concesionarios del motor. Publicación de stock, CRM, Contact Center, marketing digital y más — todo conectado en una sola plataforma.'
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }))
@@ -45,7 +45,7 @@ export const metadata: Metadata = {
         url: '/images/home-hero.png',
         width: 1200,
         height: 630,
-        alt: 'Motorflash — Solución 360 e IA para Automoción',
+        alt: 'Motorflash — Solución 360 para Automoción',
       },
     ],
   },
