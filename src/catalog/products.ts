@@ -27,7 +27,7 @@ export const products: Product[] = [
     heroTitle: 'Tu stock siempre bajo control, publicado en todos los portales',
     intro:
       'Dealer + Multipublicación unifica la gestión inteligente del VO y la publicación multi-portal en una sola plataforma. Crea, revisa y publica tu stock desde un único entorno con un 99 % de integración API con los principales portales: Coches.net, AutoScout24, Wallapop, Autocasión, Motorflash y muchos más. Controla la calidad, analiza precios, exporta a todos los portales con un clic y gana tiempo para lo que importa: vender.',
-    icon: 'hub',
+    icon: 'storefront',
   },
   {
     slug: 'crm4you',
