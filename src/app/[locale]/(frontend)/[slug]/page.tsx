@@ -10,11 +10,13 @@ export const dynamic = 'force-dynamic'
 const RESERVED_SLUGS = new Set([
   'admin',
   'api',
+  'canal-denuncias',
   'compania',
   'contacto',
   'ecosistema-tecnico',
   'historias-de-exito',
   'precios',
+  'publicacion-avanzada',
   'servicios',
   'images',
 ])
