@@ -73,7 +73,7 @@ export const productI18n: Record<ProductLocale, Record<string, ProductTranslatio
     },
     'marketing-digital': {
       name: 'Marketing Digital',
-      menuLabel: 'Marketing Digital (SEO/SEA)',
+      menuLabel: 'Marketing Digital',
       tagline: 'SEO, SEA i Social Ads orientats a vendre cotxes.',
       heroTitle: 'Estratègies digitals per vendre més cotxes',
       intro: "Coneixem el mercat de l'automoció i sabem que cada concessionari necessita una estratègia diferent. El nostre equip combina experiència en màrqueting, anàlisi i tecnologia per millorar la visibilitat del teu negoci. Creem accions personalitzades en SEO, SEA i Social Ads, sempre orientades a la venda.",
@@ -87,7 +87,7 @@ export const productI18n: Record<ProductLocale, Record<string, ProductTranslatio
     },
     'soluciones-fabricantes': {
       name: 'Solucions per a Fabricants',
-      menuLabel: 'Solucions per a Fabricants',
+      menuLabel: 'Fabricants',
       tagline: 'Tecnologia per a marques i xarxes de concessionaris.',
       heroTitle: 'Solucions tecnològiques per a fabricants i marques',
       intro: 'Plataforma integral pensada per a fabricants que necessiten coordinar la seva xarxa de concessionaris, unificar la qualitat de publicació i obtenir mètriques consolidades a nivell de marca.',
@@ -166,7 +166,7 @@ export const productI18n: Record<ProductLocale, Record<string, ProductTranslatio
     },
     'marketing-digital': {
       name: 'Digital Marketing',
-      menuLabel: 'Digital Marketing (SEO/SEA)',
+      menuLabel: 'Digital Marketing',
       tagline: 'SEO, SEA and Social Ads aimed at selling cars.',
       heroTitle: 'Digital strategies to sell more cars',
       intro: 'We know the automotive market and that every dealership needs a different strategy. Our team combines marketing experience, analytics and technology to grow your visibility. We design custom SEO, SEA and Social Ads actions always aimed at the sale.',
@@ -180,7 +180,7 @@ export const productI18n: Record<ProductLocale, Record<string, ProductTranslatio
     },
     'soluciones-fabricantes': {
       name: 'Manufacturer Solutions',
-      menuLabel: 'Manufacturer Solutions',
+      menuLabel: 'Manufacturers',
       tagline: 'Technology for brands and dealership networks.',
       heroTitle: 'Tech solutions for manufacturers and brands',
       intro: 'End-to-end platform built for manufacturers that need to coordinate their dealer network, standardise listing quality and obtain consolidated brand-level metrics.',
@@ -259,7 +259,7 @@ export const productI18n: Record<ProductLocale, Record<string, ProductTranslatio
     },
     'marketing-digital': {
       name: '数字营销',
-      menuLabel: '数字营销(SEO/SEA)',
+      menuLabel: '数字营销',
       tagline: '以卖车为目标的 SEO、SEA 与社交广告。',
       heroTitle: '帮您卖出更多车的数字策略',
       intro: '我们了解汽车市场,也清楚每家经销商需要不同的策略。我们的团队结合营销经验、分析与技术,助您提升业务可见度。我们定制的 SEO、SEA 与社交广告动作,始终以成交为目标。',
@@ -273,7 +273,7 @@ export const productI18n: Record<ProductLocale, Record<string, ProductTranslatio
     },
     'soluciones-fabricantes': {
       name: '主机厂解决方案',
-      menuLabel: '主机厂解决方案',
+      menuLabel: '主机厂',
       tagline: '面向品牌与经销网络的技术。',
       heroTitle: '面向主机厂与品牌的技术解决方案',
       intro: '为需要协调经销网络、统一发布质量、获取品牌层面整合指标的主机厂而生的完整平台。',

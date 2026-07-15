@@ -110,7 +110,7 @@ export const products: Product[] = [
   {
     slug: 'marketing-digital',
     name: 'Marketing Digital',
-    menuLabel: 'Marketing Digital (SEO/SEA)',
+    menuLabel: 'Marketing Digital',
     menuOrder: 100,
     tagline: 'SEO, SEA y Social Ads orientados a vender coches.',
     heroTitle: 'Estrategias digitales para vender más coches',
@@ -132,7 +132,7 @@ export const products: Product[] = [
   {
     slug: 'soluciones-fabricantes',
     name: 'Soluciones para Fabricantes',
-    menuLabel: 'Soluciones para Fabricantes',
+    menuLabel: 'Fabricantes',
     menuOrder: 130,
     tagline: 'Tecnología para marcas y redes de concesionarios.',
     heroTitle: 'Soluciones tecnológicas para fabricantes y marcas',
