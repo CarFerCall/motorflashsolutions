@@ -113,7 +113,7 @@ export default function SostenibilidadPage() {
       <section className="relative bg-white overflow-hidden py-20 md:py-24">
         <div aria-hidden className="absolute inset-0 -z-10" style={{ background: 'radial-gradient(ellipse at 50% 20%, rgba(255,128,0,0.08), transparent 55%)' }} />
         <div className="mf-container max-w-4xl">
-          <span className="inline-flex items-center gap-2 rounded-full border border-primary/25 bg-primary/10 text-primary px-3 py-1 text-[11px] font-bold uppercase tracking-widest mb-5">
+          <span className="inline-flex items-center gap-2 text-primary text-[11px] font-bold uppercase tracking-widest mb-5">
             <span className="material-symbols-outlined" style={{ fontSize: 14 }}>eco</span>
             Compromiso corporativo · Ejercicio 2025
           </span>
