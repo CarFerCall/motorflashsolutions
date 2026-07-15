@@ -1824,6 +1824,39 @@ try {
   }
 
   // -------------------------------------------------------------------
+  // Migración solveRows del home: quitar la fila 'Exportación automática
+  // a 15+ países europeos' (después/before de 'Stock que no rota…').
+  // Idempotente: solo dispara si detecta la fila vieja en el locale.
+  // -------------------------------------------------------------------
+  try {
+    const ROW_MARKERS = {
+      es: 'Exportación automática a 15+ países europeos',
+      ca: 'Exportació automàtica a 15+ països europeus',
+      en: 'Automatic export to 15+ European countries',
+      zh: '自动导出至 15+ 个欧洲国家',
+    }
+    for (const locale of ['es', 'ca', 'en', 'zh']) {
+      try {
+        const cur = await payload.findGlobal({ slug: 'home-page', locale, depth: 0 })
+        const rows = Array.isArray(cur?.solveRows) ? cur.solveRows : []
+        const filtered = rows.filter((r) => r?.after !== ROW_MARKERS[locale])
+        if (filtered.length !== rows.length) {
+          await payload.updateGlobal({
+            slug: 'home-page',
+            locale,
+            data: { solveRows: filtered },
+          })
+          console.log(`[sync-schema] ↻ home ${locale}: solveRows sin fila 'Exportación 15+ países'`)
+        }
+      } catch (err) {
+        console.warn(`[sync-schema] ✗ migración solveRows home (${locale}):`, err?.message || err)
+      }
+    }
+  } catch (err) {
+    console.warn('[sync-schema] ✗ migración solveRows home:', err?.message || err)
+  }
+
+  // -------------------------------------------------------------------
   // Seed del global Services Listing en los 4 locales.
   // -------------------------------------------------------------------
   try {
