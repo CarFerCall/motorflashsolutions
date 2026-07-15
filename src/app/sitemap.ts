@@ -23,6 +23,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: absoluteUrl('/compania'), lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
     { url: absoluteUrl('/contacto'), lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
     { url: absoluteUrl('/historias-de-exito'), lastModified: now, changeFrequency: 'monthly', priority: 0.6 },
+    { url: absoluteUrl('/canal-denuncias'), lastModified: now, changeFrequency: 'yearly', priority: 0.5 },
+    { url: absoluteUrl('/compania/sostenibilidad'), lastModified: now, changeFrequency: 'yearly', priority: 0.5 },
   ]
 
   // Catálogo estático de productos = /servicios/{slug}

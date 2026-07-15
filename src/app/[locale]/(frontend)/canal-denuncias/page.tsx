@@ -1,17 +1,45 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { getLocale } from 'next-intl/server'
+import { absoluteUrl, getSiteUrl } from '@/lib/seo/site-url'
+import { breadcrumbSchema, jsonLdScript } from '@/lib/seo/schema'
 
 type Locale = 'es' | 'ca' | 'en' | 'zh'
+
+const LOCALES: Locale[] = ['es', 'ca', 'en', 'zh']
+const OG_LOCALE_MAP: Record<Locale, string> = {
+  es: 'es_ES',
+  ca: 'ca_ES',
+  en: 'en_US',
+  zh: 'zh_CN',
+}
+const HREFLANG_MAP: Record<Locale, string> = {
+  es: 'es-ES',
+  ca: 'ca-ES',
+  en: 'en',
+  zh: 'zh-CN',
+}
 
 const FORM_URL =
   'https://docs.google.com/forms/d/e/1FAIpQLSdBSffhShGrrt-93PgOjuXjMwXttcJmYh7-9Vhjr2lPJTpxpw/viewform?vc=0&c=0&w=1&flr=0'
 
+function localizedPath(locale: Locale): string {
+  return locale === 'es' ? '/canal-denuncias' : `/${locale}/canal-denuncias`
+}
+
 interface CardCopy { icon: string; title: string; desc: string }
 interface StepCopy { title: string; desc: string }
+interface FaqCopy { q: string; a: string }
 
 interface ChannelCopy {
-  meta: { title: string; description: string }
+  meta: {
+    title: string
+    description: string
+    keywords: string[]
+    ogTitle: string
+    ogDescription: string
+  }
+  breadcrumb: { home: string; current: string }
   hero: {
     eyebrow: string
     title1: string
@@ -42,6 +70,12 @@ interface ChannelCopy {
     title: string
     steps: StepCopy[]
   }
+  faq: {
+    kicker: string
+    title: string
+    lead: string
+    items: FaqCopy[]
+  }
   legal: {
     kicker: string
     body: string
@@ -57,10 +91,26 @@ interface ChannelCopy {
 const COPY: Record<Locale, ChannelCopy> = {
   es: {
     meta: {
-      title: 'Canal de denuncias · Motorflash',
+      title: 'Canal de denuncias · Motorflash Ibérica · Ley 2/2023',
       description:
-        'Canal ético de Motorflash Ibérica de Negocios, S.L. Reporta de forma confidencial cualquier irregularidad, incumplimiento o vulneración del código ético. Sin represalias.',
+        'Canal ético confidencial de Motorflash Ibérica de Negocios, S.L. Reporta irregularidades, fraude, acoso o incumplimientos normativos. Cumple con la Ley 2/2023 y la Directiva UE 2019/1937. Sin represalias, respuesta en 3 meses.',
+      keywords: [
+        'canal de denuncias',
+        'canal ético',
+        'whistleblowing',
+        'Motorflash',
+        'Ley 2/2023',
+        'Directiva UE 2019/1937',
+        'compliance',
+        'denuncia anónima',
+        'protección informante',
+        'código ético',
+      ],
+      ogTitle: 'Canal de denuncias · Motorflash',
+      ogDescription:
+        'Reporta de forma confidencial y sin represalias cualquier irregularidad, fraude o incumplimiento. Canal ético conforme a la Ley 2/2023 y la Directiva UE 2019/1937.',
     },
+    breadcrumb: { home: 'Inicio', current: 'Canal de denuncias' },
     hero: {
       eyebrow: 'Ética empresarial · Cumplimiento',
       title1: 'Canal de',
@@ -113,6 +163,37 @@ const COPY: Record<Locale, ChannelCopy> = {
         { title: 'Se investiga y responde', desc: 'Se abren las diligencias necesarias, se solicitan aclaraciones si procede y se comunica el resultado en un plazo máximo de 3 meses desde la recepción de la comunicación.' },
       ],
     },
+    faq: {
+      kicker: 'Preguntas frecuentes',
+      title: 'Todo lo que necesitas saber antes de enviar',
+      lead: 'Resolvemos las dudas más habituales sobre confidencialidad, plazos y protección al informante.',
+      items: [
+        {
+          q: '¿Puedo denunciar de forma anónima?',
+          a: 'Sí. El formulario permite enviar la comunicación sin identificarte. Recibirás un código de referencia con el que podrás mantener el seguimiento y aportar información adicional si es necesario.',
+        },
+        {
+          q: '¿Cuánto tarda la respuesta?',
+          a: 'Motorflash acusa recibo de la comunicación en un plazo máximo de 7 días naturales y entrega una respuesta final dentro de los 3 meses siguientes a la recepción, tal y como establece la Ley 2/2023.',
+        },
+        {
+          q: '¿Pueden tomar represalias contra mí por informar?',
+          a: 'No. La Ley 2/2023 y la Directiva UE 2019/1937 prohíben expresamente cualquier tipo de represalia — despido, sanción, cambio de puesto, no renovación — contra las personas que informen de buena fe. Motorflash protege activamente al informante.',
+        },
+        {
+          q: '¿Quién tiene acceso a mi denuncia?',
+          a: 'Únicamente el Responsable del Sistema Interno de Información designado por Motorflash. La confidencialidad de tu identidad y de las personas mencionadas está garantizada, incluso frente al órgano de administración.',
+        },
+        {
+          q: '¿Qué información debo aportar?',
+          a: 'Cuantos más datos concretos, mejor: hechos, fechas, lugares, personas implicadas y evidencias disponibles (documentos, correos, capturas). Aporta solo información veraz; las comunicaciones manifiestamente falsas o de mala fe quedan excluidas de la protección legal.',
+        },
+        {
+          q: '¿Sirve este canal para consultas comerciales o dudas de servicio?',
+          a: 'No. Este canal es exclusivo para denuncias éticas o de cumplimiento normativo. Para dudas comerciales, soporte técnico o información sobre productos, utiliza la página de contacto.',
+        },
+      ],
+    },
     legal: {
       kicker: 'Marco legal',
       body: 'Este canal cumple con la Ley 2/2023 de 20 de febrero, reguladora de la protección de las personas que informen sobre infracciones normativas y de lucha contra la corrupción, y con la Directiva (UE) 2019/1937 del Parlamento Europeo y del Consejo. El tratamiento de los datos personales se realiza conforme al RGPD y a la LOPDGDD, con la finalidad exclusiva de gestionar la comunicación recibida.',
@@ -127,10 +208,26 @@ const COPY: Record<Locale, ChannelCopy> = {
 
   ca: {
     meta: {
-      title: 'Canal de denúncies · Motorflash',
+      title: 'Canal de denúncies · Motorflash Ibérica · Llei 2/2023',
       description:
-        'Canal ètic de Motorflash Ibérica de Negocios, S.L. Reporta de manera confidencial qualsevol irregularitat, incompliment o vulneració del codi ètic. Sense represàlies.',
+        "Canal ètic confidencial de Motorflash Ibérica de Negocios, S.L. Reporta irregularitats, frau, assetjament o incompliments normatius. Compleix amb la Llei 2/2023 i la Directiva UE 2019/1937. Sense represàlies, resposta en 3 mesos.",
+      keywords: [
+        'canal de denúncies',
+        'canal ètic',
+        'whistleblowing',
+        'Motorflash',
+        'Llei 2/2023',
+        'Directiva UE 2019/1937',
+        'compliance',
+        'denúncia anònima',
+        'protecció informant',
+        'codi ètic',
+      ],
+      ogTitle: 'Canal de denúncies · Motorflash',
+      ogDescription:
+        "Reporta de manera confidencial i sense represàlies qualsevol irregularitat, frau o incompliment. Canal ètic conforme a la Llei 2/2023 i la Directiva UE 2019/1937.",
     },
+    breadcrumb: { home: 'Inici', current: 'Canal de denúncies' },
     hero: {
       eyebrow: 'Ètica empresarial · Compliment',
       title1: 'Canal de',
@@ -183,6 +280,37 @@ const COPY: Record<Locale, ChannelCopy> = {
         { title: "S'investiga i es respon", desc: "S'obren les diligències necessàries, es demanen aclariments si escau i es comunica el resultat en un termini màxim de 3 mesos des de la recepció de la comunicació." },
       ],
     },
+    faq: {
+      kicker: 'Preguntes freqüents',
+      title: "Tot el que has de saber abans d'enviar",
+      lead: "Resolem els dubtes més habituals sobre confidencialitat, terminis i protecció a l'informant.",
+      items: [
+        {
+          q: 'Puc denunciar de manera anònima?',
+          a: "Sí. El formulari permet enviar la comunicació sense identificar-te. Rebràs un codi de referència amb el qual podràs mantenir el seguiment i aportar informació addicional si cal.",
+        },
+        {
+          q: 'Quant triga la resposta?',
+          a: "Motorflash acusa recepció de la comunicació en un termini màxim de 7 dies naturals i lliura una resposta final dins dels 3 mesos següents a la recepció, tal com estableix la Llei 2/2023.",
+        },
+        {
+          q: 'Poden prendre represàlies contra mi per informar?',
+          a: "No. La Llei 2/2023 i la Directiva UE 2019/1937 prohibeixen expressament qualsevol tipus de represàlia — acomiadament, sanció, canvi de lloc, no renovació — contra les persones que informin de bona fe. Motorflash protegeix activament l'informant.",
+        },
+        {
+          q: 'Qui té accés a la meva denúncia?',
+          a: "Únicament el Responsable del Sistema Intern d'Informació designat per Motorflash. La confidencialitat de la teva identitat i de les persones esmentades queda garantida, fins i tot davant l'òrgan d'administració.",
+        },
+        {
+          q: 'Quina informació he d’aportar?',
+          a: "Com més dades concretes, millor: fets, dates, llocs, persones implicades i evidències disponibles (documents, correus, captures). Aporta només informació veraç; les comunicacions manifestament falses o de mala fe queden excloses de la protecció legal.",
+        },
+        {
+          q: 'Serveix aquest canal per a consultes comercials o dubtes de servei?',
+          a: "No. Aquest canal és exclusiu per a denúncies ètiques o de compliment normatiu. Per a dubtes comercials, suport tècnic o informació sobre productes, utilitza la pàgina de contacte.",
+        },
+      ],
+    },
     legal: {
       kicker: 'Marc legal',
       body: "Aquest canal compleix amb la Llei 2/2023 de 20 de febrer, reguladora de la protecció de les persones que informin sobre infraccions normatives i de lluita contra la corrupció, i amb la Directiva (UE) 2019/1937 del Parlament Europeu i del Consell. El tractament de les dades personals es fa conforme al RGPD i a la LOPDGDD, amb la finalitat exclusiva de gestionar la comunicació rebuda.",
@@ -197,10 +325,25 @@ const COPY: Record<Locale, ChannelCopy> = {
 
   en: {
     meta: {
-      title: 'Whistleblowing channel · Motorflash',
+      title: 'Whistleblowing channel · Motorflash Ibérica · Spanish Law 2/2023',
       description:
-        "Motorflash Ibérica de Negocios, S.L.'s ethics channel. Report confidentially any irregularity, non-compliance or breach of the code of ethics. No retaliation.",
+        "Motorflash Ibérica de Negocios, S.L.'s confidential ethics channel. Report irregularities, fraud, harassment or regulatory breaches. Compliant with Spanish Law 2/2023 and EU Directive 2019/1937. No retaliation, 3-month response window.",
+      keywords: [
+        'whistleblowing channel',
+        'ethics hotline',
+        'Motorflash',
+        'Spanish Law 2/2023',
+        'EU Directive 2019/1937',
+        'compliance',
+        'anonymous report',
+        'whistleblower protection',
+        'code of ethics',
+      ],
+      ogTitle: 'Whistleblowing channel · Motorflash',
+      ogDescription:
+        'Report any irregularity, fraud or breach confidentially and without retaliation. Ethics channel compliant with Spanish Law 2/2023 and EU Directive 2019/1937.',
     },
+    breadcrumb: { home: 'Home', current: 'Whistleblowing channel' },
     hero: {
       eyebrow: 'Business ethics · Compliance',
       title1: 'Whistleblowing',
@@ -253,6 +396,37 @@ const COPY: Record<Locale, ChannelCopy> = {
         { title: 'It is investigated and answered', desc: 'The necessary enquiries are opened, clarifications are requested if applicable, and the outcome is communicated within a maximum of 3 months from receipt.' },
       ],
     },
+    faq: {
+      kicker: 'Frequently asked questions',
+      title: 'Everything you need to know before you submit',
+      lead: 'The most common questions about confidentiality, deadlines and whistleblower protection.',
+      items: [
+        {
+          q: 'Can I report anonymously?',
+          a: 'Yes. The form allows you to submit the report without identifying yourself. You will receive a reference code that lets you follow up and provide additional information if needed.',
+        },
+        {
+          q: 'How long does the response take?',
+          a: 'Motorflash acknowledges receipt within a maximum of 7 calendar days and delivers a final response within 3 months of receipt, as required by Spanish Law 2/2023.',
+        },
+        {
+          q: 'Can I face retaliation for reporting?',
+          a: 'No. Spanish Law 2/2023 and EU Directive 2019/1937 expressly prohibit any form of retaliation — dismissal, sanction, role change, non-renewal — against people who report in good faith. Motorflash actively protects the whistleblower.',
+        },
+        {
+          q: 'Who has access to my report?',
+          a: 'Only the Internal Information System Officer designated by Motorflash. The confidentiality of your identity and of any people mentioned is guaranteed, even before the administrative body.',
+        },
+        {
+          q: 'What information should I provide?',
+          a: 'The more concrete detail, the better: facts, dates, locations, people involved and any available evidence (documents, emails, screenshots). Only provide truthful information; reports that are manifestly false or in bad faith are excluded from legal protection.',
+        },
+        {
+          q: 'Can I use this channel for commercial enquiries or service questions?',
+          a: 'No. This channel is exclusive to ethical or regulatory-compliance reports. For commercial questions, technical support or product information, please use the contact page.',
+        },
+      ],
+    },
     legal: {
       kicker: 'Legal framework',
       body: 'This channel complies with Spanish Law 2/2023 of 20 February, regulating the protection of persons who report regulatory infringements and the fight against corruption, and with Directive (EU) 2019/1937 of the European Parliament and of the Council. Personal data is processed in accordance with the GDPR and the LOPDGDD, exclusively to manage the received report.',
@@ -267,9 +441,23 @@ const COPY: Record<Locale, ChannelCopy> = {
 
   zh: {
     meta: {
-      title: '举报渠道 · Motorflash',
-      description: 'Motorflash Ibérica de Negocios, S.L. 的道德渠道。以保密方式报告任何违规、不合规或违反道德准则的行为。不会遭到报复。',
+      title: '举报渠道 · Motorflash Ibérica · 西班牙第 2/2023 号法律',
+      description: 'Motorflash Ibérica de Negocios, S.L. 的保密道德渠道。举报违规、欺诈、骚扰或不合规行为。符合西班牙第 2/2023 号法律与欧盟指令 2019/1937。不会遭到报复,3 个月内答复。',
+      keywords: [
+        '举报渠道',
+        '道德热线',
+        'Motorflash',
+        '西班牙第 2/2023 号法律',
+        '欧盟指令 2019/1937',
+        '合规',
+        '匿名举报',
+        '举报人保护',
+        '道德准则',
+      ],
+      ogTitle: '举报渠道 · Motorflash',
+      ogDescription: '以保密方式且不会遭到报复地举报任何违规、欺诈或不合规行为。符合西班牙第 2/2023 号法律与欧盟指令 2019/1937 的道德渠道。',
     },
+    breadcrumb: { home: '首页', current: '举报渠道' },
     hero: {
       eyebrow: '商业道德 · 合规',
       title1: '举报',
@@ -322,6 +510,37 @@ const COPY: Record<Locale, ChannelCopy> = {
         { title: '进行调查并回复', desc: '启动必要的调查程序,如需要则请求补充说明,并在自收到报告之日起最多 3 个月内告知结果。' },
       ],
     },
+    faq: {
+      kicker: '常见问题',
+      title: '提交前您需要了解的一切',
+      lead: '关于保密性、时限和举报人保护的最常见问题解答。',
+      items: [
+        {
+          q: '我可以匿名举报吗?',
+          a: '可以。表单允许您在不透露身份的情况下提交报告。您会收到一个参考编号,可用于后续跟进并在需要时补充信息。',
+        },
+        {
+          q: '回复需要多长时间?',
+          a: 'Motorflash 会在最多 7 个自然日内确认收到报告,并依据西班牙第 2/2023 号法律的要求,在自收到之日起 3 个月内给出最终回复。',
+        },
+        {
+          q: '因为举报会对我实施报复吗?',
+          a: '不会。西班牙第 2/2023 号法律和欧盟指令 2019/1937 明确禁止针对善意举报者的任何报复行为 — 包括解雇、处罚、职位变更或不续签合同。Motorflash 会主动保护举报人。',
+        },
+        {
+          q: '谁可以查看我的举报?',
+          a: '仅限 Motorflash 指定的内部信息系统负责人。您的身份和被提及人员的身份保密性得到保证,即便面对管理机构也是如此。',
+        },
+        {
+          q: '我需要提供哪些信息?',
+          a: '细节越具体越好:事实、日期、地点、涉及人员和任何可用的证据(文件、电子邮件、截图)。请只提供真实信息;明显虚假或恶意的举报将不受法律保护。',
+        },
+        {
+          q: '此渠道能用于商业咨询或服务问题吗?',
+          a: '不能。此渠道仅用于道德或合规举报。若有商业问题、技术支持或产品信息需求,请使用联系页面。',
+        },
+      ],
+    },
     legal: {
       kicker: '法律框架',
       body: '本渠道符合 2023 年 2 月 20 日西班牙第 2/2023 号法律(关于保护举报法规违规和反腐败的相关人员)以及欧洲议会和理事会指令 (EU) 2019/1937 的规定。个人数据的处理依据 GDPR 与 LOPDGDD 进行,唯一目的是处理所收到的报告。',
@@ -336,18 +555,117 @@ const COPY: Record<Locale, ChannelCopy> = {
 }
 
 export async function generateMetadata(): Promise<Metadata> {
-  const locale = ((await getLocale()) as Locale) || 'es'
-  const t = (COPY[locale] ?? COPY.es).meta
+  const localeRaw = (await getLocale()) as Locale
+  const locale: Locale = LOCALES.includes(localeRaw) ? localeRaw : 'es'
+  const t = COPY[locale].meta
+  const canonicalPath = localizedPath(locale)
+  const languages: Record<string, string> = {}
+  for (const l of LOCALES) {
+    languages[HREFLANG_MAP[l]] = absoluteUrl(localizedPath(l))
+  }
+  languages['x-default'] = absoluteUrl(localizedPath('es'))
+
   return {
     title: t.title,
     description: t.description,
-    alternates: { canonical: '/canal-denuncias' },
+    keywords: t.keywords,
+    alternates: {
+      canonical: canonicalPath,
+      languages,
+    },
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        'max-image-preview': 'large',
+        'max-snippet': -1,
+        'max-video-preview': -1,
+      },
+    },
+    openGraph: {
+      type: 'website',
+      siteName: 'Motorflash',
+      title: t.ogTitle,
+      description: t.ogDescription,
+      url: absoluteUrl(canonicalPath),
+      locale: OG_LOCALE_MAP[locale],
+      alternateLocale: LOCALES.filter((l) => l !== locale).map((l) => OG_LOCALE_MAP[l]),
+      images: [
+        {
+          url: absoluteUrl('/images/logo-motorflash.png'),
+          width: 1200,
+          height: 630,
+          alt: 'Motorflash — Canal de denuncias',
+        },
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: t.ogTitle,
+      description: t.ogDescription,
+      images: [absoluteUrl('/images/logo-motorflash.png')],
+    },
   }
 }
 
 export default async function CanalDenunciasPage() {
-  const locale = ((await getLocale()) as Locale) || 'es'
-  const t = COPY[locale] ?? COPY.es
+  const localeRaw = (await getLocale()) as Locale
+  const locale: Locale = LOCALES.includes(localeRaw) ? localeRaw : 'es'
+  const t = COPY[locale]
+  const pageUrl = absoluteUrl(localizedPath(locale))
+
+  const breadcrumb = breadcrumbSchema([
+    { name: t.breadcrumb.home, url: locale === 'es' ? '/' : `/${locale}` },
+    { name: t.breadcrumb.current, url: localizedPath(locale) },
+  ])
+
+  const webPage = {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    '@id': `${pageUrl}#webpage`,
+    url: pageUrl,
+    name: t.meta.ogTitle,
+    description: t.meta.description,
+    inLanguage: HREFLANG_MAP[locale],
+    isPartOf: { '@id': `${getSiteUrl()}/#website` },
+    about: {
+      '@type': 'Thing',
+      name: 'Whistleblowing / Canal ético',
+    },
+    publisher: { '@id': `${getSiteUrl()}/#organization` },
+    breadcrumb: { '@id': `${pageUrl}#breadcrumb` },
+    primaryImageOfPage: absoluteUrl('/images/logo-motorflash.png'),
+  }
+
+  const breadcrumbWithId = { ...breadcrumb, '@id': `${pageUrl}#breadcrumb` }
+
+  const faqPage = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    '@id': `${pageUrl}#faq`,
+    mainEntity: t.faq.items.map((f) => ({
+      '@type': 'Question',
+      name: f.q,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: f.a,
+      },
+    })),
+  }
+
+  const contactPage = {
+    '@context': 'https://schema.org',
+    '@type': 'ContactPage',
+    '@id': `${pageUrl}#contactpage`,
+    url: pageUrl,
+    name: t.meta.ogTitle,
+    description: t.meta.description,
+    inLanguage: HREFLANG_MAP[locale],
+    isPartOf: { '@id': `${getSiteUrl()}/#website` },
+    about: { '@id': `${getSiteUrl()}/#organization` },
+  }
 
   return (
     <div className="font-display text-on-surface">
@@ -355,6 +673,17 @@ export default async function CanalDenunciasPage() {
       <section className="relative bg-white overflow-hidden py-20 md:py-24">
         <div aria-hidden className="absolute inset-0 -z-10" style={{ background: 'radial-gradient(ellipse at 50% 20%, rgba(255,128,0,0.08), transparent 55%)' }} />
         <div className="mf-container max-w-4xl">
+          {/* Breadcrumb visible */}
+          <nav aria-label="Breadcrumb" className="mb-6 text-xs text-on-surface-variant">
+            <ol className="flex items-center gap-2">
+              <li>
+                <Link href="/" className="hover:text-primary transition-colors">{t.breadcrumb.home}</Link>
+              </li>
+              <li aria-hidden>›</li>
+              <li aria-current="page" className="text-on-surface font-medium">{t.breadcrumb.current}</li>
+            </ol>
+          </nav>
+
           <span className="inline-flex items-center gap-2 text-primary text-[11px] font-bold uppercase tracking-widest mb-5">
             <span className="material-symbols-outlined" style={{ fontSize: 14 }}>shield</span>
             {t.hero.eyebrow}
@@ -471,8 +800,34 @@ export default async function CanalDenunciasPage() {
         </div>
       </section>
 
+      {/* FAQ */}
+      <section id="faq" className="bg-surface-container-low border-y border-outline-variant py-20">
+        <div className="mf-container max-w-4xl">
+          <span className="mf-eyebrow inline-flex items-center gap-2">
+            <span className="material-symbols-outlined" style={{ fontSize: 16 }}>quiz</span>
+            {t.faq.kicker}
+          </span>
+          <h2 className="text-3xl md:text-headline-lg font-semibold mt-3 mb-3">{t.faq.title}</h2>
+          <p className="text-on-surface-variant leading-relaxed mb-8">{t.faq.lead}</p>
+          <div className="space-y-3">
+            {t.faq.items.map((item) => (
+              <details
+                key={item.q}
+                className="group rounded-2xl border border-outline-variant bg-white p-5 open:shadow-md transition-shadow"
+              >
+                <summary className="flex items-center justify-between gap-4 cursor-pointer list-none font-semibold text-on-surface">
+                  <span>{item.q}</span>
+                  <span className="material-symbols-outlined text-primary transition-transform group-open:rotate-180" style={{ fontSize: 22 }}>expand_more</span>
+                </summary>
+                <p className="text-sm text-on-surface-variant leading-relaxed mt-3">{item.a}</p>
+              </details>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Marco legal */}
-      <section className="bg-surface-container-low border-y border-outline-variant py-16">
+      <section className="bg-white py-16">
         <div className="mf-container max-w-3xl">
           <span className="mf-eyebrow inline-flex items-center gap-2">
             <span className="material-symbols-outlined" style={{ fontSize: 16 }}>gavel</span>
@@ -483,7 +838,7 @@ export default async function CanalDenunciasPage() {
       </section>
 
       {/* CTA final */}
-      <section className="bg-white py-20 md:py-24">
+      <section className="bg-surface-container-low border-t border-outline-variant py-20 md:py-24">
         <div className="mf-container max-w-3xl text-center">
           <h2 className="text-3xl md:text-4xl font-semibold leading-tight mb-4">{t.cta.title}</h2>
           <p className="text-on-surface-variant leading-relaxed mb-8">{t.cta.lead}</p>
@@ -501,6 +856,12 @@ export default async function CanalDenunciasPage() {
           </p>
         </div>
       </section>
+
+      {/* JSON-LD */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: jsonLdScript([webPage, breadcrumbWithId, faqPage, contactPage]) }}
+      />
     </div>
   )
 }
