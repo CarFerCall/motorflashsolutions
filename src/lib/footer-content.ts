@@ -11,6 +11,7 @@ export interface FooterCopy {
   successStories: string
   pricing: string
   contact: string
+  reportingChannel: string
   hqHeading: string
   hqAddress1: string
   hqAddress2: string
@@ -34,6 +35,7 @@ export const STATIC_FOOTER: Record<FooterLocale, FooterCopy> = {
     successStories: 'Historias de éxito',
     pricing: 'Precios',
     contact: 'Contacto',
+    reportingChannel: 'Canal de denuncias',
     hqHeading: 'Sede Madrid',
     hqAddress1: 'Calle Basauri 17 – Edf. B, Bajo Izq. D',
     hqAddress2: '28023 Madrid, España',
@@ -55,6 +57,7 @@ export const STATIC_FOOTER: Record<FooterLocale, FooterCopy> = {
     successStories: "Històries d'èxit",
     pricing: 'Preus',
     contact: 'Contacte',
+    reportingChannel: 'Canal de denúncies',
     hqHeading: 'Seu Madrid',
     hqAddress1: 'Carrer Basauri 17 – Edif. B, Baixos Esq. D',
     hqAddress2: '28023 Madrid, Espanya',
@@ -76,6 +79,7 @@ export const STATIC_FOOTER: Record<FooterLocale, FooterCopy> = {
     successStories: 'Success stories',
     pricing: 'Pricing',
     contact: 'Contact',
+    reportingChannel: 'Whistleblowing channel',
     hqHeading: 'Madrid HQ',
     hqAddress1: 'Calle Basauri 17 – Bldg. B, Lower Left D',
     hqAddress2: '28023 Madrid, Spain',
@@ -97,6 +101,7 @@ export const STATIC_FOOTER: Record<FooterLocale, FooterCopy> = {
     successStories: '成功案例',
     pricing: '价格',
     contact: '联系我们',
+    reportingChannel: '举报渠道',
     hqHeading: '马德里总部',
     hqAddress1: 'Calle Basauri 17 – B 座,下左 D',
     hqAddress2: '28023 马德里,西班牙',

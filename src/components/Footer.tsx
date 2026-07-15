@@ -95,6 +95,16 @@ export async function Footer() {
               <li><Link href="/historias-de-exito" className="hover:text-primary transition-colors">{t.successStories}</Link></li>
               {/* Enlace a /precios oculto temporalmente — la página sigue accesible por URL directa. */}
               <li><Link href="/contacto" className="hover:text-primary transition-colors">{t.contact}</Link></li>
+              <li>
+                <a
+                  href="https://docs.google.com/forms/d/e/1FAIpQLSdBSffhShGrrt-93PgOjuXjMwXttcJmYh7-9Vhjr2lPJTpxpw/viewform?vc=0&c=0&w=1&flr=0"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-primary transition-colors"
+                >
+                  {t.reportingChannel}
+                </a>
+              </li>
             </ul>
           </div>
 
