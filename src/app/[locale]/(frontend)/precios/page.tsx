@@ -6,24 +6,57 @@ import { Reveal } from '@/components/Reveal'
 import { PricingConfigurator, type ConfiguratorProduct } from '@/components/PricingConfigurator'
 import { normalizeItem, type RawPricingItem } from '@/lib/pricing'
 import { getPricingCopy, getPricingCopyStatic, type PricingLocale } from '@/lib/pricing-content'
+import { breadcrumbSchema, jsonLdScript, pageSchema } from '@/lib/seo/schema'
+import { absoluteUrl } from '@/lib/seo/site-url'
+import { buildPageMetadata, HREFLANG_MAP, SEO_LOCALES, localizedPath, type SeoLocale } from '@/lib/seo/i18n-metadata'
+
+const BC_HOME: Record<SeoLocale, string> = { es: 'Inicio', ca: 'Inici', en: 'Home', zh: '首页' }
+const BC_PRICING: Record<SeoLocale, string> = { es: 'Precios', ca: 'Preus', en: 'Pricing', zh: '价格' }
 
 export const dynamic = 'force-dynamic'
 
+function resolveLocale(): Promise<SeoLocale> {
+  return getLocale().then((l) => (SEO_LOCALES.includes(l as SeoLocale) ? (l as SeoLocale) : 'es'))
+}
+
 export async function generateMetadata() {
-  const locale = ((await getLocale()) as PricingLocale) || 'es'
-  const t = getPricingCopyStatic(locale)
-  return {
+  const locale = await resolveLocale()
+  const t = getPricingCopyStatic(locale as PricingLocale)
+  return buildPageMetadata({
+    locale,
+    path: '/precios',
     title: t.metaTitle,
     description: t.metaDescription,
-    alternates: { canonical: '/precios' },
-    openGraph: { title: `${t.metaTitle} — Motorflash`, description: t.metaOg, url: '/precios' },
-  }
+    ogTitle: `${t.metaTitle} — Motorflash`,
+    ogDescription: t.metaOg,
+  })
 }
 
 export default async function PreciosPage() {
-  const locale = ((await getLocale()) as PricingLocale) || 'es'
-  const products = orderedProducts(locale)
-  const t = await getPricingCopy(locale)
+  const locale = await resolveLocale()
+  const products = orderedProducts(locale as PricingLocale)
+  const t = await getPricingCopy(locale as PricingLocale)
+
+  const path = localizedPath(locale, '/precios')
+  const pageUrl = absoluteUrl(path)
+  const breadcrumbId = `${pageUrl}#breadcrumb`
+  const jsonLd = jsonLdScript([
+    pageSchema({
+      type: 'CollectionPage',
+      path,
+      name: t.metaTitle,
+      description: t.metaDescription,
+      inLanguage: HREFLANG_MAP[locale],
+      breadcrumbId,
+    }),
+    breadcrumbSchema(
+      [
+        { name: BC_HOME[locale], url: localizedPath(locale, '/') },
+        { name: BC_PRICING[locale], url: path },
+      ],
+      breadcrumbId,
+    ),
+  ])
 
   const payload = await getPayloadClient()
   const { docs: plans } = await payload.find({
@@ -55,6 +88,7 @@ export default async function PreciosPage() {
 
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd }} />
       <section className="py-24 md:py-32">
         <div className="mf-container">
           <Reveal>

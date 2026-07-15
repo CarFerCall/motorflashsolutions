@@ -82,10 +82,89 @@ export function serviceSchema(params: {
   }
 }
 
-export function breadcrumbSchema(items: Array<{ name: string; url: string }>) {
+/**
+ * Schema genérico WebPage/AboutPage/ContactPage/CollectionPage.
+ * `type` cambia el `@type`. Todo lo demás es común: url, name, description,
+ * inLanguage, publisher, breadcrumb ref.
+ */
+export function pageSchema(params: {
+  type: 'WebPage' | 'AboutPage' | 'ContactPage' | 'CollectionPage' | 'ItemPage'
+  path: string
+  name: string
+  description?: string
+  inLanguage: string
+  breadcrumbId?: string
+  image?: string
+}) {
+  const pageUrl = absoluteUrl(params.path)
+  return {
+    '@context': 'https://schema.org',
+    '@type': params.type,
+    '@id': `${pageUrl}#webpage`,
+    url: pageUrl,
+    name: params.name,
+    description: params.description,
+    inLanguage: params.inLanguage,
+    isPartOf: { '@id': `${getSiteUrl()}/#website` },
+    publisher: { '@id': `${getSiteUrl()}/#organization` },
+    ...(params.breadcrumbId ? { breadcrumb: { '@id': params.breadcrumbId } } : {}),
+    ...(params.image ? { primaryImageOfPage: absoluteUrl(params.image) } : {}),
+  }
+}
+
+export function faqPageSchema(path: string, items: Array<{ q: string; a: string }>) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    '@id': `${absoluteUrl(path)}#faq`,
+    mainEntity: items.map((f) => ({
+      '@type': 'Question',
+      name: f.q,
+      acceptedAnswer: { '@type': 'Answer', text: f.a },
+    })),
+  }
+}
+
+/**
+ * Product schema para páginas de configurador de precio. `priceRange`
+ * evita comprometerse a un precio exacto (los planes son configurables).
+ */
+export function productSchema(params: {
+  name: string
+  description: string
+  slug: string
+  priceCurrency?: string
+  priceRange?: string
+  image?: string
+}) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    name: params.name,
+    description: params.description,
+    url: absoluteUrl(`/precios/${params.slug}`),
+    image: params.image ? absoluteUrl(params.image) : absoluteUrl('/images/logo-motorflash.png'),
+    brand: { '@id': `${getSiteUrl()}/#organization` },
+    ...(params.priceRange
+      ? {
+          offers: {
+            '@type': 'AggregateOffer',
+            priceCurrency: params.priceCurrency ?? 'EUR',
+            priceRange: params.priceRange,
+            availability: 'https://schema.org/InStock',
+            url: absoluteUrl(`/precios/${params.slug}`),
+            seller: { '@id': `${getSiteUrl()}/#organization` },
+          },
+        }
+      : {}),
+  }
+}
+
+export function breadcrumbSchema(items: Array<{ name: string; url: string }>, id?: string) {
   return {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
+    ...(id ? { '@id': id } : {}),
     itemListElement: items.map((item, idx) => ({
       '@type': 'ListItem',
       position: idx + 1,

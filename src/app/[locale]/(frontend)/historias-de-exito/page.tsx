@@ -9,22 +9,28 @@ import {
   type SuccessCase,
   type SuccessCaseLocale,
 } from '@/catalog/success-cases'
+import { breadcrumbSchema, jsonLdScript, pageSchema } from '@/lib/seo/schema'
+import { absoluteUrl } from '@/lib/seo/site-url'
+import { buildPageMetadata, HREFLANG_MAP, SEO_LOCALES, localizedPath, type SeoLocale } from '@/lib/seo/i18n-metadata'
+
+const BC_HOME: Record<SeoLocale, string> = { es: 'Inicio', ca: 'Inici', en: 'Home', zh: '首页' }
+const BC_CASES: Record<SeoLocale, string> = { es: 'Historias de éxito', ca: "Històries d'èxit", en: 'Success stories', zh: '成功案例' }
+
+function resolveLocale(): Promise<SeoLocale> {
+  return getLocale().then((l) => (SEO_LOCALES.includes(l as SeoLocale) ? (l as SeoLocale) : 'es'))
+}
 
 export async function generateMetadata() {
-  const locale = ((await getLocale()) as SuccessCaseLocale) || 'es'
-  // Para metadata usamos el catálogo estático: es síncrono y suficiente
-  // mientras el meta no se edite desde el CMS.
-  const t = getSuccessCasesPageStatic(locale)
-  return {
+  const locale = await resolveLocale()
+  const t = getSuccessCasesPageStatic(locale as SuccessCaseLocale)
+  return buildPageMetadata({
+    locale,
+    path: '/historias-de-exito',
     title: t.metaTitle,
     description: t.metaDescription,
-    alternates: { canonical: '/historias-de-exito' },
-    openGraph: {
-      title: `${t.metaTitle} — Motorflash`,
-      description: t.metaOg,
-      url: '/historias-de-exito',
-    },
-  }
+    ogTitle: `${t.metaTitle} — Motorflash`,
+    ogDescription: t.metaOg,
+  })
 }
 
 function isNumericStat(v: string) {
@@ -39,11 +45,33 @@ function parseNumericValue(v: string): { num: number; suffix: string } {
 }
 
 export default async function CasosExitoPage() {
-  const locale = ((await getLocale()) as SuccessCaseLocale) || 'es'
-  const t = await getSuccessCasesPage(locale)
+  const locale = await resolveLocale()
+  const t = await getSuccessCasesPage(locale as SuccessCaseLocale)
+
+  const path = localizedPath(locale, '/historias-de-exito')
+  const pageUrl = absoluteUrl(path)
+  const breadcrumbId = `${pageUrl}#breadcrumb`
+  const jsonLd = jsonLdScript([
+    pageSchema({
+      type: 'CollectionPage',
+      path,
+      name: t.metaTitle,
+      description: t.metaDescription,
+      inLanguage: HREFLANG_MAP[locale],
+      breadcrumbId,
+    }),
+    breadcrumbSchema(
+      [
+        { name: BC_HOME[locale], url: localizedPath(locale, '/') },
+        { name: BC_CASES[locale], url: path },
+      ],
+      breadcrumbId,
+    ),
+  ])
 
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd }} />
       {/* Hero */}
       <section className="py-20 md:py-28 relative overflow-hidden">
         <div aria-hidden className="absolute inset-0 z-0" style={{ background: 'radial-gradient(circle at 70% 100%, rgba(255, 128, 0, 0.10), transparent 60%)' }} />

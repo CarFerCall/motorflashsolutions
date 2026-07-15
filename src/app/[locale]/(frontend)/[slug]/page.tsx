@@ -1,8 +1,16 @@
 import { headers as nextHeaders } from 'next/headers'
 import { notFound } from 'next/navigation'
+import { getLocale } from 'next-intl/server'
 import { getPayloadClient } from '@/lib/payload'
 import { PuckRender } from '@/components/PuckRender'
 import { PageLivePreview } from '@/components/PageLivePreview'
+import { breadcrumbSchema, jsonLdScript, pageSchema } from '@/lib/seo/schema'
+import { absoluteUrl } from '@/lib/seo/site-url'
+import { buildPageMetadata, HREFLANG_MAP, SEO_LOCALES, localizedPath, type SeoLocale } from '@/lib/seo/i18n-metadata'
+
+function resolveLocale(): Promise<SeoLocale> {
+  return getLocale().then((l) => (SEO_LOCALES.includes(l as SeoLocale) ? (l as SeoLocale) : 'es'))
+}
 
 export const dynamic = 'force-dynamic'
 
@@ -48,13 +56,13 @@ export async function generateMetadata({ params }: RouteParams) {
   const seo = (page as any).seo ?? {}
   const title = seo.metaTitle || page.title
   const description = seo.metaDescription || undefined
-  const canonical = `/${slug}`
-  return {
+  const locale = await resolveLocale()
+  return buildPageMetadata({
+    locale,
+    path: `/${slug}`,
     title,
     description,
-    alternates: { canonical },
-    openGraph: { title, description, url: canonical },
-  }
+  })
 }
 
 // Solo permitir `?livePreview=true` a usuarios autenticados de Payload.
@@ -88,5 +96,35 @@ export default async function DynamicPage({ params, searchParams }: RouteParams)
     return <PageLivePreview initialData={page} serverURL={serverURL} />
   }
 
-  return <PuckRender data={(page as any).puckData} />
+  const locale = await resolveLocale()
+  const path = localizedPath(locale, `/${slug}`)
+  const pageUrl = absoluteUrl(path)
+  const breadcrumbId = `${pageUrl}#breadcrumb`
+  const seo = (page as any).seo ?? {}
+  const title = seo.metaTitle || page.title
+  const description = seo.metaDescription || undefined
+  const jsonLd = jsonLdScript([
+    pageSchema({
+      type: 'WebPage',
+      path,
+      name: title,
+      description,
+      inLanguage: HREFLANG_MAP[locale],
+      breadcrumbId,
+    }),
+    breadcrumbSchema(
+      [
+        { name: locale === 'ca' ? 'Inici' : locale === 'en' ? 'Home' : locale === 'zh' ? '首页' : 'Inicio', url: localizedPath(locale, '/') },
+        { name: page.title, url: path },
+      ],
+      breadcrumbId,
+    ),
+  ])
+
+  return (
+    <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd }} />
+      <PuckRender data={(page as any).puckData} />
+    </>
+  )
 }

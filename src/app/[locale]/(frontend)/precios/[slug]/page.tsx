@@ -1,36 +1,51 @@
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
+import { getLocale } from 'next-intl/server'
 import { productBySlug } from '@/catalog/products'
 import { getPayloadClient } from '@/lib/payload'
 import { PricingConfigurator, type PlanData } from '@/components/pricing/PricingConfigurator'
 import { normalizeItem, type RawPricingItem } from '@/lib/pricing'
-import { breadcrumbSchema, jsonLdScript } from '@/lib/seo/schema'
+import { breadcrumbSchema, jsonLdScript, pageSchema, productSchema } from '@/lib/seo/schema'
+import { absoluteUrl } from '@/lib/seo/site-url'
+import { buildPageMetadata, HREFLANG_MAP, SEO_LOCALES, localizedPath, type SeoLocale } from '@/lib/seo/i18n-metadata'
 
 export const dynamic = 'force-dynamic'
 
+const BC_HOME: Record<SeoLocale, string> = { es: 'Inicio', ca: 'Inici', en: 'Home', zh: '首页' }
+const BC_PRICING: Record<SeoLocale, string> = { es: 'Precios', ca: 'Preus', en: 'Pricing', zh: '价格' }
+
+function resolveLocale(): Promise<SeoLocale> {
+  return getLocale().then((l) => (SEO_LOCALES.includes(l as SeoLocale) ? (l as SeoLocale) : 'es'))
+}
+
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params
+  const locale = await resolveLocale()
   const product = productBySlug(slug)
-  const canonical = `/precios/${slug}`
+  const path = `/precios/${slug}`
   if (!product) {
-    return {
+    return buildPageMetadata({
+      locale,
+      path,
       title: 'Configurador de precios',
-      alternates: { canonical },
-    }
+    })
   }
   const title = `Configurar precio — ${product.name}`
   const description = `Configura tu plan de ${product.name} y obtén una estimación en directo. Sin permanencia.`
-  return {
+  return buildPageMetadata({
+    locale,
+    path,
     title,
     description,
-    alternates: { canonical },
-    openGraph: { title: `${title} | Motorflash`, description, url: canonical },
-  }
+    ogTitle: `${title} | Motorflash`,
+    ogDescription: description,
+  })
 }
 
 export default async function PrecioProductoPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
+  const locale = await resolveLocale()
   const product = productBySlug(slug)
   if (!product) notFound()
 
@@ -73,21 +88,56 @@ export default async function PrecioProductoPage({ params }: { params: Promise<{
     items: (plan.items ?? []).map((item: any) => normalizeItem(item as RawPricingItem)),
   }
 
-  const jsonLd = jsonLdScript(
-    breadcrumbSchema([
-      { name: 'Inicio', url: '/' },
-      { name: 'Precios', url: '/precios' },
-      { name: product.name, url: `/precios/${product.slug}` },
-    ]),
-  )
+  // Calcula priceRange a partir de base + items obligatorios más baratos/caros.
+  // Simplificamos: usamos base como floor y base + suma de opciones más caras como ceiling.
+  const optionalTotal = planData.items.reduce((acc, item) => {
+    if ('unitCents' in item && typeof item.unitCents === 'number' && item.unitCents > 0) {
+      return acc + item.unitCents
+    }
+    return acc
+  }, 0)
+  const currency = planData.currency || 'EUR'
+  const floor = Math.round(planData.basePriceCents / 100)
+  const ceiling = Math.round((planData.basePriceCents + optionalTotal) / 100)
+  const priceRange = ceiling > floor ? `€${floor}–€${ceiling}` : `€${floor}`
+
+  const path = localizedPath(locale, `/precios/${slug}`)
+  const pageUrl = absoluteUrl(path)
+  const breadcrumbId = `${pageUrl}#breadcrumb`
+
+  const jsonLd = jsonLdScript([
+    pageSchema({
+      type: 'ItemPage',
+      path,
+      name: `Configurar precio — ${product.name}`,
+      description: planData.introText || product.tagline,
+      inLanguage: HREFLANG_MAP[locale],
+      breadcrumbId,
+    }),
+    productSchema({
+      name: product.name,
+      description: planData.introText || product.tagline,
+      slug: product.slug,
+      priceCurrency: currency,
+      priceRange,
+    }),
+    breadcrumbSchema(
+      [
+        { name: BC_HOME[locale], url: localizedPath(locale, '/') },
+        { name: BC_PRICING[locale], url: localizedPath(locale, '/precios') },
+        { name: product.name, url: path },
+      ],
+      breadcrumbId,
+    ),
+  ])
 
   return (
     <section className="py-32">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd }} />
       <div className="mf-container">
         <nav aria-label="breadcrumb" className="mb-6 text-sm text-on-surface-variant">
-          <Link href="/" className="hover:text-primary">Inicio</Link> /{' '}
-          <Link href="/precios" className="hover:text-primary">Precios</Link> /{' '}
+          <Link href="/" className="hover:text-primary">{BC_HOME[locale]}</Link> /{' '}
+          <Link href="/precios" className="hover:text-primary">{BC_PRICING[locale]}</Link> /{' '}
           <span className="text-on-surface">{product.name}</span>
         </nav>
 

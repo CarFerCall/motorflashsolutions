@@ -1,31 +1,86 @@
 import Image from 'next/image'
 import { Suspense } from 'react'
-import { getLocale, getTranslations } from 'next-intl/server'
+import { getLocale } from 'next-intl/server'
 import { orderedProducts } from '@/catalog/products'
 import { ContactForm } from '@/components/ContactForm'
 import { Reveal } from '@/components/Reveal'
 import { getContactCopy, type ContactLocale } from '@/lib/contact-content'
 import { getContactFormCopy } from '@/lib/contact-form-content'
+import { breadcrumbSchema, jsonLdScript, pageSchema } from '@/lib/seo/schema'
+import { absoluteUrl } from '@/lib/seo/site-url'
+import { buildPageMetadata, HREFLANG_MAP, SEO_LOCALES, localizedPath, type SeoLocale } from '@/lib/seo/i18n-metadata'
+
+const BC_HOME: Record<SeoLocale, string> = { es: 'Inicio', ca: 'Inici', en: 'Home', zh: '首页' }
+const BC_CONTACT: Record<SeoLocale, string> = { es: 'Contacto', ca: 'Contacte', en: 'Contact', zh: '联系我们' }
+
+function resolveLocale(): Promise<SeoLocale> {
+  return getLocale().then((l) => (SEO_LOCALES.includes(l as SeoLocale) ? (l as SeoLocale) : 'es'))
+}
+
+const META: Record<SeoLocale, { title: string; description: string }> = {
+  es: {
+    title: 'Contacto · Motorflash Ibérica',
+    description: 'Contacta con Motorflash Ibérica. Sede en Madrid. Teléfono, email y formulario para solicitar demo, presupuesto o soporte. Respuesta en 24 h laborables.',
+  },
+  ca: {
+    title: 'Contacte · Motorflash Ibérica',
+    description: 'Contacta amb Motorflash Ibérica. Seu a Madrid. Telèfon, correu i formulari per sol·licitar demo, pressupost o suport. Resposta en 24 h laborables.',
+  },
+  en: {
+    title: 'Contact · Motorflash Ibérica',
+    description: 'Contact Motorflash Ibérica. HQ in Madrid. Phone, email and form to request a demo, quote or support. Response within 24 business hours.',
+  },
+  zh: {
+    title: '联系我们 · Motorflash Ibérica',
+    description: '联系 Motorflash Ibérica。马德里总部。电话、邮箱和表单可用于申请演示、报价或支持。工作时间 24 小时内回复。',
+  },
+}
 
 export async function generateMetadata() {
-  const t = await getTranslations('Pages')
-  return {
-    title: t('contact'),
-    alternates: { canonical: '/contacto' },
-  }
+  const locale = await resolveLocale()
+  const meta = META[locale]
+  return buildPageMetadata({
+    locale,
+    path: '/contacto',
+    title: meta.title,
+    description: meta.description,
+  })
 }
 
 export default async function ContactoPage() {
-  const locale = ((await getLocale()) as ContactLocale) || 'es'
-  const products = orderedProducts(locale).map((p) => ({ slug: p.slug, name: p.name }))
-  const t = await getContactCopy(locale)
-  const formCopy = await getContactFormCopy(locale)
+  const locale = await resolveLocale()
+  const products = orderedProducts(locale as ContactLocale).map((p) => ({ slug: p.slug, name: p.name }))
+  const t = await getContactCopy(locale as ContactLocale)
+  const formCopy = await getContactFormCopy(locale as ContactLocale)
   const loadingLabel = locale === 'en' ? 'Loading…' : locale === 'zh' ? '加载中…' : locale === 'ca' ? 'Carregant…' : 'Cargando…'
   const phoneHref = `tel:${t.phoneNumber.replace(/\s/g, '')}`
   const emailHref = `mailto:${t.emailAddress}`
 
+  const path = localizedPath(locale, '/contacto')
+  const pageUrl = absoluteUrl(path)
+  const breadcrumbId = `${pageUrl}#breadcrumb`
+  const meta = META[locale]
+  const jsonLd = jsonLdScript([
+    pageSchema({
+      type: 'ContactPage',
+      path,
+      name: meta.title,
+      description: meta.description,
+      inLanguage: HREFLANG_MAP[locale],
+      breadcrumbId,
+    }),
+    breadcrumbSchema(
+      [
+        { name: BC_HOME[locale], url: localizedPath(locale, '/') },
+        { name: BC_CONTACT[locale], url: path },
+      ],
+      breadcrumbId,
+    ),
+  ])
+
   return (
     <section className="py-32">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd }} />
       <div className="mf-container">
         <Reveal>
           <div className="rounded-[3rem] overflow-hidden shadow-2xl border border-outline-variant bg-surface-container">

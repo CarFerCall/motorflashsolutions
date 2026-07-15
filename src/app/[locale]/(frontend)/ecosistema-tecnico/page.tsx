@@ -7,30 +7,60 @@ import {
   getEcosystemCopyStatic,
   type EcosystemLocale,
 } from '@/lib/ecosystem-content'
+import { breadcrumbSchema, jsonLdScript, pageSchema } from '@/lib/seo/schema'
+import { absoluteUrl } from '@/lib/seo/site-url'
+import { buildPageMetadata, HREFLANG_MAP, SEO_LOCALES, localizedPath, type SeoLocale } from '@/lib/seo/i18n-metadata'
+
+const BC_HOME: Record<SeoLocale, string> = { es: 'Inicio', ca: 'Inici', en: 'Home', zh: '首页' }
+const BC_ECO: Record<SeoLocale, string> = { es: 'Ecosistema técnico', ca: 'Ecosistema tècnic', en: 'Tech ecosystem', zh: '技术生态' }
+
+function resolveLocale(): Promise<SeoLocale> {
+  return getLocale().then((l) => (SEO_LOCALES.includes(l as SeoLocale) ? (l as SeoLocale) : 'es'))
+}
 
 export async function generateMetadata() {
-  const locale = ((await getLocale()) as EcosystemLocale) || 'es'
-  const t = getEcosystemCopyStatic(locale)
-  return {
+  const locale = await resolveLocale()
+  const t = getEcosystemCopyStatic(locale as EcosystemLocale)
+  return buildPageMetadata({
+    locale,
+    path: '/ecosistema-tecnico',
     title: t.metaTitle,
     description: t.metaDescription,
-    alternates: { canonical: '/ecosistema-tecnico' },
-    openGraph: {
-      title: `${t.metaTitle} — Motorflash`,
-      description: t.metaOg,
-      url: '/ecosistema-tecnico',
-    },
-  }
+    ogTitle: `${t.metaTitle} — Motorflash`,
+    ogDescription: t.metaOg,
+  })
 }
 
 export default async function EcosistemaTecnicoPage() {
-  const locale = ((await getLocale()) as EcosystemLocale) || 'es'
-  const t = await getEcosystemCopy(locale)
+  const locale = await resolveLocale()
+  const t = await getEcosystemCopy(locale as EcosystemLocale)
   const HUBS: EcosystemHubType[] = t.hubs
   const TOTAL_INTEGRATIONS = HUBS.reduce((acc, h) => acc + h.integrations.length, 0)
 
+  const path = localizedPath(locale, '/ecosistema-tecnico')
+  const pageUrl = absoluteUrl(path)
+  const breadcrumbId = `${pageUrl}#breadcrumb`
+  const jsonLd = jsonLdScript([
+    pageSchema({
+      type: 'WebPage',
+      path,
+      name: t.metaTitle,
+      description: t.metaDescription,
+      inLanguage: HREFLANG_MAP[locale],
+      breadcrumbId,
+    }),
+    breadcrumbSchema(
+      [
+        { name: BC_HOME[locale], url: localizedPath(locale, '/') },
+        { name: BC_ECO[locale], url: path },
+      ],
+      breadcrumbId,
+    ),
+  ])
+
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd }} />
       {/* Hero */}
       <section className="py-16 md:py-32 relative overflow-hidden">
         <div aria-hidden className="absolute inset-0 z-0" style={{ background: 'radial-gradient(circle at 50% 100%, rgba(255, 128, 0, 0.10), transparent 60%)' }} />

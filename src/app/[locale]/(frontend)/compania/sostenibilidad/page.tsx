@@ -1,8 +1,19 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { getLocale } from 'next-intl/server'
+import { breadcrumbSchema, jsonLdScript, pageSchema } from '@/lib/seo/schema'
+import { absoluteUrl } from '@/lib/seo/site-url'
+import { buildPageMetadata, HREFLANG_MAP, SEO_LOCALES, localizedPath, type SeoLocale } from '@/lib/seo/i18n-metadata'
 
 type Locale = 'es' | 'ca' | 'en' | 'zh'
+
+const BC_HOME: Record<SeoLocale, string> = { es: 'Inicio', ca: 'Inici', en: 'Home', zh: '首页' }
+const BC_COMPANY: Record<SeoLocale, string> = { es: 'La compañía', ca: 'La companyia', en: 'The company', zh: '公司' }
+const BC_SUS: Record<SeoLocale, string> = { es: 'Sostenibilidad', ca: 'Sostenibilitat', en: 'Sustainability', zh: '可持续发展' }
+
+function resolveSeoLocale(l: Locale): SeoLocale {
+  return SEO_LOCALES.includes(l as SeoLocale) ? l : 'es'
+}
 
 const PDF_HREF = '/documents/informe-sostenibilidad-2025.pdf'
 
@@ -505,20 +516,48 @@ const COPY: Record<Locale, SustainabilityCopy> = {
 
 export async function generateMetadata(): Promise<Metadata> {
   const locale = ((await getLocale()) as Locale) || 'es'
+  const seoLocale = resolveSeoLocale(locale)
   const t = (COPY[locale] ?? COPY.es).meta
-  return {
+  return buildPageMetadata({
+    locale: seoLocale,
+    path: '/compania/sostenibilidad',
     title: t.title,
     description: t.description,
-    alternates: { canonical: '/compania/sostenibilidad' },
-  }
+    ogTitle: `${t.title} — Motorflash`,
+    ogDescription: t.description,
+  })
 }
 
 export default async function SostenibilidadPage() {
   const locale = ((await getLocale()) as Locale) || 'es'
+  const seoLocale = resolveSeoLocale(locale)
   const t = COPY[locale] ?? COPY.es
+
+  const path = localizedPath(seoLocale, '/compania/sostenibilidad')
+  const pageUrl = absoluteUrl(path)
+  const breadcrumbId = `${pageUrl}#breadcrumb`
+  const jsonLd = jsonLdScript([
+    pageSchema({
+      type: 'AboutPage',
+      path,
+      name: t.meta.title,
+      description: t.meta.description,
+      inLanguage: HREFLANG_MAP[seoLocale],
+      breadcrumbId,
+    }),
+    breadcrumbSchema(
+      [
+        { name: BC_HOME[seoLocale], url: localizedPath(seoLocale, '/') },
+        { name: BC_COMPANY[seoLocale], url: localizedPath(seoLocale, '/compania') },
+        { name: BC_SUS[seoLocale], url: path },
+      ],
+      breadcrumbId,
+    ),
+  ])
 
   return (
     <div className="font-display text-on-surface">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd }} />
       {/* Hero */}
       <section className="relative bg-white overflow-hidden py-20 md:py-24">
         <div aria-hidden className="absolute inset-0 -z-10" style={{ background: 'radial-gradient(ellipse at 50% 20%, rgba(255,128,0,0.08), transparent 55%)' }} />

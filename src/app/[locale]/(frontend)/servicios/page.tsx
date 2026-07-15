@@ -6,25 +6,70 @@ import {
   getServicesListingCopyStatic,
   type ServicesListingLocale,
 } from '@/lib/services-listing-content'
+import { breadcrumbSchema, jsonLdScript, pageSchema } from '@/lib/seo/schema'
+import { absoluteUrl } from '@/lib/seo/site-url'
+import { buildPageMetadata, HREFLANG_MAP, SEO_LOCALES, localizedPath, type SeoLocale } from '@/lib/seo/i18n-metadata'
+
+const BREADCRUMB_HOME: Record<SeoLocale, string> = { es: 'Inicio', ca: 'Inici', en: 'Home', zh: '首页' }
+const BREADCRUMB_SERVICES: Record<SeoLocale, string> = { es: 'Servicios', ca: 'Serveis', en: 'Services', zh: '服务' }
+
+function resolveLocale(): Promise<SeoLocale> {
+  return getLocale().then((l) => (SEO_LOCALES.includes(l as SeoLocale) ? (l as SeoLocale) : 'es'))
+}
 
 export async function generateMetadata() {
-  const locale = ((await getLocale()) as ServicesListingLocale) || 'es'
-  const t = getServicesListingCopyStatic(locale)
-  return {
+  const locale = await resolveLocale()
+  const t = getServicesListingCopyStatic(locale as ServicesListingLocale)
+  return buildPageMetadata({
+    locale,
+    path: '/servicios',
     title: t.metaTitle,
     description: t.metaDescription,
-    alternates: { canonical: '/servicios' },
-    openGraph: { title: `${t.metaTitle} — Motorflash`, description: t.metaOg, url: '/servicios' },
-  }
+    ogTitle: `${t.metaTitle} — Motorflash`,
+    ogDescription: t.metaOg,
+  })
 }
 
 export default async function ServiciosPage() {
-  const locale = ((await getLocale()) as ServicesListingLocale) || 'es'
-  const products = orderedProducts(locale)
-  const t = await getServicesListingCopy(locale)
+  const locale = await resolveLocale()
+  const products = orderedProducts(locale as ServicesListingLocale)
+  const t = await getServicesListingCopy(locale as ServicesListingLocale)
+
+  const path = localizedPath(locale, '/servicios')
+  const pageUrl = absoluteUrl(path)
+  const breadcrumbId = `${pageUrl}#breadcrumb`
+
+  const jsonLd = jsonLdScript([
+    pageSchema({
+      type: 'CollectionPage',
+      path,
+      name: t.metaTitle,
+      description: t.metaDescription,
+      inLanguage: HREFLANG_MAP[locale],
+      breadcrumbId,
+    }),
+    breadcrumbSchema(
+      [
+        { name: BREADCRUMB_HOME[locale], url: localizedPath(locale, '/') },
+        { name: BREADCRUMB_SERVICES[locale], url: path },
+      ],
+      breadcrumbId,
+    ),
+    {
+      '@context': 'https://schema.org',
+      '@type': 'ItemList',
+      itemListElement: products.map((p, idx) => ({
+        '@type': 'ListItem',
+        position: idx + 1,
+        url: absoluteUrl(localizedPath(locale, `/servicios/${p.slug}`)),
+        name: p.name,
+      })),
+    },
+  ])
 
   return (
     <section className="py-32">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd }} />
       <div className="mf-container">
         <div className="text-center mb-12">
           <span className="mf-eyebrow">{t.eyebrow}</span>

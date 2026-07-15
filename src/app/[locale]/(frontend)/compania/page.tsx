@@ -4,25 +4,54 @@ import { getLocale } from 'next-intl/server'
 import { Reveal } from '@/components/Reveal'
 import { HistoryTimeline } from '@/components/HistoryTimeline'
 import { getCompanyCopy, getCompanyCopyStatic, type CompanyLocale } from '@/lib/company-content'
+import { breadcrumbSchema, jsonLdScript, pageSchema } from '@/lib/seo/schema'
+import { absoluteUrl } from '@/lib/seo/site-url'
+import { buildPageMetadata, HREFLANG_MAP, SEO_LOCALES, localizedPath, type SeoLocale } from '@/lib/seo/i18n-metadata'
+
+const BC_HOME: Record<SeoLocale, string> = { es: 'Inicio', ca: 'Inici', en: 'Home', zh: '首页' }
+const BC_COMPANY: Record<SeoLocale, string> = { es: 'La compañía', ca: 'La companyia', en: 'The company', zh: '公司' }
+
+function resolveLocale(): Promise<SeoLocale> {
+  return getLocale().then((l) => (SEO_LOCALES.includes(l as SeoLocale) ? (l as SeoLocale) : 'es'))
+}
 
 export async function generateMetadata() {
-  const locale = ((await getLocale()) as CompanyLocale) || 'es'
-  const t = getCompanyCopyStatic(locale)
-  return {
+  const locale = await resolveLocale()
+  const t = getCompanyCopyStatic(locale as CompanyLocale)
+  return buildPageMetadata({
+    locale,
+    path: '/compania',
     title: t.metaTitle,
     description: t.metaDescription,
-    alternates: { canonical: '/compania' },
-    openGraph: {
-      title: `${t.metaTitle} — Motorflash`,
-      description: t.ogDescription,
-      url: '/compania',
-    },
-  }
+    ogTitle: `${t.metaTitle} — Motorflash`,
+    ogDescription: t.ogDescription,
+  })
 }
 
 export default async function CompaniaPage() {
-  const locale = ((await getLocale()) as CompanyLocale) || 'es'
-  const t = await getCompanyCopy(locale)
+  const locale = await resolveLocale()
+  const t = await getCompanyCopy(locale as CompanyLocale)
+
+  const path = localizedPath(locale, '/compania')
+  const pageUrl = absoluteUrl(path)
+  const breadcrumbId = `${pageUrl}#breadcrumb`
+  const jsonLd = jsonLdScript([
+    pageSchema({
+      type: 'AboutPage',
+      path,
+      name: t.metaTitle,
+      description: t.metaDescription,
+      inLanguage: HREFLANG_MAP[locale],
+      breadcrumbId,
+    }),
+    breadcrumbSchema(
+      [
+        { name: BC_HOME[locale], url: localizedPath(locale, '/') },
+        { name: BC_COMPANY[locale], url: path },
+      ],
+      breadcrumbId,
+    ),
+  ])
 
   const kpis = [
     { v: t.kpiYearsValue, l: t.kpiYears },
@@ -33,6 +62,7 @@ export default async function CompaniaPage() {
 
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd }} />
       {/* Hero */}
       <section className="py-32">
         <div className="mf-container">

@@ -8,8 +8,9 @@ import { Navbar } from '@/components/Navbar'
 import { Footer } from '@/components/Footer'
 import { ElevenLabsWidget } from '@/components/elevenlabs/ElevenLabsWidget'
 import { routing } from '@/i18n/routing'
-import { getSiteUrl } from '@/lib/seo/site-url'
+import { absoluteUrl, getSiteUrl } from '@/lib/seo/site-url'
 import { organizationSchema, websiteSchema, jsonLdScript } from '@/lib/seo/schema'
+import { OG_LOCALE_MAP, SEO_LOCALES } from '@/lib/seo/i18n-metadata'
 
 const SITE_NAME = 'Motorflash'
 const DEFAULT_TITLE = 'Motorflash | Solución 360 para Automoción'
@@ -28,15 +29,18 @@ export const metadata: Metadata = {
   alternates: {
     canonical: '/',
     languages: {
-      es: '/',
-      en: '/en',
-      zh: '/zh',
+      'es-ES': absoluteUrl('/'),
+      'ca-ES': absoluteUrl('/ca'),
+      en: absoluteUrl('/en'),
+      'zh-CN': absoluteUrl('/zh'),
+      'x-default': absoluteUrl('/'),
     },
   },
   openGraph: {
     type: 'website',
     siteName: SITE_NAME,
-    locale: 'es_ES',
+    locale: OG_LOCALE_MAP.es,
+    alternateLocale: SEO_LOCALES.filter((l) => l !== 'es').map((l) => OG_LOCALE_MAP[l]),
     url: '/',
     title: DEFAULT_TITLE,
     description: DEFAULT_DESCRIPTION,
