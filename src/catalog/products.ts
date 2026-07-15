@@ -21,7 +21,7 @@ export const products: Product[] = [
   {
     slug: 'dealer',
     name: 'Dealer + Multipublicación',
-    menuLabel: 'Dealer + Multipublicación',
+    menuLabel: 'Dealer + Multipub.',
     menuOrder: 10,
     tagline: 'Gestión inteligente del VO y multipublicación en +16 portales.',
     heroTitle: 'Tu stock siempre bajo control, publicado en todos los portales',
@@ -121,7 +121,7 @@ export const products: Product[] = [
   {
     slug: 'lead-factory',
     name: 'Lead Motorflash.com',
-    menuLabel: 'Lead Motorflash.com',
+    menuLabel: 'Lead Motorflash',
     menuOrder: 110,
     tagline: 'Captación de leads con intención de compra real.',
     heroTitle: 'Leads Motorflash.com: dos modalidades, una promesa',

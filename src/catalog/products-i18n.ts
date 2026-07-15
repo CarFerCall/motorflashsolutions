@@ -17,7 +17,7 @@ export const productI18n: Record<ProductLocale, Record<string, ProductTranslatio
   ca: {
     dealer: {
       name: 'Dealer + Multipublicació',
-      menuLabel: 'Dealer + Multipublicació',
+      menuLabel: 'Dealer + Multipub.',
       tagline: "Gestió intel·ligent del VO i multipublicació a +16 portals.",
       heroTitle: 'El teu estoc sempre sota control, publicat a tots els portals',
       intro: "Dealer + Multipublicació unifica la gestió intel·ligent del VO i la publicació multi-portal en una sola plataforma. Crea, revisa i publica el teu estoc des d'un únic entorn amb un 99% d'integració API amb els principals portals: Coches.net, AutoScout24, Wallapop, Autocasión, Motorflash i molts més. Controla la qualitat, analitza preus, exporta a tots els portals amb un clic i guanya temps per al que importa: vendre.",
@@ -80,7 +80,7 @@ export const productI18n: Record<ProductLocale, Record<string, ProductTranslatio
     },
     'lead-factory': {
       name: 'Lead Motorflash.com',
-      menuLabel: 'Lead Motorflash.com',
+      menuLabel: 'Lead Motorflash',
       tagline: "Captació de leads amb intenció de compra real.",
       heroTitle: 'Leads Motorflash.com: dues modalitats, una promesa',
       intro: "Captació de leads amb intenció de compra real, a partir del trànsit orgànic de Motorflash.com i de la major base d'estoc i inventari del mercat. Tria entre leads qualificats per sistema d'scoring o prospects sense qualificar per a la teva qualificació interna. Sense cost d'inversió publicitària: només pagues pel que reps.",
@@ -110,7 +110,7 @@ export const productI18n: Record<ProductLocale, Record<string, ProductTranslatio
   en: {
     dealer: {
       name: 'Dealer + Multi-publishing',
-      menuLabel: 'Dealer + Multi-publishing',
+      menuLabel: 'Dealer + Multi-pub.',
       tagline: 'Smart used-vehicle management and multi-publishing on 16+ portals.',
       heroTitle: 'Your stock always under control, published on every portal',
       intro: "Dealer + Multi-publishing unifies smart used-vehicle management and multi-portal publishing in a single platform. Create, review and publish your stock from one environment with 99% API integration on the leading portals: Coches.net, AutoScout24, Wallapop, Autocasión, Motorflash and many more. Keep quality under control, analyse prices, export to every portal with one click and gain time for what matters: selling.",
@@ -173,7 +173,7 @@ export const productI18n: Record<ProductLocale, Record<string, ProductTranslatio
     },
     'lead-factory': {
       name: 'Lead Motorflash.com',
-      menuLabel: 'Lead Motorflash.com',
+      menuLabel: 'Lead Motorflash',
       tagline: 'Lead generation with real purchase intent.',
       heroTitle: 'Motorflash.com Leads: two modes, one promise',
       intro: "Lead generation with real purchase intent, powered by Motorflash.com organic traffic and the largest stock and inventory base in the market. Choose between leads qualified by our scoring system or unqualified prospects for your internal qualification. No advertising investment: you only pay for what you receive.",
@@ -203,7 +203,7 @@ export const productI18n: Record<ProductLocale, Record<string, ProductTranslatio
   zh: {
     dealer: {
       name: 'Dealer + 多平台发布',
-      menuLabel: 'Dealer + 多平台发布',
+      menuLabel: 'Dealer + 多平台',
       tagline: '智能二手车管理与 16+ 门户多平台发布。',
       heroTitle: '库存始终掌控,并已发布至所有门户',
       intro: 'Dealer + 多平台发布 将二手车智能管理与多门户发布集中在一个平台。在统一环境中创建、审核与发布库存,与主要门户达成 99% API 集成:Coches.net、AutoScout24、Wallapop、Autocasión、Motorflash 等。掌控质量、分析价格、一键发布至所有门户,把时间留给真正重要的事:卖车。',
@@ -266,7 +266,7 @@ export const productI18n: Record<ProductLocale, Record<string, ProductTranslatio
     },
     'lead-factory': {
       name: 'Lead Motorflash.com',
-      menuLabel: 'Lead Motorflash.com',
+      menuLabel: 'Lead Motorflash',
       tagline: '真实购买意向的潜客获取。',
       heroTitle: 'Lead Motorflash.com:两种模式,一个承诺',
       intro: '基于 Motorflash.com 的自然流量和市场上最大的库存基础,获取具有真实购买意向的潜客。可选择由评分系统筛选的合格潜客,或由您内部筛选的未合格潜客。无广告投入:您只为交付付费。',
