@@ -833,7 +833,7 @@ try {
               label: 'Servicios',
               kind: 'dropdown',
               children: [
-                { label: 'Dealer + Multipublicación', url: '/servicios/dealer', icon: 'hub' },
+                { label: 'Dealer + Multipublicación', url: '/servicios/dealer', icon: 'storefront' },
                 { label: 'CRM4YOU', url: '/servicios/crm4you', icon: 'hub' },
                 { label: 'Contact Center', url: '/servicios/contact-center', icon: 'support_agent' },
                 { label: 'Photocall IA', url: '/servicios/spyne', icon: 'photo_camera' },
@@ -1437,6 +1437,32 @@ try {
     }
   } catch (err) {
     console.warn('[sync-schema] ✗ unificación Dealer + Multi:', err?.message || err)
+  }
+
+  // -------------------------------------------------------------------
+  // Migración icono Dealer en el menú Servicios: 'hub' colisionaba con
+  // CRM4YOU. Cambiar a 'storefront'. Idempotente.
+  // -------------------------------------------------------------------
+  try {
+    const menu = await payload.findGlobal({ slug: 'main-menu' }).catch(() => null)
+    const items = menu?.items ?? []
+    const serviciosIdx = items.findIndex((it) => it?.label === 'Servicios')
+    if (serviciosIdx >= 0) {
+      const children = items[serviciosIdx].children ?? []
+      const dealerIdx = children.findIndex((c) => c?.url === '/servicios/dealer')
+      if (dealerIdx >= 0 && children[dealerIdx].icon === 'hub') {
+        children[dealerIdx] = { ...children[dealerIdx], icon: 'storefront' }
+        items[serviciosIdx].children = children
+        try {
+          await payload.updateGlobal({ slug: 'main-menu', data: { items } })
+          console.log('[sync-schema] ↻ Dealer: icono del menú migrado hub → storefront')
+        } catch (err) {
+          console.warn('[sync-schema] ✗ migrar icono Dealer:', err?.message || err)
+        }
+      }
+    }
+  } catch (err) {
+    console.warn('[sync-schema] ✗ menú Dealer icon:', err?.message || err)
   }
 
   // -------------------------------------------------------------------
