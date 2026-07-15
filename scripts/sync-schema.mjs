@@ -1899,14 +1899,16 @@ try {
     // Migración v1 del ecosystem-page: los textos técnicos originales
     // se reescriben a algo entendible por cualquiera ("centralita",
     // "áreas conectadas", etc.). Idempotente: solo dispara si el
-    // eyebrow guardado coincide con el valor antiguo por locale.
-    const OLD_ECOSYSTEM_EYEBROW = {
-      es: 'Ecosistema técnico',
-      ca: 'Ecosistema tècnic',
-      en: 'Tech ecosystem',
-      zh: '技术生态',
+    // eyebrow guardado NO coincide con el nuevo valor por locale —
+    // así aplica también si en BD había otra variante o estaba vacío.
+    // Cuando ya está migrado, no hace nada.
+    const NEW_ECOSYSTEM_EYEBROW = {
+      es: 'Cómo funcionamos por dentro',
+      ca: 'Com funcionem per dins',
+      en: 'How we work under the hood',
+      zh: '我们的内在运作',
     }
-    const toPayloadShape = (copy) => ({
+    const toPayloadShapeMigration = (copy) => ({
       ...copy,
       hubs: (copy.hubs || []).map((h) => ({
         ...h,
@@ -1916,11 +1918,11 @@ try {
     for (const locale of ['es', 'ca', 'en', 'zh']) {
       try {
         const cur = await payload.findGlobal({ slug: 'ecosystem-page', locale, depth: 0 })
-        if (cur?.eyebrow === OLD_ECOSYSTEM_EYEBROW[locale]) {
+        if (cur?.eyebrow !== NEW_ECOSYSTEM_EYEBROW[locale]) {
           await payload.updateGlobal({
             slug: 'ecosystem-page',
             locale,
-            data: toPayloadShape(STATIC_ECOSYSTEM[locale]),
+            data: toPayloadShapeMigration(STATIC_ECOSYSTEM[locale]),
           })
           console.log(`[sync-schema] ↻ ecosystem ${locale}: reescrito a copy accesible`)
         }
