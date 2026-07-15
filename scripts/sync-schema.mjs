@@ -848,7 +848,14 @@ try {
             { label: 'Ecosistema técnico', kind: 'link', url: '/ecosistema-tecnico' },
             { label: 'Precios', kind: 'link', url: '/precios' },
             { label: 'Casos de éxito', kind: 'link', url: '/historias-de-exito' },
-            { label: 'Compañía', kind: 'link', url: '/compania' },
+            {
+              label: 'Compañía',
+              kind: 'dropdown',
+              children: [
+                { label: 'La compañía', url: '/compania', icon: 'business' },
+                { label: 'Sostenibilidad', url: '/compania/sostenibilidad', icon: 'eco' },
+              ],
+            },
           ],
           cta: { label: 'Contacto', url: '/contacto' },
         },
@@ -1494,6 +1501,63 @@ try {
     }
   } catch (err) {
     console.warn('[sync-schema] ✗ menú Motor-Chat:', err?.message || err)
+  }
+
+  // -------------------------------------------------------------------
+  // Menú Compañía → dropdown con 'La compañía' + 'Sostenibilidad'.
+  // Antes era un `link` plano a /compania. Idempotente:
+  //  - si sigue siendo link, se transforma en dropdown con los 2 hijos
+  //  - si ya es dropdown pero falta Sostenibilidad, se añade
+  // -------------------------------------------------------------------
+  try {
+    const menu = await payload.findGlobal({ slug: 'main-menu' }).catch(() => null)
+    const items = Array.isArray(menu?.items) ? [...menu.items] : []
+    const idx = items.findIndex(
+      (it) => it?.label === 'Compañía' || it?.url === '/compania',
+    )
+    if (idx >= 0) {
+      const cur = items[idx]
+      const isDropdown = cur?.kind === 'dropdown'
+      const existingChildren = Array.isArray(cur?.children) ? [...cur.children] : []
+      const hasSost = existingChildren.some((c) => c?.url === '/compania/sostenibilidad')
+      const hasLaComp = existingChildren.some((c) => c?.url === '/compania')
+
+      let changed = false
+      let newChildren = existingChildren
+      if (!isDropdown) {
+        newChildren = [
+          { label: 'La compañía', url: '/compania', icon: 'business' },
+          { label: 'Sostenibilidad', url: '/compania/sostenibilidad', icon: 'eco' },
+        ]
+        changed = true
+      } else {
+        if (!hasLaComp) {
+          newChildren = [{ label: 'La compañía', url: '/compania', icon: 'business' }, ...newChildren]
+          changed = true
+        }
+        if (!hasSost) {
+          newChildren = [...newChildren, { label: 'Sostenibilidad', url: '/compania/sostenibilidad', icon: 'eco' }]
+          changed = true
+        }
+      }
+
+      if (changed) {
+        items[idx] = {
+          ...cur,
+          kind: 'dropdown',
+          url: undefined,
+          children: newChildren,
+        }
+        try {
+          await payload.updateGlobal({ slug: 'main-menu', data: { items } })
+          console.log('[sync-schema] ↻ menú Compañía: dropdown con Sostenibilidad')
+        } catch (err) {
+          console.warn('[sync-schema] ✗ actualizar menú Compañía:', err?.message || err)
+        }
+      }
+    }
+  } catch (err) {
+    console.warn('[sync-schema] ✗ menú Compañía Sostenibilidad:', err?.message || err)
   }
 
   // -------------------------------------------------------------------
