@@ -55,14 +55,6 @@ const GHG_ROWS: { label: string; market: string; location: string }[] = [
   { label: 'Alcance 2 — electricidad (sede)', market: '0,01', location: '2,30' },
 ]
 
-const WASTE_ROWS: { label: string; kg: string; pct: string }[] = [
-  { label: 'Orgánico', kg: '240,85 kg', pct: '39,1 %' },
-  { label: 'Envases', kg: '193,36 kg', pct: '31,4 %' },
-  { label: 'Papel y cartón', kg: '178,10 kg', pct: '28,9 %' },
-  { label: 'Vidrio', kg: '3,66 kg', pct: '0,6 %' },
-  { label: 'Residuos peligrosos', kg: '0 kg', pct: '—' },
-]
-
 const PEOPLE_CARDS = [
   {
     icon: 'badge',
@@ -281,46 +273,6 @@ export default function SostenibilidadPage() {
             </div>
           </div>
 
-          {/* Waste table */}
-          <div className="rounded-2xl bg-white border border-outline-variant p-6">
-            <h3 className="flex items-center gap-2 text-sm font-bold uppercase tracking-widest text-on-surface-variant mb-4">
-              <span className="material-symbols-outlined text-primary" style={{ fontSize: 18 }}>recycling</span>
-              Gestión de residuos
-            </h3>
-            <div className="overflow-x-auto">
-              <table className="w-full min-w-[420px] text-sm">
-                <caption className="caption-bottom text-xs text-on-surface-variant text-left pt-3">
-                  Ejercicio 2025 · residuos registrados por pesaje diario en sede (kg)
-                </caption>
-                <thead>
-                  <tr className="text-left border-b border-outline-variant">
-                    <th className="py-2 font-semibold text-on-surface-variant">Fracción</th>
-                    <th className="py-2 font-semibold text-on-surface-variant text-right">2025</th>
-                    <th className="py-2 font-semibold text-on-surface-variant text-right">% del total</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {WASTE_ROWS.map((r) => (
-                    <tr key={r.label} className="border-b border-outline-variant/50">
-                      <td className="py-2 pr-2">{r.label}</td>
-                      <td className="py-2 text-right font-semibold whitespace-nowrap">{r.kg}</td>
-                      <td className="py-2 text-right font-semibold whitespace-nowrap">{r.pct}</td>
-                    </tr>
-                  ))}
-                </tbody>
-                <tfoot>
-                  <tr className="border-t border-outline-variant">
-                    <td className="py-2 pr-2 font-bold">Total no peligrosos</td>
-                    <td className="py-2 text-right font-bold text-primary whitespace-nowrap">615,97 kg</td>
-                    <td className="py-2 text-right font-bold text-primary whitespace-nowrap">100 %</td>
-                  </tr>
-                </tfoot>
-              </table>
-            </div>
-            <p className="text-xs text-on-surface-variant mt-3 italic">
-              Las fracciones recuperables (envases, papel/cartón y vidrio) suponen el 60,9 % del total. No se generan residuos peligrosos en la actividad.
-            </p>
-          </div>
         </div>
       </section>
 
