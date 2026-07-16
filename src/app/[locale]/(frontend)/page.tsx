@@ -5,7 +5,7 @@ import { orderedProducts } from '@/catalog/products'
 import { Reveal } from '@/components/Reveal'
 import { AnimatedCounter } from '@/components/AnimatedCounter'
 import { ProductCarousel, type ProductCarouselLabels } from '@/components/ProductCarousel'
-import { ProductsTimeline } from '@/components/ProductsTimeline'
+import { EcosystemZones } from '@/components/EcosystemZones'
 import { HomeSectionNav } from '@/components/HomeSectionNav'
 import { getHomeCopy, type HomeLocale } from '@/lib/home-content'
 import { getProductUiCopy } from '@/lib/product-ui-content'
@@ -58,17 +58,10 @@ export default async function HomePage() {
 
       <HomeSectionNav sections={t.navSections} />
 
-      {/* Línea de tiempo de productos */}
-      <section id="catalogo-timeline" className="py-16 bg-white overflow-hidden">
+      {/* Catálogo por zonas del ecosistema */}
+      <section id="catalogo-timeline" className="py-16 md:py-24 bg-white overflow-hidden">
         <Reveal>
-          <div className="mf-container mb-10">
-            <div className="max-w-3xl mx-auto text-center">
-              <span className="mf-eyebrow">{t.timelineEyebrow}</span>
-              <h2 className="text-2xl md:text-3xl font-semibold mb-2">{t.timelineTitle}</h2>
-              <p className="text-on-surface-variant">{t.timelineLead}</p>
-            </div>
-          </div>
-          <ProductsTimeline />
+          <EcosystemZones />
         </Reveal>
       </section>
 
