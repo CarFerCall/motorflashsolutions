@@ -7,6 +7,7 @@ import './styles.css'
 import { Navbar } from '@/components/Navbar'
 import { Footer } from '@/components/Footer'
 import { ElevenLabsWidget } from '@/components/elevenlabs/ElevenLabsWidget'
+import { WhatsAppButton } from '@/components/WhatsAppButton'
 import { routing } from '@/i18n/routing'
 import { absoluteUrl, getSiteUrl } from '@/lib/seo/site-url'
 import { organizationSchema, websiteSchema, jsonLdScript } from '@/lib/seo/schema'
@@ -122,6 +123,7 @@ export default async function FrontendLayout({
           {await Navbar()}
           <main className="pt-20">{children}</main>
           {await Footer()}
+          <WhatsAppButton />
           <ElevenLabsWidget />
         </NextIntlClientProvider>
       </body>
