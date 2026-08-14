@@ -131,7 +131,127 @@ npx vercel@latest ls 2>&1 | head -10
 
 ---
 
+## Estado actual (agosto 2026)
+
+### 🔴 Blocker en producción
+
+- **BD Prisma Postgres suspendida** (integración Vercel Marketplace
+  `motorflash-db`, estado `● Suspended`, causa `planLimitReached`).
+  Consecuencias:
+  - `/admin` devuelve HTTP 500.
+  - `getMainMenu()` cae al fallback vacío → la barra superior aparece
+    sin ítems.
+  - Cualquier página que dependa de Payload (globals, pages, precios)
+    se sirve sin contenido de BD.
+  - El sitio SIGUE cargando gracias a fallbacks estáticos; sólo pierde
+    lo que vive en Payload.
+- **Cómo desbloquear**: Vercel Dashboard →
+  `carlosfernandez-3523s-projects/motorflashsolutions` → Storage →
+  `motorflash-db` → Upgrade plan (Free → Pro). O migrar a Neon:
+  `pg_dump` + swap del `POSTGRES_URL` en Vercel envs (~15-30 min, sin
+  cambios de código).
+- El CLI `npx vercel@latest integration ls` muestra el estado en vivo.
+- No hace falta redeploy tras levantar la restricción: Payload
+  reconecta solo. Si en 2-3 min no vuelve, forzar rebuild.
+
+### Envío de emails de formularios
+
+- Destinatario: variable Vercel `COMMERCIAL_EMAIL` (Sensitive). Fallback
+  en código: `comercial@motorflash.com`.
+- Formularios que envían: `submitContact.ts`, `submitQuote.ts`,
+  `submitMultiQuote.ts` (`src/app/actions/`). Cada uno envía dos
+  correos: comercial + confirmación al remitente.
+- Transporte: `@payloadcms/email-nodemailer` con SMTP genérico. Envs:
+  `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASS`, `MAILER_FROM`
+  (todas Sensitive en Vercel producción).
+- From display: `Motorflash Ibérica` (hardcoded en
+  `src/payload.config.ts:132`).
+
+### SEO — estado actual
+
+Toda la web tiene aplicado el "SEO máximo" con helpers reutilizables:
+
+- **Helpers en `src/lib/seo/`**:
+  - `i18n-metadata.ts`: `buildPageMetadata`, `buildAlternates`,
+    `buildOpenGraph`, `localizedPath`. Cubre `es | ca | en | zh` + `x-default`.
+  - `schema.ts`: `pageSchema` (WebPage/AboutPage/ContactPage/CollectionPage/ItemPage),
+    `serviceSchema`, `productSchema` (AggregateOffer + priceRange),
+    `faqPageSchema`, `breadcrumbSchema`, `organizationSchema`,
+    `websiteSchema`, `jsonLdScript`.
+- Layout raíz: `hreflang` completo (4 locales + `x-default`),
+  `alternateLocale`, robots granular (`max-image-preview: large`,
+  `max-snippet: -1`) en producción.
+- Todas las páginas usan `buildPageMetadata` + JSON-LD específico +
+  breadcrumb schema. `/canal-denuncias` además incluye `FAQPage`.
+- Sitemap dinámico en `src/app/sitemap.ts` con rutas estáticas +
+  `/servicios/[slug]` + planes de precios + pages del CMS.
+- Robots en `src/app/robots.ts`: solo indexa en `VERCEL_ENV=production`.
+
+### Cambios recientes relevantes en la home
+
+- Sección "Catálogo en una línea" reemplazada: antes `ProductsTimeline`,
+  ahora `EcosystemZones` (`src/components/EcosystemZones.tsx`). Tres
+  zonas conectadas (Industrial naranja / Publicación azul / Gestión
+  comercial verde) + Apex como chip sutil abajo. Textos i18n en
+  `src/lib/catalog-zones-content.ts`. `ProductsTimeline` queda sin
+  usos pero se mantiene en el repo.
+
+### Botón flotante WhatsApp
+
+- Server component `src/components/WhatsAppButton.tsx`, montado en
+  el layout raíz (`(frontend)/layout.tsx`). Abajo-izquierda para no
+  colisionar con `<elevenlabs-convai>` (abajo-derecha).
+- Teléfono: `+34 910 78 72 59` → `wa.me/34910787259` con mensaje
+  pre-rellenado por locale.
+- **Importante**: teléfono distinto al de `contact-content.ts` (`+34
+  910 788 575`). WhatsApp es un canal independiente.
+
+### Página `/canal-denuncias`
+
+- Página completa con hero, quién puede usarlo, materias cubiertas,
+  garantías, cómo funciona, FAQ (6 preguntas por locale), marco legal
+  (Ley 2/2023 + Directiva UE 2019/1937) y CTA al Google Form.
+- Cuatro locales completos. Link desde el footer.
+- Ya incluida en `RESERVED_SLUGS` del catch-all CMS y en el sitemap.
+
+---
+
 ## Tareas abiertas pendientes (no auto-cerrar)
 
-- #33 — Crear primer admin en producción.
+- 🔴 **P0 — Desbloquear BD Prisma Postgres** (ver "Estado actual"
+  arriba). Sin esto el `/admin` y todo lo que dependa de Payload
+  siguen rotos.
+- #33 — Crear primer admin en producción (bloqueado por P0 hasta que
+  vuelva `/admin`).
 - #34 — Rotar claves expuestas (Resend, Stitch).
+- Purgar historia de git si `.env.production` llegó al repo alguna vez
+  (revisión de seguridad pendiente por el usuario).
+- Follow-up SEO: reenviar `sitemap.xml` en Google Search Console y
+  Bing Webmaster Tools tras el último despliegue de SEO global para
+  acelerar reindexado.
+- Follow-up UX: unificar el helper i18n interno de
+  `canal-denuncias/page.tsx` (que duplica su propio `LOCALES`/`OG_LOCALE_MAP`/
+  `HREFLANG_MAP`) con `src/lib/seo/i18n-metadata.ts` cuando toque
+  refactor.
+
+---
+
+## Siguientes pasos recomendados
+
+1. **Resolver la BD** — decidir upgrade de plan Prisma en Vercel
+   Marketplace o migración a Neon. Sin esto, tareas #33 y muchas de
+   edición vía admin quedan bloqueadas.
+2. **Verificar rich results en producción** una vez la BD vuelva:
+   - `https://search.google.com/test/rich-results` con:
+     - `/canal-denuncias` (FAQPage, BreadcrumbList, WebPage, ContactPage)
+     - `/servicios/dealer` (Service, BreadcrumbList, ItemPage)
+     - `/precios/exportaciones` (Product con AggregateOffer,
+       BreadcrumbList)
+3. **Reenviar sitemap** en Google Search Console y Bing Webmaster
+   Tools tras confirmar que las páginas responden 200 con contenido.
+4. **Crear primer admin** en producción (#33) cuando el `/admin`
+   vuelva. Requiere set temporal de `ALLOW_FIRST_USER_REGISTRATION=1`
+   en Vercel (ver `src/middleware.ts`), crear usuario, luego quitar
+   la env y redeploy.
+5. **Rotar claves expuestas** (#34) — Resend y Stitch, según lista de
+   revisión de seguridad.
