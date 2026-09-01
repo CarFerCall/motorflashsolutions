@@ -23,6 +23,7 @@ const RESERVED_SLUGS = new Set([
   'contacto',
   'ecosistema-tecnico',
   'historias-de-exito',
+  'politica-cookies',
   'precios',
   'publicacion-avanzada',
   'servicios',

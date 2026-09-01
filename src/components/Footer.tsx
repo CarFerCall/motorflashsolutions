@@ -125,7 +125,13 @@ export async function Footer() {
           <p className="text-xs text-on-surface-variant m-0">{t.copyright.replace('{year}', String(year))}</p>
           <div className="flex gap-6 text-xs font-bold text-on-surface-variant">
             <a href="#" className="hover:text-primary">{t.privacy}</a>
-            <a href="#" className="hover:text-primary">{t.cookies}</a>
+            <Link
+              prefetch={false}
+              href={locale === 'es' ? '/politica-cookies' : `/${locale}/politica-cookies`}
+              className="hover:text-primary"
+            >
+              {t.cookies}
+            </Link>
             <a href="#" className="hover:text-primary">{t.legal}</a>
           </div>
         </div>

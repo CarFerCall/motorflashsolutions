@@ -4,6 +4,7 @@ import Script from 'next/script'
 import { useEffect, useRef, useState } from 'react'
 import { useLocale } from 'next-intl'
 import { usePathname, useRouter } from '@/i18n/navigation'
+import { getConsent, onConsentChange } from '@/lib/cookie-consent'
 
 const AGENT_ID = 'agent_5201kd7z6vp6ext81vadrmqm5q5e'
 
@@ -126,6 +127,7 @@ export function ElevenLabsWidget() {
   const [isMobile, setIsMobile] = useState(false)
   const [loaded, setLoaded] = useState(false)
   const [loading, setLoading] = useState(false)
+  const [consented, setConsented] = useState(false)
   const locale = useLocale()
   const label = OPEN_LABEL[locale] ?? OPEN_LABEL.es
 
@@ -145,13 +147,22 @@ export function ElevenLabsWidget() {
     return () => mq.removeEventListener('change', handler)
   }, [])
 
-  // En desktop, cargamos el widget automáticamente en cuanto sepamos
-  // que no somos móvil. En móvil hay que esperar el click del usuario.
+  // El widget de ElevenLabs es un tercero que conecta con
+  // api.eu.residency.elevenlabs.io y descarga assets externos. Solo
+  // se carga si el usuario ha aceptado cookies.
   useEffect(() => {
-    if (mounted && !isMobile && !loaded) {
+    setConsented(getConsent() === 'accepted')
+    return onConsentChange((value) => setConsented(value === 'accepted'))
+  }, [])
+
+  // En desktop, cargamos el widget automáticamente en cuanto sepamos
+  // que no somos móvil y hay consentimiento. En móvil hay que esperar
+  // el click del usuario aun con consentimiento.
+  useEffect(() => {
+    if (mounted && !isMobile && consented && !loaded) {
       setLoaded(true)
     }
-  }, [mounted, isMobile, loaded])
+  }, [mounted, isMobile, consented, loaded])
 
   // El spinner se autolimita a 4 s por si el evento de "widget listo"
   // no llega (bundle bloqueado, red intermitente, etc.).
@@ -218,6 +229,10 @@ export function ElevenLabsWidget() {
   // Antes de saber si somos móvil o desktop no renderizamos nada — evita
   // cargar el widget en desktop durante el primer tick previo al check.
   if (!mounted) return null
+
+  // Sin consentimiento, no mostramos ni siquiera el placeholder. El
+  // banner de cookies vive en el mismo layout y ocupa esa esquina.
+  if (!consented) return null
 
   const handleOpen = () => {
     setLoading(true)
