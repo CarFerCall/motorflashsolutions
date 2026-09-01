@@ -4,7 +4,7 @@ import Script from 'next/script'
 import { useEffect, useRef, useState } from 'react'
 import { useLocale } from 'next-intl'
 import { usePathname, useRouter } from '@/i18n/navigation'
-import { getConsent, onConsentChange } from '@/lib/cookie-consent'
+import { getPreferences, onPreferencesChange } from '@/lib/cookie-consent'
 
 const AGENT_ID = 'agent_5201kd7z6vp6ext81vadrmqm5q5e'
 
@@ -149,10 +149,10 @@ export function ElevenLabsWidget() {
 
   // El widget de ElevenLabs es un tercero que conecta con
   // api.eu.residency.elevenlabs.io y descarga assets externos. Solo
-  // se carga si el usuario ha aceptado cookies.
+  // se carga si el usuario ha activado la categoría `assistant`.
   useEffect(() => {
-    setConsented(getConsent() === 'accepted')
-    return onConsentChange((value) => setConsented(value === 'accepted'))
+    setConsented(getPreferences()?.assistant === true)
+    return onPreferencesChange((prefs) => setConsented(prefs.assistant === true))
   }, [])
 
   // En desktop, cargamos el widget automáticamente en cuanto sepamos
