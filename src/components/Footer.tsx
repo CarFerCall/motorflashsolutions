@@ -79,11 +79,11 @@ export async function Footer() {
             <ul className="space-y-3 text-sm text-on-surface-variant">
               {products.map((p) => (
                 <li key={p.slug}>
-                  <Link href={`/servicios/${p.slug}`} className="hover:text-primary transition-colors">{p.name}</Link>
+                  <Link prefetch={false} href={`/servicios/${p.slug}`} className="hover:text-primary transition-colors">{p.name}</Link>
                 </li>
               ))}
               <li className="mt-2">
-                <Link href="/servicios" className="font-bold text-on-surface hover:text-primary">{t.viewAll}</Link>
+                <Link prefetch={false} href="/servicios" className="font-bold text-on-surface hover:text-primary">{t.viewAll}</Link>
               </li>
             </ul>
           </div>
@@ -91,12 +91,12 @@ export async function Footer() {
           <div>
             <h5 className="text-sm font-bold uppercase tracking-wider mb-6">{t.companyHeading}</h5>
             <ul className="space-y-3 text-sm text-on-surface-variant">
-              <li><Link href="/compania" className="hover:text-primary transition-colors">{t.aboutUs}</Link></li>
-              <li><Link href="/historias-de-exito" className="hover:text-primary transition-colors">{t.successStories}</Link></li>
+              <li><Link prefetch={false} href="/compania" className="hover:text-primary transition-colors">{t.aboutUs}</Link></li>
+              <li><Link prefetch={false} href="/historias-de-exito" className="hover:text-primary transition-colors">{t.successStories}</Link></li>
               {/* Enlace a /precios oculto temporalmente — la página sigue accesible por URL directa. */}
-              <li><Link href="/contacto" className="hover:text-primary transition-colors">{t.contact}</Link></li>
+              <li><Link prefetch={false} href="/contacto" className="hover:text-primary transition-colors">{t.contact}</Link></li>
               <li>
-                <Link href="/canal-denuncias" className="hover:text-primary transition-colors">
+                <Link prefetch={false} href="/canal-denuncias" className="hover:text-primary transition-colors">
                   {t.reportingChannel}
                 </Link>
               </li>

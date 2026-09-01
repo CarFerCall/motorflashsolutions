@@ -75,7 +75,7 @@ export function NavbarClient({ menu }: Props) {
         style={{ background: 'rgba(255, 255, 255, 0.95)' }}
       >
         <div ref={containerRef} className="mf-container flex items-center h-full gap-6">
-          <Link href="/" className="flex-shrink-0">
+          <Link href="/" prefetch={false} className="flex-shrink-0">
             <Image
               src="/images/logo-motorflash.png"
               alt="Motorflash"
@@ -106,7 +106,11 @@ export function NavbarClient({ menu }: Props) {
             </div>
 
             {menu.cta?.label && menu.cta?.url && (
-              <Link href={menu.cta.url} className="btn-primary !py-2.5 !px-6 !text-sm hidden sm:inline-flex">
+              <Link
+                href={menu.cta.url}
+                prefetch={false}
+                className="btn-primary !py-2.5 !px-6 !text-sm hidden sm:inline-flex"
+              >
                 {menu.cta.label}
               </Link>
             )}
@@ -127,14 +131,17 @@ export function NavbarClient({ menu }: Props) {
         </div>
       </nav>
 
-      {/* Drawer móvil */}
-      <MobileDrawer
-        open={mobileOpen}
-        onClose={() => setMobileOpen(false)}
-        menu={menu}
-        pathname={pathname}
-        topOffset={scrolled ? 64 : 80}
-      />
+      {/* Drawer móvil — solo se monta cuando está abierto para no
+          añadir Links extra al DOM (evita 6 prefetch RSC en background
+          desde la home cuando el usuario aún no ha pedido el menú). */}
+      {mobileOpen && (
+        <MobileDrawer
+          onClose={() => setMobileOpen(false)}
+          menu={menu}
+          pathname={pathname}
+          topOffset={scrolled ? 64 : 80}
+        />
+      )}
     </>
   )
 }
@@ -180,6 +187,7 @@ function NavItem({
                 <Link
                   key={`${c.url}-${i}`}
                   href={c.url}
+                  prefetch={false}
                   role="menuitem"
                   className="flex items-start gap-3 px-3 py-2.5 rounded-lg hover:bg-surface-container transition-colors text-sm font-medium text-on-surface"
                 >
@@ -201,6 +209,7 @@ function NavItem({
   return (
     <Link
       href={item.url ?? '#'}
+      prefetch={false}
       target={item.newTab ? '_blank' : undefined}
       rel={item.newTab ? 'noopener noreferrer' : undefined}
       className={`text-sm font-medium transition-colors ${
@@ -213,13 +222,11 @@ function NavItem({
 }
 
 function MobileDrawer({
-  open,
   onClose,
   menu,
   pathname,
   topOffset,
 }: {
-  open: boolean
   onClose: () => void
   menu: MainMenuData
   pathname: string | null
@@ -227,25 +234,19 @@ function MobileDrawer({
 }) {
   const [expanded, setExpanded] = useState<number | null>(null)
 
-  // Cuando se cierra el drawer, recoge los desplegables
-  useEffect(() => {
-    if (!open) setExpanded(null)
-  }, [open])
-
   return (
     <>
       {/* Overlay */}
       <div
-        className={`md:hidden fixed inset-0 z-40 bg-black/40 transition-opacity ${open ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
+        className="md:hidden fixed inset-0 z-40 bg-black/40"
         onClick={onClose}
         aria-hidden
       />
 
       {/* Panel */}
       <aside
-        className={`md:hidden fixed inset-x-0 bottom-0 z-50 bg-white overflow-y-auto transition-transform duration-300 ${open ? 'translate-y-0' : 'translate-y-full'}`}
+        className="md:hidden fixed inset-x-0 bottom-0 z-50 bg-white overflow-y-auto"
         style={{ top: topOffset, maxHeight: `calc(100vh - ${topOffset}px)` }}
-        aria-hidden={!open}
       >
         <nav className="p-4 pb-8">
           <ul className="space-y-1">
@@ -262,6 +263,7 @@ function MobileDrawer({
                 ) : (
                   <Link
                     href={item.url ?? '#'}
+                    prefetch={false}
                     target={item.newTab ? '_blank' : undefined}
                     rel={item.newTab ? 'noopener noreferrer' : undefined}
                     onClick={onClose}
@@ -279,7 +281,12 @@ function MobileDrawer({
 
           {menu.cta?.label && menu.cta?.url && (
             <div className="mt-6 pt-6 border-t border-outline-variant">
-              <Link href={menu.cta.url} onClick={onClose} className="btn-primary w-full justify-center">
+              <Link
+                href={menu.cta.url}
+                prefetch={false}
+                onClick={onClose}
+                className="btn-primary w-full justify-center"
+              >
                 {menu.cta.label}
                 <span className="material-symbols-outlined">arrow_forward</span>
               </Link>
@@ -335,6 +342,7 @@ function MobileDropdown({
             <li key={`${c.url}-${i}`}>
               <Link
                 href={c.url}
+                prefetch={false}
                 onClick={onLinkClick}
                 className="flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium text-on-surface hover:bg-surface-container transition-colors"
               >
