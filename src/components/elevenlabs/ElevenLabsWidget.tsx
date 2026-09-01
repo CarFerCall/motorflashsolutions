@@ -108,24 +108,58 @@ function detectServiceFromPath(pathname: string): string {
 /**
  * Widget del asistente de voz de ElevenLabs.
  *
- * Estrategia de carga: click-to-load. El bundle del widget pesa ~1,5 MB
- * y su parseo bloquea el hilo principal 2-4 s en móviles medios. Para
- * no interferir con la hidratación (drawer del menú, contadores, etc.)
- * mostramos un botón placeholder ligero abajo-derecha; el widget real
- * solo se descarga y monta cuando el usuario lo pide explícitamente.
+ * En desktop se carga con la estrategia por defecto (lazyOnload) —
+ * la CPU aguanta el parseo del bundle sin bloquear interacciones.
+ *
+ * En móvil el bundle (~1,5 MB) bloquea el hilo principal 2-4 s al
+ * parsear/inicializar, entorpeciendo el tap del menú hamburguesa.
+ * Por eso mostramos un botón placeholder ligero abajo-derecha y solo
+ * cargamos el widget real cuando el usuario lo pulsa. Mientras carga,
+ * el botón se convierte en un spinner para dar feedback visual.
  */
 export function ElevenLabsWidget() {
   const widgetRef = useRef<HTMLElement | null>(null)
   const router = useRouter()
   const pathname = usePathname()
   const pathnameRef = useRef(pathname)
+  const [mounted, setMounted] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
   const [loaded, setLoaded] = useState(false)
+  const [loading, setLoading] = useState(false)
   const locale = useLocale()
   const label = OPEN_LABEL[locale] ?? OPEN_LABEL.es
 
   useEffect(() => {
     pathnameRef.current = pathname
   }, [pathname])
+
+  // Detectamos móvil client-side. Evitamos renderizar nada en el
+  // primer paint (SSR) — solo después de saber si somos mobile o
+  // desktop, para no cargar el widget en desktop antes del check.
+  useEffect(() => {
+    setMounted(true)
+    const mq = window.matchMedia('(max-width: 767px)')
+    setIsMobile(mq.matches)
+    const handler = (e: MediaQueryListEvent) => setIsMobile(e.matches)
+    mq.addEventListener('change', handler)
+    return () => mq.removeEventListener('change', handler)
+  }, [])
+
+  // En desktop, cargamos el widget automáticamente en cuanto sepamos
+  // que no somos móvil. En móvil hay que esperar el click del usuario.
+  useEffect(() => {
+    if (mounted && !isMobile && !loaded) {
+      setLoaded(true)
+    }
+  }, [mounted, isMobile, loaded])
+
+  // El spinner se autolimita a 4 s por si el evento de "widget listo"
+  // no llega (bundle bloqueado, red intermitente, etc.).
+  useEffect(() => {
+    if (!loading) return
+    const t = setTimeout(() => setLoading(false), 4000)
+    return () => clearTimeout(t)
+  }, [loading])
 
   useEffect(() => {
     if (!loaded) return
@@ -169,17 +203,34 @@ export function ElevenLabsWidget() {
       }
     }
 
+    // Cuando el widget termina de inicializarse, quitamos el spinner.
+    // El evento exacto depende del bundle; si no llega, el timeout de
+    // 4 s del efecto anterior nos cubre.
+    const onReady = () => setLoading(false)
     widget.addEventListener('elevenlabs-convai:call', onCall)
+    widget.addEventListener('elevenlabs-convai:ready', onReady)
     return () => {
       widget.removeEventListener('elevenlabs-convai:call', onCall)
+      widget.removeEventListener('elevenlabs-convai:ready', onReady)
     }
   }, [router, loaded])
 
-  if (!loaded) {
+  // Antes de saber si somos móvil o desktop no renderizamos nada — evita
+  // cargar el widget en desktop durante el primer tick previo al check.
+  if (!mounted) return null
+
+  const handleOpen = () => {
+    setLoading(true)
+    setLoaded(true)
+  }
+
+  // Placeholder móvil (solo cuando aún no está cargado). En desktop se
+  // salta este render y se monta el widget directamente por el efecto.
+  if (isMobile && !loaded) {
     return (
       <button
         type="button"
-        onClick={() => setLoaded(true)}
+        onClick={handleOpen}
         aria-label={label}
         title={label}
         className="fixed bottom-6 right-6 z-40 inline-flex items-center justify-center w-14 h-14 rounded-full shadow-lg hover:shadow-xl transition-all hover:scale-105"
@@ -194,6 +245,28 @@ export function ElevenLabsWidget() {
 
   return (
     <>
+      {/* Spinner overlay mientras el bundle del widget descarga y se
+          inicializa. Se posiciona en el mismo sitio que el placeholder
+          y desaparece cuando el widget está listo (evento) o al timeout. */}
+      {isMobile && loading && (
+        <div
+          aria-hidden
+          className="fixed bottom-6 right-6 z-50 inline-flex items-center justify-center w-14 h-14 rounded-full shadow-lg pointer-events-none"
+          style={{ background: '#121414' }}
+        >
+          <svg
+            width="28"
+            height="28"
+            viewBox="0 0 24 24"
+            fill="none"
+            style={{ animation: 'mf-eleven-spin 0.8s linear infinite' }}
+          >
+            <circle cx="12" cy="12" r="10" stroke="rgba(255,255,255,0.25)" strokeWidth="3" />
+            <path d="M22 12a10 10 0 0 0-10-10" stroke="#ffffff" strokeWidth="3" strokeLinecap="round" />
+          </svg>
+          <style>{`@keyframes mf-eleven-spin { to { transform: rotate(360deg); } }`}</style>
+        </div>
+      )}
       <elevenlabs-convai
         ref={widgetRef}
         agent-id={AGENT_ID}
