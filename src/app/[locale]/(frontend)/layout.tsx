@@ -1,6 +1,7 @@
 import React from 'react'
 import type { Metadata, Viewport } from 'next'
 import { notFound } from 'next/navigation'
+import { Outfit, Geist } from 'next/font/google'
 import { hasLocale, NextIntlClientProvider } from 'next-intl'
 import { setRequestLocale } from 'next-intl/server'
 import './styles.css'
@@ -12,6 +13,20 @@ import { routing } from '@/i18n/routing'
 import { absoluteUrl, getSiteUrl } from '@/lib/seo/site-url'
 import { organizationSchema, websiteSchema, jsonLdScript } from '@/lib/seo/schema'
 import { OG_LOCALE_MAP, SEO_LOCALES } from '@/lib/seo/i18n-metadata'
+
+const outfit = Outfit({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700', '800'],
+  variable: '--font-outfit',
+  display: 'swap',
+})
+
+const geist = Geist({
+  subsets: ['latin'],
+  weight: ['400', '500', '600'],
+  variable: '--font-geist',
+  display: 'swap',
+})
 
 const SITE_NAME = 'Motorflash'
 const DEFAULT_TITLE = 'Motorflash | Solución 360 para Automoción'
@@ -101,14 +116,15 @@ export default async function FrontendLayout({
   const orgJsonLd = jsonLdScript([organizationSchema(), websiteSchema()])
 
   return (
-    <html lang={locale}>
+    <html lang={locale} className={`${outfit.variable} ${geist.variable}`}>
       <head>
+        {/* Material Symbols se sirve fuera de next/font porque no está
+            en el catálogo de Google Fonts variable estándar. Cargamos
+            con preconnect + hoja aparte; el resto de tipografías las
+            self-hostea Next automáticamente. */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
-        <link
-          rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Geist:wght@400;500;600&display=swap"
-        />
+        <link rel="preconnect" href="https://unpkg.com" crossOrigin="" />
         <link
           rel="stylesheet"
           href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"

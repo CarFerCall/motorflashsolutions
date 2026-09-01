@@ -19,8 +19,8 @@ export default {
         outline: '#727779',
       },
       fontFamily: {
-        display: ['Outfit', 'system-ui', 'sans-serif'],
-        body: ['Geist', 'Outfit', 'system-ui', 'sans-serif'],
+        display: ['var(--font-outfit)', 'Outfit', 'system-ui', 'sans-serif'],
+        body: ['var(--font-geist)', 'var(--font-outfit)', 'Geist', 'Outfit', 'system-ui', 'sans-serif'],
       },
       fontSize: {
         'display-lg': ['56px', { lineHeight: '64px', letterSpacing: '-0.02em', fontWeight: '700' }],

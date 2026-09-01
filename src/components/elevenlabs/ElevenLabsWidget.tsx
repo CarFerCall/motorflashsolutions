@@ -1,7 +1,7 @@
 'use client'
 
 import Script from 'next/script'
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { usePathname, useRouter } from '@/i18n/navigation'
 
 const AGENT_ID = 'agent_5201kd7z6vp6ext81vadrmqm5q5e'
@@ -102,6 +102,52 @@ export function ElevenLabsWidget() {
   const router = useRouter()
   const pathname = usePathname()
   const pathnameRef = useRef(pathname)
+  // Diferimos el montaje del <elevenlabs-convai> y su script hasta que
+  // el navegador esté idle o el usuario interactúe. El widget hace mucho
+  // trabajo síncrono al arrancar (shadow DOM, audio, WebSocket) y en
+  // móvil retrasa la hidratación del resto de la UI — sobre todo del
+  // menú, dando sensación de "web bloqueada" si el usuario toca antes.
+  const [shouldMount, setShouldMount] = useState(false)
+
+  useEffect(() => {
+    if (shouldMount) return
+
+    let cancelled = false
+    const mount = () => {
+      if (!cancelled) setShouldMount(true)
+    }
+
+    const win = window as Window & {
+      requestIdleCallback?: (cb: () => void, opts?: { timeout: number }) => number
+      cancelIdleCallback?: (handle: number) => void
+    }
+
+    let idleHandle: number | null = null
+    let timeoutHandle: ReturnType<typeof setTimeout> | null = null
+
+    if (typeof win.requestIdleCallback === 'function') {
+      idleHandle = win.requestIdleCallback(mount, { timeout: 4000 })
+    } else {
+      timeoutHandle = setTimeout(mount, 2500)
+    }
+
+    const opts: AddEventListenerOptions = { once: true, passive: true }
+    const onInteract = () => mount()
+    window.addEventListener('scroll', onInteract, opts)
+    window.addEventListener('pointerdown', onInteract, opts)
+    window.addEventListener('keydown', onInteract, opts)
+
+    return () => {
+      cancelled = true
+      if (idleHandle !== null && typeof win.cancelIdleCallback === 'function') {
+        win.cancelIdleCallback(idleHandle)
+      }
+      if (timeoutHandle) clearTimeout(timeoutHandle)
+      window.removeEventListener('scroll', onInteract)
+      window.removeEventListener('pointerdown', onInteract)
+      window.removeEventListener('keydown', onInteract)
+    }
+  }, [shouldMount])
 
   useEffect(() => {
     pathnameRef.current = pathname
@@ -152,7 +198,9 @@ export function ElevenLabsWidget() {
     return () => {
       widget.removeEventListener('elevenlabs-convai:call', onCall)
     }
-  }, [router])
+  }, [router, shouldMount])
+
+  if (!shouldMount) return null
 
   return (
     <>
@@ -163,7 +211,7 @@ export function ElevenLabsWidget() {
       />
       <Script
         src="https://unpkg.com/@elevenlabs/convai-widget-embed"
-        strategy="afterInteractive"
+        strategy="lazyOnload"
       />
     </>
   )

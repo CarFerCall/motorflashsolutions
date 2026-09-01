@@ -7,8 +7,8 @@
     --primary: #ff8000;
   }
   html { scroll-behavior: smooth; }
-  body { font-family: 'Outfit', system-ui, -apple-system, sans-serif; color: #121414; background: #ffffff; }
-  h1, h2, h3, h4, h5, h6 { font-family: 'Outfit', system-ui, sans-serif; letter-spacing: -0.01em; }
+  body { font-family: var(--font-outfit), 'Outfit', system-ui, -apple-system, sans-serif; color: #121414; background: #ffffff; }
+  h1, h2, h3, h4, h5, h6 { font-family: var(--font-outfit), 'Outfit', system-ui, sans-serif; letter-spacing: -0.01em; }
 }
 
 @layer components {

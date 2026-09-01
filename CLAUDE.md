@@ -131,28 +131,32 @@ npx vercel@latest ls 2>&1 | head -10
 
 ---
 
-## Estado actual (agosto 2026)
+## Estado actual (septiembre 2026)
 
-### 🔴 Blocker en producción
+### BD Postgres
 
-- **BD Prisma Postgres suspendida** (integración Vercel Marketplace
-  `motorflash-db`, estado `● Suspended`, causa `planLimitReached`).
-  Consecuencias:
-  - `/admin` devuelve HTTP 500.
-  - `getMainMenu()` cae al fallback vacío → la barra superior aparece
-    sin ítems.
-  - Cualquier página que dependa de Payload (globals, pages, precios)
-    se sirve sin contenido de BD.
-  - El sitio SIGUE cargando gracias a fallbacks estáticos; sólo pierde
-    lo que vive en Payload.
-- **Cómo desbloquear**: Vercel Dashboard →
-  `carlosfernandez-3523s-projects/motorflashsolutions` → Storage →
-  `motorflash-db` → Upgrade plan (Free → Pro). O migrar a Neon:
-  `pg_dump` + swap del `POSTGRES_URL` en Vercel envs (~15-30 min, sin
-  cambios de código).
-- El CLI `npx vercel@latest integration ls` muestra el estado en vivo.
-- No hace falta redeploy tras levantar la restricción: Payload
-  reconecta solo. Si en 2-3 min no vuelve, forzar rebuild.
+- Integración Vercel Marketplace `motorflash-db` **activa**. `/admin`
+  responde 200 y `getMainMenu()` sirve items desde Payload.
+- Si vuelve a caer por `planLimitReached`, el patrón es: Vercel
+  Dashboard → Storage → `motorflash-db` → Upgrade plan. Como
+  alternativa, migrar a Neon (`pg_dump` + swap del `POSTGRES_URL` en
+  Vercel envs, ~15-30 min sin cambios de código). Payload reconecta
+  solo en 2-3 min sin redeploy.
+
+### Rendimiento — carga móvil
+
+- **Fuentes** (`Outfit`, `Geist`) migradas a `next/font/google` en
+  `src/app/[locale]/(frontend)/layout.tsx`. Self-hosted por Next,
+  expuestas como CSS variables `--font-outfit` y `--font-geist`
+  (referenciadas desde `styles.css` y `tailwind.config.ts`). Material
+  Symbols sigue como hoja externa por no estar en `next/font`.
+- **Widget ElevenLabs** (`src/components/elevenlabs/ElevenLabsWidget.tsx`)
+  ya no bloquea la hidratación: el `<elevenlabs-convai>` y su script
+  se difieren hasta `requestIdleCallback` (o fallback de 2.5s), y se
+  fuerzan al primer scroll/pointerdown/keydown. `Script` cargado con
+  `strategy="lazyOnload"`. Añadido `preconnect` a `unpkg.com`. Esto
+  arregla el bug de "el menú móvil no responde y la web se queda
+  bloqueada" al tocar antes de que hidrate.
 
 ### Envío de emails de formularios
 
@@ -218,11 +222,8 @@ Toda la web tiene aplicado el "SEO máximo" con helpers reutilizables:
 
 ## Tareas abiertas pendientes (no auto-cerrar)
 
-- 🔴 **P0 — Desbloquear BD Prisma Postgres** (ver "Estado actual"
-  arriba). Sin esto el `/admin` y todo lo que dependa de Payload
-  siguen rotos.
-- #33 — Crear primer admin en producción (bloqueado por P0 hasta que
-  vuelva `/admin`).
+- #33 — Crear primer admin en producción (requiere `ALLOW_FIRST_USER_REGISTRATION=1`
+  temporal en Vercel; ver `src/middleware.ts`).
 - #34 — Rotar claves expuestas (Resend, Stitch).
 - Purgar historia de git si `.env.production` llegó al repo alguna vez
   (revisión de seguridad pendiente por el usuario).
@@ -238,20 +239,16 @@ Toda la web tiene aplicado el "SEO máximo" con helpers reutilizables:
 
 ## Siguientes pasos recomendados
 
-1. **Resolver la BD** — decidir upgrade de plan Prisma en Vercel
-   Marketplace o migración a Neon. Sin esto, tareas #33 y muchas de
-   edición vía admin quedan bloqueadas.
-2. **Verificar rich results en producción** una vez la BD vuelva:
+1. **Verificar rich results en producción**:
    - `https://search.google.com/test/rich-results` con:
      - `/canal-denuncias` (FAQPage, BreadcrumbList, WebPage, ContactPage)
      - `/servicios/dealer` (Service, BreadcrumbList, ItemPage)
      - `/precios/exportaciones` (Product con AggregateOffer,
        BreadcrumbList)
-3. **Reenviar sitemap** en Google Search Console y Bing Webmaster
-   Tools tras confirmar que las páginas responden 200 con contenido.
-4. **Crear primer admin** en producción (#33) cuando el `/admin`
-   vuelva. Requiere set temporal de `ALLOW_FIRST_USER_REGISTRATION=1`
-   en Vercel (ver `src/middleware.ts`), crear usuario, luego quitar
-   la env y redeploy.
-5. **Rotar claves expuestas** (#34) — Resend y Stitch, según lista de
+2. **Reenviar sitemap** en Google Search Console y Bing Webmaster
+   Tools.
+3. **Crear primer admin** en producción (#33). Requiere set temporal de
+   `ALLOW_FIRST_USER_REGISTRATION=1` en Vercel (ver `src/middleware.ts`),
+   crear usuario, luego quitar la env y redeploy.
+4. **Rotar claves expuestas** (#34) — Resend y Stitch, según lista de
    revisión de seguridad.
