@@ -2,7 +2,9 @@
 
 import Link from 'next/link'
 import { useMemo, useState } from 'react'
+import { useLocale } from 'next-intl'
 import { buildDefaultSelections, computeProductLine, type SelectionMap } from '@/lib/multiQuotePricing'
+import { PrivacyLayer1 } from '@/components/PrivacyLayer1'
 import type { NormalizedItem } from '@/lib/pricing'
 import { submitMultiQuote } from '@/app/actions/submitMultiQuote'
 
@@ -30,6 +32,7 @@ const fmt = (cents: number) => {
 }
 
 export function PricingConfigurator({ products }: Props) {
+  const locale = useLocale()
   const [selected, setSelected] = useState<Set<string>>(new Set())
   const [selections, setSelections] = useState<SelectionMap>({})
   const [showForm, setShowForm] = useState(false)
@@ -290,8 +293,9 @@ export function PricingConfigurator({ products }: Props) {
               <textarea value={message} onChange={(e) => setMessage(e.target.value)} placeholder="Cuéntanos algo más (opcional)" rows={3} className="w-full px-4 py-3 rounded-xl border border-outline-variant bg-white focus:outline-none focus:border-primary resize-none" />
               <label className="flex items-start gap-2 text-sm text-on-surface-variant">
                 <input type="checkbox" required checked={privacy} onChange={(e) => setPrivacy(e.target.checked)} className="mt-1" />
-                <span>Acepto la <Link href="/privacidad" className="text-primary underline">política de privacidad</Link>.</span>
+                <span>Acepto la <Link href="/privacidad" prefetch={false} className="text-primary underline">política de privacidad</Link>.</span>
               </label>
+              <PrivacyLayer1 locale={locale} />
               {submitError && (
                 <p className="text-sm text-red-600 bg-red-50 border border-red-200 px-3 py-2 rounded-lg">{submitError}</p>
               )}

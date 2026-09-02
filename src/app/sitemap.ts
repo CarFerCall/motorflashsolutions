@@ -25,6 +25,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: absoluteUrl('/historias-de-exito'), lastModified: now, changeFrequency: 'monthly', priority: 0.6 },
     { url: absoluteUrl('/canal-denuncias'), lastModified: now, changeFrequency: 'yearly', priority: 0.5 },
     { url: absoluteUrl('/politica-cookies'), lastModified: now, changeFrequency: 'yearly', priority: 0.3 },
+    { url: absoluteUrl('/privacidad'), lastModified: now, changeFrequency: 'yearly', priority: 0.3 },
+    { url: absoluteUrl('/aviso-legal'), lastModified: now, changeFrequency: 'yearly', priority: 0.3 },
     { url: absoluteUrl('/compania/sostenibilidad'), lastModified: now, changeFrequency: 'yearly', priority: 0.5 },
   ]
 

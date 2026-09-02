@@ -124,7 +124,13 @@ export async function Footer() {
         <div className="flex flex-col md:flex-row justify-between items-center gap-3 mt-12 pt-8 border-t border-outline-variant">
           <p className="text-xs text-on-surface-variant m-0">{t.copyright.replace('{year}', String(year))}</p>
           <div className="flex gap-6 text-xs font-bold text-on-surface-variant">
-            <a href="#" className="hover:text-primary">{t.privacy}</a>
+            <Link
+              prefetch={false}
+              href={locale === 'es' ? '/privacidad' : `/${locale}/privacidad`}
+              className="hover:text-primary"
+            >
+              {t.privacy}
+            </Link>
             <Link
               prefetch={false}
               href={locale === 'es' ? '/politica-cookies' : `/${locale}/politica-cookies`}
@@ -132,7 +138,13 @@ export async function Footer() {
             >
               {t.cookies}
             </Link>
-            <a href="#" className="hover:text-primary">{t.legal}</a>
+            <Link
+              prefetch={false}
+              href={locale === 'es' ? '/aviso-legal' : `/${locale}/aviso-legal`}
+              className="hover:text-primary"
+            >
+              {t.legal}
+            </Link>
           </div>
         </div>
       </div>

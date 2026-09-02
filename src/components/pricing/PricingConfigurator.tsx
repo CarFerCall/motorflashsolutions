@@ -2,7 +2,9 @@
 
 import { useMemo, useState, useTransition } from 'react'
 import { useRouter } from 'next/navigation'
+import { useLocale } from 'next-intl'
 import { submitQuote } from '@/app/actions/submitQuote'
+import { PrivacyLayer1 } from '@/components/PrivacyLayer1'
 import type { NormalizedItem } from '@/lib/pricing'
 import { fmtMoney } from '@/lib/pricing'
 
@@ -21,6 +23,7 @@ type Selections = Record<string, string | number | boolean>
 
 export function PricingConfigurator({ plan }: { plan: PlanData }) {
   const router = useRouter()
+  const locale = useLocale()
   const [pending, startTransition] = useTransition()
   const [error, setError] = useState<string | null>(null)
 
@@ -205,6 +208,9 @@ export function PricingConfigurator({ plan }: { plan: PlanData }) {
                 <label htmlFor="privacy" className="text-xs text-on-surface-variant">
                   He leído y acepto la Política de privacidad. Consiento el tratamiento de mis datos para recibir esta cotización.
                 </label>
+              </div>
+              <div className="sm:col-span-2">
+                <PrivacyLayer1 locale={locale} />
               </div>
             </div>
           </div>

@@ -18,6 +18,7 @@ export const dynamic = 'force-dynamic'
 const RESERVED_SLUGS = new Set([
   'admin',
   'api',
+  'aviso-legal',
   'canal-denuncias',
   'compania',
   'contacto',
@@ -25,6 +26,7 @@ const RESERVED_SLUGS = new Set([
   'historias-de-exito',
   'politica-cookies',
   'precios',
+  'privacidad',
   'publicacion-avanzada',
   'servicios',
   'images',

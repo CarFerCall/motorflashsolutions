@@ -2,7 +2,9 @@
 
 import { useState, useTransition } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
+import { useLocale } from 'next-intl'
 import { submitContact } from '@/app/actions/submitContact'
+import { PrivacyLayer1 } from '@/components/PrivacyLayer1'
 import type { ContactFormCopy } from '@/lib/contact-form-content'
 
 export interface ProductOption {
@@ -36,6 +38,7 @@ export type ContactFormLabels = Pick<
 export function ContactForm({ products, t }: { products: ProductOption[]; t: ContactFormLabels }) {
   const router = useRouter()
   const searchParams = useSearchParams()
+  const locale = useLocale()
   const initialService = searchParams.get('servicio') ?? ''
   const [pending, startTransition] = useTransition()
   const [error, setError] = useState<string | null>(null)
@@ -104,6 +107,7 @@ export function ContactForm({ products, t }: { products: ProductOption[]; t: Con
           {t.privacy}
         </label>
       </div>
+      <PrivacyLayer1 locale={locale} />
       <button type="submit" disabled={pending} className="btn-primary w-full mt-2" style={{ padding: '1.125rem 2rem' }}>
         {pending ? t.sending : t.submit}
         {!pending && <span className="material-symbols-outlined">send</span>}
